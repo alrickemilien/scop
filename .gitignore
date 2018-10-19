@@ -1,0 +1,15 @@
+*.o
+CMakeFiles
+CMakeCache.txt
+*.vcxproj
+*.filters
+*.cmake
+*.sln
+Win32
+Debug
+bin
+*.dir
+*.vs
+*.ps
+external/glew*
+external/glfw*
