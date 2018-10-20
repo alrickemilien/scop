@@ -1,5 +1,6 @@
 #include "scop.h"
 
+#ifndef __APPLE__
 void glew_init(void) {
 	glewExperimental = GL_TRUE;
 
@@ -12,6 +13,7 @@ void glew_init(void) {
 		exit(err);
 	}
 }
+#endif
 
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
@@ -82,8 +84,8 @@ void init(t_software_environ *env, int argc, char **argv)
 	}
 
 	glfwWindowHint(GLFW_SAMPLES, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
@@ -103,7 +105,9 @@ void init(t_software_environ *env, int argc, char **argv)
 
 	glfwMakeContextCurrent(WINDOW);
 
+#ifndef __APPLE__
 	glew_init();
+#endif
 }
 
 int main(int argc, char **argv)

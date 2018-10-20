@@ -12,11 +12,11 @@ endif
 
 CCFLAGS= -Wall -Wextra -Werror
 
-LIBS := -framework Cocoa -framework AppKit -framework OpenGL -lglew -lglfw
-GLEW := external/glew/include
+LIBS := -framework OpenGL -framework Cocoa -framework IOkit -framework CoreVideo -lGLEW -lglfw3
+GLEW := $(HOME)/.brew/include
 GLFW := external/glfw/include
 C_INCLUDE_PATH := $(GLEW):$(GLFW)
-GLEW_LIB := external/glew/lib
+GLEW_LIB := $(HOME)/.brew/lib
 GLFW_LIB := external/glfw/lib
 LIBRARY_PATH := $(GLEW_LIB):$(GLFW_LIB)
 

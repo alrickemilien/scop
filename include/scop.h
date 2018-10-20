@@ -5,43 +5,46 @@
 * * OPENGL INCLUDES
 */
 #ifdef __APPLE__
-#include <GL/glew.h>
-#include <OpenGL/gl.h>
-#include <OpenGL/glu.h>
-// Windowing
-#include <GLFW/glfw3.h>
+
+/*
+** GLFW3 already includes opengl.h gl.h etc.
+*/
+
+# include <GLFW/glfw3.h>
+
 #else
-#include <GL/glew.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
+# include <GL/glew.h>
+# include <GL/gl.h>
+# include <GL/glu.h>
 // Windowing
-#include <GLFW/glfw3.h>
+# include <GLFW/glfw3.h>
 #endif
 
 #ifdef _MSC_VER
-#include <windows.h>
+# include <windows.h>
 #endif
 
 /*
 ** LOCALS INCLUDES
 */
 
-#include <signal.h>
-#include <stdio.h>
-#include <stdint.h>
-#include <stdbool.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
+# include <signal.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <stdint.h>
+# include <stdbool.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 
 /*
 ** MACROS to access more easily to x server pointeurs to variables
 ** that will be always manipulated
 ** like x_server, window, image_buffer, etc
 */
-#define WINDOW env->window
-#define WINDOW_WIDTH env->window_width
-#define WINDOW_HEIGHT env->window_height
+# define WINDOW env->window
+# define WINDOW_WIDTH env->window_width
+# define WINDOW_HEIGHT env->window_height
 
 typedef struct	s_software_environ
 {
@@ -58,8 +61,8 @@ typedef struct	s_color
 	unsigned char	blue;
 } t_color;
 
-#define DEFAULT_WINDOW_WIDTH 600
-#define DEFAULT_WINDOW_HEIGHT 600
+# define DEFAULT_WINDOW_WIDTH 600
+# define DEFAULT_WINDOW_HEIGHT 600
 
 /*
 * * This structure groups all available variables linked to gl infos

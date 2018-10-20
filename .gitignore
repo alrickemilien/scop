@@ -11,5 +11,3 @@ bin
 *.dir
 *.vs
 *.ps
-external/glew*
-external/glfw*
