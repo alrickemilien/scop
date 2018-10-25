@@ -58,6 +58,8 @@ char*	create_escaped_path_for_windows(const char *path)
 		i++;
 		j++;
 	}
+
+	return (ret);
 }
 
 /*
@@ -80,36 +82,6 @@ static shader_t	*load_single_shader(const char *path, GLuint id)
 
 	shader->id = id;
 
-	tmp = create_escaped_path_for_windows(path);
-
-	if ((fd = CreateFile(
-            tmp,
-            GENERIC_READ,
-            FILE_SHARE_READ,
-   			NULL,
-            OPEN_EXISTING,
-            FILE_ATTRIBUTE_READONLY,
-            NULL
-	)) == NULL) {
-		fprintf(stderr, "%s: File does not exist or permission denied\n", path);
-
-		return (NULL);
-	}
-
-	if ((hMapFile = CreateFileMapping(fd,
-		NULL,
-		PAGE_READONLY,
-		0,
-		0,
-		NULL)) == NULL)
-	{
-		fprintf(stderr, "%s: File does not exist or permission denied\n", path);
-
-		return (NULL);
-	}
-
-	free(tmp);
-
 	if (stat(path, &stats) == -1) {
 		fprintf(stderr, "%s: Could not read file size\n", path);
 		return (NULL);
@@ -122,30 +94,124 @@ static shader_t	*load_single_shader(const char *path, GLuint id)
 		return (NULL);
 	}
 
-	shader->content = malloc(sizeof(char) * (shader->length + 1));
+	shader->content = (char*)malloc(sizeof(char) * shader->length);
 
 	if (shader->content == NULL)
 		return (NULL);
 
-	printf("file size : %d\n", shader->length);
+	tmp = create_escaped_path_for_windows(path);
 
-	if (NULL == (memory_buffer = MapViewOfFile(hMapFile,
-		FILE_MAP_READ,
-		0,
-		0,
-		shader->length + 1)))
-	{
-		fprintf(stderr, "File does not exist or permission denied\n");
+	if (NULL == (fd = CreateFile(
+            tmp,
+            GENERIC_READ,
+            FILE_SHARE_READ,
+   			NULL,
+            OPEN_EXISTING,
+            FILE_ATTRIBUTE_NORMAL,
+            NULL
+	))) {
+		fprintf(stderr, "%s: CreateFile error - File does not exist or permission denied\n", path);
+
 		return (NULL);
 	}
 
-	memcpy(shader->content, memory_buffer, shader->length + 1);
+	free(tmp);
+	
+	if (NULL == (hMapFile = CreateFileMapping(
+		fd,
+		0,
+		PAGE_READONLY,
+		0,
+		shader->length,
+		0
+	)))
+	{
+		fprintf(stderr, "%s: CreateFileMapping error - File does not exist or permission denied\n", path);
+
+		return (NULL);
+	}
+
+	printf("file size : %d\n", (int)shader->length);
+
+	if (NULL == (memory_buffer = MapViewOfFile(
+		hMapFile,
+		FILE_MAP_READ,
+		0,
+		0,
+		shader->length)))
+	{
+		fprintf(stderr, "MapViewOfFile error - File does not exist or permission denied\n");
+		return (NULL);
+	}
+
+	if (GetLastError() == ERROR_ALREADY_EXISTS) {
+		printf("yaaaaa\n");
+	}
+	
+	printf("memory buffer %.10s\n", (char*)memory_buffer);
+
+	memcpy(shader->content, memory_buffer, shader->length);
 
 	UnmapViewOfFile(memory_buffer);
+
+	CloseHandle(hMapFile);
 
 	CloseHandle(fd);
 
 	return (shader);
+}
+
+void *mmap(char *address, size_t length, int file, off_t offset)
+{
+    void *map;
+    HANDLE handle;
+
+    map = (void *) NULL;
+    handle = INVALID_HANDLE_VALUE;
+
+    handle = CreateFileMapping((HANDLE) _get_osfhandle(file), 0, PAGE_READONLY, 0, length, 0);
+    if (!handle)
+           return (NULL);
+    map = (void *) MapViewOfFile(handle, FILE_MAP_READ, 0, 0, length);
+    CloseHandle(handle);
+
+    if (map == (void *) NULL)
+        return(NULL);
+    return((void *) ((char *) map + offset));
+}
+
+/**
+ * https://github.com/icefox/netflixrecommenderframework/blob/b0315e13edab5f3095007cb018bb40686eb2e431/src/winmmap.h
+ * /
+
+static void	*test(const char *path)
+{
+	int			fd;
+	struct stat	stats;
+	int length;
+	void *content;
+
+	if ((fd = open(path, O_RDONLY)) == -1)
+	{
+		fprintf(stderr, "%s: open - File does not exist or permission denied\n", path);
+		return (NULL);
+	}
+
+	if (fstat(fd, &stats) == -1)
+		return (NULL);
+
+	if (stats.st_size <= 0)
+		return (NULL);
+	
+	length = stats.st_size;
+
+	if (NULL == (content = mmap(NULL, length, fd, 0)))
+	{
+		fprintf(stderr, "mmap - File does not exist or permission denied\n");
+	}
+
+	close(fd);
+	return (content);
 }
 #else
 static shader_t	*load_single_shader(const char *path)
@@ -216,8 +282,6 @@ static void compile_single_shader(GLuint id, const shader_t *source, int *info_l
 */
 
 GLuint load_shaders(void) {
-	char *program_error_message;
-
 	// Create the shaders variables
 	GLuint vertex_shader_id = glCreateShader(GL_VERTEX_SHADER);
 	GLuint fragment_shader_id = glCreateShader(GL_FRAGMENT_SHADER);
@@ -228,15 +292,20 @@ GLuint load_shaders(void) {
 	// Read the Vertex Shader code from the file
 	vertex_shader_code = load_single_shader(vertex_file_path, vertex_shader_id);
 
+	void *map = test(vertex_file_path);
+
+	printf("LOOOOL : %.20s\n", map);
+	free(map);
+
 	// Read the Fragment Shader code from the file
 	fragment_shader_code = load_single_shader(fragment_file_path, fragment_shader_id);
 
-	printf("vertex_shader_code %.10s\n", vertex_shader_code->content);
+	printf("vertex_shader_code %.10s\n", (char*)vertex_shader_code->content);
 
 	
-	for(size_t i = 0; i < vertex_shader_code->length; i++)
+	for(uint64_t i = 0; i < vertex_shader_code->length; i++)
 	{
-		printf("%c", vertex_shader_code->content[i]);
+		printf("%c", ((char*)vertex_shader_code->content)[i]);
 	}
 
 	printf("\n");
@@ -272,8 +341,7 @@ GLuint load_shaders(void) {
 	glGetProgramiv(program_id, GL_INFO_LOG_LENGTH, &info_log_length);
 	
 	if (info_log_length > 0) {
-		glGetProgramInfoLog(program_id, info_log_length, NULL, program_error_message);
-		printf("%s\n", program_error_message);
+		print_gl_shader_error(program_id, info_log_length);
 	}
 
 	glDetachShader(program_id, vertex_shader_id);

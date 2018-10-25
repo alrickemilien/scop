@@ -11,3 +11,5 @@ bin
 *.dir
 *.vs
 *.ps
+glew-*
+glfw-*

@@ -22,6 +22,24 @@
 
 #ifdef _MSC_VER
 # include <windows.h>
+# include <io.h>
+#define PROT_READ  1
+#define PROT_WRITE  2
+#define PROT_READWRITE  3
+#define MAP_SHARED  1
+#define MAP_PRIVATE  2
+#define F_OK 0
+#define R_OK 4
+#define W_OK 2
+#define RW_OK 6
+
+#if !defined(MAP_FAILED)
+#define MAP_FAILED      ((void *) -1)
+
+#endif
+
+void *mmap(char *, size_t, int, int, int, off_t);
+int   munmap(void *, size_t);
 #endif
 
 /*

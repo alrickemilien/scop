@@ -17,7 +17,7 @@ add_subdirectory (glfw)
 
 include_directories(
 	glfw/include/GLFW/
-	glew/include/
+	glew-1.13.0/include/
 )
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
@@ -38,7 +38,7 @@ endif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 ### GLEW ###
 
 set(GLEW_SOURCE
-	glew/src/glew.c
+	glew-1.13.0/src/glew.c
 )
 
 set(GLEW_HEADERS
