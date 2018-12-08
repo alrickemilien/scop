@@ -1,9 +1,7 @@
 #include "scop.h"
-#ifdef _MSC_VER
+
 static const char *vertex_file_path = "C:\\Users\\Thierry\\Documents\\Alrick\\scop\\shaders\\SimpleVertexShader.glsl";
 static const char *fragment_file_path = "C:\\Users\\Thierry\\Documents\\Alrick\\scop\\shaders\\SimpleFragmentShader.glsl";
-#else
-#endif
 
 typedef struct	shader_s {
 	GLuint		id;
@@ -66,6 +64,7 @@ char*	create_escaped_path_for_windows(const char *path)
 ** Fuck windows
 */
 #ifdef _MSC_VER
+
 static shader_t	*load_single_shader(const char *path, GLuint id)
 {
 	HANDLE		fd;
@@ -116,7 +115,7 @@ static shader_t	*load_single_shader(const char *path, GLuint id)
 	}
 
 	free(tmp);
-	
+
 	if (NULL == (hMapFile = CreateFileMapping(
 		fd,
 		0,
@@ -147,7 +146,7 @@ static shader_t	*load_single_shader(const char *path, GLuint id)
 	if (GetLastError() == ERROR_ALREADY_EXISTS) {
 		printf("yaaaaa\n");
 	}
-	
+
 	printf("memory buffer %.10s\n", (char*)memory_buffer);
 
 	memcpy(shader->content, memory_buffer, shader->length);
@@ -180,50 +179,53 @@ void *mmap(char *address, size_t length, int file, off_t offset)
     return((void *) ((char *) map + offset));
 }
 
+#else
 /**
  * https://github.com/icefox/netflixrecommenderframework/blob/b0315e13edab5f3095007cb018bb40686eb2e431/src/winmmap.h
- * /
+ */
 
-static void	*test(const char *path)
-{
-	int			fd;
-	struct stat	stats;
-	int length;
-	void *content;
-
-	if ((fd = open(path, O_RDONLY)) == -1)
-	{
-		fprintf(stderr, "%s: open - File does not exist or permission denied\n", path);
-		return (NULL);
-	}
-
-	if (fstat(fd, &stats) == -1)
-		return (NULL);
-
-	if (stats.st_size <= 0)
-		return (NULL);
-	
-	length = stats.st_size;
-
-	if (NULL == (content = mmap(NULL, length, fd, 0)))
-	{
-		fprintf(stderr, "mmap - File does not exist or permission denied\n");
-	}
-
-	close(fd);
-	return (content);
-}
-#else
-static shader_t	*load_single_shader(const char *path)
+// static void	*test(const char *path)
+// {
+// 	int			fd;
+// 	struct stat	stats;
+// 	int length;
+// 	void *content;
+//
+// 	if ((fd = open(path, O_RDONLY)) == -1)
+// 	{
+// 		fprintf(stderr, "%s: open - File does not exist or permission denied\n", path);
+// 		return (NULL);
+// 	}
+//
+// 	if (fstat(fd, &stats) == -1)
+// 		return (NULL);
+//
+// 	if (stats.st_size <= 0)
+// 		return (NULL);
+//
+// 	length = stats.st_size;
+//
+// 	if (NULL == (content = mmap(NULL, length, fd, 0)))
+// 	{
+// 		fprintf(stderr, "mmap - File does not exist or permission denied\n");
+// 	}
+//
+// 	close(fd);
+// 	return (content);
+// }
+static shader_t	*load_single_shader(const char *path, GLuint id)
 {
 	int			fd;
 	shader_t	*shader;
 	struct stat	stats;
 
+
 	shader = malloc(sizeof(shader_t));
 
 	if (shader == NULL)
 		return (NULL);
+
+	shader->id = id;
 
 	if ((fd = open(path, O_RDONLY)) == -1)
 	{
@@ -236,7 +238,7 @@ static shader_t	*load_single_shader(const char *path)
 
 	if (stats.st_size <= 0)
 		return (NULL);
-	
+
 	shader->length = stats.st_size;
 
 	if (MAP_FAILED == (shader->content = mmap(NULL, shader->length,
@@ -246,7 +248,8 @@ static shader_t	*load_single_shader(const char *path)
 	}
 
 	close(fd);
-	return (map);
+
+	return (shader);
 }
 #endif
 
@@ -265,7 +268,7 @@ static void compile_single_shader(GLuint id, const shader_t *source, int *info_l
 
 	error_message = NULL;
 
-	glShaderSource(id, 1, &source->content, &source->length);
+	glShaderSource(id, 1, (const GLchar *const *)(&source->content), &source->length);
 	glCompileShader(id);
 
 	// Check Shader
@@ -292,18 +295,18 @@ GLuint load_shaders(void) {
 	// Read the Vertex Shader code from the file
 	vertex_shader_code = load_single_shader(vertex_file_path, vertex_shader_id);
 
-	void *map = test(vertex_file_path);
-
-	printf("LOOOOL : %.20s\n", map);
-	free(map);
+	// void *map = test(vertex_file_path);
+	//
+	// printf("LOOOOL : %.20s\n", map);
+	// free(map);
 
 	// Read the Fragment Shader code from the file
 	fragment_shader_code = load_single_shader(fragment_file_path, fragment_shader_id);
 
 	printf("vertex_shader_code %.10s\n", (char*)vertex_shader_code->content);
 
-	
-	for(uint64_t i = 0; i < vertex_shader_code->length; i++)
+
+	for(GLint i = 0; i < vertex_shader_code->length; i++)
 	{
 		printf("%c", ((char*)vertex_shader_code->content)[i]);
 	}
@@ -328,18 +331,18 @@ GLuint load_shaders(void) {
 
 	// Link the program
 	printf("Linking program\n");
-	
+
 	GLuint program_id = glCreateProgram();
-	
+
 	glAttachShader(program_id, vertex_shader_id);
 	glAttachShader(program_id, fragment_shader_id);
-	
+
 	glLinkProgram(program_id);
 
 	// Check the program
 	glGetProgramiv(program_id, GL_LINK_STATUS, &result);
 	glGetProgramiv(program_id, GL_INFO_LOG_LENGTH, &info_log_length);
-	
+
 	if (info_log_length > 0) {
 		print_gl_shader_error(program_id, info_log_length);
 	}

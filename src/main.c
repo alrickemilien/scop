@@ -26,7 +26,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 
 /*
 */
-void run(t_software_environ *env) 
+void run(t_software_environ *env)
 {
 	// Dark blue background
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
@@ -85,7 +85,7 @@ void init(t_software_environ *env, int argc, char **argv)
 
 	glfwWindowHint(GLFW_SAMPLES, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
@@ -120,4 +120,3 @@ int main(int argc, char **argv)
 
 	return 0;
 }
-

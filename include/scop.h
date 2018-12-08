@@ -10,7 +10,9 @@
 ** GLFW3 already includes opengl.h gl.h etc.
 */
 
+# include <GL/glew.h>
 # include <GLFW/glfw3.h>
+#include <sys/mman.h>
 
 #else
 # include <GL/glew.h>
@@ -21,6 +23,7 @@
 #endif
 
 #ifdef _MSC_VER
+
 # include <windows.h>
 # include <io.h>
 #define PROT_READ  1
@@ -33,13 +36,14 @@
 #define W_OK 2
 #define RW_OK 6
 
-#if !defined(MAP_FAILED)
-#define MAP_FAILED      ((void *) -1)
+#ifndef MAP_FAILED
 
+#define MAP_FAILED      ((void *) -1)
 #endif
 
 void *mmap(char *, size_t, int, int, int, off_t);
 int   munmap(void *, size_t);
+
 #endif
 
 /*
@@ -50,10 +54,12 @@ int   munmap(void *, size_t);
 # include <stdio.h>
 # include <stdlib.h>
 # include <stdint.h>
+# include <string.h>
 # include <stdbool.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+#include <unistd.h>
 
 /*
 ** MACROS to access more easily to x server pointeurs to variables
@@ -87,7 +93,7 @@ typedef struct	s_color
 */
 typedef struct s_gl_info {
 	const char *vendor;
-	const char *renderer; 
+	const char *renderer;
 	const char *version;
 	const char *extensions;
 	const char *glsl_version;

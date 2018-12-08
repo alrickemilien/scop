@@ -10,14 +10,22 @@ ifneq ($(OS), Darwin)
 	$(error OSX required ...)
 endif
 
+ifndef $(CC)
+	CC = gcc
+endif
+
+ifndef $(CMAKE)
+	CMAKE = ~/.brew/bin/cmake
+endif
+
 CCFLAGS= -Wall -Wextra -Werror
 
-LIBS := -framework OpenGL -framework Cocoa -framework IOkit -framework CoreVideo -lGLEW -lglfw3
+LIBS := -framework OpenGL -framework Cocoa -framework IOkit -framework CoreVideo -lglfw3 -lGLEW
 GLEW := $(HOME)/.brew/include
 GLFW := external/glfw/include
 C_INCLUDE_PATH := $(GLEW):$(GLFW)
 GLEW_LIB := $(HOME)/.brew/lib
-GLFW_LIB := external/glfw/lib
+GLFW_LIB := external/glfw/src
 LIBRARY_PATH := $(GLEW_LIB):$(GLFW_LIB)
 
 SRC=src/main.c \
@@ -30,13 +38,20 @@ INCLUDE=-I include
 
 .PHONY: all clean fclean
 
-all: $(SCOP)
+all: gitsubmodule $(SCOP)
 
 $(SCOP): $(OBJ)
-	LIBRARY_PATH=$(LIBRARY_PATH) gcc $^ -o $@ $(INCLUDE) $(LIBS)
+	LIBRARY_PATH=$(LIBRARY_PATH) $(CC) $^ -o $@ $(INCLUDE) $(LIBS)
 
 %.o: %.c
-	C_INCLUDE_PATH=$(C_INCLUDE_PATH) gcc -o $@ -c $< $(INCLUDE) $(CCFLAGS)
+	C_INCLUDE_PATH=$(C_INCLUDE_PATH) $(CC) -o $@ -c $< $(INCLUDE) $(CCFLAGS)
+
+gitsubmodule:
+	# git submodule init
+	# git submodule update
+	# make -C external/glew
+	(cd external/glfw && $(CMAKE) .)
+	make -C external/glfw
 
 clean:
 	@rm -rf $(OBJ)
