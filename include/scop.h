@@ -69,6 +69,11 @@ int   munmap(void *, size_t);
 # define WINDOW env->window
 # define WINDOW_WIDTH env->window_width
 # define WINDOW_HEIGHT env->window_height
+# define WINDOW_NAME "scop"
+
+# define SOFT_GLFW_CONTEXT_VERSION_MAJOR 4
+# define SOFT_GLFW_CONTEXT_VERSION_MINOR 1
+
 
 typedef struct	s_software_environ
 {
@@ -113,8 +118,12 @@ typedef struct s_gl_info {
 	int maxTextureStacks;
 } t_gl_info;
 
-void	gl_info(void);
-void	create_triangle(t_software_environ *env);
+void		gl_info(void);
+void		create_triangle(t_software_environ *env);
 GLuint	load_shaders(void);
+void 		load_texture(
+  GLuint shader_id,
+  const char *texture_path,
+  GLuint *texture_dest);
 
 #endif

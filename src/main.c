@@ -1,6 +1,6 @@
 #include "scop.h"
 
-#ifndef __APPLE__
+#ifdef __APPLE__
 void glew_init(void) {
 	glewExperimental = GL_TRUE;
 
@@ -28,12 +28,16 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 */
 void run(t_software_environ *env)
 {
+	GLuint program_id;
+
 	// Dark blue background
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
 	create_triangle(env);
 
-	load_shaders();
+	program_id = load_shaders();
+
+	glUseProgram(program_id);
 
 	do {
 		// Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
@@ -77,6 +81,7 @@ void init(t_software_environ *env, int argc, char **argv)
 
 	glfwSetErrorCallback(error_callback);
 
+
 	if (!glfwInit()) {
 		fprintf(stderr, "Failed to initialize GLFW\n");
 		getchar();
@@ -84,12 +89,12 @@ void init(t_software_environ *env, int argc, char **argv)
 	}
 
 	glfwWindowHint(GLFW_SAMPLES, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, SOFT_GLFW_CONTEXT_VERSION_MAJOR);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, SOFT_GLFW_CONTEXT_VERSION_MINOR);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	WINDOW = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "SCOP", NULL, NULL);
+	WINDOW = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_NAME, NULL, NULL);
 
 	if (!WINDOW) {
 		glfwTerminate();
@@ -105,7 +110,7 @@ void init(t_software_environ *env, int argc, char **argv)
 
 	glfwMakeContextCurrent(WINDOW);
 
-#ifndef __APPLE__
+#ifdef __APPLE__
 	glew_init();
 #endif
 }

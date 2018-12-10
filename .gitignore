@@ -12,3 +12,4 @@ bin
 *.vs
 *.ps
 scop
+*.swp

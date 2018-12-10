@@ -1,11 +1,30 @@
-#version 330 core
+#version 400 core
 
-// Input vertex data, different for all executions of this shader.
+in vec3			position;
+in vec3			color;
+in vec2			uv;
+in vec3			normal;
 
-layout(location = 0) in vec3 vertexPosition_modelspace;
+out	vec3		_color;
+out vec2		_uv;
+out vec3		_normal;
+out vec3		_toLightVector;
 
-void main(){
-    gl_Position.xyz = vertexPosition_modelspace;
+uniform mat4	modelMatrix;
+uniform vec3	lightPosition;
+uniform mat4	mvp;
 
-    gl_Position.w = 1.0;
+void	main()
+{
+	gl_Position = mvp * vec4(position, 1);
+
+	_color = color;
+	_uv = uv;
+
+	vec4	worldPosition;
+
+	worldPosition = modelMatrix * vec4(position, 1.0);
+
+	_normal = (modelMatrix * vec4(normal, 0.0)).xyz;
+	_toLightVector = lightPosition - worldPosition.xyz;
 }
