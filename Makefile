@@ -10,20 +10,24 @@ ifneq ($(OS), Darwin)
 	$(error OSX required ...)
 endif
 
+# Choose compiler path when not set
 ifndef $(CC)
-	CC = gcc
+	CC=gcc
 endif
 
+# Choose cmake path when not set
 ifndef $(CMAKE)
-	CMAKE = ~/.brew/bin/cmake
+	CMAKE=/usr/bin/cmake
 endif
 
 CCFLAGS= -Wall -Wextra -Werror
 
 LIBS := -framework OpenGL -framework Cocoa -framework IOkit -framework CoreVideo -lglfw3 -lGLEW
+
 GLEW := $(HOME)/.brew/include
 GLFW := external/glfw/include
 C_INCLUDE_PATH := $(GLEW):$(GLFW)
+
 GLEW_LIB := $(HOME)/.brew/lib
 GLFW_LIB := external/glfw/src
 LIBRARY_PATH := $(GLEW_LIB):$(GLFW_LIB)
