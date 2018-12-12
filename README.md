@@ -1,6 +1,7 @@
 # Scop
 
 3D object renderer from object files
+Work only on OSX >= ElCaptain and Windows 10
 
 # Build
 

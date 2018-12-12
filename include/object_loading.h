@@ -5,6 +5,8 @@
 # define TYPE_COUNT 5
 # define DEFAULT_CODE -9
 
+#include <stdlib.h>
+
 /*
 ** Struct returned by parse_obj. It contains a list of everything in the file,
 ** where :
@@ -51,7 +53,7 @@ int				is_vec3_defined(t_vec3 *v);
 # define POLYGON_TOKEN "f"
 
 int			token_to_int(const char **tokens, int index);
-int			are_tokens_enough(const char **tokens, int qty);
+int			check_tokens_number(const char **tokens, int qty);
 
 typedef struct				s_type_match
 {

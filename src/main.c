@@ -71,6 +71,19 @@ static void error_callback(int error, const char* description)
 	fprintf(stderr, "Error: %s (%d)\n", description, error);
 }
 
+/*
+** Initialize the system with the provided resources
+** - Register the current
+** - Find the shader folder and register the path
+** - Read the resources into the object folder
+*/
+
+void init_system_resources(t_software_environ *env) {
+	getcwd(env->cwd, sizeof(env->cwd));
+
+
+}
+
 void init(t_software_environ *env, int argc, char **argv)
 {
 	WINDOW_WIDTH = DEFAULT_WINDOW_WIDTH;
@@ -120,6 +133,8 @@ int main(int argc, char **argv)
 	t_software_environ env;
 
 	init(&env, argc, argv);
+
+	init_system_resources(&env);
 
 	run(&env);
 

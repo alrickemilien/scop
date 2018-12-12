@@ -1,36 +1,8 @@
-#include <stdlib.h>
 #include <stdio.h>
 #include "object_loading.h"
 
 static size_t				g_current_line;
 t_obj_data					*g_current_data;
-
-static const t_type_match	g_type_matches[] = {
-	{
-		COMMENT_TOKEN,
-		parse_comment,
-	},
-	{
-		POSITION_TOKEN,
-		parse_position,
-	},
-	{
-		COLOR_TOKEN,
-		parse_color,
-	},
-	{
-		NORMAL_TOKEN,
-		parse_normal,
-	},
-	{
-		POLYGON_TOKEN,
-		parse_polygon
-	},
-	{
-		NULL,
-		NULL
-	}
-};
 
 static int		init_parser(t_obj_data *data)
 {
@@ -61,7 +33,7 @@ t_obj_data		*load_object_file(const char *file_path)
 		if (line[0] == '\n')
 			continue ;
 
-		if (!parse_line(line))
+		if (read_object_file_line(line) < 0)
 			return (NULL);
 	}
 

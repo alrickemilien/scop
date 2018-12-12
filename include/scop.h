@@ -12,7 +12,8 @@
 
 # include <GL/glew.h>
 # include <GLFW/glfw3.h>
-#include <sys/mman.h>
+# include <sys/mman.h>
+
 
 #else
 # include <GL/glew.h>
@@ -59,7 +60,8 @@ int   munmap(void *, size_t);
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
-#include <unistd.h>
+# include <unistd.h>
+# include <limits.h>
 
 /*
 ** MACROS to access more easily to x server pointeurs to variables
@@ -80,6 +82,7 @@ typedef struct	s_software_environ
 	int			window_width;
 	int			window_height;
 	GLFWwindow     *window;
+	char 					cwd[PATH_MAX];
 } t_software_environ;
 
 
