@@ -80,8 +80,6 @@ static void error_callback(int error, const char* description)
 
 void init_system_resources(t_software_environ *env) {
 	getcwd(env->cwd, sizeof(env->cwd));
-
-
 }
 
 void init(t_software_environ *env, int argc, char **argv)

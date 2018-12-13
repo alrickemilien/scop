@@ -10,3 +10,7 @@
 	path = src/libmatrix
 	url = https://github.com/alrickemilien/libmatrix
 	branch = master
+[submodule "src/libft"]
+	path = src/libft
+	url = https://github.com/alrickemilien/libft.git
+	branch = master

@@ -1,10 +1,32 @@
 #include <string.h>
 #include "object_loading.h"
 
-static char **split_polygon_component() {
+static char **split_polygon_components(const char *line) {
+  size_t i;
+  char   *array;
 
+  i = 0
+  while (line[i] && !is_printable(line[i]))
+    i++;
+
+  if (NULL == (array = malloc(sizeof(char*) * (i + 1))))
+    return (NULL);
+
+  array[i] = 0;
+
+  i = 0
+  while(line[i]) {
+    while (line[i] && !is_printable(line[i]) && line[i] == '/')
+      i++;
+
+    array[i] = line + i;
+
+    while (line[i] && is_printable(line[i]))
+      i++;
+  }
+
+  return (array);
 }
-
 static int		read_polygon_components(
 					const char **tokens,
 					t_polygon *new_polygon)
@@ -23,17 +45,17 @@ static int		read_polygon_components(
     if (strstr(tokens[i], "//"))
 			is_texture_set = true;
 
-    ctokens = ft_split(tokens[i], "/\n");
+    ctokens = split_polygon_components(tokens[i], "/\n");
 
     if (!read_vertex((const char **)ctokens, is_texture_set, new_polygon->vertices))
 		{
-			ft_free_tab(ctokens);
+			free(ctokens);
 			return (-1);
 		}
 
-    i+;
+    i++;
 
-    ft_free_tab(ctokens);
+    free(ctokens);
 	}
 	return (0);
 }
@@ -46,20 +68,13 @@ static int		read_polygon_components(
 */
 int				read_poylgon(const char **tokens)
 {
-	t_polygon	*new_polygon;
+	t_polygon	new_polygon;
 
-	if (!(new_polygon = malloc(sizeof(t_polygon))))
+  if (!parse_polygon_components(tokens, &new_polygon))
 		return (-1);
 
-  new_polygon->vertices = new_lst();
-
-  if (!parse_polygon_components(tokens, new_polygon))
-	{
-		free(new_polygon);
-		return (-1);
-	}
-
-  lst_push_back(g_current_data->polygons, new_polygon);
+  ft_lstadd(g_current_data->polygons,
+		ft_lstnew(&new_polygon, sizeof(new_polygon));
 
   return (0);
 }

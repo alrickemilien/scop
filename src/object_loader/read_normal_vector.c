@@ -2,17 +2,12 @@
 
 int			read_normal_vector(const char **tokens)
 {
-	t_vec3	*normal;
+	t_vec3	normal;
 
-	if (!(normal = malloc(sizeof(t_vec3))))
-		return (-1);
-	else if (read_vec3(tokens, normal) < 0)
-	{
-		free(normal);
+	if (read_vec3(tokens, normal) < 0)
 		read_object_error("A normal needs three arguments.");
-	}
 
-  lst_push_back(g_current_data->normals, normal);
+  ft_lstadd(g_current_data->normals, ft_lstnew(&normal, sizeof(normal)));
 
   return (0);
 }

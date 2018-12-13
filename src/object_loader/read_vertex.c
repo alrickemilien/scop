@@ -18,7 +18,7 @@ static void		fill_vertex_position(const char **tokens, t_vertex *vertex)
 		vertex->position.y = pos->y;
 		vertex->position.z = pos->z;
 	}
-	else if (index >= 0 && lst_get_size(positions) > (size_t)index)
+	else if (index >= 0 && ft_lstlen(positions) > (size_t)index)
 	{
 		vertex->position.x = FLT_MAX;
 		vertex->position.y = FLT_MAX;
@@ -31,7 +31,7 @@ static void		fill_vertex_position(const char **tokens, t_vertex *vertex)
 static void		fill_vertex_color(const char **tokens, t_vertex *vertex, int nt)
 {
 	int			i;
-	t_lst		*colors;
+	t_list		*colors;
 	t_vec2		*color;
 
 	colors = g_current_data->uvs;
@@ -48,7 +48,7 @@ static void		fill_vertex_color(const char **tokens, t_vertex *vertex, int nt)
 		vertex->uv.y = color->y;
 	}
 
-  else if (i == DEFAULT_CODE || (i >= 0 && lst_get_size(colors) > (size_t)i))
+  else if (i == DEFAULT_CODE || (i >= 0 && ft_lstlen(colors) > (size_t)i))
 	{
 		vertex->uv.x = FLT_MAX;
 		vertex->uv.y = FLT_MAX;
@@ -81,7 +81,7 @@ static void		fill_vertex_normal(const char **tokens, t_vertex *vertx, int nt)
 		vertx->normal.z = normal->z;
 	}
 
-	else if (i == DEFAULT_CODE || (i >= 0 && lst_get_size(normals) > (size_t)i))
+	else if (i == DEFAULT_CODE || (i >= 0 && ft_lstlen(normals) > (size_t)i))
 	{
 		vertx->normal.x = FLT_MAX;
 		vertx->normal.y = FLT_MAX;
@@ -101,21 +101,18 @@ static void		fill_vertex_normal(const char **tokens, t_vertex *vertx, int nt)
 
 int				read_vertex(const char **tokens, bool is_texture_set, t_lst *vertices)
 {
-	t_vertex	*new_vertex;
+	t_vertex	new_vertex;
 
-	new_vertex = NULL;
 	if (!tokens[0])
 		read_object_error("A face component can't be empty.");
-	else if (!(new_vertex = malloc(sizeof(t_vertex))))
-		return (-1);
 
-  fill_vertex_position(tokens, new_vertex);
+  fill_vertex_position(tokens, &new_vertex);
 
-  fill_vertex_color(tokens, new_vertex, is_texture_set);
+  fill_vertex_color(tokens, &new_vertex, is_texture_set);
 
-  fill_vertex_normal(tokens, new_vertex, is_texture_set);
+  fill_vertex_normal(tokens, &new_vertex, is_texture_set);
 
-  lst_push_back(vertices, new_vertex);
+  ft_lstadd(vertices, ft_lstnew(&new_vertex, sizeof(t_vertex)));
 
   return (0);
 }

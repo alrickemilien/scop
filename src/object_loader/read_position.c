@@ -12,7 +12,7 @@ int			read_position(const char **tokens)
 		return (0);
 	}
 
-  lst_push_back(g_current_data->positions, new_position);
+  ft_lstadd(g_current_data->positions, new_position);
 
   return (1);
 }
