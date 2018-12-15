@@ -15,7 +15,7 @@ static const t_type_match	g_type_matches[] = {
 	},
 	{
 		NORMAL_TOKEN,
-		&read_normal,
+		&read_normal_vector,
 	},
 	{
 		POLYGON_TOKEN,

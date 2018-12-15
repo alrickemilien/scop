@@ -67,7 +67,7 @@ int				is_vec3_defined(t_vec3 *v);
 # define NORMAL_TOKEN "vn"
 # define POLYGON_TOKEN "f"
 
-int			token_to_int(const char **tokens, int index);
+int			token_to_int(const char **tokens, size_t index);
 bool		check_tokens_number(const char **tokens, size_t size);
 bool 		is_printable(char c);
 
@@ -87,7 +87,7 @@ int							read_vec2(const char **tokens, t_vec3 *vector);
 int							read_comment(t_obj_data *data, const char **tokens);
 int							read_position(t_obj_data *data, const char **tokens);
 int							read_color(t_obj_data *data, const char **tokens);
-int							read_normal(t_obj_data *data, const char **tokens);
+int							read_normal_vector(t_obj_data *data, const char **tokens);
 int							read_polygon(t_obj_data *data, const char **tokens);
 
 int							read_vertex(t_obj_data *data, const char **tokens, bool is_texture_set, t_polygon *polygon);

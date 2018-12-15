@@ -42,7 +42,7 @@ all: gitsubmodule $(SCOP)
 
 $(SCOP): $(OBJ)
 	make -C src/libft
-	make -C src/libvec
+	#make -C src/libvec
 	LIBRARY_PATH=$(LIBRARY_PATH) $(CC) $^ -o $@ $(INCLUDE) $(LIBS)
 
 %.o: %.c

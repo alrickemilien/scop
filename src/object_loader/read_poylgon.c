@@ -67,7 +67,7 @@ static int		read_polygon_components(
 ** f 1381//17765 9428//17765 1382//17765
 ** ...
 */
-int				read_poylgon(t_obj_data *data, const char **tokens)
+int				read_polygon(t_obj_data *data, const char **tokens)
 {
 	t_polygon	new_polygon;
 
