@@ -1,23 +1,24 @@
 static void	auto_rotate_object(void)
 {
-	matrix_rotate_y(g_scop.model_matrix, 0.001f);
+	matrix_rotate_y(env->model_matrix, 0.001f);
 }
 
-static void	update_texture_transition(void)
+static void	update_texture_transition(t_software_environ *env)
 {
-	if (g_scop.texturing)
+	if (env->texturing)
 	{
-		if (g_scop.texture_level < 1.0f)
-			g_scop.texture_level += 0.01f;
-		else if (g_scop.texture_level > 1.0f)
-			g_scop.texture_level = 1.0f;
+		if (env->texture_level < 1.0f)
+			env->texture_level += 0.01f;
+		else if (env->texture_level > 1.0f)
+			env->texture_level = 1.0f;
 	}
-	else if (!g_scop.texturing)
+
+	else if (!env->texturing)
 	{
-		if (g_scop.texture_level > 0.0f)
-			g_scop.texture_level -= 0.01f;
-		else if (g_scop.texture_level < 0.0f)
-			g_scop.texture_level = 0.0f;
+		if (env->texture_level > 0.0f)
+			env->texture_level -= 0.01f;
+		else if (env->texture_level < 0.0f)
+			env->texture_level = 0.0f;
 	}
 }
 
@@ -28,7 +29,7 @@ void		render(t_software_environ *env)
 	if (env->auto_rotate)
 		auto_rotate_object();
 
-	update_texture_transition();
+	update_texture_transition(env);
 
 	matrix_identity(mvp);
 

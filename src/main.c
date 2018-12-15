@@ -28,6 +28,8 @@ void run(t_software_environ *env)
 
 	glUseProgram(program_id);
 
+	prepare();
+
 	// Check if the ESC key was pressed or the window was closed
 	while (glfwGetKey(WINDOW, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
 		glfwWindowShouldClose(WINDOW) == 0)
