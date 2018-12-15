@@ -80,6 +80,11 @@ int   munmap(void *, size_t);
 # define SOFT_GLFW_CONTEXT_VERSION_MAJOR 4
 # define SOFT_GLFW_CONTEXT_VERSION_MINOR 1
 
+typedef struct	s_light
+{
+	t_vec3		position;
+	t_vec3		color;
+}				t_light;
 
 typedef struct	s_software_environ
 {
@@ -90,8 +95,29 @@ typedef struct	s_software_environ
 	// Path to the current directory where the binary file ./scop is executed
 	char 					cwd[PATH_MAX];
 
-	// The data that will be flled during object fle loading
+	// The data that will be flled during object file loading
 	t_obj_data		data;
+
+	t_light				light;
+
+	// Scop options that can evolve during software run
+	int wireframe;
+	int auto_rotate;
+	int	lighting;
+
+	// OpenGL tools
+	GLuint		program;
+	GLuint		vbo;
+	GLuint		vertex_array;
+	GLuint		mvp_uni;
+	GLuint		model_matrix_uni;
+	GLuint		lighting_uni;
+	GLuint		light_position_uni;
+	GLuint		light_color_uni;
+	GLuint		texture_level_uni;
+	GLuint		pos_attrib;
+	GLuint		col_attrib;
+	GLuint		texture;
 } t_software_environ;
 
 

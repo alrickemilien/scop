@@ -33,28 +33,23 @@ void run(t_software_environ *env)
 	// Dark blue background
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
-	create_triangle(env);
-
 	program_id = load_shaders();
 
 	glUseProgram(program_id);
 
-	do {
+	// Check if the ESC key was pressed or the window was closed
+	while (glfwGetKey(WINDOW, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
+		glfwWindowShouldClose(WINDOW) == 0)
+	{
 		// Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		create_triangle(env);
-
-		// Draw nothing, see you in tutorial 2 !
-
+		//render();
 
 		// Swap buffers
 		glfwSwapBuffers(WINDOW);
 		glfwPollEvents();
-
-	} // Check if the ESC key was pressed or the window was closed
-	while (glfwGetKey(WINDOW, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
-		glfwWindowShouldClose(WINDOW) == 0);
+	}
 
 	// Close OpenGL window and terminate GLFW
 	glfwTerminate();
