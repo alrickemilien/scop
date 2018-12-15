@@ -24,7 +24,8 @@ SRC +=	src/object_loader/load_object_file.c \
 				src/object_loader/read_vec2.c \
 				src/object_loader/read_vec3.c \
 				src/object_loader/read_vertex.c \
-				src/object_loader/read_object_error.c
+				src/object_loader/read_object_error.c \
+				src/object_loader/split_into_tokens.c
 
 SRC += src/main.c
 

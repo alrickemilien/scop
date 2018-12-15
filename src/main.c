@@ -78,8 +78,20 @@ static void error_callback(int error, const char* description)
 ** - Read the resources into the object folder
 */
 
-void init_system_resources(t_software_environ *env) {
+static int init_system_resources(t_software_environ *env, int argc, char **argv)
+{
 	getcwd(env->cwd, sizeof(env->cwd));
+
+	if (argc != 2) {
+		return (-1);
+	}
+
+	// Load provided object file
+	if (load_object_file(&env->data, argv[1]) < 0)
+		return (-1);
+
+	// All OK
+	return (0);
 }
 
 void init(t_software_environ *env, int argc, char **argv)
@@ -130,9 +142,11 @@ int main(int argc, char **argv)
 {
 	t_software_environ env;
 
-	init(&env, argc, argv);
+	// Could not continue if the system ressources are fully and successfully loaded
+	if (init_system_resources(&env, argc, argv) < 0)
+		return (-1);
 
-	init_system_resources(&env);
+	init(&env, argc, argv);
 
 	run(&env);
 

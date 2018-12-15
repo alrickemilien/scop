@@ -65,6 +65,7 @@ int   munmap(void *, size_t);
 
 # include "libft.h"
 # include "libvec.h"
+# include "object_loading.h"
 
 /*
 ** MACROS to access more easily to x server pointeurs to variables
@@ -85,7 +86,12 @@ typedef struct	s_software_environ
 	int			window_width;
 	int			window_height;
 	GLFWwindow     *window;
+
+	// Path to the current directory where the binary file ./scop is executed
 	char 					cwd[PATH_MAX];
+
+	// The data that will be flled during object fle loading
+	t_obj_data		data;
 } t_software_environ;
 
 

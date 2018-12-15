@@ -1,0 +1,81 @@
+#include "object_loading.h"
+
+/*
+** Check if the string a cotains a char of string b
+*/
+static bool str_contains_one_of_char(const char *line, const char *delimiters)
+{
+	size_t i;
+
+	if (NULL == delimiters)
+		return (false);
+
+	i = 0;
+	while (delimiters[i])
+	{
+		if (strchr(line, delimiters[i]))
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
+// Get nmber of token
+static size_t count_words(const char *line, const char *delimiters)
+{
+	size_t 		i;
+	size_t 		n;
+
+	i = 0;
+	n = 0;
+	while (line[i]) {
+		while (line[i] && (!is_printable(line[i])
+					|| str_contains_one_of_char(line, delimiters)))
+			i++;
+
+		if (line[i])
+			n++;
+
+		while (line[i] && is_printable(line[i]))
+			i++;
+	}
+
+	return (n);
+}
+
+t_token *split_into_tokens(const char *line, const char *delimiters) {
+  size_t 		i;
+  size_t 		n;
+  t_token   token;
+  t_token   *array;
+
+	if (NULL == line)
+		return (NULL);
+
+	n = count_words(line, delimiters);
+
+  if (NULL == (array = (t_token*)malloc(sizeof(t_token) * (n + 1))))
+    return (NULL);
+
+  array[n] = (t_token){ 0, 0 };
+
+	i = 0;
+	n = 0;
+  while(line[i]) {
+		while (line[i] && (!is_printable(line[i])
+					|| str_contains_one_of_char(line, delimiters)))
+			i++;
+
+		token.cursor = (char*)((size_t)line + i);
+		token.size = 0;
+
+    while (line[i] && is_printable(line[i])) {
+			token.size++;
+			i++;
+		}
+
+		memcpy(&array[n++], &token, sizeof(t_token));
+  }
+
+  return (array);
+}

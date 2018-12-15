@@ -2,27 +2,15 @@
 #include "object_loading.h"
 
 static size_t				g_current_line;
-t_obj_data					*g_current_data;
-
-static int		init_parser(t_obj_data *data)
-{
-	g_current_line = 0;
-	g_current_data = data;
-
-	data->positions = NULL;
-	data->uvs = NULL;
-	data->normals = NULL;
-	data->polygons = NULL;
-
-	return (0);
-}
 
 int		load_object_file(t_obj_data *data, const char *file_path)
 {
 	FILE		*fp;
 	char		line[OBJECT_LOADING_BUFF_SIZE];
 
-	if (!(fp = fopen(file_path, "r")) || init_parser(data) < 0) {
+	memset(data, 0, sizeof(t_obj_data));
+
+	if (!(fp = fopen(file_path, "r"))) {
 		return (-1);
 	}
 
@@ -34,6 +22,7 @@ int		load_object_file(t_obj_data *data, const char *file_path)
 		if (read_object_file_line(data, line) < 0)
 			return (-1);
 	}
+
 
 	fclose(fp);
 

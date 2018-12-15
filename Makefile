@@ -49,11 +49,11 @@ $(SCOP): $(OBJ)
 	C_INCLUDE_PATH=$(C_INCLUDE_PATH) $(CC) -o $@ -c $< $(INCLUDE) $(CCFLAGS)
 
 gitsubmodule:
-	git submodule init
-	git submodule update --remote
+	# git submodule init
+	# git submodule update --remote
 	# make -C external/glew
-	(cd external/glfw && $(CMAKE) .)
-	make -C external/glfw
+	# (cd external/glfw && $(CMAKE) .)
+	# make -C external/glfw
 
 clean:
 	@rm -rf $(OBJ)

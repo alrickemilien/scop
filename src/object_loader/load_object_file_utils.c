@@ -1,19 +1,12 @@
 #include "object_loading.h"
 
-bool			check_tokens_number(const char **tokens, size_t size)
+bool			check_tokens_number(const t_token *token, size_t size)
 {
-	size_t		i;
-
-	i = 0;
-	while (i < size)
-	{
-		if (!tokens[i++])
-			return (false);
-	}
+	if (size < token->size)
+		return (false);
 
 	return (true);
 }
-
 
 inline bool is_printable(char c)
 {
@@ -22,7 +15,7 @@ inline bool is_printable(char c)
   return (true);
 }
 
-int			token_to_int(const char **tokens, size_t index)
+int			token_to_int(const t_token *token, size_t index)
 {
 	size_t		j;
 	int		ret;
@@ -30,10 +23,10 @@ int			token_to_int(const char **tokens, size_t index)
 	j = 0;
 	while (j <= index)
 	{
-		if (!tokens[j++])
+		if (!token->cursor[j++])
 			return (DEFAULT_CODE);
 	}
-	ret = atoi(tokens[index]) - 1;
+	ret = atoi(&token->cursor[index]) - 1;
 	if (ret < 0)
 		read_object_error("A face index can't be negative.");
 	return (ret);

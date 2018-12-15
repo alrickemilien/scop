@@ -27,14 +27,14 @@ static const t_type_match	g_type_matches[] = {
 	}
 };
 
-static t_parse_function get_parse_func(const char *input)
+static t_parse_function get_parse_func(const t_token *token)
 {
 	size_t		i;
 
 	i = 0;
 	while (g_type_matches[i].token && g_type_matches[i].f)
 	{
-		if (!strcmp(g_type_matches[i].token, input))
+		if (!strncmp(g_type_matches[i].token, token->cursor, token->size))
 			return (g_type_matches[i].f);
 
     i++;
@@ -43,54 +43,28 @@ static t_parse_function get_parse_func(const char *input)
   return (NULL);
 }
 
-static char **split_tokens(const char *line) {
-  size_t i;
-  char   **array;
-
-  i = 0;
-  while (line[i] && !is_printable(line[i]))
-    i++;
-
-  if (NULL == (array = malloc(sizeof(char*) * (i + 1))))
-    return (NULL);
-
-  array[i] = 0;
-
-  i = 0;
-  while(line[i]) {
-    while (line[i] && !is_printable(line[i]))
-      i++;
-
-		memcpy(array[i], line + i, sizeof(char*));
-
-    while (line[i] && is_printable(line[i]))
-      i++;
-  }
-
-  return (array);
-}
-
 int			read_object_file_line(t_obj_data *data, const char *line)
 {
-	char	**tokens;
+	t_token	*tokens;
 	t_parse_function parse_function;
 
   // Spli each token of the line
-	if (NULL == (tokens = split_tokens(line)))
+	if (NULL == (tokens = split_into_tokens(line, NULL)))
 		return (0);
 
+
   // Get the function according to the first token
-  parse_function = get_parse_func(tokens[0]);
+  parse_function = get_parse_func(tokens);
 
   if (!parse_function)
 	{
-		puts(tokens[0]);
+		puts(tokens[0].cursor);
 		free(tokens);
 
     return (-1);
 	}
 
-  (*parse_function)(data, (const char **)(tokens + 1));
+  (*parse_function)(data, (const t_token *)(tokens + 1));
 
 	free(tokens);
 

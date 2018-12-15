@@ -1,6 +1,6 @@
 #include "object_loading.h"
 
-static void		fill_vertex_position(t_obj_data *data, const char **tokens, t_vertex *vertex)
+static void		fill_vertex_position(t_obj_data *data, const t_token *tokens, t_vertex *vertex)
 {
 	int			index;
 	t_list		*positions;
@@ -28,7 +28,7 @@ static void		fill_vertex_position(t_obj_data *data, const char **tokens, t_verte
 		read_object_error("Invalid index for a position.");
 }
 
-static void		fill_vertex_color(t_obj_data *data, const char **tokens, t_vertex *vertex, int nt)
+static void		fill_vertex_color(t_obj_data *data, const t_token *tokens, t_vertex *vertex, int nt)
 {
 	int			i;
 	t_list		*colors;
@@ -59,7 +59,7 @@ static void		fill_vertex_color(t_obj_data *data, const char **tokens, t_vertex *
   }
 }
 
-static void		fill_vertex_normal(t_obj_data *data, const char **tokens, t_vertex *vertx, int nt)
+static void		fill_vertex_normal(t_obj_data *data, const t_token *tokens, t_vertex *vertx, int nt)
 {
 	int			i;
 	t_list		*normals;
@@ -99,13 +99,13 @@ static void		fill_vertex_normal(t_obj_data *data, const char **tokens, t_vertex 
 ** for a type vertex that do not exists in obj file
 */
 
-int				read_vertex(t_obj_data *data, const char **tokens, bool is_texture_set, t_polygon *polygon)
+int				read_vertex(t_obj_data *data, const t_token *tokens, bool is_texture_set, t_polygon *polygon)
 {
 	t_vertex	new_vertex;
 
 	t_list *tmp = polygon->vertices;
 
-	if (!tokens[0])
+	if (!tokens->cursor[0])
 		read_object_error("A face component can't be empty.");
 
   fill_vertex_position(data, tokens, &new_vertex);

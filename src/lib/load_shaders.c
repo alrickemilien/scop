@@ -95,7 +95,6 @@ GLuint load_shaders(void) {
 
 	printf("vertex_shader_code %.10s\n", (char*)vertex_shader_code->content);
 
-
 	for(GLint i = 0; i < vertex_shader_code->length; i++)
 	{
 		printf("%c", ((char*)vertex_shader_code->content)[i]);

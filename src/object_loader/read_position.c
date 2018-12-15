@@ -1,6 +1,6 @@
 #include "object_loading.h"
 
-int			read_position(t_obj_data *data, const char **tokens)
+int			read_position(t_obj_data *data, const t_token *tokens)
 {
 	t_vec3	new_position;
 
