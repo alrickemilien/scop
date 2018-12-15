@@ -29,10 +29,10 @@ int			token_to_int(const t_token *token, size_t index)
 	j = 0;
 	while (j <= index)
 	{
-		if (!token->cursor[j++])
+		if (!token[j++].cursor)
 			return (DEFAULT_CODE);
 	}
-	ret = atoi(&token->cursor[index]) - 1;
+	ret = (int)n_atof(token[index].cursor, token[index].size) - 1;
 	if (ret < 0)
 		read_object_error("A face index can't be negative.");
 	return (ret);

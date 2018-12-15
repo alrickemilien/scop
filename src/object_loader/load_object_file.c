@@ -3,6 +3,28 @@
 
 static size_t				g_current_line;
 
+static void	count_vertices(t_obj_data *data)
+{
+	size_t	count;
+	size_t	poly_length;
+	t_list	*iter;
+
+	iter = (t_list*)data->polygons;
+	count = 0;
+	while (iter)
+	{
+		poly_length = ft_lstlen(((t_polygon*)iter->content)->vertices);
+		if (poly_length != 3)
+			read_object_error("Scop can only handle triangle shapes.");
+
+		count += poly_length;
+
+		iter = iter->next;
+	}
+
+	data->count_vertices = count;
+}
+
 int		load_object_file(t_obj_data *data, const char *file_path)
 {
 	FILE		*fp;
@@ -23,8 +45,9 @@ int		load_object_file(t_obj_data *data, const char *file_path)
 			return (-1);
 	}
 
-
 	fclose(fp);
+
+	count_vertices(data);
 
 	return (0);
 }

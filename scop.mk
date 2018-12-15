@@ -13,6 +13,8 @@ endif
 SRC +=	src/lib/create_triangle.c \
 				src/lib/load_shaders.c
 
+SRC += src/controls/controls.c
+
 SRC +=	src/object_loader/load_object_file.c \
 				src/object_loader/load_object_file_utils.c \
 				src/object_loader/read_color.c \

@@ -164,4 +164,6 @@ void 		load_texture(
   const char *texture_path,
   GLuint *texture_dest);
 
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+
 #endif

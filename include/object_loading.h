@@ -24,6 +24,7 @@ typedef struct	s_obj_data
 	void		*uvs;
 	void		*normals;
 	void		*polygons;
+	size_t	count_vertices;
 }				t_obj_data;
 
 typedef struct s_polygon {

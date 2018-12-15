@@ -15,15 +15,6 @@ void glew_init(void) {
 }
 #endif
 
-static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-	(void)scancode;
-	(void)mods;
-	(void)key;
-	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, 1);
-}
-
 /*
 */
 void run(t_software_environ *env)
