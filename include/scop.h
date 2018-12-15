@@ -47,10 +47,6 @@ int   munmap(void *, size_t);
 
 #endif
 
-/*
-** LOCALS INCLUDES
-*/
-
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -62,6 +58,13 @@ int   munmap(void *, size_t);
 # include <fcntl.h>
 # include <unistd.h>
 # include <limits.h>
+
+/*
+** LOCALS INCLUDES
+*/
+
+# include "libft.h"
+# include "libvec.h"
 
 /*
 ** MACROS to access more easily to x server pointeurs to variables

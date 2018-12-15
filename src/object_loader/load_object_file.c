@@ -14,30 +14,28 @@ static int		init_parser(t_obj_data *data)
 	data->normals = NULL;
 	data->polygons = NULL;
 
-	return (1);
+	return (0);
 }
 
-t_obj_data		*load_object_file(const char *file_path)
+int		load_object_file(t_obj_data *data, const char *file_path)
 {
 	FILE		*fp;
-	char		line[BUFF_SIZE];
-	t_obj_data	*data;
+	char		line[OBJECT_LOADING_BUFF_SIZE];
 
-	if (!(fp = fopen(file_path, "r"))
-		|| !(data = (t_obj_data*)malloc(sizeof(t_obj_data)))
-		|| !init_parser(data))
-		return (NULL);
+	if (!(fp = fopen(file_path, "r")) || init_parser(data) < 0) {
+		return (-1);
+	}
 
 	while (fgets(line, BUFF_SIZE, fp) != NULL && ++g_current_line)
 	{
 		if (line[0] == '\n')
 			continue ;
 
-		if (read_object_file_line(line) < 0)
-			return (NULL);
+		if (read_object_file_line(data, line) < 0)
+			return (-1);
 	}
 
 	fclose(fp);
 
-	return (data);
+	return (0);
 }

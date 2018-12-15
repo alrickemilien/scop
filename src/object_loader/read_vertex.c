@@ -1,14 +1,14 @@
 #include "object_loading.h"
 
-static void		fill_vertex_position(const char **tokens, t_vertex *vertex)
+static void		fill_vertex_position(t_obj_data *data, const char **tokens, t_vertex *vertex)
 {
 	int			index;
-	t_lst		*positions;
+	t_list		*positions;
 	t_vec3		*pos;
 
 	index = token_to_int(tokens, 0);
 
-  positions = g_current_data->positions;
+  positions = data->positions;
 
   pos = lst_data_at(positions, index);
 
@@ -20,21 +20,21 @@ static void		fill_vertex_position(const char **tokens, t_vertex *vertex)
 	}
 	else if (index >= 0 && ft_lstlen(positions) > (size_t)index)
 	{
-		vertex->position.x = FLT_MAX;
-		vertex->position.y = FLT_MAX;
-		vertex->position.z = FLT_MAX;
+		vertex->position.x = 0xFFFFFF;
+		vertex->position.y = 0xFFFFFF;
+		vertex->position.z = 0xFFFFFF;
 	}
 	else
 		read_object_error("Invalid index for a position.");
 }
 
-static void		fill_vertex_color(const char **tokens, t_vertex *vertex, int nt)
+static void		fill_vertex_color(t_obj_data *data, const char **tokens, t_vertex *vertex, int nt)
 {
 	int			i;
 	t_list		*colors;
 	t_vec2		*color;
 
-	colors = g_current_data->uvs;
+	colors = data->uvs;
 	i = DEFAULT_CODE;
 
   if (!nt)
@@ -50,8 +50,8 @@ static void		fill_vertex_color(const char **tokens, t_vertex *vertex, int nt)
 
   else if (i == DEFAULT_CODE || (i >= 0 && ft_lstlen(colors) > (size_t)i))
 	{
-		vertex->uv.x = FLT_MAX;
-		vertex->uv.y = FLT_MAX;
+		vertex->uv.x = 0xFFFFFF;
+		vertex->uv.y = 0xFFFFFF;
 	}
 
   else {
@@ -59,13 +59,13 @@ static void		fill_vertex_color(const char **tokens, t_vertex *vertex, int nt)
   }
 }
 
-static void		fill_vertex_normal(const char **tokens, t_vertex *vertx, int nt)
+static void		fill_vertex_normal(t_obj_data *data, const char **tokens, t_vertex *vertx, int nt)
 {
 	int			i;
-	t_lst		*normals;
+	t_list		*normals;
 	t_vec3		*normal;
 
-	normals = g_current_data->normals;
+	normals = data->normals;
 
   i = token_to_int(tokens, 2);
 
@@ -83,9 +83,9 @@ static void		fill_vertex_normal(const char **tokens, t_vertex *vertx, int nt)
 
 	else if (i == DEFAULT_CODE || (i >= 0 && ft_lstlen(normals) > (size_t)i))
 	{
-		vertx->normal.x = FLT_MAX;
-		vertx->normal.y = FLT_MAX;
-		vertx->normal.z = FLT_MAX;
+		vertx->normal.x = 0xFFFFFF;
+		vertx->normal.y = 0xFFFFFF;
+		vertx->normal.z = 0xFFFFFF;
 	}
 
 	else {
@@ -99,20 +99,24 @@ static void		fill_vertex_normal(const char **tokens, t_vertex *vertx, int nt)
 ** for a type vertex that do not exists in obj file
 */
 
-int				read_vertex(const char **tokens, bool is_texture_set, t_lst *vertices)
+int				read_vertex(t_obj_data *data, const char **tokens, bool is_texture_set, t_polygon *polygon)
 {
 	t_vertex	new_vertex;
+
+	t_list *tmp = polygon->vertices;
 
 	if (!tokens[0])
 		read_object_error("A face component can't be empty.");
 
-  fill_vertex_position(tokens, &new_vertex);
+  fill_vertex_position(data, tokens, &new_vertex);
 
-  fill_vertex_color(tokens, &new_vertex, is_texture_set);
+  fill_vertex_color(data, tokens, &new_vertex, is_texture_set);
 
-  fill_vertex_normal(tokens, &new_vertex, is_texture_set);
+  fill_vertex_normal(data, tokens, &new_vertex, is_texture_set);
 
-  ft_lstadd(vertices, ft_lstnew(&new_vertex, sizeof(t_vertex)));
+  ft_lstadd(&tmp, ft_lstnew(&new_vertex, sizeof(t_vertex)));
+
+	polygon->vertices = tmp;
 
   return (0);
 }

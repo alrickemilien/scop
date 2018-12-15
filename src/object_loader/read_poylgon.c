@@ -3,9 +3,9 @@
 
 static char **split_polygon_components(const char *line) {
   size_t i;
-  char   *array;
+  char   **array;
 
-  i = 0
+  i = 0;
   while (line[i] && !is_printable(line[i]))
     i++;
 
@@ -14,12 +14,12 @@ static char **split_polygon_components(const char *line) {
 
   array[i] = 0;
 
-  i = 0
+  i = 0;
   while(line[i]) {
     while (line[i] && !is_printable(line[i]) && line[i] == '/')
       i++;
 
-    array[i] = line + i;
+    memcpy(array[i], line + i, sizeof(char*));
 
     while (line[i] && is_printable(line[i]))
       i++;
@@ -28,6 +28,7 @@ static char **split_polygon_components(const char *line) {
   return (array);
 }
 static int		read_polygon_components(
+          t_obj_data *data,
 					const char **tokens,
 					t_polygon *new_polygon)
 {
@@ -45,9 +46,9 @@ static int		read_polygon_components(
     if (strstr(tokens[i], "//"))
 			is_texture_set = true;
 
-    ctokens = split_polygon_components(tokens[i], "/\n");
+    ctokens = split_polygon_components(tokens[i]);
 
-    if (!read_vertex((const char **)ctokens, is_texture_set, new_polygon->vertices))
+    if (!read_vertex(data, (const char **)ctokens, is_texture_set, new_polygon))
 		{
 			free(ctokens);
 			return (-1);
@@ -66,15 +67,15 @@ static int		read_polygon_components(
 ** f 1381//17765 9428//17765 1382//17765
 ** ...
 */
-int				read_poylgon(const char **tokens)
+int				read_poylgon(t_obj_data *data, const char **tokens)
 {
 	t_polygon	new_polygon;
 
-  if (!parse_polygon_components(tokens, &new_polygon))
+  if (!read_polygon_components(data, tokens, &new_polygon))
 		return (-1);
 
-  ft_lstadd(g_current_data->polygons,
-		ft_lstnew(&new_polygon, sizeof(new_polygon));
+  ft_lstadd(data->polygons,
+		ft_lstnew(&new_polygon, sizeof(t_polygon)));
 
   return (0);
 }

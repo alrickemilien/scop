@@ -13,3 +13,11 @@ bool			check_tokens_number(const char **tokens, size_t size)
 
 	return (true);
 }
+
+
+inline bool is_printable(char c)
+{
+  if (c >= 1 && c <= 32)
+    return (false);
+  return (true);
+}

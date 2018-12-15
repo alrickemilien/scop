@@ -1,18 +1,13 @@
 #include "object_loading.h"
 
-int			read_position(const char **tokens)
+int			read_position(t_obj_data *data, const char **tokens)
 {
-	t_vec3	*new_position;
+	t_vec3	new_position;
 
-	if (!(new_position = malloc(sizeof(t_vec3))))
+	if (read_vec3(tokens, &new_position) < 0)
 		return (0);
-	else if (parse_vec3(tokens, new_position) < 0)
-	{
-		free(new_position);
-		return (0);
-	}
 
-  ft_lstadd(g_current_data->positions, new_position);
+  ft_lstadd(data->positions, ft_lstnew(&new_position, sizeof(t_vec3)));
 
   return (1);
 }

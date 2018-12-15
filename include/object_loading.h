@@ -1,11 +1,14 @@
 #ifndef OBJ_LOADING_H
 # define OBJ_LOADING_H
 
-# define BUFF_SIZE 512
+# define OBJECT_LOADING_BUFF_SIZE 512
 # define TYPE_COUNT 5
 # define DEFAULT_CODE -9
 
 #include <stdlib.h>
+
+# include "libft.h"
+# include "libvec.h"
 
 /*
 ** Struct returned by parse_obj. It contains a list of everything in the file,
@@ -22,6 +25,18 @@ typedef struct	s_obj_data
 	void		*normals;
 	void		*polygons;
 }				t_obj_data;
+
+typedef struct s_polygon {
+			void *vertices;
+}								t_polygon;
+
+typedef struct	s_vertex
+{
+	t_vec3		position;
+	t_vec3		color;
+	t_vec2		uv;
+	t_vec3		normal;
+}				t_vertex;
 
 /*
 ** Use this function to retrieve data from a obj file path.
@@ -53,30 +68,38 @@ int				is_vec3_defined(t_vec3 *v);
 # define POLYGON_TOKEN "f"
 
 int			token_to_int(const char **tokens, int index);
-int			check_tokens_number(const char **tokens, int qty);
+bool		check_tokens_number(const char **tokens, size_t size);
+bool 		is_printable(char c);
+
+typedef int	(*t_parse_function)(t_obj_data *, const char **);
 
 typedef struct				s_type_match
 {
 	const char				*token;
-	int						(*f)(const char **);
+	t_parse_function	f;
 }							t_type_match;
+
+int							load_object_file(t_obj_data *data, const char *file_path);
 
 int							read_vec3(const char **tokens, t_vec3 *vector);
 int							read_vec2(const char **tokens, t_vec3 *vector);
 
-int							read_comment(const char **tokens);
-int							read_position(const char **tokens);
-int							read_color(const char **tokens);
-int							read_normal(const char **tokens);
-int							read_polygon(const char **tokens);
+int							read_comment(t_obj_data *data, const char **tokens);
+int							read_position(t_obj_data *data, const char **tokens);
+int							read_color(t_obj_data *data, const char **tokens);
+int							read_normal(t_obj_data *data, const char **tokens);
+int							read_polygon(t_obj_data *data, const char **tokens);
 
-int							read_line(char *line);
+int							read_vertex(t_obj_data *data, const char **tokens, bool is_texture_set, t_polygon *polygon);
 
-void						reading_die(const char *msg);
+int							read_object_file_line(t_obj_data *data, const char *line);
+
+void 						read_object_error(const char *msg);
 
 int							add_vertex(
+								t_obj_data *data,
 								const char **tokens,
 								int no_texture,
-								t_lst *vertices);
+								t_list *vertices);
 
 #endif

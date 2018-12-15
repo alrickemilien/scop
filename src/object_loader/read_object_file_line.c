@@ -1,27 +1,25 @@
 #include "object_loading.h"
 
-typedef int	(*t_parse_function)(const char **);
-
 static const t_type_match	g_type_matches[] = {
 	{
 		COMMENT_TOKEN,
-		&parse_comment,
+		&read_comment,
 	},
 	{
 		POSITION_TOKEN,
-		&parse_position,
+		&read_position,
 	},
 	{
 		COLOR_TOKEN,
-		&parse_color,
+		&read_color,
 	},
 	{
 		NORMAL_TOKEN,
-		&parse_normal,
+		&read_normal,
 	},
 	{
 		POLYGON_TOKEN,
-		&parse_polygon,
+		&read_polygon,
 	},
 	{
 		NULL,
@@ -45,18 +43,11 @@ static t_parse_function get_parse_func(const char *input)
   return (NULL);
 }
 
-static inline bool is_printable(char c)
-{
-  if (c >= 1 && c <= 32)
-    return (false);
-  return (true);
-}
-
 static char **split_tokens(const char *line) {
   size_t i;
-  char   *array;
+  char   **array;
 
-  i = 0
+  i = 0;
   while (line[i] && !is_printable(line[i]))
     i++;
 
@@ -65,12 +56,12 @@ static char **split_tokens(const char *line) {
 
   array[i] = 0;
 
-  i = 0
+  i = 0;
   while(line[i]) {
     while (line[i] && !is_printable(line[i]))
       i++;
 
-    array[i] = line + i;
+		memcpy(array[i], line + i, sizeof(char*));
 
     while (line[i] && is_printable(line[i]))
       i++;
@@ -79,7 +70,7 @@ static char **split_tokens(const char *line) {
   return (array);
 }
 
-int			read_object_file_line(char *line)
+int			read_object_file_line(t_obj_data *data, const char *line)
 {
 	char	**tokens;
 	t_parse_function parse_function;
@@ -99,7 +90,7 @@ int			read_object_file_line(char *line)
     return (-1);
 	}
 
-  (*parse_function)((const char **)(tokens + 1));
+  (*parse_function)(data, (const char **)(tokens + 1));
 
 	free(tokens);
 
