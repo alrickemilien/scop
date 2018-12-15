@@ -2,7 +2,13 @@
 
 bool			check_tokens_number(const t_token *token, size_t size)
 {
-	if (size < token->size)
+	size_t		i;
+
+	i = 0;
+	while (token[i].cursor)
+		i++;
+
+	if (i < size)
 		return (false);
 
 	return (true);

@@ -6,8 +6,8 @@ int		parse_vec2(const t_token *tokens, t_vec3 *vector)
 		return (-1);
 
 	// @TODO need check of values
-	vector->x = atof(&tokens->cursor[0]);
-	vector->y = atof(&tokens->cursor[1]);
+	vector->x = n_atof(tokens[0].cursor, tokens[0].size);
+	vector->y = n_atof(tokens[1].cursor, tokens[1].size);
 
 	return (0);
 }

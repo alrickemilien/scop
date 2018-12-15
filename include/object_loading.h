@@ -76,6 +76,7 @@ int			token_to_int(const t_token *tokens, size_t index);
 bool		check_tokens_number(const t_token *tokens, size_t size);
 bool 		is_printable(char c);
 t_token *split_into_tokens(const char *line, const char *delimiters);
+float		n_atof(const char* str, size_t size);
 
 typedef int	(*t_parse_function)(t_obj_data *, const t_token *);
 
