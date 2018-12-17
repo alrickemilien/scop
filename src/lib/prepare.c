@@ -13,10 +13,13 @@ void prepare(t_software_environ *env)
 
 	load_texture(env);
 
-	g_scop.view_matrix = create_matrix();
-	g_scop.model_matrix = matrix_scale_xyz(NULL, 0.2f);
-	g_scop.proj_matrix = matrix_perspective(deg_to_rad(60.0f), 800.0f / 600.0f,
-		0.0f, 1000.0f);
+	env->view_matrix = new_matrix();
+	env->.model_matrix = scale_matrix4x4(0.2f);
+	env->.proj_matrix = perspective_fmatrix4x4(
+		deg_to_rad(60.0f),
+		800.0f / 600.0f,
+		0.0f,
+		1000.0f);
 
 	env->mvp_uni = glGetUniformLocation(env->program, "mvp");
 	env->model_matrix_uni = glGetUniformLocation(env->program, "modelMatrix");

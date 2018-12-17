@@ -35,4 +35,4 @@ SRC += src/main.c
 
 INCLUDE += -I include -I src/libft -I src/libvec/include
 
-LIBS += -lft -L src/libft
+LIBS += -lft -L src/libft -lmatrix -L src/libmatrix
