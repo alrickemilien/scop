@@ -11,7 +11,12 @@ ifndef LIBS
 endif
 
 SRC +=	src/lib/create_triangle.c \
-				src/lib/load_shaders.c
+				src/lib/load_shaders.c \
+				src/lib/set_attribute.c \
+				src/lib/math_utils.c \
+				src/lib/load_texture.c \
+				src/texture_loader/load_bitmap_file.c \
+				src/lib/prepare.c
 
 SRC += src/controls/controls.c
 
@@ -33,6 +38,6 @@ SRC +=	src/object_loader/load_object_file.c \
 SRC += src/main.c
 
 
-INCLUDE += -I include -I src/libft -I src/libvec/include
+INCLUDE += -I include -I src/libft -I src/libvec/include -I src/libmatrix/include
 
 LIBS += -lft -L src/libft -lmatrix -L src/libmatrix

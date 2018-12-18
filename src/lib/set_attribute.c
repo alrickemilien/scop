@@ -1,7 +1,5 @@
 #include "scop.h"
 
-extern t_scop	g_scop;
-
 //  void glVertexAttribPointer(GLuint index​, GLint size​, GLenum type​, GLboolean normalized​, GLsizei stride​, const GLvoid * pointer​)
 typedef struct            s_glx_attribute {
                const char *attribute_name;
@@ -30,8 +28,8 @@ static const t_glx_attribute g_attribute_map[] = {
     sizeof(GLfloat) * 11, (void*)(sizeof(GLfloat) * 8)
   },
   {
-    NULL, 0, 0, 0, 0
-  }
+    NULL, 0, 0, 0, 0, 0
+  },
 };
 
 void set_attribute(GLuint id_program, const char *attribute_name)

@@ -65,6 +65,7 @@ int   munmap(void *, size_t);
 
 # include "libft.h"
 # include "libvec.h"
+# include "libmatrix.h"
 # include "object_loading.h"
 
 /*
@@ -105,19 +106,26 @@ typedef struct	s_software_environ
 	int auto_rotate;
 	int	lighting;
 
+	const char *path_to_texture;
+
 	// OpenGL tools
-	GLuint		program;
+	GLuint		program_id;
 	GLuint		vbo;
 	GLuint		vertex_array;
 	GLuint		mvp_uni;
 	GLuint		model_matrix_uni;
 	GLuint		lighting_uni;
 	GLuint		light_position_uni;
+	GLuint		texture_level;
 	GLuint		light_color_uni;
 	GLuint		texture_level_uni;
 	GLuint		pos_attrib;
 	GLuint		col_attrib;
 	GLuint		texture;
+
+	t_matrix *view_matrix;
+	t_matrix *model_matrix;
+	t_matrix *projection_matrix;
 } t_software_environ;
 
 
@@ -165,5 +173,17 @@ void 		load_texture(
   GLuint *texture_dest);
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+
+void set_attribute(GLuint id_program, const char *attribute_name);
+
+/*
+** Math utils
+*/
+
+double	deg_to_rad(double deg);
+
+void prepare(t_software_environ *env);
+
+unsigned char	*load_bitmap_file(const char *pathname, size_t *width, size_t *height);
 
 #endif

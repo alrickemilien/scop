@@ -1,7 +1,7 @@
 #include "scop.h"
 #include "bitmap.h"
 
-unsigned char	*parse_bmp(const char *pathname, size_t *width, size_t *height)
+unsigned char	*load_bitmap_file(const char *pathname, size_t *width, size_t *height)
 {
 	FILE				*file;
 	t_bmp_header		header;

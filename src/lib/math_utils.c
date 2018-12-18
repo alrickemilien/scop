@@ -1,6 +1,6 @@
 #include "scop.h"
 
-inline float	deg_to_rad(float deg)
+inline double	deg_to_rad(double deg)
 {
-	return (deg * ((float)M_PI / 180.0f));
+	return (deg * ((double)M_PI / 180.0f));
 }

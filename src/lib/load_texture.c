@@ -8,7 +8,6 @@ void	load_texture(
 	size_t				 width;
 	size_t				 height;
 	unsigned char  *image_bytes_buffer;
-  GLuint         texture_dest;
 
 	glGenTextures(1, texture_dest);
 	glActiveTexture(GL_TEXTURE0);
