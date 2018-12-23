@@ -8,7 +8,7 @@
 	branch = master
 [submodule "src/libmatrix"]
 	path = src/libmatrix
-	url = https://github.com/alrickemilien/libmatrix
+	url = https://github.com/alrickemilien/libmatrix.git
 	branch = master
 [submodule "src/libft"]
 	path = src/libft
