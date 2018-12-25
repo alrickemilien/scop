@@ -23,7 +23,7 @@ endif(INCLUDE_DISTRIB)
 
 # Includes directory (-I on Makefile)
 include_directories(
-	external/glfw/include/
+	external/glfw/include/GLFW/
 
 	external/glew/include/
 
@@ -33,7 +33,6 @@ include_directories(
 
 	src/libmatrix/include/
 )
-
 
 # Libft
 add_custom_target(
@@ -57,9 +56,9 @@ set(ALL_LIBS
 
 	GLEW_1130
 
-	libft
+	src/libft
 
-	libmatrix
+	src/libmatrix
 )
 
 add_definitions(
