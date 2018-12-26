@@ -8,7 +8,7 @@
 #include <stdlib.h>
 
 # include "libft.h"
-# include "libvec.h"
+# include "libmatrix.h"
 
 /*
 ** Struct returned by parse_obj. It contains a list of everything in the file,

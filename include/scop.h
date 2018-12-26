@@ -64,7 +64,6 @@ int   munmap(void *, size_t);
 */
 
 # include "libft.h"
-# include "libvec.h"
 # include "libmatrix.h"
 # include "object_loading.h"
 

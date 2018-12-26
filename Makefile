@@ -52,9 +52,9 @@ $(SCOP): $(OBJ)
 gitsubmodule:
 	# git submodule init
 	# git submodule update --remote
-	# make -C external/glew
-	# (cd external/glfw && $(CMAKE) .)
-	# make -C external/glfw
+	make -C external/glew
+	(cd external/glfw && $(CMAKE) .)
+	make -C external/glfw
 
 clean:
 	@rm -rf $(OBJ)
