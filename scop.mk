@@ -16,6 +16,7 @@ SRC +=	src/lib/create_triangle.c \
 				src/lib/math_utils.c \
 				src/lib/load_texture.c \
 				src/texture_loader/load_bitmap_file.c \
+				src/lib/exit_error_with_msg.c \
 				src/lib/prepare.c
 
 SRC += src/controls/controls.c

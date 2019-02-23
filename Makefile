@@ -2,7 +2,7 @@
 # Makefile only for Darwin / OSx
 #
 
-SCOP=scop
+SCOP=bin/scop
 
 OS := $(shell uname -s)
 
@@ -14,6 +14,8 @@ endif
 ifeq ($(CC),)
 CC=gcc
 endif
+
+BIN=$(PWD)/bin
 
 # Choose cmake path when not set
 ifeq ($(CMAKE),)
@@ -44,6 +46,7 @@ $(SCOP): $(OBJ)
 	make -C src/libft
 	make -C src/libmatrix
 	#make -C src/libvec
+	mkdir -p bin
 	LIBRARY_PATH=$(LIBRARY_PATH) $(CC) $^ -o $@ $(INCLUDE) $(LIBS)
 
 %.o: %.c
@@ -52,9 +55,9 @@ $(SCOP): $(OBJ)
 gitsubmodule:
 	# git submodule init
 	# git submodule update --remote
-	make -C external/glew
-	(cd external/glfw && $(CMAKE) .)
-	make -C external/glfw
+	# make -C external/glew
+	# (cd external/glfw && $(CMAKE) .)
+	# make -C external/glfw
 
 clean:
 	@rm -rf $(OBJ)

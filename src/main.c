@@ -6,14 +6,22 @@ void glew_init(void) {
 
 	GLenum err = glewInit();
 
+	// Problem: glewInit failed, something is seriously wrong.
 	if (err != GLEW_OK)
 	{
-		// Problem: glewInit failed, something is seriously wrong.
-		printf("glewInit failed, aborting. Code %d.\n", err);
+		fprintf(stderr, "glewInit failed, aborting. Code %d.\n", err);
 		exit(err);
 	}
 }
 #endif
+
+// Close OpenGL window and terminate GLFW
+void	end_program()
+{
+	printf("Closing app ...\n");
+	glfwTerminate();
+	exit(0);
+}
 
 /*
 */
@@ -24,7 +32,7 @@ void run(t_software_environ *env)
 	// Dark blue background
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
-	program_id = load_shaders();
+	program_id = load_shaders(env);
 
 	glUseProgram(program_id);
 
@@ -44,14 +52,7 @@ void run(t_software_environ *env)
 		glfwPollEvents();
 	}
 
-	// Close OpenGL window and terminate GLFW
-	glfwTerminate();
-}
-
-void	end_program()
-{
-	glfwTerminate();
-	exit(0);
+	end_program();
 }
 
 static void error_callback(int error, const char* description)
@@ -64,23 +65,28 @@ static void error_callback(int error, const char* description)
 ** - Register the current
 ** - Find the shader folder and register the path
 ** - Read the resources into the object folder
+** When all ok, start the application
 */
 
 static int init_system_resources(t_software_environ *env, int argc, char **argv)
 {
-	getcwd(env->cwd, sizeof(env->cwd));
+	if (argc != 2)
+		exit_error_with_message("Input file missing.");
 
-	if (argc != 2) {
-		return (-1);
-	}
+	if (getcwd(env->cwd, sizeof(env->cwd)) == NULL)
+		exit_error_with_message("An error occured when oading the pwd path of the program.");
 
 	// Load provided object file
 	if (load_object_file(&env->data, argv[1]) < 0)
 		return (-1);
 
-	// All OK
+	// All OK, start applicaton
 	return (0);
 }
+
+/*
+** Init the system display using OpenGL library
+*/
 
 void init(t_software_environ *env, int argc, char **argv)
 {
@@ -92,26 +98,22 @@ void init(t_software_environ *env, int argc, char **argv)
 
 	glfwSetErrorCallback(error_callback);
 
-
-	if (!glfwInit()) {
-		fprintf(stderr, "Failed to initialize GLFW\n");
-		getchar();
-		return ;
-	}
+	if (!glfwInit())
+		exit_error_with_message("Failed to initialize GLFW");
 
 	glfwWindowHint(GLFW_SAMPLES, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, SOFT_GLFW_CONTEXT_VERSION_MAJOR);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, SOFT_GLFW_CONTEXT_VERSION_MINOR);
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
+	// To make MacOS happy; should not be needed
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	WINDOW = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_NAME, NULL, NULL);
 
-	if (!WINDOW) {
+	if (!WINDOW)
+	{
 		glfwTerminate();
-		fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n");
-		getchar();
-		exit(1);
+		exit_error_with_message("Failed to open GLFW window. Need GPU compatible with 4.0 OpenGL library");
 	};
 
 	// Ensure we can capture the escape key being pressed below

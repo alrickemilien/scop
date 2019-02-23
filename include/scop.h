@@ -163,9 +163,11 @@ typedef struct s_gl_info {
 	int maxTextureStacks;
 } t_gl_info;
 
+void 		exit_error_with_message(const char *msg);
+
 void		gl_info(void);
 void		create_triangle(t_software_environ *env);
-GLuint	load_shaders(void);
+GLuint	load_shaders(t_software_environ *env);
 void 		load_texture(
   GLuint shader_id,
   const char *texture_path,

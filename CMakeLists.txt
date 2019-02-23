@@ -13,7 +13,7 @@ SET ( CMAKE_RUNTIME_OUTPUT_DIRECTORY
 	${CMAKE_CURRENT_SOURCE_DIR}/bin
 )
 
-# Compile external dependencies 
+# Compile external dependencies
 add_subdirectory (external/glfw)
 
 # Create distrib subdirectory
@@ -76,7 +76,7 @@ add_definitions(
 # Create the executable
 ADD_EXECUTABLE(scop
 	src/main.c
-	
+
 	src/lib/create_triangle.c
 	src/lib/load_shaders.c
 	src/lib/set_attribute.c
@@ -84,30 +84,29 @@ ADD_EXECUTABLE(scop
 	src/lib/load_texture.c
 	src/texture_loader/load_bitmap_file.c
 	src/lib/prepare.c
+	src/lib/exit_error_with_msg.c
 
 	src/controls/controls.c
 
 	src/object_loader/load_object_file.c
 	src/object_loader/load_object_file_utils.c
-	src/object_loader/read_color.c 
+	src/object_loader/read_color.c
 	src/object_loader/read_comment.c
-	src/object_loader/read_normal_vector.c 
-	src/object_loader/read_object_file_line.c 
-	src/object_loader/read_position.c 
-	src/object_loader/read_poylgon.c 
-	src/object_loader/read_vec2.c 
-	src/object_loader/read_vec3.c 
-	src/object_loader/read_vertex.c 
-	src/object_loader/read_object_error.c 
-	src/object_loader/n_atof.c 
+	src/object_loader/read_normal_vector.c
+	src/object_loader/read_object_file_line.c
+	src/object_loader/read_position.c
+	src/object_loader/read_poylgon.c
+	src/object_loader/read_vec2.c
+	src/object_loader/read_vec3.c
+	src/object_loader/read_vertex.c
+	src/object_loader/read_object_error.c
+	src/object_loader/n_atof.c
 	src/object_loader/split_into_tokens.c
-	
+
 	shaders/SimpleVertexShader.glsl
 )
 
-TARGET_LINK_LIBRARIES(scop
-	${ALL_LIBS}
-)
+TARGET_LINK_LIBRARIES(scop ${ALL_LIBS})
 
 # Xcode and Visual working directories
 SOURCE_GROUP(shaders REGULAR_EXPRESSION ".*/.*shader$" )

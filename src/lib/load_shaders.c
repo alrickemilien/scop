@@ -1,7 +1,17 @@
 #include "scop.h"
 
-static const char *vertex_file_path = "./shaders/SimpleVertexShader.glsl";
-static const char *fragment_file_path = "./shaders/SimpleFragmentShader.glsl";
+/*
+** This macro handles the fact that windows works with \ and not / as Unix
+** when it comes to treat with files ...
+*/
+
+#ifdef _MSC_VER
+static const char *vertex_file_path = "\x5cshaders\x5cSimpleVertexShader.glsl";
+static const char *fragment_file_path = "\x5cshaders\x5cSimpleFragmentShader.glsl";
+#else
+static const char *vertex_file_path = "/shaders/SimpleVertexShader.glsl";
+static const char *fragment_file_path = "/shaders/SimpleFragmentShader.glsl";
+#endif
 
 typedef struct	shader_s {
 	GLuint		id;
@@ -14,7 +24,6 @@ static shader_t	*load_single_shader(const char *path, GLuint id)
 	int			fd;
 	shader_t	*shader;
 	struct stat	stats;
-
 
 	shader = malloc(sizeof(shader_t));
 
@@ -79,7 +88,7 @@ static void compile_single_shader(GLuint id, const shader_t *source, int *info_l
 ** Load shaders
 */
 
-GLuint load_shaders(void) {
+GLuint load_shaders(t_software_environ *env) {
 	// Create the shaders variables
 	GLuint vertex_shader_id = glCreateShader(GL_VERTEX_SHADER);
 	GLuint fragment_shader_id = glCreateShader(GL_FRAGMENT_SHADER);
@@ -87,11 +96,21 @@ GLuint load_shaders(void) {
 	shader_t *vertex_shader_code;
 	shader_t *fragment_shader_code;
 
+	char *vertex_file_full_path;
+	char *fragment_file_full_path;
+
+	// Build full path of the shaders
+	vertex_file_full_path = ft_strjoin(env->cwd, vertex_file_path);
+	fragment_file_full_path = ft_strjoin(env->cwd, fragment_file_path);
+
+	if (!vertex_file_full_path || !fragment_file_full_path)
+		exit_error_with_message("An error occured when wanting to build shaders full path");
+
 	// Read the Vertex Shader code from the file
-	vertex_shader_code = load_single_shader(vertex_file_path, vertex_shader_id);
+	vertex_shader_code = load_single_shader(vertex_file_full_path, vertex_shader_id);
 
 	// Read the Fragment Shader code from the file
-	fragment_shader_code = load_single_shader(fragment_file_path, fragment_shader_id);
+	fragment_shader_code = load_single_shader(fragment_file_full_path, fragment_shader_id);
 
 	printf("vertex_shader_code %.10s\n", (char*)vertex_shader_code->content);
 
@@ -109,12 +128,12 @@ GLuint load_shaders(void) {
 	int info_log_length;
 
 	// Compile Vertex Shader
-	printf("Compiling shader : %s\n", vertex_file_path);
+	printf("Compiling shader : %s\n", vertex_file_full_path);
 
 	compile_single_shader(vertex_shader_id, vertex_shader_code, &info_log_length, &result);
 
 	// Compile Fragment Shader
-	printf("Compiling shader : %s\n", fragment_file_path);
+	printf("Compiling shader : %s\n", fragment_file_full_path);
 
 	compile_single_shader(vertex_shader_id, fragment_shader_code, &info_log_length, &result);
 
