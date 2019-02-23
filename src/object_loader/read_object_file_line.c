@@ -1,6 +1,6 @@
 #include "object_loading.h"
 
-static const t_type_match	g_type_matches[] = {
+static const t_type_match	g_type_matches[7] = {
 	{
 		COMMENT_TOKEN,
 		&read_comment,
@@ -18,13 +18,17 @@ static const t_type_match	g_type_matches[] = {
 		&read_normal_vector,
 	},
 	{
-		POLYGON_TOKEN,
-		&read_polygon,
+		FACE_TOKEN,
+		&read_face,
 	},
 	{
-		NULL,
-		NULL
-	}
+		NAME_TOKEN,
+		&read_name,
+	},
+	{
+		MTL_TOKEN,
+		&read_mtl,
+	},
 };
 
 static t_parse_function get_parse_func(const t_token *token)
@@ -32,7 +36,7 @@ static t_parse_function get_parse_func(const t_token *token)
 	size_t		i;
 
 	i = 0;
-	while (g_type_matches[i].token && g_type_matches[i].f)
+	while (i * sizeof(t_type_match) < sizeof(g_type_matches))
 	{
 		if (!strncmp(g_type_matches[i].token, token->cursor, token->size))
 			return (g_type_matches[i].f);
@@ -48,10 +52,9 @@ int			read_object_file_line(t_obj_data *data, const char *line)
 	t_token	*tokens;
 	t_parse_function parse_function;
 
-  // Spli each token of the line
+  // Split each token of the line
 	if (NULL == (tokens = split_into_tokens(line, NULL)))
 		return (0);
-
 
   // Get the function according to the first token
   parse_function = get_parse_func(tokens);

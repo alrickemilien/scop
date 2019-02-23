@@ -78,6 +78,7 @@ ADD_EXECUTABLE(scop
 	src/main.c
 
 	src/lib/create_triangle.c
+	src/lib/count_vertices.c
 	src/lib/load_shaders.c
 	src/lib/set_attribute.c
 	src/lib/math_utils.c
@@ -91,11 +92,13 @@ ADD_EXECUTABLE(scop
 	src/object_loader/load_object_file.c
 	src/object_loader/load_object_file_utils.c
 	src/object_loader/read_color.c
+	src/object_loader/read_name.c
+	src/object_loader/read_mtl.c
 	src/object_loader/read_comment.c
 	src/object_loader/read_normal_vector.c
 	src/object_loader/read_object_file_line.c
 	src/object_loader/read_position.c
-	src/object_loader/read_poylgon.c
+	src/object_loader/read_face.c
 	src/object_loader/read_vec2.c
 	src/object_loader/read_vec3.c
 	src/object_loader/read_vertex.c

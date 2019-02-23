@@ -45,7 +45,7 @@ void run(t_software_environ *env)
 		// Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		//render();
+		render(env);
 
 		// Swap buffers
 		glfwSwapBuffers(WINDOW);
@@ -79,6 +79,8 @@ static int init_system_resources(t_software_environ *env, int argc, char **argv)
 	// Load provided object file
 	if (load_object_file(&env->data, argv[1]) < 0)
 		return (-1);
+
+	count_vertices(&env->data);
 
 	// All OK, start applicaton
 	return (0);

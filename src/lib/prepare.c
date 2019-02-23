@@ -26,13 +26,15 @@ void prepare(t_software_environ *env)
 	glGenVertexArrays(1, &env->vertex_array);
 	glBindVertexArray(env->vertex_array);
 
-	// Load the attributes
+	// Load the vriables taht will be use into shaders
+	// the variables id will be stored in env structure
+	// with the fields of the same name
 	set_attribute(env->program_id, "position");
 	set_attribute(env->program_id, "color");
 	set_attribute(env->program_id, "uv");
 	set_attribute(env->program_id, "normal");
 
-	load_texture(env->program_id, env->path_to_texture, &env->texture);
+	load_texture(env);
 
 	env->view_matrix = new_matrix(4, 4);
 	env->model_matrix = scale_matrix4x4(0.2);

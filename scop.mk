@@ -17,6 +17,8 @@ SRC +=	src/lib/create_triangle.c \
 				src/lib/load_texture.c \
 				src/texture_loader/load_bitmap_file.c \
 				src/lib/exit_error_with_msg.c \
+				src/lib/count_vertices.c \
+				src/lib/render.c \
 				src/lib/prepare.c
 
 SRC += src/controls/controls.c
@@ -24,11 +26,13 @@ SRC += src/controls/controls.c
 SRC +=	src/object_loader/load_object_file.c \
 				src/object_loader/load_object_file_utils.c \
 				src/object_loader/read_color.c \
+				src/object_loader/read_name.c \
+				src/object_loader/read_mtl.c \
 				src/object_loader/read_comment.c \
 				src/object_loader/read_normal_vector.c \
 				src/object_loader/read_object_file_line.c \
 				src/object_loader/read_position.c \
-				src/object_loader/read_poylgon.c \
+				src/object_loader/read_face.c \
 				src/object_loader/read_vec2.c \
 				src/object_loader/read_vec3.c \
 				src/object_loader/read_vertex.c \

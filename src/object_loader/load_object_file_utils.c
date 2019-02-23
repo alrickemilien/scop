@@ -16,7 +16,7 @@ bool			check_tokens_number(const t_token *token, size_t size)
 
 inline bool is_printable(char c)
 {
-  if (c >= 1 && c <= 32)
+  if (c >= 1 && c <= 32 && c != 127)
     return (false);
   return (true);
 }
@@ -32,8 +32,8 @@ int			token_to_int(const t_token *token, size_t index)
 		if (!token[j++].cursor)
 			return (DEFAULT_CODE);
 	}
-	ret = (int)n_atof(token[index].cursor, token[index].size) - 1;
-	if (ret < 0)
-		read_object_error("A face index can't be negative.");
+
+	ret = (int)n_atof(token[index].cursor, token[index].size);
+
 	return (ret);
 }

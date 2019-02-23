@@ -1,6 +1,7 @@
 # include "object_loading.h"
 
-void read_object_error(const char *msg)
+int read_object_error(const char *msg)
 {
-  (void)msg;
+	fprintf(stderr, "%s\n", msg);
+	return (-1);
 }

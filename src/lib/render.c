@@ -1,7 +1,4 @@
-static void	auto_rotate_object(void)
-{
-	matrix_rotate_y(env->model_matrix, 0.001f);
-}
+#include "scop.h"
 
 static void	update_texture_transition(t_software_environ *env)
 {
@@ -24,22 +21,26 @@ static void	update_texture_transition(t_software_environ *env)
 
 void		render(t_software_environ *env)
 {
-	static float	mvp[16] = { 0 };
+	t_matrix *mvp;
 
 	if (env->auto_rotate)
-		auto_rotate_object();
+	rotate_x_matrix4x4(env->model_matrix, 1.0f);
 
 	update_texture_transition(env);
 
-	matrix_identity(mvp);
+ 	mvp = identity_matrix(4, 4);
 
-	matrix_mult_m(mvp, 3, env->model_matrix, env->view_matrix, env->proj_matrix);
+	multiply_matrix(mvp, env->model_matrix, mvp);
 
-	glUniformMatrix4fv(env->model_matrix_uni, 1, GL_FALSE, env->model_matrix);
+	multiply_matrix(mvp, env->view_matrix, mvp);
 
-	glUniformMatrix4fv(env->mvp_uni, 1, GL_FALSE, mvp);
+	multiply_matrix(mvp, env->projection_matrix, mvp);
+
+	glUniformMatrix4fv(env->model_matrix_uni, 1, GL_FALSE, (GLfloat*) env->model_matrix->value);
+
+	glUniformMatrix4fv(env->mvp_uni, 1, GL_FALSE, (GLfloat*) mvp->value);
 
 	glUniform1f(env->texture_level_uni, env->texture_level);
 
-	glDrawArrays(GL_TRIANGLES, 0, env->vertex_count);
+	glDrawArrays(GL_TRIANGLES, 0, env->data.vertex_count);
 }

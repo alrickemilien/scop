@@ -6,7 +6,13 @@ static void		fill_vertex_position(t_obj_data *data, const t_token *tokens, t_ver
 	t_list		*positions;
 	t_vec3		*pos;
 
-	index = token_to_int(tokens, 0);
+	index = token_to_int(tokens, 0) - 1;
+
+	// @TODO need to handle negative
+  if (index < 0)
+	 read_object_error("A face index can't be negative.");
+
+	printf("index ==> %d\n", index);
 
   positions = data->positions;
 
@@ -28,7 +34,7 @@ static void		fill_vertex_position(t_obj_data *data, const t_token *tokens, t_ver
 		read_object_error("Invalid index for a position.");
 }
 
-static void		fill_vertex_color(t_obj_data *data, const t_token *tokens, t_vertex *vertex, int nt)
+static void		fill_vertex_color(t_obj_data *data, const t_token *tokens, t_vertex *vertex, int is_texture_set)
 {
 	int			i;
 	t_list		*colors;
@@ -37,8 +43,11 @@ static void		fill_vertex_color(t_obj_data *data, const t_token *tokens, t_vertex
 	colors = data->uvs;
 	i = DEFAULT_CODE;
 
-  if (!nt)
+  if (!is_texture_set)
 		i = token_to_int(tokens, 1);
+
+		// @TODO need to handle negative
+
 
   color = lst_data_at(colors, i);
 
@@ -67,7 +76,11 @@ static void		fill_vertex_normal(t_obj_data *data, const t_token *tokens, t_verte
 
 	normals = data->normals;
 
-  i = token_to_int(tokens, 2);
+	// @TODO need to handle negative
+	i = token_to_int(tokens, 2) - 1;
+
+ 	if (i < 0)
+	 read_object_error("A face index can't be negative.");
 
   if (nt)
 		i = token_to_int(tokens, 1);
@@ -107,6 +120,14 @@ int				read_vertex(t_obj_data *data, const t_token *tokens, bool is_texture_set,
 
 	if (!tokens->cursor[0])
 		read_object_error("A face component can't be empty.");
+
+		// DEBUG ==> compute ctokens length
+	size_t i;
+	for (i = 0; tokens[i].cursor; i++) {
+		printf("tokens[i].cursor[0] into vertex : %c\n", tokens[i].cursor[0]);
+	}
+
+	printf("ctoken length into vertex : %ld\n", i);
 
   fill_vertex_position(data, tokens, &new_vertex);
 

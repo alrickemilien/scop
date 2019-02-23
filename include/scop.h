@@ -1,10 +1,16 @@
 #ifndef SCOP_H
 #define SCOP_H
 
-/*
-* * OPENGL INCLUDES
+/**
+**       ___  ____  _____ _   _  ____ _       ___ _   _  ____ _    _   _ ____  _____ ____
+**      / _ \|  _ \| ____| \ | |/ ___| |     |_ _| \ | |/ ___| |  | | | |  _ \| ____/ ___|
+**     | | | | |_) |  _| |  \| | |  _| |      | ||  \| | |   | |  | | | | | | |  _| \___ \
+**     | |_| |  __/| |___| |\  | |_| | |___   | || |\  | |___| |__| |_| | |_| | |___ ___) |
+**      \___/|_|   |_____|_| \_|\____|_____| |___|_| \_|\____|_____\___/|____/|_____|____/
+**
 */
-#ifdef __APPLE__
+
+# ifdef __APPLE__
 
 /*
 ** GLFW3 already includes opengl.h gl.h etc.
@@ -14,38 +20,47 @@
 # include <GLFW/glfw3.h>
 # include <sys/mman.h>
 
+# else
 
-#else
 # include <GL/glew.h>
 # include <GL/gl.h>
 # include <GL/glu.h>
-// Windowing
 # include <GLFW/glfw3.h>
-#endif
+
+# endif
+
+/*
+**           __  __ ____   ____ __     _______ ____
+**          |  \/  / ___| / ___|\ \   / / ____|  _ \
+**          | |\/| \___ \| |     \ \ / /|  _| | |_) |
+**          | |  | |___) | |___   \ V / | |___|  _ <
+**      ____|_|  |_|____/ \____|___\_/  |_____|_| \_\
+**     |_____|                |_____|
+*/
 
 #ifdef _MSC_VER
 
 # include <windows.h>
 # include <io.h>
-#define PROT_READ  1
-#define PROT_WRITE  2
-#define PROT_READWRITE  3
-#define MAP_SHARED  1
-#define MAP_PRIVATE  2
-#define F_OK 0
-#define R_OK 4
-#define W_OK 2
-#define RW_OK 6
 
-#ifndef MAP_FAILED
+# define PROT_READ  1
+# define PROT_WRITE  2
+# define PROT_READWRITE  3
+# define MAP_SHARED  1
+# define MAP_PRIVATE  2
+# define F_OK 0
+# define R_OK 4
+# define W_OK 2
+# define RW_OK 6
 
-#define MAP_FAILED      ((void *) -1)
-#endif
+# ifndef MAP_FAILED
+# define MAP_FAILED      ((void *) -1)
+# endif
 
 void *mmap(char *, size_t, int, int, int, off_t);
 int   munmap(void *, size_t);
 
-#endif
+# endif
 
 # include <signal.h>
 # include <stdio.h>
@@ -104,12 +119,17 @@ typedef struct	s_software_environ
 	int wireframe;
 	int auto_rotate;
 	int	lighting;
+	int texturing;
 
 	const char *path_to_texture;
 
-	// OpenGL tools
+	// OpenGL progrm id
 	GLuint		program_id;
+
+	// OpengL VBO
 	GLuint		vbo;
+
+	// OpenGL shaders variables
 	GLuint		vertex_array;
 	GLuint		mvp_uni;
 	GLuint		model_matrix_uni;
@@ -139,8 +159,14 @@ typedef struct	s_color
 # define DEFAULT_WINDOW_HEIGHT 600
 
 /*
-* * This structure groups all available variables linked to gl infos
+**                    _     _        __
+**      ___      __ _| |   (_)_ __  / _| ___
+**     / __|    / _` | |   | | '_ \| |_ / _ \
+**     \__ \   | (_| | |   | | | | |  _| (_) |
+**     |___/____\__, |_|___|_|_| |_|_|  \___/
+**        |_____|___/ |_____|
 */
+
 typedef struct s_gl_info {
 	const char *vendor;
 	const char *renderer;
@@ -163,28 +189,27 @@ typedef struct s_gl_info {
 	int maxTextureStacks;
 } t_gl_info;
 
+void	count_vertices(t_obj_data *data);
+
 void 		exit_error_with_message(const char *msg);
 
-void		gl_info(void);
 void		create_triangle(t_software_environ *env);
 GLuint	load_shaders(t_software_environ *env);
-void 		load_texture(
-  GLuint shader_id,
-  const char *texture_path,
-  GLuint *texture_dest);
+void 		load_texture(t_software_environ *env);
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
 void set_attribute(GLuint id_program, const char *attribute_name);
 
+
+void prepare(t_software_environ *env);
+void render(t_software_environ *env);
+
+unsigned char	*load_bitmap_file(const char *pathname, size_t *width, size_t *height);
+
 /*
 ** Math utils
 */
-
 double	deg_to_rad(double deg);
-
-void prepare(t_software_environ *env);
-
-unsigned char	*load_bitmap_file(const char *pathname, size_t *width, size_t *height);
 
 #endif

@@ -1,26 +1,42 @@
 #include "object_loading.h"
 
-/*
-** Check if the string a cotains a char of string b
-*/
-static bool str_contains_one_of_char(const char *line, const char *delimiters)
+static bool is_on_delimiter(const char *line, const char *delimiters)
 {
-	size_t i;
+	size_t 		i;
 
-	if (NULL == delimiters)
+	if (delimiters == NULL)
 		return (false);
 
 	i = 0;
-	while (delimiters[i])
-	{
-		if (strchr(line, delimiters[i]))
-			return (true);
+	while (line[i] && delimiters[i]) {
+		if (line[i] != delimiters[i])
+			return (false);
+
 		i++;
 	}
-	return (false);
+
+	if (!line[i] && delimiters[i])
+		return (false);
+
+	return (true);
 }
 
-// Get nmber of token
+/*
+** Consider we are on a delimiter
+*/
+
+static size_t skip_delimiters(const char *line, const char *delimiters)
+{
+	size_t 		i;
+
+	i = 0;
+	while (delimiters[i] && line[i] == delimiters[i])
+		i++;
+
+	return (i);
+}
+
+// Get number of token
 static size_t count_words(const char *line, const char *delimiters)
 {
 	size_t 		i;
@@ -29,9 +45,12 @@ static size_t count_words(const char *line, const char *delimiters)
 	i = 0;
 	n = 0;
 	while (line[i]) {
-		while (line[i] && (!is_printable(line[i])
-					|| str_contains_one_of_char(line, delimiters)))
+		// Skip zhitespace and non printable
+		while (line[i] && !is_printable(line[i]))
 			i++;
+
+		if (is_on_delimiter(line + i, delimiters))
+			i += skip_delimiters(line + i, delimiters);
 
 		if (line[i])
 			n++;
@@ -57,24 +76,31 @@ t_token *split_into_tokens(const char *line, const char *delimiters) {
   if (NULL == (array = (t_token*)malloc(sizeof(t_token) * (n + 1))))
     return (NULL);
 
-  array[n] = (t_token){ 0, 0 };
+	array[n] = (t_token){ 0, 0 };
 
 	i = 0;
 	n = 0;
-  while(line[i]) {
-		while (line[i] && (!is_printable(line[i])
-					|| str_contains_one_of_char(line, delimiters)))
+  while(line[i])
+	{
+		while (line[i] && !is_printable(line[i]))
 			i++;
 
-		token.cursor = (char*)((size_t)line + i);
-		token.size = 0;
+		if (is_on_delimiter(line + i, delimiters))
+			i += skip_delimiters(line + i, delimiters);
 
-    while (line[i] && is_printable(line[i])) {
-			token.size++;
-			i++;
+		if (line[i]) {
+			token.cursor = (char*)((size_t)line + i);
+			token.size = 0;
+
+			while (line[i] && is_printable(line[i]))
+			{
+				token.size++;
+				i++;
+			}
+
+			memcpy(&array[n], &token, sizeof(t_token));
+			n++;
 		}
-
-		memcpy(&array[n++], &token, sizeof(t_token));
   }
 
   return (array);
