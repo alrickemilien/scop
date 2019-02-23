@@ -15,10 +15,10 @@
 ** where :
 **	- name is the given name, it is not mandatory
 **	- mtl is the name of a material template library
-**	- positions correspond to 'v' ;
-**	- uvs correspond to 'vt' ;
-**	- normals correspond to 'vn' ;
-**	- polygons correspond to 'f' ;
+**	- positions correspond to 'v'
+**	- uvs correspond to 'vt'
+**	- normals correspond to 'vn'
+**	- polygons correspond to 'f'
 */
 
 typedef struct	s_obj_data

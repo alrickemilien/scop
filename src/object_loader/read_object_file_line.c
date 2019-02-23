@@ -69,7 +69,7 @@ int			read_object_file_line(t_obj_data *data, const char *line)
 
   (*parse_function)(data, (const t_token *)(tokens + 1));
 
-	free(tokens);
+	free(tokens);	
 
 	return (0);
 }

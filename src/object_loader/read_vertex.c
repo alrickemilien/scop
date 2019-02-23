@@ -3,7 +3,6 @@
 static void		fill_vertex_position(t_obj_data *data, const t_token *tokens, t_vertex *vertex)
 {
 	int			index;
-	t_list		*positions;
 	t_vec3		*pos;
 
 	index = token_to_int(tokens, 0) - 1;
@@ -12,11 +11,8 @@ static void		fill_vertex_position(t_obj_data *data, const t_token *tokens, t_ver
   if (index < 0)
 	 read_object_error("A face index can't be negative.");
 
-	printf("index ==> %d\n", index);
+  pos = lst_data_at(data->positions, index);
 
-  positions = data->positions;
-
-  pos = lst_data_at(positions, index);
 
   if (pos)
 	{
@@ -24,7 +20,7 @@ static void		fill_vertex_position(t_obj_data *data, const t_token *tokens, t_ver
 		vertex->position.y = pos->y;
 		vertex->position.z = pos->z;
 	}
-	else if (index >= 0 && ft_lstlen(positions) > (size_t)index)
+	else if (index >= 0 && ft_lstlen(data->positions) > (size_t)index)
 	{
 		vertex->position.x = 0xFFFFFF;
 		vertex->position.y = 0xFFFFFF;
@@ -115,29 +111,25 @@ static void		fill_vertex_normal(t_obj_data *data, const t_token *tokens, t_verte
 int				read_vertex(t_obj_data *data, const t_token *tokens, bool is_texture_set, t_polygon *polygon)
 {
 	t_vertex	new_vertex;
-
-	t_list *tmp = polygon->vertices;
+	size_t	tokens_number;
 
 	if (!tokens->cursor[0])
 		read_object_error("A face component can't be empty.");
 
-		// DEBUG ==> compute ctokens length
-	size_t i;
-	for (i = 0; tokens[i].cursor; i++) {
-		printf("tokens[i].cursor[0] into vertex : %c\n", tokens[i].cursor[0]);
-	}
-
-	printf("ctoken length into vertex : %ld\n", i);
+  // Compute tokens array length
+	tokens_number = 0;
+	while (tokens[tokens_number].cursor)
+		tokens_number++;
 
   fill_vertex_position(data, tokens, &new_vertex);
 
-  fill_vertex_color(data, tokens, &new_vertex, is_texture_set);
+	if (tokens_number > 1)
+  	fill_vertex_color(data, tokens, &new_vertex, is_texture_set);
 
-  fill_vertex_normal(data, tokens, &new_vertex, is_texture_set);
+	if (tokens_number > 1)
+  	fill_vertex_normal(data, tokens, &new_vertex, is_texture_set);
 
-  ft_lstadd(&tmp, ft_lstnew(&new_vertex, sizeof(t_vertex)));
-
-	polygon->vertices = tmp;
+  ft_lstadd(&polygon->vertices, ft_lstnew(&new_vertex, sizeof(t_vertex)));
 
   return (0);
 }

@@ -36,16 +36,10 @@ static int		read_face_components(
 	int			i;
 	bool			is_texture_set;
 	t_token *ctokens;
+	char *tmp;
 
 	if (!check_tokens_number(tokens, 3))
 		read_object_error("A face must declare at least three vertices.");
-
-	printf("tokens[0].cursor[0] in face : %s\n", tokens[0].cursor);
-	for (i = 0; tokens[i].cursor; i++) {
-		printf("tokens[i].cursor[0] into face : %c\n", tokens[i].cursor[0]);
-	}
-	printf("ctoken length into face : %d\n", i);
-
 
 	// Start at 1 becase of the f at the start of f X Y Z
 	i = 0;
@@ -58,20 +52,24 @@ static int		read_face_components(
     if (strstr(tokens[i].cursor, "//"))
 			is_texture_set = true;
 
+		tmp = strndup(tokens[i].cursor, tokens[i].size);
+
 		// Split the token 12/888/3018
 		// Into three sub tokens 12, 888, and 3018
 		// Split the token without slash 12
 		// Into one sub token 12
-		ctokens = split_into_tokens(tokens[i].cursor, "/");
+		ctokens = split_into_tokens(tmp, "/");
 
-    if (!read_vertex(data, (const t_token *)ctokens, is_texture_set, new_polygon))
+    if (read_vertex(data, (const t_token *)ctokens, is_texture_set, new_polygon) < 0)
 		{
+			free(tmp);
 			free(ctokens);
 			return (-1);
 		}
 
     i++;
 
+    free(tmp);
     free(ctokens);
 	}
 
@@ -90,6 +88,8 @@ static int		read_face_components(
 int				read_face(t_obj_data *data, const t_token *tokens)
 {
 	t_polygon	new_polygon;
+
+	new_polygon.vertices = NULL;
 
   if (!read_face_components(data, tokens, &new_polygon))
 		return (-1);

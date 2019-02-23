@@ -42,12 +42,12 @@ void run(t_software_environ *env)
 	while (glfwGetKey(WINDOW, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
 		glfwWindowShouldClose(WINDOW) == 0)
 	{
-		// Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		// // Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
+		// glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		render(env);
 
-		// Swap buffers
+		// // Swap buffers
 		glfwSwapBuffers(WINDOW);
 		glfwPollEvents();
 	}
