@@ -1,5 +1,5 @@
 #include <string.h>
-#include "object_loading.h"
+#include "object_loader.h"
 
 /*
 ** Face elements

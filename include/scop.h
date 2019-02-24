@@ -80,7 +80,7 @@ int   munmap(void *, size_t);
 
 # include "libft.h"
 # include "libmatrix.h"
-# include "object_loading.h"
+# include "object_loader.h"
 
 /*
 ** MACROS to access more easily to x server pointeurs to variables

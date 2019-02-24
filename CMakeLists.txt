@@ -75,36 +75,46 @@ add_definitions(
 
 # Create the executable
 ADD_EXECUTABLE(scop
-	src/main.c
-
 	src/lib/create_triangle.c
+	src/lib/exit_error_with_msg.c
+	src/lib/render.c
+	src/lib/set_attribute.c
 	src/lib/count_vertices.c
 	src/lib/load_shaders.c
-	src/lib/set_attribute.c
+	src/lib/build_vertex_buffer.c
 	src/lib/math_utils.c
-	src/lib/load_texture.c
-	src/texture_loader/load_bitmap_file.c
 	src/lib/prepare.c
-	src/lib/exit_error_with_msg.c
+	src/lib/load_texture.c
 
-	src/controls/controls.c
-
-	src/object_loader/load_object_file.c
-	src/object_loader/load_object_file_utils.c
-	src/object_loader/read_color.c
-	src/object_loader/read_name.c
+	src/object_loader/read_position.c
 	src/object_loader/read_mtl.c
 	src/object_loader/read_comment.c
-	src/object_loader/read_normal_vector.c
+	src/object_loader/read_color.c
 	src/object_loader/read_object_file_line.c
-	src/object_loader/read_position.c
-	src/object_loader/read_face.c
+	src/object_loader/read_vertex.c
 	src/object_loader/read_vec2.c
 	src/object_loader/read_vec3.c
-	src/object_loader/read_vertex.c
+	src/object_loader/load_object_file_utils.c
+	src/object_loader/read_normal_vector.c
+	src/object_loader/read_name.c
+	src/object_loader/load_object_file.c
 	src/object_loader/read_object_error.c
-	src/object_loader/n_atof.c
-	src/object_loader/split_into_tokens.c
+	src/object_loader/read_face.c
+
+	src/loader_utils/n_atof.c
+	src/loader_utils/split_into_tokens.c
+
+	src/texture_loader/load_bitmap_file.c
+
+	src/mtl_loader/load_mtl_file.c
+	src/mtl_loader/read_mtl_file_line.c
+	src/mtl_loader/utils.c
+
+	src/controls/controls.o
+	src/controls/controls.c
+	src/controls/toggles.c
+
+	src/main.c
 
 	shaders/SimpleVertexShader.glsl
 )

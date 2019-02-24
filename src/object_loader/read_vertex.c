@@ -1,4 +1,4 @@
-#include "object_loading.h"
+#include "object_loader.h"
 
 static void		fill_vertex_position(t_obj_data *data, const t_token *tokens, t_vertex *vertex)
 {

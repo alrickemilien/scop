@@ -1,4 +1,4 @@
-#include "object_loading.h"
+#include "object_loader.h"
 
 int		read_vec3(const t_token *tokens, t_vec3 *vector)
 {

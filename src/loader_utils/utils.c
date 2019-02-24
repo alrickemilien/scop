@@ -1,4 +1,4 @@
-#include "object_loader.h"
+#include "loader.h"
 
 bool			check_tokens_number(const t_token *token, size_t size)
 {
@@ -30,7 +30,7 @@ int			token_to_int(const t_token *token, size_t index)
 	while (j <= index)
 	{
 		if (!token[j++].cursor)
-			return (DEFAULT_CODE);
+			return (-1);
 	}
 
 	ret = (int)n_atof(token[index].cursor, token[index].size);

@@ -10,6 +10,9 @@ ifndef LIBS
 	LIBS :=
 endif
 
+#
+# scop core functions library
+#
 SRC +=	src/lib/create_triangle.c \
 				src/lib/load_shaders.c \
 				src/lib/set_attribute.c \
@@ -23,8 +26,10 @@ SRC +=	src/lib/create_triangle.c \
 
 SRC += src/controls/controls.c
 
+#
+# .obj loader
+#
 SRC +=	src/object_loader/load_object_file.c \
-				src/object_loader/load_object_file_utils.c \
 				src/object_loader/read_color.c \
 				src/object_loader/read_name.c \
 				src/object_loader/read_mtl.c \
@@ -36,9 +41,22 @@ SRC +=	src/object_loader/load_object_file.c \
 				src/object_loader/read_vec2.c \
 				src/object_loader/read_vec3.c \
 				src/object_loader/read_vertex.c \
-				src/object_loader/read_object_error.c \
-				src/object_loader/n_atof.c \
-				src/object_loader/split_into_tokens.c
+				src/object_loader/read_object_error.c
+
+#
+# Loader utils
+#
+SRC +=	src/loader_utils/n_atof.c \
+				src/loader_utils/split_into_tokens.c \
+				src/loader_utils/utils.c
+
+#
+# .mtl loader
+#
+SRC +=	src/mtl_loader/load_mtl_file.c \
+				src/mtl_loader/read_mtl_file_line.c \
+				src/mtl_loader/read_new_mtl.c \
+				src/mtl_loader/read_comment.c
 
 SRC += src/main.c
 

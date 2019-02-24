@@ -1,4 +1,4 @@
-#include "object_loading.h"
+#include "object_loader.h"
 
 int		parse_vec2(const t_token *tokens, t_vec3 *vector)
 {
