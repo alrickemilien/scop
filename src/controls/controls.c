@@ -1,5 +1,7 @@
 # include "scop.h"
 
+extern t_software_environ *env;
+
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	(void)scancode;
@@ -8,8 +10,8 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, 1);
 }
-/*
-void		scroll_callback(GLFWwindow *window, double scroll_x, double scroll_y)
+
+/*void		scroll_callback(GLFWwindow *window, double scroll_x, double scroll_y)
 {
 	matrix_scale_xyz(env->model_matrix, 1.0f + (float)scroll_y / 10);
 	(void)scroll_x;
@@ -55,5 +57,4 @@ void		mouse_click_callback(GLFWwindow *window, int button, int action,
 
 	(void)window;
 	(void)mods;
-}
-*/
+}*/

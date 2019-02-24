@@ -24,8 +24,7 @@ void		render(t_software_environ *env)
 	t_matrix *mvp;
 
 	if (env->auto_rotate)
-
-	rotate_x_matrix4x4(env->model_matrix, 1.0f);
+		rotate_x_matrix4x4(env->model_matrix, 1.0f);
 
 	update_texture_transition(env);
 
@@ -37,8 +36,6 @@ void		render(t_software_environ *env)
 
 	multiply_matrix(mvp, env->projection_matrix, mvp);
 
-	pmatrix("%lf", mvp);
-
 	glUniformMatrix4fv(env->model_matrix_uni, 1, GL_FALSE, (GLfloat*) env->model_matrix->value);
 
 	glUniformMatrix4fv(env->mvp_uni, 1, GL_FALSE, (GLfloat*) mvp->value);
@@ -46,4 +43,6 @@ void		render(t_software_environ *env)
 	glUniform1f(env->texture_level_uni, env->texture_level);
 
 	glDrawArrays(GL_TRIANGLES, 0, env->data.vertex_count);
+
+	delete_matrix(mvp);
 }

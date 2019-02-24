@@ -1,5 +1,7 @@
 #include "scop.h"
 
+t_software_environ *env = NULL;
+
 #ifdef __APPLE__
 void glew_init(void) {
 	glewExperimental = GL_TRUE;
@@ -15,17 +17,54 @@ void glew_init(void) {
 }
 #endif
 
+/*
+** Clear the environnement in memory
+*/
+
+static void del(void *p, size_t s) {
+	(void)s;
+	free(p);
+}
+
+void clear_env_memory() {
+	printf("Clearing environnement ...\n");
+
+	if (!env)
+		return ;
+
+	if(env->data.name)
+		free(env->data.name);
+	if(env->data.mtl)
+		free(env->data.mtl);
+	if(env->data.positions)
+		ft_lstdel(&env->data.positions, &del);
+	if(env->data.uvs)
+		ft_lstdel(&env->data.uvs, &del);
+	if(env->data.normals)
+		ft_lstdel(&env->data.normals, &del);
+
+	// @TODO ==> need to clear sublist
+	if(env->data.polygons)
+		ft_lstdel(&env->data.polygons, &del);
+
+	free(env);
+}
+
 // Close OpenGL window and terminate GLFW
 void	end_program()
 {
 	printf("Closing app ...\n");
 	glfwTerminate();
+	clear_env_memory();
+
+	printf("Closed.\n");
+
 	exit(0);
 }
 
 /*
 */
-void run(t_software_environ *env)
+void run()
 {
 	GLuint program_id;
 
@@ -43,7 +82,7 @@ void run(t_software_environ *env)
 		glfwWindowShouldClose(WINDOW) == 0)
 	{
 		// // Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
-		// glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		render(env);
 
@@ -68,8 +107,11 @@ static void error_callback(int error, const char* description)
 ** When all ok, start the application
 */
 
-static int init_system_resources(t_software_environ *env, int argc, char **argv)
+static int init_system_resources(int argc, char **argv)
 {
+	if (NULL == (env = malloc(sizeof(t_software_environ))))
+		exit_error_with_message("Not enought memory to run the program");
+
 	if (argc != 2)
 		exit_error_with_message("Input file missing.");
 
@@ -90,7 +132,7 @@ static int init_system_resources(t_software_environ *env, int argc, char **argv)
 ** Init the system display using OpenGL library
 */
 
-void init(t_software_environ *env, int argc, char **argv)
+void init(int argc, char **argv)
 {
 	WINDOW_WIDTH = DEFAULT_WINDOW_WIDTH;
 	WINDOW_HEIGHT = DEFAULT_WINDOW_HEIGHT;
@@ -132,15 +174,13 @@ void init(t_software_environ *env, int argc, char **argv)
 
 int main(int argc, char **argv)
 {
-	t_software_environ env;
-
 	// Could not continue if the system ressources are fully and successfully loaded
-	if (init_system_resources(&env, argc, argv) < 0)
+	if (init_system_resources(argc, argv) < 0)
 		return (-1);
 
-	init(&env, argc, argv);
+	init(argc, argv);
 
-	run(&env);
+	run();
 
 	return 0;
 }
