@@ -29,16 +29,7 @@ include_directories(
 
 	include/
 
-	src/libft/
-
 	src/libmatrix/include/
-)
-
-# Libft
-add_custom_target(
-   libft
-   COMMAND make
-   WORKING_DIRECTORY src/libft
 )
 
 # Libmatrix
@@ -55,8 +46,6 @@ set(ALL_LIBS
 	glfw
 
 	GLEW_1130
-
-	src/libft
 
 	src/libmatrix
 )
@@ -103,20 +92,31 @@ ADD_EXECUTABLE(scop
 
 	src/loader_utils/n_atof.c
 	src/loader_utils/split_into_tokens.c
+	src/loader_utils/utils.c
 
 	src/texture_loader/load_bitmap_file.c
 
 	src/mtl_loader/load_mtl_file.c
 	src/mtl_loader/read_mtl_file_line.c
-	src/mtl_loader/utils.c
+	src/mtl_loader/read_comment.c
+	src/mtl_loader/read_new_mtl.c
 
-	src/controls/controls.o
 	src/controls/controls.c
 	src/controls/toggles.c
+
+	src/utils/ft_lstadd.c
+	src/utils/ft_lstdel.c
+	src/utils/ft_lstdelone.c
+	src/utils/ft_lstlen.c
+	src/utils/ft_lstnew.c
+	src/utils/ft_lstreverse.c
+	src/utils/ft_strjoin.c
+	src/utils/lst_data_at.c
 
 	src/main.c
 
 	shaders/SimpleVertexShader.glsl
+	shaders/SimpleFragmentShader.glsl
 )
 
 TARGET_LINK_LIBRARIES(scop ${ALL_LIBS})

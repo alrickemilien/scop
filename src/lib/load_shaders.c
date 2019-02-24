@@ -13,12 +13,6 @@ static const char *vertex_file_path = "/shaders/SimpleVertexShader.glsl";
 static const char *fragment_file_path = "/shaders/SimpleFragmentShader.glsl";
 #endif
 
-typedef struct	shader_s {
-	GLuint		id;
-	GLchar		*content;
-	GLint		length;
-}				shader_t;
-
 static shader_t	*load_single_shader(const char *path, GLuint id)
 {
 	int			fd;

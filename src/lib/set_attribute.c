@@ -1,14 +1,14 @@
 #include "scop.h"
 
 //  void glVertexAttribPointer(GLuint index​, GLint size​, GLenum type​, GLboolean normalized​, GLsizei stride​, const GLvoid * pointer​)
-typedef struct            s_glx_attribute {
-               const char *attribute_name;
-               GLint     size​;
-               GLenum     type​;
-               GLboolean     stride​;
-               GLsizei     data_size;
-               const GLvoid *pointer​;
-}                         t_glx_attribute;
+typedef struct  s_glx_attribute {
+                const char    *attribute_name;
+                GLint         size​;
+                GLenum        type​;
+                GLboolean     stride​;
+                GLsizei       data_size;
+                const GLvoid  *pointer​;
+}               t_glx_attribute;
 
 static const t_glx_attribute g_attribute_map[] = {
   {

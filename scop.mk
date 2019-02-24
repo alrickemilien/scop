@@ -24,6 +24,9 @@ SRC +=	src/lib/create_triangle.c \
 				src/lib/render.c \
 				src/lib/prepare.c
 
+#
+# controls and toggle of the app
+#
 SRC += src/controls/controls.c
 
 #
@@ -58,9 +61,20 @@ SRC +=	src/mtl_loader/load_mtl_file.c \
 				src/mtl_loader/read_new_mtl.c \
 				src/mtl_loader/read_comment.c
 
+#
+# utils
+#
+SRC +=	src/utils/ft_lstadd.c \
+		src/utils/ft_lstdel.c\
+		src/utils/ft_lstdelone.c\
+		src/utils/ft_lstlen.c\
+		src/utils/ft_lstnew.c\
+		src/utils/ft_lstreverse.c\
+		src/utils/ft_strjoin.c\
+		src/utils/lst_data_at.c
+
 SRC += src/main.c
 
+INCLUDE += -I include -I src/libmatrix/include
 
-INCLUDE += -I include -I src/libft -I src/libvec/include -I src/libmatrix/include
-
-LIBS += -lft -L src/libft -lmatrix -L src/libmatrix
+LIBS += -lmatrix -L src/libmatrix

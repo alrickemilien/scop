@@ -1,10 +1,10 @@
 #ifdef _MSC_VER
 
+#include "scop.h"
 
 /*
 ** Fuck windows
 */
-
 
 static int		count_char_into_string(const char *str, const char c)
 {
@@ -152,11 +152,13 @@ static shader_t	*load_single_shader(const char *path, GLuint id)
 	return (shader);
 }
 
-
-void *mmap(char *address, size_t length, int file, off_t offset)
+void *mmap(char *address, size_t length, int file, int flags, int fildes, off_t offset)
 {
     void *map;
     HANDLE handle;
+
+	(void)flags;
+	(void)fildes;
 
     map = (void *) NULL;
     handle = INVALID_HANDLE_VALUE;

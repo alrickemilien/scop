@@ -13,3 +13,4 @@
 [submodule "src/libmatrix"]
 	path = src/libmatrix
 	url = https://gitlab.com/alrickemilien/libmatrix
+	branch = dev

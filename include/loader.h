@@ -4,8 +4,10 @@
 # include <stdlib.h>
 # include <stdio.h>
 
-# include "libft.h"
+# include "utils.h"
 # include "libmatrix.h"
+
+# define BUFF_SIZE 1024
 
 # define LOADER_LINE_BUFF_SIZE 512
 

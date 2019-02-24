@@ -20,6 +20,7 @@
 # include <GLFW/glfw3.h>
 # include <sys/mman.h>
 
+
 # else
 
 # include <GL/glew.h>
@@ -43,6 +44,11 @@
 # include <windows.h>
 # include <io.h>
 
+#define _USE_MATH_DEFINES // for C
+#include <math.h>
+
+# define PATH_MAX 255
+
 # define PROT_READ  1
 # define PROT_WRITE  2
 # define PROT_READWRITE  3
@@ -57,9 +63,16 @@
 # define MAP_FAILED      ((void *) -1)
 # endif
 
-void *mmap(char *, size_t, int, int, int, off_t);
-int   munmap(void *, size_t);
+typedef long int off_t;
 
+void	*mmap(void *addr, size_t len, int prot, int flags, int fildes, off_t offset);
+
+int		munmap(void *addr, size_t len);
+
+# endif
+
+#ifndef _MSC_VER
+# include <unistd.h>
 # endif
 
 # include <signal.h>
@@ -71,14 +84,13 @@ int   munmap(void *, size_t);
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
-# include <unistd.h>
 # include <limits.h>
 
 /*
 ** LOCALS INCLUDES
 */
 
-# include "libft.h"
+# include "utils.h"
 # include "libmatrix.h"
 # include "object_loader.h"
 
@@ -94,6 +106,12 @@ int   munmap(void *, size_t);
 
 # define SOFT_GLFW_CONTEXT_VERSION_MAJOR 4
 # define SOFT_GLFW_CONTEXT_VERSION_MINOR 1
+
+typedef struct	shader_s {
+	GLuint		id;
+	GLchar		*content;
+	GLint		length;
+}				shader_t;
 
 typedef struct	s_light
 {
@@ -210,6 +228,12 @@ unsigned char	*load_bitmap_file(const char *pathname, size_t *width, size_t *hei
 /*
 ** Math utils
 */
+
 double	deg_to_rad(double deg);
+
+/*
+** Utils
+*/
+char	*ft_strjoin(char const *s1, char const *s2);
 
 #endif

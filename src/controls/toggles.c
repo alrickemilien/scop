@@ -22,6 +22,8 @@ void		toggle_lighting(t_software_environ *env)
 
 void		switch_clear_color(t_software_environ *env)
 {
+	(void)env;
+	/*
 	if (env->clear_color.x < 1.0f)
 	{
 		env->clear_color.x += 0.35f;
@@ -34,4 +36,5 @@ void		switch_clear_color(t_software_environ *env)
 
 	glClearColor(env->clear_color.x, env->clear_color.y,
 		env->clear_color.z, 1.0f);
+	s*/
 }

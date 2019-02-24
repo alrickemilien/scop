@@ -14,6 +14,7 @@ In our case, we will ue [cmake](https://cmake.com).
 # Make sure the path to cmake in your environment Path variable with the following command in Powershell
 # $env:Path = "path/to/cmake";
 git submodule init
+cmake .
 cmake --build  .
 ```
 
