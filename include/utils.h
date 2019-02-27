@@ -2,6 +2,7 @@
 # define UTILS_H
 
 # include <stdlib.h>
+# include <string.h>
 
 typedef struct	s_list
 {
