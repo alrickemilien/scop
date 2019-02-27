@@ -23,22 +23,56 @@ void		render(t_software_environ *env)
 {
 	t_matrix *mvp;
 
-	if (env->auto_rotate)
-		rotate_x_matrix4x4(env->model_matrix, 1.0f);
+
+//	if (env->auto_rotate)
+//		rotate_x_matrix4x4(env->model_matrix, 1.0f);
 
 	update_texture_transition(env);
 
  	mvp = identity_matrix(4, 4);
 
+
 	multiply_matrix(mvp, env->model_matrix, mvp);
 
 	multiply_matrix(mvp, env->view_matrix, mvp);
 
+
 	multiply_matrix(mvp, env->projection_matrix, mvp);
 
-	glUniformMatrix4fv(env->model_matrix_uni, 1, GL_FALSE, (GLfloat*) env->model_matrix->value);
+	size_t i = 0;
+	while (i < env->projection_matrix->lines * env->projection_matrix->columns)
+	{
+		if (i && (i + 1) % 4 == 0) {
+			printf("%lf \n",env->projection_matrix->value[i]);
+		} else {
+			printf("%lf ",env->projection_matrix->value[i]);
+		}
 
-	glUniformMatrix4fv(env->mvp_uni, 1, GL_FALSE, (GLfloat*) mvp->value);
+		i++;
+	}
+	printf("\n");
+
+	GLfloat b[16];
+
+	i = 0;
+	while (i < env->model_matrix->lines * env->model_matrix->columns)
+	{
+		b[i] = (GLfloat)env->model_matrix->value[i];
+		i++;
+	}
+
+	GLfloat c[16];
+
+	i = 0;
+	while (i < mvp->lines * mvp->columns)
+	{
+		c[i] = (GLfloat)mvp->value[i];
+		i++;
+	}
+
+	glUniformMatrix4fv(env->model_matrix_uni, 1, GL_FALSE, b);
+
+	glUniformMatrix4fv(env->mvp_uni, 1, GL_FALSE, c);
 
 	glUniform1f(env->texture_level_uni, env->texture_level);
 
