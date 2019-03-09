@@ -4,20 +4,22 @@ void	count_vertices(t_obj_data *data)
 {
 	size_t	count;
 	size_t	poly_length;
-	t_list	*iter;
+	t_list	*x;
 
-	iter = data->polygons;
+	x = data->polygons;
 	count = 0;
-	while (iter)
+	while (x)
 	{
-		poly_length = ft_lstlen(((t_polygon*)iter->content)->vertices);
+		poly_length = ft_lstlen(((t_polygon*)x->content)->vertices);
 
-		if (poly_length != 3)
+		if (poly_length != 3) {
+			printf("=> %ld\n", poly_length);
 			read_object_error("Scop can only handle triangle shapes.");
+		}
 
 		count += poly_length;
 
-		iter = iter->next;
+		x = x->next;
 	}
 
 	data->vertex_count = count;

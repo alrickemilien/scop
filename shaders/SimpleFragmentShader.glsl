@@ -1,40 +1,30 @@
 #version 400 core
 
-in vec3				_color;
-in vec2				_uv;
-in vec3				_normal;
-in vec3				_toLightVector;
+in vec3			position;
+in vec3			color;
+in vec2			uv;
+in vec3			normal;
 
-out vec4			color;
+out	vec3		_color;
+out vec2		_uv;
+out vec3		_normal;
+out vec3		_toLightVector;
 
-uniform bool		lighting;
-uniform float		textureLevel;
-uniform vec3		lightPosition;
-uniform vec3		lightColor;
-uniform sampler2D	tex;
+uniform mat4	modelMatrix;
+uniform vec3	lightPosition;
+uniform mat4	mvp;
 
 void	main()
 {
-	color = vec4(_color, 1.0f);
+	gl_Position = mvp * vec4(position, 1);
 
-	if (textureLevel > 0.0f)
-		color = mix(color, texture(tex, _uv), textureLevel);
+	_color = color;
+	_uv = uv;
 
-	if (!lighting)
-		return ;
+	vec4	worldPosition;
 
-	vec3	normNormal;
-	vec3	normLight;
-	float	dotResult;
-	float	brightness;
-	vec3	diffuse;
+	worldPosition = modelMatrix * vec4(position, 1.0);
 
-	normNormal = normalize(_normal);
-	normLight = normalize(_toLightVector);
-
-	dotResult = dot(normNormal, normLight);
-	brightness = max(dotResult, 0.2);
-	diffuse = brightness * lightColor;
-
-	color *= vec4(diffuse, 1.0);
+	_normal = (modelMatrix * vec4(normal, 0.0)).xyz;
+	_toLightVector = lightPosition - worldPosition.xyz;
 }

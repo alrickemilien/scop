@@ -113,6 +113,8 @@ ADD_EXECUTABLE(scop
 	src/utils/ft_strjoin.c
 	src/utils/lst_data_at.c
 
+	src/lib/gl_log.c
+
 	src/main.c
 
 	shaders/SimpleVertexShader.glsl

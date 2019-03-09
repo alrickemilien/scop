@@ -149,11 +149,8 @@ GLuint load_shaders(t_software_environ *env) {
 		print_gl_shader_error(program_id, info_log_length);
 	}
 
-	glDetachShader(program_id, vertex_shader_id);
-	glDetachShader(program_id, fragment_shader_id);
-
-	glDeleteShader(vertex_shader_id);
-	glDeleteShader(fragment_shader_id);
+	env->vertex_shader_id = vertex_shader_id;
+	env->fragment_shader_id = fragment_shader_id;
 
 	return (program_id);
 }

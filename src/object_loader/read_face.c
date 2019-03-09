@@ -91,7 +91,7 @@ int				read_face(t_obj_data *data, const t_token *tokens)
 
 	new_polygon.vertices = NULL;
 
-  if (!read_face_components(data, tokens, &new_polygon))
+  if (read_face_components(data, tokens, &new_polygon) < 0)
 		return (-1);
 
   ft_lstadd(&data->polygons,

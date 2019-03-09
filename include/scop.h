@@ -144,11 +144,14 @@ typedef struct	s_software_environ
 	// OpenGL progrm id
 	GLuint		program_id;
 
-	// OpengL VBO
+	// OpenGL VAO and VBO
+	GLuint		vao;
 	GLuint		vbo;
 
+	GLuint vertex_shader_id;
+	GLuint fragment_shader_id;
+
 	// OpenGL shaders variables
-	GLuint		vertex_array;
 	GLuint		mvp_uni;
 	GLuint		model_matrix_uni;
 	GLuint		lighting_uni;
@@ -235,5 +238,12 @@ double	deg_to_rad(double deg);
 ** Utils
 */
 char	*ft_strjoin(char const *s1, char const *s2);
+
+/*
+** Logs
+*/
+bool	restart_gl_log();
+bool	gl_log(const char* message, ...);
+bool	gl_log_err(const char* message, ...);
 
 #endif

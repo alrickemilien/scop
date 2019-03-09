@@ -13,3 +13,4 @@ bin
 *.ps
 scop
 *.swp
+*.log

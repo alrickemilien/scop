@@ -62,6 +62,11 @@ SRC +=	src/mtl_loader/load_mtl_file.c \
 				src/mtl_loader/read_comment.c
 
 #
+# Logs
+#
+SRC += src/lib/gl_log.c
+
+#
 # utils
 #
 SRC +=	src/utils/ft_lstadd.c \

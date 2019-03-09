@@ -54,8 +54,20 @@ void clear_env_memory() {
 void	end_program()
 {
 	printf("Closing app ...\n");
-	glfwTerminate();
+
 	clear_env_memory();
+
+	glDetachShader(env->program_id, env->vertex_shader_id);
+	glDetachShader(env->program_id, env->fragment_shader_id);
+
+	glDeleteShader(env->vertex_shader_id);
+	glDeleteShader(env->fragment_shader_id);
+
+	// glDeleteBuffers(1, env->);
+	// glDeleteVertexArrays(1, env->);
+	glDeleteProgram(env->program_id);
+
+	glfwTerminate();
 
 	printf("Closed.\n");
 
@@ -81,22 +93,25 @@ void run()
 	while (glfwGetKey(WINDOW, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
 		glfwWindowShouldClose(WINDOW) == 0)
 	{
-		// // Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
+		// wipe the drawing surface clear
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		render(env);
 
-		// // Swap buffers
+		// Swap buffers
 		glfwSwapBuffers(WINDOW);
+
+		// Handle other events (mouse, keyboard, ...)
 		glfwPollEvents();
 	}
 
 	end_program();
 }
 
-static void error_callback(int error, const char* description)
+static void glfw_error_callback(int error, const char* description)
 {
 	fprintf(stderr, "Error: %s (%d)\n", description, error);
+	gl_log_err("GLFW ERROR: code %i msg: %s\n", error, description);
 }
 
 /*
@@ -140,14 +155,16 @@ void init(int argc, char **argv)
 	(void)argv;
 	(void)argc;
 
-	glfwSetErrorCallback(error_callback);
+	glfwSetErrorCallback(glfw_error_callback);
 
 	if (!glfwInit())
 		exit_error_with_message("Failed to initialize GLFW");
 
+  // Se the antialiasing => pixels are subdivided by X
 	glfwWindowHint(GLFW_SAMPLES, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, SOFT_GLFW_CONTEXT_VERSION_MAJOR);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, SOFT_GLFW_CONTEXT_VERSION_MINOR);
+
 	// To make MacOS happy; should not be needed
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
