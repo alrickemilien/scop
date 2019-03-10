@@ -55,9 +55,8 @@ void	end_program()
 {
 	printf("Closing app ...\n");
 
-	clear_env_memory();
-
 	glDetachShader(env->program_id, env->vertex_shader_id);
+
 	glDetachShader(env->program_id, env->fragment_shader_id);
 
 	glDeleteShader(env->vertex_shader_id);
@@ -69,9 +68,17 @@ void	end_program()
 
 	glfwTerminate();
 
+	clear_env_memory();
+
 	printf("Closed.\n");
 
 	exit(0);
+}
+
+void stop_on_sigint(int signo) {
+	if (signo == SIGINT && env != NULL) {
+		 glfwSetWindowShouldClose(WINDOW, GLFW_TRUE);
+	}
 }
 
 /*
@@ -80,14 +87,17 @@ void run()
 {
 	GLuint program_id;
 
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc( GL_LESS );
+
 	// Dark blue background
-	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
-
-	program_id = load_shaders(env);
-
-	glUseProgram(program_id);
+//	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
 	prepare(env);
+
+	program_id = load_shaders(env);
+	// White Background
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
 	// Check if the ESC key was pressed or the window was closed
 	while (glfwGetKey(WINDOW, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
@@ -98,11 +108,11 @@ void run()
 
 		render(env);
 
-		// Swap buffers
-		glfwSwapBuffers(WINDOW);
-
 		// Handle other events (mouse, keyboard, ...)
 		glfwPollEvents();
+
+		// Swap buffers
+		glfwSwapBuffers(WINDOW);
 	}
 
 	end_program();
@@ -161,7 +171,8 @@ void init(int argc, char **argv)
 		exit_error_with_message("Failed to initialize GLFW");
 
   // Se the antialiasing => pixels are subdivided by X
-	glfwWindowHint(GLFW_SAMPLES, 4);
+//	glfwWindowHint(GLFW_SAMPLES, 4);
+
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, SOFT_GLFW_CONTEXT_VERSION_MAJOR);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, SOFT_GLFW_CONTEXT_VERSION_MINOR);
 
@@ -178,7 +189,7 @@ void init(int argc, char **argv)
 	};
 
 	// Ensure we can capture the escape key being pressed below
-	glfwSetInputMode(WINDOW, GLFW_STICKY_KEYS, GL_TRUE);
+//	glfwSetInputMode(WINDOW, GLFW_STICKY_KEYS, GL_TRUE);
 
 	glfwSetKeyCallback(WINDOW, key_callback);
 
@@ -191,6 +202,9 @@ void init(int argc, char **argv)
 
 int main(int argc, char **argv)
 {
+	if (signal(SIGINT, stop_on_sigint) == SIG_ERR)
+   fprintf(stderr, "Can't catch SIGINT\n");
+
 	// Could not continue if the system ressources are fully and successfully loaded
 	if (init_system_resources(argc, argv) < 0)
 		return (-1);

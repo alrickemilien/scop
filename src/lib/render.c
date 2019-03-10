@@ -1,5 +1,5 @@
 #include "scop.h"
-
+/*
 static void	update_texture_transition(t_software_environ *env)
 {
 	if (env->texturing)
@@ -18,9 +18,10 @@ static void	update_texture_transition(t_software_environ *env)
 			env->texture_level = 0.0f;
 	}
 }
-
+*/
 void		render(t_software_environ *env)
 {
+	/*
 	t_matrix *mvp;
 
 //	if (env->auto_rotate)
@@ -37,6 +38,7 @@ void		render(t_software_environ *env)
 	multiply_matrix(mvp, env->projection_matrix, mvp);
 
 	size_t i = 0;
+	*/
 /*
 	while (i < env->projection_matrix->lines * env->projection_matrix->columns)
 	{
@@ -50,6 +52,7 @@ void		render(t_software_environ *env)
 	}
 	printf("\n");
 */
+/*
 	GLfloat b[16];
 
 	i = 0;
@@ -67,15 +70,18 @@ void		render(t_software_environ *env)
 		c[i] = (GLfloat)mvp->value[i];
 		i++;
 	}
+	*/
+
+	glUseProgram(env->program_id);
+	glBindVertexArray(env->vao);
+	glDrawArrays(GL_TRIANGLES, 0, 3);
+
+//	glUniformMatrix4fv(env->model_matrix_uni, 1, GL_FALSE, b);
+
+//	glUniformMatrix4fv(env->mvp_uni, 1, GL_FALSE, c);
+
+//	glUniform1f(env->texture_level_uni, env->texture_level);
 
 
-	glUniformMatrix4fv(env->model_matrix_uni, 1, GL_FALSE, b);
-
-	glUniformMatrix4fv(env->mvp_uni, 1, GL_FALSE, c);
-
-	glUniform1f(env->texture_level_uni, env->texture_level);
-
-	glDrawArrays(GL_TRIANGLES, 0, env->data.vertex_count);
-
-	delete_matrix(mvp);
+	//delete_matrix(mvp);
 }

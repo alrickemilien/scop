@@ -146,7 +146,6 @@ typedef struct	s_software_environ
 
 	// OpenGL VAO and VBO
 	GLuint		vao;
-	GLuint		vbo;
 
 	GLuint vertex_shader_id;
 	GLuint fragment_shader_id;

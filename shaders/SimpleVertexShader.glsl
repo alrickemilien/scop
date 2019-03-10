@@ -1,30 +1,11 @@
-#version 400 core
+#version 410 core
 
-in vec3			position;
-in vec3			color;
-in vec2			uv;
-in vec3			normal;
+layout(location = 0) in vec3 position;
+layout(location = 1) in vec3 color;
 
-out	vec3		_color;
-out vec2		_uv;
-out vec3		_normal;
-out vec3		_toLightVector;
+out vec3 fragment_color;
 
-uniform mat4	modelMatrix;
-uniform vec3	lightPosition;
-uniform mat4	mvp;
-
-void	main()
-{
-	gl_Position = mvp * vec4(position, 1);
-
-	_color = color;
-	_uv = uv;
-
-	vec4	worldPosition;
-
-	worldPosition = modelMatrix * vec4(position, 1.0);
-
-	_normal = (modelMatrix * vec4(normal, 0.0)).xyz;
-	_toLightVector = lightPosition - worldPosition.xyz;
+void main() {
+	gl_Position = vec4(position, 1.0);
+	fragment_color = color;
 }

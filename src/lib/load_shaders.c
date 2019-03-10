@@ -129,7 +129,7 @@ GLuint load_shaders(t_software_environ *env) {
 	// Compile Fragment Shader
 	printf("Compiling shader : %s\n", fragment_file_full_path);
 
-	compile_single_shader(vertex_shader_id, fragment_shader_code, &info_log_length, &result);
+	compile_single_shader(fragment_shader_id, fragment_shader_code, &info_log_length, &result);
 
 	// Link the program
 	printf("Linking program\n");
@@ -151,6 +151,8 @@ GLuint load_shaders(t_software_environ *env) {
 
 	env->vertex_shader_id = vertex_shader_id;
 	env->fragment_shader_id = fragment_shader_id;
+
+	env->program_id = program_id;
 
 	return (program_id);
 }

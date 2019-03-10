@@ -18,7 +18,8 @@ typedef struct  s_glx_attribute {
 								const GLvoid  *pointer​;
 }               t_glx_attribute;
 
-static const size_t polygon_size = sizeof(t_vec3) * 3 + sizeof(t_vec2);
+// static const size_t polygon_size = sizeof(t_vec3) * 3 + sizeof(t_vec2);
+static const size_t polygon_size = sizeof(GLfloat) * 3 * 2;
 
 static const t_glx_attribute g_attribute_map[] = {
   {
@@ -65,7 +66,7 @@ static const t_glx_attribute g_attribute_map[] = {
 
 void set_attribute(GLuint id_program, const char *attribute_name)
 {
-  GLuint	id;
+  //GLuint	id;
   size_t  i;
 
   for (i = 0; i * sizeof(t_glx_attribute) < sizeof(g_attribute_map); i++) {
@@ -73,17 +74,19 @@ void set_attribute(GLuint id_program, const char *attribute_name)
           g_attribute_map[i].attribute_name,
           strlen(g_attribute_map[i].attribute_name)) == 0)
     {
-      id = glGetAttribLocation(id_program,
-                              g_attribute_map[i].attribute_name);
+    //  id = glGetAttribLocation(id_program,
+    //                          g_attribute_map[i].attribute_name);
 
-      glEnableVertexAttribArray(id);
+      glEnableVertexAttribArray(i);
 
-      glVertexAttribPointer(id_program,
-        g_attribute_map[i].size​,
-        g_attribute_map[i].type​,
-        g_attribute_map[i].normalized,
-        g_attribute_map[i].stride​,
-        (void*)(g_attribute_map[i].pointer​));
+      // glVertexAttribPointer(id_program,
+      //   g_attribute_map[i].size​,
+      //   g_attribute_map[i].type​,
+      //   g_attribute_map[i].normalized,
+      //   g_attribute_map[i].stride​,
+      //   (void*)(g_attribute_map[i].pointer​));
+
+			glBindAttribLocation(id_program, i, attribute_name);
 
       return ;
     }
