@@ -28,7 +28,7 @@ static shader_t	*load_single_shader(const char *path, GLuint id)
 
 	if ((fd = open(path, O_RDONLY)) == -1)
 	{
-		dprintf(2, "%s: File does not exist or permission denied\n", path);
+		fprintf(stderr, "%s: File does not exist or permission denied\n", path);
 		return (NULL);
 	}
 
@@ -43,7 +43,7 @@ static shader_t	*load_single_shader(const char *path, GLuint id)
 	if (MAP_FAILED == (shader->content = mmap(NULL, shader->length,
 		PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, 0)))
 	{
-		dprintf(2, "File does not exist or permission denied\n");
+		fprintf(stderr, "File does not exist or permission denied\n");
 	}
 
 	close(fd);

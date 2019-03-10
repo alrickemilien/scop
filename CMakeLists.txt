@@ -16,10 +16,9 @@ SET ( CMAKE_RUNTIME_OUTPUT_DIRECTORY
 # Compile external dependencies
 add_subdirectory (external/glfw)
 
-# Create distrib subdirectory
-if(INCLUDE_DISTRIB)
-	add_subdirectory(distrib)
-endif(INCLUDE_DISTRIB)
+add_subdirectory (external/glew)
+
+add_subdirectory (src/libmatrix)
 
 # Includes directory (-I on Makefile)
 include_directories(
@@ -32,33 +31,22 @@ include_directories(
 	src/libmatrix/include/
 )
 
-# Libmatrix
-add_custom_target(
-   libmatrix
-   COMMAND make
-   WORKING_DIRECTORY src/libmatrix
-)
-
 # Library to use (-l on Makefile)
 set(ALL_LIBS
 	${OPENGL_LIBRARY}
 
 	glfw
 
-	GLEW_1130
+	external/glew/lib/Debug/glewd
 
 	src/libmatrix
 )
 
 add_definitions(
 	-DTW_STATIC
-
 	-DTW_NO_LIB_PRAGMA
-
 	-DTW_NO_DIRECT3D
-
 	-DGLEW_STATIC
-
 	-D_CRT_SECURE_NO_WARNINGS
 )
 
@@ -70,7 +58,6 @@ ADD_EXECUTABLE(scop
 	src/lib/set_attribute.c
 	src/lib/count_vertices.c
 	src/lib/load_shaders.c
-	src/lib/build_vertex_buffer.c
 	src/lib/math_utils.c
 	src/lib/prepare.c
 	src/lib/load_texture.c
