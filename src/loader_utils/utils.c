@@ -14,7 +14,7 @@ bool			check_tokens_number(const t_token *token, size_t size)
 	return (true);
 }
 
-inline bool is_printable(char c)
+bool is_printable(char c)
 {
   if (c >= 1 && c <= 32 && c != 127)
     return (false);

@@ -31,16 +31,29 @@ include_directories(
 	src/libmatrix/include/
 )
 
-# Library to use (-l on Makefile)
-set(ALL_LIBS
-	${OPENGL_LIBRARY}
+if(WIN32)
+	# Library to use (-l on Makefile)
+	set(ALL_LIBS
+		${OPENGL_LIBRARY}
 
-	glfw
+		glfw
 
-	external/glew/lib/Debug/glewd
+		external/glew/lib/Debug/glewd
 
-	src/libmatrix
-)
+		src/libmatrix/Debug/libmatrix
+	)
+else()
+	# Library to use (-l on Makefile)
+	set(ALL_LIBS
+		${OPENGL_LIBRARY}
+
+		glfw
+
+		external/glew/lib/glewd
+
+		src/libmatrix
+	)
+endif()
 
 add_definitions(
 	-DTW_STATIC
@@ -70,7 +83,6 @@ ADD_EXECUTABLE(scop
 	src/object_loader/read_vertex.c
 	src/object_loader/read_vec2.c
 	src/object_loader/read_vec3.c
-	src/object_loader/load_object_file_utils.c
 	src/object_loader/read_normal_vector.c
 	src/object_loader/read_name.c
 	src/object_loader/load_object_file.c
