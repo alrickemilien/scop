@@ -91,4 +91,6 @@ int							add_vertex(
 								int no_texture,
 								t_list *vertices);
 
+void						print_object(const t_obj_data *data);
+
 #endif

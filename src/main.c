@@ -91,13 +91,11 @@ void run()
 	glDepthFunc( GL_LESS );
 
 	// Dark blue background
-//	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
 	prepare(env);
 
 	program_id = load_shaders(env);
-	// White Background
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
 	// Check if the ESC key was pressed or the window was closed
 	while (glfwGetKey(WINDOW, GLFW_KEY_ESCAPE) != GLFW_PRESS &&

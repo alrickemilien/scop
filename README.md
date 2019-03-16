@@ -23,3 +23,6 @@ cmake --build  .
 git submodule init
 make
 ```
+
+# Sources
+[Some VBO good practice](https://www.khronos.org/opengl/wiki/Vertex_Specification_Best_Practices)

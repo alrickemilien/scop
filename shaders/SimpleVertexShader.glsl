@@ -1,11 +1,19 @@
 #version 410 core
 
-layout(location = 0) in vec3 position;
-layout(location = 1) in vec3 color;
+in vec3			position;
+in vec3			color;
+in vec2			uv;
+in vec3			normal;
 
-out vec3 fragment_color;
+out vec3 _color;
+out vec2 _uv;
+out vec3 _normal;
+
+uniform mat4	mvp;
 
 void main() {
-	gl_Position = vec4(position, 1.0);
-	fragment_color = color;
+	gl_Position = mvp * vec4(position, 1);
+	_color = color;
+	_uv = uv;
+	_color = color;
 }
