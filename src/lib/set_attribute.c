@@ -10,15 +10,13 @@ typedef struct s_glx_attribute {
   const GLvoid *pointer;
 } t_glx_attribute;
 
-static const size_t polygon_size = sizeof(t_vec3) * 3 + sizeof(t_vec2);
-
 static const t_glx_attribute g_attribute_map[] = {
   {
     "position",
     3,
     GL_FLOAT,
     GL_FALSE,
-    polygon_size,
+    sizeof(t_vertex),
     0
   },
   {
@@ -26,7 +24,7 @@ static const t_glx_attribute g_attribute_map[] = {
     3,
     GL_FLOAT,
     GL_FALSE,
-    polygon_size,
+    sizeof(t_vertex),
     (void*)(sizeof(t_vec3))
   },
   {
@@ -34,7 +32,7 @@ static const t_glx_attribute g_attribute_map[] = {
     2,
     GL_FLOAT,
     GL_FALSE,
-    polygon_size,
+    sizeof(t_vertex),
     (void*)(sizeof(t_vec3) + sizeof(t_vec3))
   },
   {
@@ -42,7 +40,7 @@ static const t_glx_attribute g_attribute_map[] = {
     3,
     GL_FLOAT,
     GL_FALSE,
-    polygon_size,
+    sizeof(t_vertex),
     (void*)(sizeof(t_vec3) + sizeof(t_vec3) + sizeof(t_vec2))
   }
 };

@@ -2,14 +2,14 @@
 cmake_minimum_required (VERSION 3.0)
 
 # OPENGL package
-FIND_PACKAGE(OpenGL REQUIRED)
+find_package(OpenGL REQUIRED)
 
 # Sets the src directory
-SET ( CMAKE_SOURCE_DIR
+set ( CMAKE_SOURCE_DIR
 	${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
-SET ( CMAKE_RUNTIME_OUTPUT_DIRECTORY
+set ( CMAKE_RUNTIME_OUTPUT_DIRECTORY
 	${CMAKE_CURRENT_SOURCE_DIR}/bin
 )
 
@@ -31,8 +31,8 @@ include_directories(
 	src/libmatrix/include/
 )
 
+# Library to use (-l on Makefile)
 if(WIN32)
-	# Library to use (-l on Makefile)
 	set(ALL_LIBS
 		${OPENGL_LIBRARY}
 
@@ -43,7 +43,6 @@ if(WIN32)
 		src/libmatrix/Debug/libmatrix
 	)
 else()
-	# Library to use (-l on Makefile)
 	set(ALL_LIBS
 		${OPENGL_LIBRARY}
 
@@ -63,14 +62,24 @@ add_definitions(
 	-D_CRT_SECURE_NO_WARNINGS
 )
 
-# Create the executable
-ADD_EXECUTABLE(scop
+set (WIN_SOURCES 
+	src/win64/escape_path_antislash.c
+	src/win64/load_single_shader.c
+	src/win64/strndup.c
+)
+
+set (OSX_SOURCES 
+	src/lib/load_single_shader.c
+)
+
+set (SOURCES 
 	src/lib/create_triangle.c
 	src/lib/exit_error_with_msg.c
 	src/lib/render.c
 	src/lib/set_attribute.c
 	src/lib/count_vertices.c
 	src/lib/load_shaders.c
+	
 	src/lib/math_utils.c
 	src/lib/prepare.c
 	src/lib/load_texture.c
@@ -119,6 +128,21 @@ ADD_EXECUTABLE(scop
 	shaders/SimpleVertexShader.glsl
 	shaders/SimpleFragmentShader.glsl
 )
+
+# Create the executable
+if(WIN32)
+	ADD_EXECUTABLE(scop
+		${SOURCES}
+		${WIN_SOURCES}
+	)
+else()
+	ADD_EXECUTABLE(scop
+		${SOURCES}
+		${OSX_SOURCES}
+	)
+endif()
+
+
 
 TARGET_LINK_LIBRARIES(scop ${ALL_LIBS})
 

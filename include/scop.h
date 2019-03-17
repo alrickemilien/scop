@@ -217,7 +217,10 @@ void	count_vertices(t_obj_data *data);
 void 		exit_error_with_message(const char *msg);
 
 void		create_triangle(t_software_environ *env);
-GLuint	load_shaders(t_software_environ *env);
+
+GLuint		load_shaders(t_software_environ *env);
+shader_t	*load_single_shader(const char *path, GLuint id);
+
 void 		load_texture(t_software_environ *env);
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
@@ -240,6 +243,10 @@ double	deg_to_rad(double deg);
 ** Utils
 */
 char	*ft_strjoin(char const *s1, char const *s2);
+#ifdef _MSC_VER
+char	*create_escaped_path_for_windows(const char *path);
+char	*strndup(char *str, int chars);
+#endif
 
 /*
 ** Logs

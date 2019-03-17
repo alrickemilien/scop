@@ -43,18 +43,18 @@ static void load_polygon_into_data(t_polygon *polygon, void *buffer) {
 	{
 		vertex = (t_vertex*)x->content;
 
-		memcpy(buffer + i * polygon_size, &vertex->position, sizeof(t_vec3));
+		memcpy(&((t_vertex*)buffer)[i], &vertex->position, sizeof(t_vec3));
 
-		memcpy(buffer + i * polygon_size + sizeof(t_vec3), &vertex->color, sizeof(t_vec3));
+		memcpy(&((t_vertex*)buffer)[i] + sizeof(t_vec3), &vertex->color, sizeof(t_vec3));
 
 		memcpy(
-			buffer + i * polygon_size + sizeof(t_vec3) + sizeof(t_vec2),
+			&((t_vertex*)buffer)[i] + sizeof(t_vec3) + sizeof(t_vec2),
 			&vertex->uv,
 			sizeof(t_vec2)
 		);
 
 		memcpy(
-			buffer + i * polygon_size + sizeof(t_vec3) + sizeof(t_vec3) + sizeof(t_vec2),
+			&((t_vertex*)buffer)[i] + sizeof(t_vec3) + sizeof(t_vec3) + sizeof(t_vec2),
 			&vertex->normal,
 			sizeof(t_vec3)
 		);

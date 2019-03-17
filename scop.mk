@@ -15,6 +15,7 @@ endif
 #
 SRC +=	src/lib/create_triangle.c \
 				src/lib/load_shaders.c \
+				src/lib/load_single_shader.c \
 				src/lib/set_attribute.c \
 				src/lib/math_utils.c \
 				src/lib/load_texture.c \
