@@ -36,6 +36,8 @@ static void load_polygon_into_data(t_polygon *polygon, void *buffer) {
 	size_t	i;
 	t_vertex	*vertex;
 
+	t_color color = { 0xFF, 0xFF, 0xFF};
+
 	i = 0;
 	x = polygon->vertices;
 
@@ -45,10 +47,10 @@ static void load_polygon_into_data(t_polygon *polygon, void *buffer) {
 
 		memcpy(&((t_vertex*)buffer)[i], &vertex->position, sizeof(t_vec3));
 
-		memcpy(&((t_vertex*)buffer)[i] + sizeof(t_vec3), &vertex->color, sizeof(t_vec3));
+		memcpy(&((t_vertex*)buffer)[i] + sizeof(t_vec3), &color, sizeof(t_vec3));
 
 		memcpy(
-			&((t_vertex*)buffer)[i] + sizeof(t_vec3) + sizeof(t_vec2),
+			&((t_vertex*)buffer)[i] + sizeof(t_vec3) + sizeof(t_vec3),
 			&vertex->uv,
 			sizeof(t_vec2)
 		);
