@@ -40,7 +40,6 @@ void		render(t_software_environ *env)
 
 	size_t i = 0;
 
-	glUniformMatrix4fv(env->mvp_uni, 1, GL_FALSE, c);
 
 	GLfloat b[16];
 
@@ -60,16 +59,18 @@ void		render(t_software_environ *env)
 		i++;
 	}
 
-	while (i < env->projection_matrix->lines * env->mvp->columns)
+	while (i < mvp->lines * mvp->columns)
 	{
 		if (i && (i + 1) % 4 == 0) {
-			printf("%lf \n",env->projection_matrix->value[i]);
+			printf("%lf \n",mvp->value[i]);
 		} else {
-			printf("%lf ",env->projection_matrix->value[i]);
+			printf("%lf ",mvp->value[i]);
 		}
 
 		i++;
 	}
+
+	glUniformMatrix4fv(env->mvp_uni, 1, GL_FALSE, c);
 
 	glUseProgram(env->program_id);
 	glBindVertexArray(env->vao);

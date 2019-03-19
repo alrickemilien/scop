@@ -3,7 +3,8 @@
 t_software_environ *env = NULL;
 
 #ifdef __APPLE__
-void glew_init(void) {
+void glew_init(void)
+{
 	glewExperimental = GL_TRUE;
 
 	GLenum err = glewInit();
@@ -21,37 +22,39 @@ void glew_init(void) {
 ** Clear the environnement in memory
 */
 
-static void del(void *p, size_t s) {
+static void del(void *p, size_t s)
+{
 	(void)s;
 	free(p);
 }
 
-void clear_env_memory() {
+void clear_env_memory()
+{
 	printf("Clearing environnement ...\n");
 
 	if (!env)
-		return ;
+		return;
 
-	if(env->data.name)
+	if (env->data.name)
 		free(env->data.name);
-	if(env->data.mtl)
+	if (env->data.mtl)
 		free(env->data.mtl);
-	if(env->data.positions)
+	if (env->data.positions)
 		ft_lstdel(&env->data.positions, &del);
-	if(env->data.uvs)
+	if (env->data.uvs)
 		ft_lstdel(&env->data.uvs, &del);
-	if(env->data.normals)
+	if (env->data.normals)
 		ft_lstdel(&env->data.normals, &del);
 
 	// @TODO ==> need to clear sublist
-	if(env->data.polygons)
+	if (env->data.polygons)
 		ft_lstdel(&env->data.polygons, &del);
 
 	free(env);
 }
 
 // Close OpenGL window and terminate GLFW
-void	end_program()
+void end_program()
 {
 	printf("Closing app ...\n");
 
@@ -75,9 +78,11 @@ void	end_program()
 	exit(0);
 }
 
-void stop_on_sigint(int signo) {
-	if (signo == SIGINT && env != NULL) {
-		 glfwSetWindowShouldClose(WINDOW, GLFW_TRUE);
+void stop_on_sigint(int signo)
+{
+	if (signo == SIGINT && env != NULL)
+	{
+		glfwSetWindowShouldClose(WINDOW, GLFW_TRUE);
 	}
 }
 
@@ -88,18 +93,22 @@ void run()
 	GLuint program_id;
 
 	glEnable(GL_DEPTH_TEST);
-	glDepthFunc( GL_LESS );
+	glDepthFunc(GL_LESS);
 
 	// Dark blue background
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
+	print_object(&env->data);
+
 	prepare(env);
+
+	printf("Preparation is done\n");
 
 	program_id = load_shaders(env);
 
 	// Check if the ESC key was pressed or the window was closed
 	while (glfwGetKey(WINDOW, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
-		glfwWindowShouldClose(WINDOW) == 0)
+		   glfwWindowShouldClose(WINDOW) == 0)
 	{
 		// wipe the drawing surface clear
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -116,7 +125,7 @@ void run()
 	end_program();
 }
 
-static void glfw_error_callback(int error, const char* description)
+static void glfw_error_callback(int error, const char *description)
 {
 	fprintf(stderr, "Error: %s (%d)\n", description, error);
 	gl_log_err("GLFW ERROR: code %i msg: %s\n", error, description);
@@ -138,8 +147,13 @@ static int init_system_resources(int argc, char **argv)
 	if (argc != 2)
 		exit_error_with_message("Input file missing.");
 
+#ifdef __APPLE__
 	if (getcwd(env->cwd, sizeof(env->cwd)) == NULL)
 		exit_error_with_message("An error occured when oading the pwd path of the program.");
+#else
+	if (_getcwd(env->cwd, sizeof(env->cwd)) == NULL)
+		exit_error_with_message("An error occured when oading the pwd path of the program.");
+#endif
 
 	// Load provided object file
 	if (load_object_file(&env->data, argv[1]) < 0)
@@ -168,8 +182,8 @@ void init(int argc, char **argv)
 	if (!glfwInit())
 		exit_error_with_message("Failed to initialize GLFW");
 
-  // Se the antialiasing => pixels are subdivided by X
-//	glfwWindowHint(GLFW_SAMPLES, 4);
+	// Se the antialiasing => pixels are subdivided by X
+	//	glfwWindowHint(GLFW_SAMPLES, 4);
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, SOFT_GLFW_CONTEXT_VERSION_MAJOR);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, SOFT_GLFW_CONTEXT_VERSION_MINOR);
@@ -187,7 +201,7 @@ void init(int argc, char **argv)
 	};
 
 	// Ensure we can capture the escape key being pressed below
-//	glfwSetInputMode(WINDOW, GLFW_STICKY_KEYS, GL_TRUE);
+	//	glfwSetInputMode(WINDOW, GLFW_STICKY_KEYS, GL_TRUE);
 
 	glfwSetKeyCallback(WINDOW, key_callback);
 
@@ -201,7 +215,7 @@ void init(int argc, char **argv)
 int main(int argc, char **argv)
 {
 	if (signal(SIGINT, stop_on_sigint) == SIG_ERR)
-   fprintf(stderr, "Can't catch SIGINT\n");
+		fprintf(stderr, "Can't catch SIGINT\n");
 
 	// Could not continue if the system ressources are fully and successfully loaded
 	if (init_system_resources(argc, argv) < 0)

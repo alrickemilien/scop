@@ -45,9 +45,15 @@ static void load_polygon_into_data(t_polygon *polygon, void *buffer) {
 	{
 		vertex = (t_vertex*)x->content;
 
-		memcpy(&((t_vertex*)buffer)[i], &vertex->position, sizeof(t_vec3));
+		printf("a\n");
+
+		memcpy(& ((t_vertex*)buffer)[i], &vertex->position, sizeof(t_vec3));
+
+		printf("b\n");
 
 		memcpy(&((t_vertex*)buffer)[i] + sizeof(t_vec3), &color, sizeof(t_vec3));
+
+		printf("c\n");
 
 		memcpy(
 			&((t_vertex*)buffer)[i] + sizeof(t_vec3) + sizeof(t_vec3),
@@ -55,11 +61,15 @@ static void load_polygon_into_data(t_polygon *polygon, void *buffer) {
 			sizeof(t_vec2)
 		);
 
+		printf("d\n");
+
 		memcpy(
 			&((t_vertex*)buffer)[i] + sizeof(t_vec3) + sizeof(t_vec3) + sizeof(t_vec2),
 			&vertex->normal,
 			sizeof(t_vec3)
 		);
+
+		printf("e\n");
 
 		i++;
 
@@ -82,6 +92,8 @@ static void vertex_list_to_vbo(t_software_environ *env)
 
 	// print_object((const void*)&env->data);
 
+	printf("Load Polygons\n");
+
 	i = 0;
 	x = env->data.polygons;
 	while (x)
@@ -95,12 +107,17 @@ static void vertex_list_to_vbo(t_software_environ *env)
 		x = x->next;
 	}
 
+	printf("Load VAO\n");
+
 	// 1 - Load VAO
 
 	glGenVertexArrays(1, &env->vao);
 	glBindVertexArray(env->vao);
 
 	// 2 - Load VBO
+
+	printf("Load VBO\n");
+
 
 	glGenBuffers(1, &env->vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, env->vbo);

@@ -43,6 +43,7 @@
 
 # include <windows.h>
 # include <io.h>
+# include <direct.h>
 
 #define _USE_MATH_DEFINES // for C
 #include <math.h>

@@ -13,9 +13,9 @@ void		print_vec3(void *data)
 
 	pos = (t_vec3 *)data;
 	printf(
-		"\tx = %f\n"
-		"\ty = %f\n"
-		"\tz = %f\n\n",
+		"\tx = %lf\n"
+		"\ty = %lf\n"
+		"\tz = %lf\n\n",
 		pos->x,
 		pos->y,
 		pos->z);
@@ -26,8 +26,8 @@ void		print_vec2(void *data)
 	t_vec3		*pos;
 
 	pos = (t_vec3 *)data;
-	printf("\tx = %f\n"
-				"\ty = %f\n\n",
+	printf("\tx = %lf\n"
+				"\ty = %lf\n\n",
 				pos->x, pos->y);
 }
 

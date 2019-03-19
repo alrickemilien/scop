@@ -125,10 +125,8 @@ int				read_vertex(t_obj_data *data, const t_token *tokens, bool is_texture_set,
 
   fill_vertex_position(data, tokens, &new_vertex);
 
-	printf("tokens_number : %ld\n", tokens_number);
-	printf("tokens[0].cursor : %s\n", tokens[0].cursor);
-	if (tokens[0].cursor) printf("tokens[1].cursor : %s\n", tokens[1].cursor);
-	if (tokens[1].cursor) printf("tokens[2].cursor : %s\n", tokens[2].cursor);
+	//if (tokens[0].cursor) printf("tokens[1].cursor : %s\n", tokens[1].cursor);
+	//if (tokens[1].cursor) printf("tokens[2].cursor : %s\n", tokens[2].cursor);
 
 	if (tokens_number > 1)
   	fill_vertex_color(data, tokens, &new_vertex, is_texture_set);
