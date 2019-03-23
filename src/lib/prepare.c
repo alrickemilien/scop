@@ -45,31 +45,21 @@ static void load_polygon_into_data(t_polygon *polygon, void *buffer) {
 	{
 		vertex = (t_vertex*)x->content;
 
-		printf("a\n");
+		memcpy(&((uint8_t*)buffer)[i], &vertex->position, sizeof(t_vec3));
 
-		memcpy(& ((t_vertex*)buffer)[i], &vertex->position, sizeof(t_vec3));
-
-		printf("b\n");
-
-		memcpy(&((t_vertex*)buffer)[i] + sizeof(t_vec3), &color, sizeof(t_vec3));
-
-		printf("c\n");
+		memcpy(&((uint8_t*)buffer)[i] + sizeof(t_vec3), &color, sizeof(t_vec3));
 
 		memcpy(
-			&((t_vertex*)buffer)[i] + sizeof(t_vec3) + sizeof(t_vec3),
+			&((uint8_t*)buffer)[i] + sizeof(t_vec3) + sizeof(t_vec3),
 			&vertex->uv,
 			sizeof(t_vec2)
 		);
 
-		printf("d\n");
-
 		memcpy(
-			&((t_vertex*)buffer)[i] + sizeof(t_vec3) + sizeof(t_vec3) + sizeof(t_vec2),
+			&((uint8_t*)buffer)[i] + sizeof(t_vec3) + sizeof(t_vec3) + sizeof(t_vec2),
 			&vertex->normal,
 			sizeof(t_vec3)
 		);
-
-		printf("e\n");
 
 		i++;
 
@@ -109,9 +99,18 @@ static void vertex_list_to_vbo(t_software_environ *env)
 
 	printf("Load VAO\n");
 
+	if (glGenVertexArrays == NULL) {
+		fprintf(stderr, "glGenVertexArrays do not exist, exiting now ...\n");
+		exit(-1);
+	}
+	 
+
 	// 1 - Load VAO
 
 	glGenVertexArrays(1, &env->vao);
+			check_gl_error();
+			printf("ici \n");
+
 	glBindVertexArray(env->vao);
 
 	// 2 - Load VBO
@@ -121,7 +120,7 @@ static void vertex_list_to_vbo(t_software_environ *env)
 	glGenBuffers(1, &env->vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, env->vbo);
 	glBufferData(GL_ARRAY_BUFFER,
-							polygon_size * env->data.vertex_count * sizeof(float),
+							polygon_size * env->data.vertex_count,
 							buffer,
 							GL_STATIC_DRAW);
 }

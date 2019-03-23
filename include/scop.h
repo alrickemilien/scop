@@ -143,10 +143,10 @@ typedef struct	s_software_environ
 	const char *path_to_texture;
 
 	// OpenGL progrm id
-	GLuint		program_id;
+	GLuint 		program_id;
 
 	// OpenGL VAO and VBO
-	GLuint		vao;
+	GLuint 		vao;
 
 	// Here we have a single VBO taht contains v/c/n
 	GLuint		vbo;

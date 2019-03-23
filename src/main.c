@@ -2,7 +2,6 @@
 
 t_software_environ *env = NULL;
 
-#ifdef __APPLE__
 void glew_init(void)
 {
 	glewExperimental = GL_TRUE;
@@ -16,7 +15,6 @@ void glew_init(void)
 		exit(err);
 	}
 }
-#endif
 
 /*
 ** Clear the environnement in memory
@@ -206,10 +204,12 @@ void init(int argc, char **argv)
 	glfwSetKeyCallback(WINDOW, key_callback);
 
 	glfwMakeContextCurrent(WINDOW);
+	
+	printf("OpenGL %s, GLSL %s\n", 
+    		glGetString(GL_VERSION),
+    		glGetString(GL_SHADING_LANGUAGE_VERSION));
 
-#ifdef __APPLE__
 	glew_init();
-#endif
 }
 
 int main(int argc, char **argv)

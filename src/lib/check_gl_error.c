@@ -28,7 +28,10 @@ void check_gl_error()
 			if (glmaperror[i].err == err)
 			error = glmaperror[i].string_error;
 		}
-
+#ifdef _MSC_VER
+		fprintf(stderr, _isatty(_fileno(stderr)) ? "\033[31m[GL Error]\033[0m : %s\n" : "[GL Error] : %s\n", error);
+#else
 		fprintf(stderr, isatty(fileno(stderr)) ? "\033[31m[GL Error]\033[0m : %s\n" : "[GL Error] : %s\n", error);
+#endif
 	}
 }

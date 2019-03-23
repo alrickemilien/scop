@@ -16,7 +16,8 @@ static const char *fragment_file_path = "/shaders/SimpleFragmentShader.glsl";
 static void print_gl_shader_error(GLuint id, int info_log_length) {
 	char *error_message;
 
-	error_message = malloc(sizeof(char) * info_log_length);
+	error_message = malloc(sizeof(char) * info_log_length + 1);
+	error_message[sizeof(char) * info_log_length] = 0;
 	glGetShaderInfoLog(id, info_log_length, NULL, error_message);
 	fprintf(stderr, "%s\n", error_message);
 	free(error_message);
@@ -28,7 +29,7 @@ static void compile_single_shader(GLuint id, const shader_t *source, int *info_l
 
 	error_message = NULL;
 
-	glShaderSource(id, 1, (const GLchar *const *)(&source->content), &source->length);
+	glShaderSource(id, 1, (const GLchar *const*)(&source->content), &source->length);
 	glCompileShader(id);
 
 	// Check Shader
@@ -36,6 +37,7 @@ static void compile_single_shader(GLuint id, const shader_t *source, int *info_l
 	glGetShaderiv(id, GL_INFO_LOG_LENGTH, info_log_length);
 
 	if (info_log_length > 0) {
+		fprintf(stderr, "gl_shader_error :");
 		print_gl_shader_error(id, *info_log_length);
 	}
 }
