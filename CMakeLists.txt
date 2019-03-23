@@ -62,27 +62,28 @@ add_definitions(
 	-D_CRT_SECURE_NO_WARNINGS
 )
 
-set (WIN_SOURCES 
+set (WIN_SOURCES
 	src/win64/escape_path_antislash.c
 	src/win64/load_single_shader.c
 	src/win64/strndup.c
 )
 
-set (OSX_SOURCES 
+set (OSX_SOURCES
 	src/lib/load_single_shader.c
 )
 
-set (SOURCES 
+set (SOURCES
 	src/lib/create_triangle.c
 	src/lib/exit_error_with_msg.c
 	src/lib/render.c
 	src/lib/set_attribute.c
 	src/lib/count_vertices.c
 	src/lib/load_shaders.c
-	
+
 	src/lib/math_utils.c
 	src/lib/prepare.c
 	src/lib/load_texture.c
+	src/lib/check_gl_error.c
 
 	src/object_loader/read_position.c
 	src/object_loader/read_mtl.c
@@ -97,7 +98,7 @@ set (SOURCES
 	src/object_loader/load_object_file.c
 	src/object_loader/read_object_error.c
 	src/object_loader/read_face.c
-	src/object_loader/print_object.c	
+	src/object_loader/print_object.c
 
 	src/loader_utils/n_atof.c
 	src/loader_utils/split_into_tokens.c

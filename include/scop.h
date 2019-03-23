@@ -228,6 +228,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 void set_attribute(GLuint id_program, const char *attribute_name);
 
+void check_gl_error();
 
 void prepare(t_software_environ *env);
 void render(t_software_environ *env);

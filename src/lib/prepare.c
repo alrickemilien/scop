@@ -118,7 +118,6 @@ static void vertex_list_to_vbo(t_software_environ *env)
 
 	printf("Load VBO\n");
 
-
 	glGenBuffers(1, &env->vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, env->vbo);
 	glBufferData(GL_ARRAY_BUFFER,

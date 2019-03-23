@@ -1,0 +1,34 @@
+#include "scop.h"
+
+/*
+** Provides gl error string message if any
+*/
+
+typedef struct glmaperror_s {
+							GLenum err;
+							char *string_error;
+}							 glmaperror_t;
+
+static const glmaperror_t glmaperror[] = {
+	{ GL_INVALID_OPERATION, "GL_INVALID_OPERATION", },
+	{ GL_INVALID_ENUM, "GL_INVALID_ENUM", },
+	{ GL_INVALID_VALUE, "GL_INVALID_VALUE", },
+	{ GL_OUT_OF_MEMORY, "GL_OUT_OF_MEMORY", },
+	{ GL_INVALID_FRAMEBUFFER_OPERATION, "GL_INVALID_FRAMEBUFFER_OPERATION", },
+};
+
+void check_gl_error()
+{
+	GLenum err;
+	char *error;
+
+	while ((err = glGetError()) != GL_NO_ERROR) {
+		error = "Unhandled GL error";
+		for (size_t i = 0; i * sizeof(glmaperror_t) < sizeof(glmaperror); i++) {
+			if (glmaperror[i].err == err)
+			error = glmaperror[i].string_error;
+		}
+
+		fprintf(stderr, isatty(fileno(stderr)) ? "\033[31m[GL Error]\033[0m : %s\n" : "[GL Error] : %s\n", error);
+	}
+}

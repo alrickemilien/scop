@@ -60,14 +60,25 @@ void set_attribute(GLuint id_program, const char *attribute_name)
 
 			id = glGetAttribLocation(id_program, g_attribute_map[i].attribute_name);
 
+			// If the named attribute variable is not an active attribute in the specified program object
+			// if (id == -1) {
+			//
+			// }
+
+			check_gl_error();
+
 			glEnableVertexAttribArray(id);
 
-      glVertexAttribPointer(id_program,
+			fprintf(stderr, "id : %d\n", id);
+
+      glVertexAttribPointer(id,
         g_attribute_map[i].size,
 				g_attribute_map[i].type,
         g_attribute_map[i].normalized,
         g_attribute_map[i].stride,
 				(void*)(g_attribute_map[i].pointer));
+
+				check_gl_error();
 
       return ;
     }

@@ -1,9 +1,9 @@
 #version 410 core
 
-in vec3			position;
-in vec3			color;
-in vec2			uv;
-in vec3			normal;
+in vec3 position;
+in vec3 color;
+in vec2 uv;
+in vec3 normal;
 
 out vec3 _color;
 out vec2 _uv;
