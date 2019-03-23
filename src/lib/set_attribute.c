@@ -25,7 +25,7 @@ static const t_glx_attribute g_attribute_map[] = {
     GL_FLOAT,
     GL_FALSE,
     sizeof(t_vertex),
-    (void*)(sizeof(t_vec3))
+    (char *)NULL + (sizeof(t_vec3))
   },
   {
     "uv",
@@ -33,7 +33,7 @@ static const t_glx_attribute g_attribute_map[] = {
     GL_FLOAT,
     GL_FALSE,
     sizeof(t_vertex),
-    (void*)(sizeof(t_vec3) + sizeof(t_vec3))
+    (char *)NULL + (sizeof(t_vec3) + sizeof(t_vec3))
   },
   {
     "normal",
@@ -41,7 +41,7 @@ static const t_glx_attribute g_attribute_map[] = {
     GL_FLOAT,
     GL_FALSE,
     sizeof(t_vertex),
-    (void*)(sizeof(t_vec3) + sizeof(t_vec3) + sizeof(t_vec2))
+    (char *)NULL + (sizeof(t_vec3) + sizeof(t_vec3) + sizeof(t_vec2))
   }
 };
 
@@ -58,16 +58,18 @@ void set_attribute(GLuint id_program, const char *attribute_name)
           strlen(g_attribute_map[i].attribute_name)) == 0)
     {
 
-			id = glGetAttribLocation(id_program, g_attribute_map[i].attribute_name);
+//			id = glGetAttribLocation(id_program, g_attribute_map[i].attribute_name);
+			glBindAttribLocation(id_program, i, g_attribute_map[i].attribute_name);
+
+      id = (GLint)i;
 
 			// If the named attribute variable is not an active attribute in the specified program object
 			// if (id == -1) {
 			//
 			// }
-
 			check_gl_error();
 
-			glEnableVertexAttribArray(id);
+	//		glEnableVertexAttribArray(id);
 
 			fprintf(stderr, "id : %d\n", id);
 
