@@ -81,7 +81,7 @@ set (SOURCES
 	src/lib/load_shaders.c
 
 	src/lib/math_utils.c
-	src/lib/prepare.c
+	src/lib/gl_buffering.c
 	src/lib/load_texture.c
 	src/lib/check_gl_error.c
 

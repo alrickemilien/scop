@@ -165,9 +165,9 @@ typedef struct	s_software_environ
 	GLuint		col_attrib;
 	GLuint		texture;
 
-	t_matrix *view_matrix;
-	t_matrix *model_matrix;
-	t_matrix *projection_matrix;
+	t_matrix	*view_matrix;
+	t_matrix	*model_matrix;
+	t_matrix	*projection_matrix;
 } t_software_environ;
 
 
@@ -212,25 +212,25 @@ typedef struct s_gl_info {
 	int maxTextureStacks;
 } t_gl_info;
 
-void	count_vertices(t_obj_data *data);
+void		count_vertices(t_obj_data *data);
 
 void 		exit_error_with_message(const char *msg);
 
 void		create_triangle(t_software_environ *env);
 
-int		load_shaders(t_software_environ *env);
+int			load_shaders(t_software_environ *env);
 shader_t	*load_single_shader(const char *path, GLuint id);
 
 void 		load_texture(t_software_environ *env);
 
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+void		key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
-void set_attribute(GLuint id_program, const char *attribute_name);
+void		set_attribute(GLuint id_program, const char *attribute_name);
 
-void check_gl_error();
+void		check_gl_error();
 
-void prepare(t_software_environ *env);
-void render(t_software_environ *env);
+void		gl_buffering(t_software_environ *env);
+void		render(t_software_environ *env);
 
 unsigned char	*load_bitmap_file(const char *pathname, size_t *width, size_t *height);
 
@@ -243,6 +243,7 @@ double	deg_to_rad(double deg);
 /*
 ** Utils
 */
+
 char	*ft_strjoin(char const *s1, char const *s2);
 #ifdef _MSC_VER
 char	*create_escaped_path_for_windows(const char *path);
@@ -252,6 +253,7 @@ char	*strndup(char *str, int chars);
 /*
 ** Logs
 */
+
 bool	restart_gl_log();
 bool	gl_log(const char* message, ...);
 bool	gl_log_err(const char* message, ...);

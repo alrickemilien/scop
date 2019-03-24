@@ -101,7 +101,7 @@ void run()
 	if (load_shaders(env) < 0)
 		return end_program(-1);
 
-	prepare(env);
+	gl_buffering(env);
 
 	printf("Preparation is done\n");
 
@@ -182,7 +182,7 @@ void init(int argc, char **argv)
 		exit_error_with_message("Failed to initialize GLFW");
 
 	// Se the antialiasing => pixels are subdivided by X
-	//	glfwWindowHint(GLFW_SAMPLES, 4);
+		// glfwWindowHint(GLFW_SAMPLES, 4);
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, SOFT_GLFW_CONTEXT_VERSION_MAJOR);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, SOFT_GLFW_CONTEXT_VERSION_MINOR);

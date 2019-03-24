@@ -146,7 +146,7 @@ static void vertex_list_to_vbo(t_software_environ *env)
 							GL_STATIC_DRAW);
 }
 
-void prepare(t_software_environ *env)
+void gl_buffering(t_software_environ *env)
 {
 	// Load vertex only VBO
 	vertex_list_to_vbo(env);

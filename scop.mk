@@ -23,7 +23,7 @@ SRC +=	src/lib/create_triangle.c \
 				src/lib/exit_error_with_msg.c \
 				src/lib/count_vertices.c \
 				src/lib/render.c \
-				src/lib/prepare.c \
+				src/lib/gl_buffering.c \
 				src/lib/check_gl_error.c
 
 #
