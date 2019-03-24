@@ -16,3 +16,4 @@ scop
 *.log
 a.out
 *.DS_STORE
+.vscode

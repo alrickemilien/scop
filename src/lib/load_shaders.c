@@ -78,7 +78,8 @@ int load_shaders(t_software_environ *env) {
 	// Read the Fragment Shader code from the file
 	fragment_shader_code = load_single_shader(fragment_file_full_path, fragment_shader_id);
 
-	printf("vertex_shader_code %.10s\n", (char*)vertex_shader_code->content);
+	printf("vertex_shader_code length : %d\n", vertex_shader_code->length);
+	printf("vertex_shader_code content :\n");
 
 	for(GLint i = 0; i < vertex_shader_code->length; i++)
 	{

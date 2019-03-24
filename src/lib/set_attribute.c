@@ -10,7 +10,7 @@ typedef struct s_glx_attribute {
   const GLvoid *pointer;
 } t_glx_attribute;
 
-static const size_t vertex_size = 3 * sizeof(t_vec3) + sizeof(t_vec2);
+#define VERTEX_SIZE 3 * sizeof(t_vec3) + sizeof(t_vec2)
 
 static const t_glx_attribute g_attribute_map[] = {
   {
@@ -18,7 +18,7 @@ static const t_glx_attribute g_attribute_map[] = {
     3,
     GL_FLOAT,
     GL_FALSE,
-    vertex_size,
+    VERTEX_SIZE,
     0
   },
   {
@@ -26,7 +26,7 @@ static const t_glx_attribute g_attribute_map[] = {
     3,
     GL_FLOAT,
     GL_FALSE,
-    vertex_size,
+    VERTEX_SIZE,
     (char *)NULL + (sizeof(t_vec3))
   },
   {
@@ -34,7 +34,7 @@ static const t_glx_attribute g_attribute_map[] = {
     2,
     GL_FLOAT,
     GL_FALSE,
-    vertex_size,
+    VERTEX_SIZE,
     (char *)NULL + (sizeof(t_vec3) + sizeof(t_vec3))
   },
   {
@@ -42,7 +42,7 @@ static const t_glx_attribute g_attribute_map[] = {
     3,
     GL_FLOAT,
     GL_FALSE,
-    vertex_size,
+    VERTEX_SIZE,
     (char *)NULL + (sizeof(t_vec3) + sizeof(t_vec3) + sizeof(t_vec2))
   }
 };
