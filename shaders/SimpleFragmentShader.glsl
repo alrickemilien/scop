@@ -1,8 +1,6 @@
 #version 410 core
 
-out vec3 _color;
-out vec3 _uv;
-out vec3 _normal;
+in vec3 _color;
 
 out vec4 color;
 

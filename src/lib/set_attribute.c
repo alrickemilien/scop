@@ -10,13 +10,15 @@ typedef struct s_glx_attribute {
   const GLvoid *pointer;
 } t_glx_attribute;
 
+static const size_t vertex_size = 3 * sizeof(t_vec3) + sizeof(t_vec2);
+
 static const t_glx_attribute g_attribute_map[] = {
   {
     "position",
     3,
     GL_FLOAT,
     GL_FALSE,
-    sizeof(t_vertex),
+    vertex_size,
     0
   },
   {
@@ -24,7 +26,7 @@ static const t_glx_attribute g_attribute_map[] = {
     3,
     GL_FLOAT,
     GL_FALSE,
-    sizeof(t_vertex),
+    vertex_size,
     (char *)NULL + (sizeof(t_vec3))
   },
   {
@@ -32,7 +34,7 @@ static const t_glx_attribute g_attribute_map[] = {
     2,
     GL_FLOAT,
     GL_FALSE,
-    sizeof(t_vertex),
+    vertex_size,
     (char *)NULL + (sizeof(t_vec3) + sizeof(t_vec3))
   },
   {
@@ -40,7 +42,7 @@ static const t_glx_attribute g_attribute_map[] = {
     3,
     GL_FLOAT,
     GL_FALSE,
-    sizeof(t_vertex),
+    vertex_size,
     (char *)NULL + (sizeof(t_vec3) + sizeof(t_vec3) + sizeof(t_vec2))
   }
 };
@@ -58,10 +60,13 @@ void set_attribute(GLuint id_program, const char *attribute_name)
           strlen(g_attribute_map[i].attribute_name)) == 0)
     {
 
-//			id = glGetAttribLocation(id_program, g_attribute_map[i].attribute_name);
-			glBindAttribLocation(id_program, i, g_attribute_map[i].attribute_name);
+			id = glGetAttribLocation(id_program, g_attribute_map[i].attribute_name);
 
-      id = (GLint)i;
+      fprintf(stderr, "glGetAttribLocation returned id : %d\n", id);
+
+			// glBindAttribLocation(id_program, i, g_attribute_map[i].attribute_name);
+
+     // id = (GLint)i;
 
 			// If the named attribute variable is not an active attribute in the specified program object
 			// if (id == -1) {
@@ -69,7 +74,7 @@ void set_attribute(GLuint id_program, const char *attribute_name)
 			// }
 			check_gl_error();
 
-	//		glEnableVertexAttribArray(id);
+			glEnableVertexAttribArray(id);
 
 			fprintf(stderr, "id : %d\n", id);
 
@@ -80,7 +85,7 @@ void set_attribute(GLuint id_program, const char *attribute_name)
         g_attribute_map[i].stride,
 				(void*)(g_attribute_map[i].pointer));
 
-				check_gl_error();
+			check_gl_error();
 
       return ;
     }

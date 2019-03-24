@@ -2,7 +2,7 @@
 
 t_software_environ *env = NULL;
 
-void glew_init(void)
+static void glew_init(void)
 {
 	glewExperimental = GL_TRUE;
 
@@ -26,7 +26,7 @@ static void del(void *p, size_t s)
 	free(p);
 }
 
-void clear_env_memory()
+static void clear_env_memory()
 {
 	printf("Clearing environnement ...\n");
 
@@ -52,7 +52,7 @@ void clear_env_memory()
 }
 
 // Close OpenGL window and terminate GLFW
-void end_program()
+static void end_program(int code)
 {
 	printf("Closing app ...\n");
 
@@ -73,7 +73,7 @@ void end_program()
 
 	printf("Closed.\n");
 
-	exit(0);
+	exit(code);
 }
 
 void stop_on_sigint(int signo)
@@ -85,24 +85,25 @@ void stop_on_sigint(int signo)
 }
 
 /*
+**
 */
 void run()
 {
-	GLuint program_id;
-
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 
 	// Dark blue background
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
-
+	
 	print_object(&env->data);
+
+
+	if (load_shaders(env) < 0)
+		return end_program(-1);
 
 	prepare(env);
 
 	printf("Preparation is done\n");
-
-	program_id = load_shaders(env);
 
 	// Check if the ESC key was pressed or the window was closed
 	while (glfwGetKey(WINDOW, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
@@ -120,7 +121,7 @@ void run()
 		glfwSwapBuffers(WINDOW);
 	}
 
-	end_program();
+	end_program(0);
 }
 
 static void glfw_error_callback(int error, const char *description)

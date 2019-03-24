@@ -23,12 +23,12 @@ void		print_vec3(void *data)
 
 void		print_vec2(void *data)
 {
-	t_vec3		*pos;
+	t_vec2		*pos;
 
-	pos = (t_vec3 *)data;
+	pos = (t_vec2 *)data;
 	printf("\tx = %lf\n"
-				"\ty = %lf\n\n",
-				pos->x, pos->y);
+			"\ty = %lf\n\n",
+			pos->x, pos->y);
 }
 
 void		print_poly_component(void *data)

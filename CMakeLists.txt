@@ -99,6 +99,7 @@ set (SOURCES
 	src/object_loader/read_object_error.c
 	src/object_loader/read_face.c
 	src/object_loader/print_object.c
+	src/object_loader/print_token.c
 
 	src/loader_utils/n_atof.c
 	src/loader_utils/split_into_tokens.c

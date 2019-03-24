@@ -26,37 +26,37 @@ static void	set_light_uniforms(t_software_environ *env)
 /*
 * * This is the size of memory of polygon vertex
 * * It is composed of many vertices
-* * Each vertice is composed of position color uv and normal
+* * Each vertice is composed of position, color uv and normal
 */
-
-static const size_t polygon_size = sizeof(t_vec3) * 3 + sizeof(t_vec2);
 
 static void load_polygon_into_data(t_polygon *polygon, void *buffer) {
 	t_list	*x;
 	size_t	i;
 	t_vertex	*vertex;
 
-	t_color color = { 0xFF, 0xFF, 0xFF};
+	t_vec3 color = { 0xFF, 0xFF, 0xFF };
 
 	i = 0;
 	x = polygon->vertices;
+
+	size_t vertex_size = sizeof(t_vec3) * 3 + sizeof(t_vec2);
 
 	while (x)
 	{
 		vertex = (t_vertex*)x->content;
 
-		memcpy(&((uint8_t*)buffer)[i], &vertex->position, sizeof(t_vec3));
+		memcpy((uint8_t*)buffer + i * vertex_size, &vertex->position, sizeof(t_vec3));
 
-		memcpy(&((uint8_t*)buffer)[i] + sizeof(t_vec3), &color, sizeof(t_vec3));
+		memcpy((uint8_t*)buffer + i * vertex_size + sizeof(t_vec3), &color, sizeof(t_vec3));
 
 		memcpy(
-			&((uint8_t*)buffer)[i] + sizeof(t_vec3) + sizeof(t_vec3),
+			(uint8_t*)buffer + i * vertex_size + sizeof(t_vec3) + sizeof(t_vec3),
 			&vertex->uv,
 			sizeof(t_vec2)
 		);
 
 		memcpy(
-			&((uint8_t*)buffer)[i] + sizeof(t_vec3) + sizeof(t_vec3) + sizeof(t_vec2),
+			(uint8_t*)buffer + i * vertex_size + sizeof(t_vec3) + sizeof(t_vec3) + sizeof(t_vec2),
 			&vertex->normal,
 			sizeof(t_vec3)
 		);
@@ -76,9 +76,16 @@ static void vertex_list_to_vbo(t_software_environ *env)
 	t_list		*x;
 	float			*buffer;
 
-	buffer = (float*)malloc(polygon_size * env->data.vertex_count);
+	// A polygon is three vertex length
+	size_t vertex_size = sizeof(t_vec3) * 3 + sizeof(t_vec2);
+	size_t polygon_size = 3 * vertex_size;
 
-	memset(buffer, 0, polygon_size * env->data.vertex_count);
+
+	buffer = (float*)malloc(vertex_size * env->data.vertex_count);
+
+	memset(buffer, 0, vertex_size * env->data.vertex_count);
+
+	printf("env->data.vertex_count : %ld\n", env->data.vertex_count);
 
 	// print_object((const void*)&env->data);
 
@@ -86,16 +93,25 @@ static void vertex_list_to_vbo(t_software_environ *env)
 
 	i = 0;
 	x = env->data.polygons;
+	size_t poly_length;
 	while (x)
 	{
-		load_polygon_into_data(x->content, buffer + i * polygon_size);
+		poly_length = ft_lstlen(((t_polygon*)x->content)->vertices);
 
+		if (poly_length == 3) {
+			// Load 3 polygons into data
+			load_polygon_into_data(x->content, buffer + i * polygon_size);
 
-		// Increase of three because a polygon is 3 vertex long
-		i += 3;
+			// Increase of three because a polygon is 3 vertex long
+			i++;
+		}
+
+		printf("i:%ld\n", i);
 
 		x = x->next;
 	}
+
+	printf("I resulted to %ld\n", i);
 
 	printf("Load VAO\n");
 
@@ -103,13 +119,18 @@ static void vertex_list_to_vbo(t_software_environ *env)
 		fprintf(stderr, "glGenVertexArrays do not exist, exiting now ...\n");
 		exit(-1);
 	}
-	 
+
+	if (glBindVertexArray == NULL) {
+		fprintf(stderr, "glBindVertexArray do not exist, exiting now ...\n");
+		exit(-1);
+	}
 
 	// 1 - Load VAO
 
 	glGenVertexArrays(1, &env->vao);
-			check_gl_error();
-			printf("ici \n");
+	
+	check_gl_error();
+	printf("ici \n");
 
 	glBindVertexArray(env->vao);
 
@@ -150,7 +171,7 @@ void prepare(t_software_environ *env)
 		0.0,
 		1000.0);
 
-		env->mvp_uni = glGetUniformLocation(env->program_id, "mvp");
+	env->mvp_uni = glGetUniformLocation(env->program_id, "mvp");
 
 //	env->model_matrix_uni = glGetUniformLocation(env->program_id, "modelMatrix");
 

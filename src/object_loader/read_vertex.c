@@ -13,7 +13,6 @@ static void		fill_vertex_position(t_obj_data *data, const t_token *tokens, t_ver
 
   pos = lst_data_at(data->positions, index);
 
-
   if (pos)
 	{
 		vertex->position.x = pos->x;
@@ -116,7 +115,7 @@ int				read_vertex(t_obj_data *data, const t_token *tokens, bool is_texture_set,
 	size_t	tokens_number;
 
 	if (!tokens->cursor[0])
-		read_object_error("A face component can't be empty.");
+		return read_object_error("A face component can't be empty.");
 
   // Compute tokens array length
 	tokens_number = 0;

@@ -18,35 +18,43 @@ static void print_gl_shader_error(GLuint id, int info_log_length) {
 
 	error_message = malloc(sizeof(char) * info_log_length + 1);
 	error_message[sizeof(char) * info_log_length] = 0;
-	glGetShaderInfoLog(id, info_log_length, NULL, error_message);
-	fprintf(stderr, "%s\n", error_message);
+	glGetShaderInfoLog(id, sizeof(char) * info_log_length, NULL, error_message);
+	fprintf(stderr, "gl_shader_error : %s\n", error_message);
 	free(error_message);
 }
 
-static void compile_single_shader(GLuint id, const shader_t *source, int *info_log_length, GLint *result)
-{
+static void print_gl_program_error(GLuint id, int info_log_length) {
 	char *error_message;
 
-	error_message = NULL;
+	error_message = malloc(sizeof(char) * info_log_length + 1);
+	error_message[sizeof(char) * info_log_length] = 0;
+	glGetProgramInfoLog(id, sizeof(char) * info_log_length, NULL, error_message);
+	fprintf(stderr, "gl_program_error : %s\n", error_message);
+	free(error_message);
+}
 
+static int compile_single_shader(GLuint id, const shader_t *source, int *info_log_length, GLint *result)
+{
 	glShaderSource(id, 1, (const GLchar *const*)(&source->content), &source->length);
 	glCompileShader(id);
 
-	// Check Shader
+	// Check Shader compilation
 	glGetShaderiv(id, GL_COMPILE_STATUS, result);
 	glGetShaderiv(id, GL_INFO_LOG_LENGTH, info_log_length);
 
-	if (info_log_length > 0) {
-		fprintf(stderr, "gl_shader_error :");
+	if (*result == GL_FALSE) {
 		print_gl_shader_error(id, *info_log_length);
+		return (-1);
 	}
+
+	return (0);
 }
 
 /*
 ** Load shaders
 */
 
-GLuint load_shaders(t_software_environ *env) {
+int load_shaders(t_software_environ *env) {
 	// Create the shaders variables
 	GLuint vertex_shader_id = glCreateShader(GL_VERTEX_SHADER);
 	GLuint fragment_shader_id = glCreateShader(GL_FRAGMENT_SHADER);
@@ -83,17 +91,19 @@ GLuint load_shaders(t_software_environ *env) {
 		return (-1);
 
 	GLint result = GL_FALSE;
-	int info_log_length;
+	int info_log_length = 0;
 
 	// Compile Vertex Shader
 	printf("Compiling shader : %s\n", vertex_file_full_path);
 
-	compile_single_shader(vertex_shader_id, vertex_shader_code, &info_log_length, &result);
+	if (compile_single_shader(vertex_shader_id, vertex_shader_code, &info_log_length, &result) < 0)
+		return (-1);
 
 	// Compile Fragment Shader
 	printf("Compiling shader : %s\n", fragment_file_full_path);
 
-	compile_single_shader(fragment_shader_id, fragment_shader_code, &info_log_length, &result);
+	if (compile_single_shader(fragment_shader_id, fragment_shader_code, &info_log_length, &result) < 0)
+		return (-1);
 
 	// Link the program
 	printf("Linking program\n");
@@ -109,8 +119,10 @@ GLuint load_shaders(t_software_environ *env) {
 	glGetProgramiv(program_id, GL_LINK_STATUS, &result);
 	glGetProgramiv(program_id, GL_INFO_LOG_LENGTH, &info_log_length);
 
-	if (info_log_length > 0) {
-		print_gl_shader_error(program_id, info_log_length);
+	if (result == GL_FALSE)
+	{
+		print_gl_program_error(program_id, info_log_length);
+		return (-1);
 	}
 
 	env->vertex_shader_id = vertex_shader_id;
@@ -118,5 +130,5 @@ GLuint load_shaders(t_software_environ *env) {
 
 	env->program_id = program_id;
 
-	return (program_id);
+	return (0);
 }

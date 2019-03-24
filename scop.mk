@@ -47,7 +47,8 @@ SRC +=	src/object_loader/load_object_file.c \
 				src/object_loader/read_vec3.c \
 				src/object_loader/read_vertex.c \
 				src/object_loader/read_object_error.c \
-				src/object_loader/print_object.c
+				src/object_loader/print_object.c \
+				src/object_loader/print_token.c
 
 #
 # Loader utils

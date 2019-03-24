@@ -33,13 +33,13 @@ static int		read_face_components(
 					const t_token *tokens,
 					t_polygon *new_polygon)
 {
-	int			i;
+	size_t			i;
 	bool			is_texture_set;
 	t_token *ctokens;
 	char *tmp;
 
 	if (!check_tokens_number(tokens, 3))
-		read_object_error("A face must declare at least three vertices.");
+		return (read_object_error("A face must declare at least three vertices."));
 
 	// Start at 1 becase of the f at the start of f X Y Z
 	i = 0;
@@ -49,7 +49,7 @@ static int		read_face_components(
 
 		// When two slashes are present, it means in regular case that it is
 		// a vertex normal indices without texture coordinate indices
-    if (strstr(tokens[i].cursor, "//"))
+    	if (strstr(tokens[i].cursor, "//"))
 			is_texture_set = true;
 
 		tmp = strndup(tokens[i].cursor, tokens[i].size);
@@ -60,17 +60,17 @@ static int		read_face_components(
 		// Into one sub token 12
 		ctokens = split_into_tokens(tmp, "/");
 
-    if (read_vertex(data, (const t_token *)ctokens, is_texture_set, new_polygon) < 0)
+    	if (read_vertex(data, (const t_token *)ctokens, is_texture_set, new_polygon) < 0)
 		{
 			free(tmp);
 			free(ctokens);
 			return (-1);
 		}
 
-    i++;
+    	i++;
 
-    free(tmp);
-    free(ctokens);
+    	free(tmp);
+    	free(ctokens);
 	}
 
 	return (0);
