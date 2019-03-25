@@ -246,7 +246,6 @@ double	deg_to_rad(double deg);
 
 char	*ft_strjoin(char const *s1, char const *s2);
 #ifdef _MSC_VER
-char	*create_escaped_path_for_windows(const char *path);
 char	*strndup(char *str, int chars);
 #endif
 

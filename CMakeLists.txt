@@ -63,7 +63,6 @@ add_definitions(
 )
 
 set (WIN_SOURCES
-	src/win64/escape_path_antislash.c
 	src/win64/load_single_shader.c
 	src/win64/strndup.c
 )
