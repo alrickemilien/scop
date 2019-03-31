@@ -74,7 +74,7 @@ void		render(t_software_environ *env)
 
 	glUseProgram(env->program_id);
 	glBindVertexArray(env->vao);
-	glDrawArrays(GL_TRIANGLES, 0, env->data.vertex_count);
+	glDrawArrays(GL_TRIANGLES, 0, 10);
 
 //	glUniformMatrix4fv(env->model_matrix_uni, 1, GL_FALSE, b);
 

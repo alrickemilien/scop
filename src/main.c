@@ -98,8 +98,10 @@ void run()
 	print_object(&env->data);
 
 
-	if (load_shaders(env) < 0)
-		return end_program(-1);
+	if (load_shaders(env) < 0) {
+		end_program(-1);
+		return;
+	}
 
 	gl_buffering(env);
 
@@ -221,6 +223,11 @@ int main(int argc, char **argv)
 	// Could not continue if the system ressources are fully and successfully loaded
 	if (init_system_resources(argc, argv) < 0)
 		return (-1);
+
+
+	// printf("env->data.vertex_count : %ld\n", env->data.vertex_count);
+
+	// print_object((const void*)&env->data);
 
 	init(argc, argv);
 

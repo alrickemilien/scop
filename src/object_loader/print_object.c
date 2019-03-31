@@ -37,8 +37,13 @@ void		print_poly_component(void *data)
 
 	component = (t_vertex *)data;
 	puts("***");
+	puts("POSITION");
 	print_vec3(&component->position);
+
+	puts("UV");
 	print_vec2(&component->uv);
+	
+	puts("NORMAL");
 	print_vec3(&component->normal);
 	puts("***");
 }
@@ -47,20 +52,20 @@ void		print_polygons(void *data)
 {
 	t_list		*components;
 
-	puts("---");
+	puts("--- POLYGON");
 	components = (t_list *)((t_polygon *)data)->vertices;
 	lst_print(components, print_poly_component);
-	puts("---");
+	puts("---\n");
 }
 
 void			print_object(const t_obj_data *data)
 {
-	puts("--- POSITIONS ---");
-	lst_print(data->positions, print_vec3);
+	// puts("--- POSITIONS ---");
+	// lst_print(data->positions, print_vec3);
 	// puts("--- UVS ---");
 	// lst_print(data->uvs, print_vec2);
 	// puts("--- NORMALS ---");
 	// lst_print(data->normals, print_vec3);
-	// puts("--- POLYGONS ---");
-	// lst_print(data->polygons, print_polygons);
+	puts("--- POLYGONS ---");
+	lst_print(data->polygons, print_polygons);
 }

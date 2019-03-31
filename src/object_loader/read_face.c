@@ -94,6 +94,8 @@ int				read_face(t_obj_data *data, const t_token *tokens)
   if (read_face_components(data, tokens, &new_polygon) < 0)
 		return (-1);
 
+  ft_lstreverse(&new_polygon.vertices);
+
   ft_lstadd(&data->polygons,
 		ft_lstnew(&new_polygon, sizeof(t_polygon)));
 

@@ -24,5 +24,8 @@ int		load_object_file(t_obj_data *data, const char *file_path)
 
 	fclose(fp);
 
+	ft_lstreverse(&data->positions);
+	ft_lstreverse(&data->polygons);
+
 	return (0);
 }

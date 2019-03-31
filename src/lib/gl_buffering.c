@@ -34,7 +34,7 @@ static void load_polygon_into_data(t_polygon *polygon, void *buffer) {
 	size_t	i;
 	t_vertex	*vertex;
 
-	t_vec3 color = { 0xFF, 0xFF, 0xFF };
+	t_vec3 color = { 255, 255, 255 };
 
 	i = 0;
 	x = polygon->vertices;
@@ -80,7 +80,6 @@ static void vertex_list_to_vbo(t_software_environ *env)
 	size_t vertex_size = sizeof(t_vec3) * 3 + sizeof(t_vec2);
 	size_t polygon_size = 3 * vertex_size;
 
-
 	buffer = (float*)malloc(vertex_size * env->data.vertex_count);
 
 	memset(buffer, 0, vertex_size * env->data.vertex_count);
@@ -100,13 +99,11 @@ static void vertex_list_to_vbo(t_software_environ *env)
 
 		if (poly_length == 3) {
 			// Load 3 polygons into data
-			load_polygon_into_data(x->content, buffer + i * polygon_size);
+			load_polygon_into_data(x->content, (float*)((char*)buffer + i * polygon_size));
 
 			// Increase of three because a polygon is 3 vertex long
 			i++;
 		}
-
-		printf("i:%ld\n", i);
 
 		x = x->next;
 	}

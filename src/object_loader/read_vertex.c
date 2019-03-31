@@ -56,8 +56,8 @@ static void		fill_vertex_color(t_obj_data *data, const t_token *tokens, t_vertex
 
   else if (i == DEFAULT_CODE || (i >= 0 && ft_lstlen(colors) > (size_t)i))
 	{
-		vertex->uv.x = 0xFFFFFF;
-		vertex->uv.y = 0xFFFFFF;
+		vertex->uv.x = 0;
+		vertex->uv.y = 0;
 	}
 
   else {
@@ -93,9 +93,9 @@ static void		fill_vertex_normal(t_obj_data *data, const t_token *tokens, t_verte
 
 	else if (i == DEFAULT_CODE || (i >= 0 && ft_lstlen(normals) > (size_t)i))
 	{
-		vertx->normal.x = 0xFFFFFF;
-		vertx->normal.y = 0xFFFFFF;
-		vertx->normal.z = 0xFFFFFF;
+		vertx->normal.x = 0;
+		vertx->normal.y = 0;
+		vertx->normal.z = 0;
 	}
 
 	else {

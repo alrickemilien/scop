@@ -1,4 +1,4 @@
-# include "scop.h"
+#include "scop.h"
 
 void	count_vertices(t_obj_data *data)
 {
