@@ -4,6 +4,7 @@ int		fill_vertex_position(t_obj_data *data, t_vertex *vertex)
 {
 	t_vec3		*pos;
 
+	// Substract 1 because stored indexes is the index of obj object that do not start at 0
   pos = lst_data_at(data->positions, vertex->position_index - 1);
 
   if (!pos)
@@ -32,6 +33,7 @@ int		fill_vertex_color(t_obj_data *data, t_vertex *vertex)
 
 	printf("Fill vertex color\n");
 
+	// Substract 1 because stored indexes is the index of obj object that do not start at 0
   color = lst_data_at(colors, vertex->position_index - 1);
 
   if (!color)
@@ -49,7 +51,8 @@ int		fill_vertex_normal(t_obj_data *data, t_vertex *vertex)
 	t_vec3		*normal;
 
 	normals = data->normals;
-
+	
+	// Substract 1 because stored indexes is the index of obj object that do not start at 0
   normal = lst_data_at(normals, vertex->position_index - 1);
 
   if (!normal)
