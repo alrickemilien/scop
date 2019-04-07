@@ -1,106 +1,84 @@
 #include "object_loader.h"
 
-static void		fill_vertex_position(t_obj_data *data, const t_token *tokens, t_vertex *vertex)
+int		fill_vertex_position(t_obj_data *data, t_vertex *vertex)
 {
-	int			index;
 	t_vec3		*pos;
 
-	index = token_to_int(tokens, 0) - 1;
+  pos = lst_data_at(data->positions, vertex->position_index - 1);
 
-	// @TODO need to handle negative
-  if (index < 0)
-	 read_object_error("A face index can't be negative.");
+  if (!pos)
+		return read_object_error("Invalid index for a position.");
 
-  pos = lst_data_at(data->positions, index);
+	printf("vertex->position.x : %lf\n"
+	"vertex->position.x : %lf\n"
+	"vertex->position.z : %lf\n",
+	pos->x,
+	pos->y,
+	pos->z);
 
-  if (pos)
-	{
-		vertex->position.x = pos->x;
-		vertex->position.y = pos->y;
-		vertex->position.z = pos->z;
-	}
-	else if (index >= 0 && ft_lstlen(data->positions) > (size_t)index)
-	{
-		vertex->position.x = 0xFFFFFF;
-		vertex->position.y = 0xFFFFFF;
-		vertex->position.z = 0xFFFFFF;
-	}
-	else
-		read_object_error("Invalid index for a position.");
+	vertex->position.x = pos->x;
+	vertex->position.y = pos->y;
+	vertex->position.z = pos->z;
+
+	return 0;
 }
 
-static void		fill_vertex_color(t_obj_data *data, const t_token *tokens, t_vertex *vertex, int is_texture_set)
+int		fill_vertex_color(t_obj_data *data, t_vertex *vertex)
 {
-	int			i;
 	t_list		*colors;
 	t_vec2		*color;
 
 	colors = data->uvs;
-	i = DEFAULT_CODE;
 
 	printf("Fill vertex color\n");
 
-  if (!is_texture_set)
-		i = token_to_int(tokens, 1);
+  color = lst_data_at(colors, vertex->position_index - 1);
 
-		// @TODO need to handle negative
+  if (!color)
+    return read_object_error("Invalid index for color.");
 
+	vertex->uv.x = color->x;
+	vertex->uv.y = color->y;
 
-  color = lst_data_at(colors, i);
-
-  if (color)
-	{
-		vertex->uv.x = color->x;
-		vertex->uv.y = color->y;
-	}
-
-  else if (i == DEFAULT_CODE || (i >= 0 && ft_lstlen(colors) > (size_t)i))
-	{
-		vertex->uv.x = 0;
-		vertex->uv.y = 0;
-	}
-
-  else {
-    read_object_error("Invalid index for color.");
-  }
+	return 0;
 }
 
-static void		fill_vertex_normal(t_obj_data *data, const t_token *tokens, t_vertex *vertx, int nt)
+int		fill_vertex_normal(t_obj_data *data, t_vertex *vertex)
 {
-	int			i;
 	t_list		*normals;
 	t_vec3		*normal;
 
 	normals = data->normals;
 
-	// @TODO need to handle negative
-	i = token_to_int(tokens, 2) - 1;
+  normal = lst_data_at(normals, vertex->position_index - 1);
 
- 	if (i < 0)
-	 read_object_error("A face index can't be negative.");
+  if (!normal)
+    return read_object_error("Invalid index for normal.");
 
-  if (nt)
-		i = token_to_int(tokens, 1);
+	vertex->normal.x = normal->x;
+	vertex->normal.y = normal->y;
+	vertex->normal.z = normal->z;
 
-  normal = lst_data_at(normals, i);
+	return 0;
+}
 
-  if (normal)
+static size_t read_index(t_obj_data *data, const t_token *tokens, size_t token_index)
+{
+	int			index;
+
+		index = token_to_int(tokens, token_index);
+
+  if (index == 0)
 	{
-		vertx->normal.x = normal->x;
-		vertx->normal.y = normal->y;
-		vertx->normal.z = normal->z;
+		read_object_error("Invalid index for a position, must start at 1 or -1.");
+		return (size_t)-1;
 	}
 
-	else if (i == DEFAULT_CODE || (i >= 0 && ft_lstlen(normals) > (size_t)i))
-	{
-		vertx->normal.x = 0;
-		vertx->normal.y = 0;
-		vertx->normal.z = 0;
-	}
+	// Handle negative
+  if (index < 0)
+		index = ft_lstlen(data->positions) + index;
 
-	else {
-    read_object_error("Invalid index for normal.");
-  }
+	return (size_t)index;
 }
 
 /*
@@ -109,10 +87,12 @@ static void		fill_vertex_normal(t_obj_data *data, const t_token *tokens, t_verte
 ** for a type vertex that do not exists in obj file
 */
 
-int				read_vertex(t_obj_data *data, const t_token *tokens, bool is_texture_set, t_polygon *polygon)
+int				read_vertex(t_obj_data *data, const t_token *tokens, t_polygon *polygon)
 {
 	t_vertex	new_vertex;
 	size_t	tokens_number;
+
+	memset(&new_vertex, 0, sizeof(t_vertex));
 
 	if (!tokens->cursor[0])
 		return read_object_error("A face component can't be empty.");
@@ -122,16 +102,15 @@ int				read_vertex(t_obj_data *data, const t_token *tokens, bool is_texture_set,
 	while (tokens[tokens_number].cursor)
 		tokens_number++;
 
-  fill_vertex_position(data, tokens, &new_vertex);
+	// Fill index of each components
 
-	//if (tokens[0].cursor) printf("tokens[1].cursor : %s\n", tokens[1].cursor);
-	//if (tokens[1].cursor) printf("tokens[2].cursor : %s\n", tokens[2].cursor);
-
-	if (tokens_number > 1)
-  	fill_vertex_color(data, tokens, &new_vertex, is_texture_set);
+	new_vertex.position_index = read_index(data, tokens, 0);
 
 	if (tokens_number > 1)
-  	fill_vertex_normal(data, tokens, &new_vertex, is_texture_set);
+		new_vertex.color_index = read_index(data, tokens, 1);
+
+	if (tokens_number > 2)
+		new_vertex.normal_index = read_index(data, tokens, 2);
 
   ft_lstadd(&polygon->vertices, ft_lstnew(&new_vertex, sizeof(t_vertex)));
 

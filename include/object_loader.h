@@ -18,13 +18,14 @@
 
 typedef struct	s_obj_data
 {
-	char					*name;
-	char					*mtl;
+	char				*name;
+	char				*mtl;
 	t_list				*positions;
 	t_list				*uvs;
 	t_list				*normals;
 	t_list				*polygons;
 	size_t				vertex_count;
+	bool				is_texture_set;
 }								t_obj_data;
 
 typedef struct	s_polygon {
@@ -33,6 +34,11 @@ typedef struct	s_polygon {
 
 typedef struct	s_vertex
 {
+	size_t		position_index;
+	size_t		color_index;
+	size_t		normal_index;
+	size_t		uv_index;
+
 	t_vec3		position;
 	t_vec3		color;
 	t_vec2		uv;
@@ -79,7 +85,7 @@ int							read_face(t_obj_data *data, const t_token *tokens);
 int							read_name(t_obj_data *data, const t_token *tokens);
 int							read_mtl(t_obj_data *data, const t_token *tokens);
 
-int							read_vertex(t_obj_data *data, const t_token *tokens, bool is_texture_set, t_polygon *polygon);
+int							read_vertex(t_obj_data *data, const t_token *tokens, t_polygon *polygon);
 
 int							read_object_file_line(t_obj_data *data, const char *line);
 
@@ -92,5 +98,9 @@ int							add_vertex(
 								t_list *vertices);
 
 void						print_object(const t_obj_data *data);
+
+int							fill_vertex_position(t_obj_data *data, t_vertex *vertex);
+int							fill_vertex_color(t_obj_data *data, t_vertex *vertex);
+int							fill_vertex_normal(t_obj_data *data, t_vertex *vertex);
 
 #endif

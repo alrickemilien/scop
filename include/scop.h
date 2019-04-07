@@ -119,6 +119,38 @@ typedef struct	s_light
 	t_vec3		color;
 }				t_light;
 
+/*
+** Provides all maths parameters that are required
+** to build view matrix
+*/
+
+typedef struct	s_camera {
+				t_vec3 position;
+				t_vec3 target;
+				t_vec3 direction;
+				t_vec3 up;
+				t_vec3 right;
+}				t_camera;
+
+/*
+** - The model matrix is a transformation matrix
+**   that translates, scales and/or rotates your object to place it
+**   in the world at a location/orientation they belong to.
+**
+** - The view space is the result of transforming your world-space coordinates
+**   to coordinates that are in front of the user's view.
+**   This is done through the view/lookAt matrix
+**   The view space is thus the space as seen from the camera's point of view.
+**
+** - At the end of each vertex shader run,
+**   OpenGL expects the coordinates to be within a specific range
+**   and any coordinate that falls outside this range is clipped.
+**   Coordinates that are clipped are discarded, so the remaining coordinates will end up as fragments visible on your screen.
+**   This is also where clip space gets its name from.
+**   The projection matrix then transforms coordinates within this specified range
+**   to normalized device coordinates (-1.0, 1.0).
+*/
+
 typedef struct	s_software_environ
 {
 	int			window_width;
@@ -130,8 +162,7 @@ typedef struct	s_software_environ
 
 	// The data that will be flled during object file loading
 	t_obj_data		data;
-
-	t_light				light;
+	t_light			light;
 
 	// Scop options that can evolve during software run
 	int wireframe;
@@ -165,8 +196,8 @@ typedef struct	s_software_environ
 	GLuint		col_attrib;
 	GLuint		texture;
 
-	t_matrix	*view_matrix;
 	t_matrix	*model_matrix;
+	t_matrix	*view_matrix;
 	t_matrix	*projection_matrix;
 } t_software_environ;
 

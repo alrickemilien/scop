@@ -1,12 +1,47 @@
 #include <stdio.h>
 #include "object_loader.h"
 
-static size_t				g_current_line;
+/*
+** Fill all faces vertices componenets
+** Done at the end after all vertices has been read
+*/
+
+static int fill_faces_vertices_data(t_obj_data *data, t_list *polygons)
+{
+	t_list *x;
+	t_polygon *p;
+	int error;
+
+	error = 0;
+
+	while(polygons)
+	{
+		p = (t_polygon*)polygons->content;
+		x = p->vertices;
+		while (x)
+		{
+			if (fill_vertex_position(data, x->content) < 0)
+				error = -1;
+			if (fill_vertex_color(data, x->content) < 0)
+				error = -1;
+			if (fill_vertex_normal(data, x->content) < 0)
+				error = -1;
+			x = x->next;
+		}
+
+		polygons = polygons->next;
+	}
+
+	return error;
+}
 
 int		load_object_file(t_obj_data *data, const char *file_path)
 {
 	FILE		*fp;
 	char		line[LOADER_LINE_BUFF_SIZE];
+	size_t		g_current_line;
+
+	g_current_line = 0;
 
 	memset(data, 0, sizeof(t_obj_data));
 
@@ -26,6 +61,8 @@ int		load_object_file(t_obj_data *data, const char *file_path)
 
 	ft_lstreverse(&data->positions);
 	ft_lstreverse(&data->polygons);
+
+	fill_faces_vertices_data(data, data->polygons);
 
 	return (0);
 }

@@ -40,7 +40,6 @@ void		render(t_software_environ *env)
 
 	size_t i = 0;
 
-
 	GLfloat b[16];
 
 	i = 0;
@@ -72,15 +71,13 @@ void		render(t_software_environ *env)
 
 	glUniformMatrix4fv(env->mvp_uni, 1, GL_FALSE, c);
 
+//	glUniformMatrix4fv(env->model_matrix_uni, 1, GL_FALSE, b);
+
+//	glUniform1f(env->texture_level_uni, env->texture_level);
+
 	glUseProgram(env->program_id);
 	glBindVertexArray(env->vao);
 	glDrawArrays(GL_TRIANGLES, 0, 10);
-
-//	glUniformMatrix4fv(env->model_matrix_uni, 1, GL_FALSE, b);
-
-	glUniformMatrix4fv(env->mvp_uni, 1, GL_FALSE, c);
-
-//	glUniform1f(env->texture_level_uni, env->texture_level);
 
 	delete_matrix(mvp);
 }

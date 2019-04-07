@@ -36,8 +36,9 @@ void		print_poly_component(void *data)
 	t_vertex	*component;
 
 	component = (t_vertex *)data;
-	puts("***");
-	puts("POSITION");
+	printf("***"
+			"POSITION - %ld\n",
+			component->position_index);
 	print_vec3(&component->position);
 
 	puts("UV");
