@@ -10,13 +10,6 @@ int		fill_vertex_position(t_obj_data *data, t_vertex *vertex)
   if (!pos)
 		return read_object_error("Invalid index for a position.");
 
-	printf("vertex->position.x : %lf\n"
-	"vertex->position.x : %lf\n"
-	"vertex->position.z : %lf\n",
-	pos->x,
-	pos->y,
-	pos->z);
-
 	vertex->position.x = pos->x;
 	vertex->position.y = pos->y;
 	vertex->position.z = pos->z;
@@ -51,6 +44,8 @@ int		fill_vertex_normal(t_obj_data *data, t_vertex *vertex)
 	t_vec3		*normal;
 
 	normals = data->normals;
+
+	printf("Fill vertex normal\n");
 	
 	// Substract 1 because stored indexes is the index of obj object that do not start at 0
   normal = lst_data_at(normals, vertex->position_index - 1);

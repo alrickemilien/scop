@@ -24,6 +24,9 @@ static void	update_texture_transition(t_software_environ *env)
 void		render(t_software_environ *env)
 {
 	t_matrix *mvp;
+	size_t i;
+
+	i = 0;
 
 	//	if (env->auto_rotate)
 	//		rotate_x_matrix4x4(env->model_matrix, 1.0f);
@@ -32,13 +35,23 @@ void		render(t_software_environ *env)
 
  	mvp = identity_matrix(4, 4);
 
+	i = 0;
+	while (i < env->model_matrix->lines * env->model_matrix->columns)
+	{
+		if (i && (i + 1) % 4 == 0) {
+			printf("%lf \n",env->model_matrix->value[i]);
+		} else {
+			printf("%lf ",env->model_matrix->value[i]);
+		}
+
+		i++;
+	}
+
 	multiply_matrix(mvp, env->model_matrix, mvp);
 
 	multiply_matrix(mvp, env->view_matrix, mvp);
 
 	multiply_matrix(mvp, env->projection_matrix, mvp);
-
-	size_t i = 0;
 
 	GLfloat b[16];
 
@@ -55,17 +68,6 @@ void		render(t_software_environ *env)
 	while (i < mvp->lines * mvp->columns)
 	{
 		c[i] = (GLfloat)mvp->value[i];
-		i++;
-	}
-
-	while (i < mvp->lines * mvp->columns)
-	{
-		if (i && (i + 1) % 4 == 0) {
-			printf("%lf \n",mvp->value[i]);
-		} else {
-			printf("%lf ",mvp->value[i]);
-		}
-
 		i++;
 	}
 

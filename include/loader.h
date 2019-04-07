@@ -30,4 +30,8 @@ t_token *split_into_tokens(const char *line, const char *delimiters);
 float		n_atof(const char* str, size_t size);
 void print_token(const t_token *tokens);
 
+#ifdef _MSC_VER
+char	*strndup(char *str, int chars);
+#endif
+
 #endif

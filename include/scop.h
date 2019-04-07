@@ -10,6 +10,10 @@
 **
 */
 
+#ifdef _MSC_VER
+# include <windows.h>
+# endif
+
 # ifdef __APPLE__
 
 /*
@@ -40,7 +44,6 @@
 
 #ifdef _MSC_VER
 
-# include <windows.h>
 # include <io.h>
 # include <direct.h>
 
