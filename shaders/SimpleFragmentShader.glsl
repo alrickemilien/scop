@@ -1,9 +1,8 @@
-#version 410 core
+#version 410
 
-in vec3 _color;
-
-out vec4 out_Color ;
+uniform vec4 _color;
+out vec4 fragColour;
 
 void main() {
-  out_Color  = vec4(_color, 1.0);
+  fragColour = _color;
 }

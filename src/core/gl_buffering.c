@@ -34,12 +34,13 @@ static void load_polygon_into_data(t_polygon *polygon, void *buffer) {
 	size_t	i;
 	t_vertex	*vertex;
 
-	t_vec3 color = { 255, 255, 255 };
+//	t_vec3 color = { 255, 255, 255 };
 
 	i = 0;
 	x = polygon->vertices;
 
-	size_t vertex_size = sizeof(t_vec3) * 3 + sizeof(t_vec2);
+//	size_t vertex_size = sizeof(t_vec3) * 3 + sizeof(t_vec2);
+	size_t vertex_size = sizeof(t_vec3);
 
 	while (x)
 	{
@@ -47,19 +48,19 @@ static void load_polygon_into_data(t_polygon *polygon, void *buffer) {
 
 		memcpy((uint8_t*)buffer + i * vertex_size, &vertex->position, sizeof(t_vec3));
 
-		memcpy((uint8_t*)buffer + i * vertex_size + sizeof(t_vec3), &color, sizeof(t_vec3));
+	//	memcpy((uint8_t*)buffer + i * vertex_size + sizeof(t_vec3), &color, sizeof(t_vec3));
 
-		memcpy(
-			(uint8_t*)buffer + i * vertex_size + sizeof(t_vec3) + sizeof(t_vec3),
-			&vertex->uv,
-			sizeof(t_vec2)
-		);
+	//	memcpy(
+	//		(uint8_t*)buffer + i * vertex_size + sizeof(t_vec3) + sizeof(t_vec3),
+	//		&vertex->uv,
+	//		sizeof(t_vec2)
+	//	);
 
-		memcpy(
-			(uint8_t*)buffer + i * vertex_size + sizeof(t_vec3) + sizeof(t_vec3) + sizeof(t_vec2),
-			&vertex->normal,
-			sizeof(t_vec3)
-		);
+	//	memcpy(
+	//		(uint8_t*)buffer + i * vertex_size + sizeof(t_vec3) + sizeof(t_vec3) + sizeof(t_vec2),
+	//		&vertex->normal,
+	//		sizeof(t_vec3)
+	//	);
 
 		i++;
 
@@ -74,13 +75,15 @@ static void vertex_list_to_vbo(t_software_environ *env)
 {
 	size_t		i;
 	t_list		*x;
-	float			*buffer;
+	GLfloat			*buffer;
 
 	// A polygon is three vertex length
-	size_t vertex_size = sizeof(t_vec3) * 3 + sizeof(t_vec2);
+	// size_t vertex_size = sizeof(t_vec3) * 3 + sizeof(t_vec2);
+	size_t vertex_size = sizeof(t_vec3);
+
 	size_t polygon_size = 3 * vertex_size;
 
-	buffer = (float*)malloc(vertex_size * env->data.vertex_count);
+	buffer = (GLfloat*)malloc(vertex_size * env->data.vertex_count);
 
 	memset(buffer, 0, vertex_size * env->data.vertex_count);
 
@@ -99,7 +102,7 @@ static void vertex_list_to_vbo(t_software_environ *env)
 
 		if (poly_length == 3) {
 			// Load 3 polygons into data
-			load_polygon_into_data(x->content, (float*)((char*)buffer + i * polygon_size));
+			load_polygon_into_data(x->content, (GLfloat*)((char*)buffer + i * polygon_size));
 
 			// Increase of three because a polygon is 3 vertex long
 			i++;
@@ -152,9 +155,9 @@ void gl_buffering(t_software_environ *env)
 	// the variables id will be stored in env structure
 	// with the fields of the same name
 	set_attribute(env->program_id, "position");
-	set_attribute(env->program_id, "color");
-	set_attribute(env->program_id, "uv");
-	set_attribute(env->program_id, "normal");
+	// set_attribute(env->program_id, "color");
+	// set_attribute(env->program_id, "uv");
+	// set_attribute(env->program_id, "normal");
 
 //	load_texture(env);
 
@@ -168,7 +171,7 @@ void gl_buffering(t_software_environ *env)
 		0.0,
 		1000.0);
 
-	env->mvp_uni = glGetUniformLocation(env->program_id, "mvp");
+//	env->mvp_uni = glGetUniformLocation(env->program_id, "mvp");
 
 //	env->model_matrix_uni = glGetUniformLocation(env->program_id, "modelMatrix");
 

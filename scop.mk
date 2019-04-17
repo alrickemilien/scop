@@ -13,18 +13,18 @@ endif
 #
 # scop core functions library
 #
-SRC +=	src/lib/create_triangle.c \
-				src/lib/load_shaders.c \
-				src/lib/load_single_shader.c \
-				src/lib/set_attribute.c \
-				src/lib/math_utils.c \
-				src/lib/load_texture.c \
+SRC +=	src/core/create_triangle.c \
+				src/core/load_shaders.c \
+				src/core/load_single_shader.c \
+				src/core/set_attribute.c \
+				src/core/math_utils.c \
+				src/core/load_texture.c \
 				src/texture_loader/load_bitmap_file.c \
-				src/lib/exit_error_with_msg.c \
-				src/lib/count_vertices.c \
-				src/lib/render.c \
-				src/lib/gl_buffering.c \
-				src/lib/check_gl_error.c
+				src/core/exit_error_with_msg.c \
+				src/core/count_vertices.c \
+				src/core/render.c \
+				src/core/gl_buffering.c \
+				src/core/check_gl_error.c
 
 #
 # controls and toggle of the app
@@ -68,7 +68,7 @@ SRC +=	src/mtl_loader/load_mtl_file.c \
 #
 # Logs
 #
-SRC += src/lib/gl_log.c
+SRC += src/core/gl_log.c
 
 #
 # utils

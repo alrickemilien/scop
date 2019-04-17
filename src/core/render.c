@@ -23,6 +23,8 @@ static void	update_texture_transition(t_software_environ *env)
 
 void		render(t_software_environ *env)
 {
+	printf("je suis lwefjklwejg\n");
+	/*
 	t_matrix *mvp;
 	size_t i;
 
@@ -46,7 +48,8 @@ void		render(t_software_environ *env)
 
 		i++;
 	}
-
+	*/
+/*
 	multiply_matrix(mvp, env->model_matrix, mvp);
 
 	multiply_matrix(mvp, env->view_matrix, mvp);
@@ -70,8 +73,8 @@ void		render(t_software_environ *env)
 		c[i] = (GLfloat)mvp->value[i];
 		i++;
 	}
-
-	glUniformMatrix4fv(env->mvp_uni, 1, GL_FALSE, c);
+*/
+	//glUniformMatrix4fv(env->mvp_uni, 1, GL_FALSE, c);
 
 //	glUniformMatrix4fv(env->model_matrix_uni, 1, GL_FALSE, b);
 
@@ -79,7 +82,7 @@ void		render(t_software_environ *env)
 
 	glUseProgram(env->program_id);
 	glBindVertexArray(env->vao);
-	glDrawArrays(GL_TRIANGLES, 0, 10);
+	glDrawArrays(GL_TRIANGLES, 0, env->data.vertex_count);
 
-	delete_matrix(mvp);
+	// delete_matrix(mvp);
 }

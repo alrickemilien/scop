@@ -63,6 +63,7 @@ clean:
 	@rm -rf $(OBJ)
 
 fclean: clean
+	make fclean -C src/libmatrix
 	@rm -rf $(SCOP)
 
 re: fclean all
