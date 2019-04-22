@@ -130,7 +130,6 @@ static void vertex_list_to_vbo(t_software_environ *env)
 	glGenVertexArrays(1, &env->vao);
 	
 	check_gl_error();
-	printf("ici \n");
 
 	glBindVertexArray(env->vao);
 
@@ -159,25 +158,13 @@ void gl_buffering(t_software_environ *env)
 	// set_attribute(env->program_id, "uv");
 	// set_attribute(env->program_id, "normal");
 
+	gl_matrixing(env);
+
 //	load_texture(env);
 
-	env->view_matrix = identity_matrix(4, 4);
-
-	env->model_matrix = scale_matrix4x4(0.2);
-
-	env->projection_matrix = perspective_matrix4x4(
-		deg_to_rad(60.0),
-		800.0 / 600.0,
-		0.0,
-		1000.0);
-
-//	env->mvp_uni = glGetUniformLocation(env->program_id, "mvp");
-
-//	env->model_matrix_uni = glGetUniformLocation(env->program_id, "modelMatrix");
-
-//	env->lighting_uni = glGetUniformLocation(env->program_id, "lighting");
-
 //	glUniform1i(env->lighting_uni, env->lighting);
+
+// env->lighting_uni = glGetUniformLocation(env->program_id, "lighting");
 
 //	env->texture_level_uni = glGetUniformLocation(env->program_id, "textureLevel");
 

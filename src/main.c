@@ -97,7 +97,6 @@ void run()
 	
 	print_object(&env->data);
 
-
 	if (load_shaders(env) < 0) {
 		end_program(-1);
 		return;
@@ -161,6 +160,8 @@ static int init_system_resources(int argc, char **argv)
 		return (-1);
 
 	count_vertices(&env->data);
+
+	env->scale = 1;
 
 	// All OK, start applicaton
 	return (0);

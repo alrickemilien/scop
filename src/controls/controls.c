@@ -2,13 +2,35 @@
 
 extern t_software_environ *env;
 
+typedef struct	s_keyboard_callback_map {
+		int action;
+		int key;
+		void (*f)(t_software_environ *env, GLFWwindow* window);
+}		t_keyboard_callback_map;
+
+static const t_keyboard_callback_map g_keyboard_callback_map[] = {
+	{ GLFW_PRESS, GLFW_KEY_ESCAPE, &close_window_callback },
+	{ GLFW_PRESS, GLFW_KEY_KP_SUBTRACT, &scale_down },
+	{ GLFW_PRESS, GLFW_KEY_KP_ADD, &scale_up },
+};
+
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
+	size_t i;
+
 	(void)scancode;
 	(void)mods;
-	(void)key;
-	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, 1);
+
+	i = 0;
+	while (sizeof(t_keyboard_callback_map) * i < sizeof(g_keyboard_callback_map)) {
+		if (g_keyboard_callback_map[i].key == key
+			&& g_keyboard_callback_map[i].action == action)
+		{
+			g_keyboard_callback_map[i].f(env, window);
+			break;
+		}
+		i++;
+	}
 }
 
 /*void		scroll_callback(GLFWwindow *window, double scroll_x, double scroll_y)

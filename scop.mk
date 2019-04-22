@@ -16,7 +16,7 @@ endif
 SRC +=	src/core/create_triangle.c \
 				src/core/load_shaders.c \
 				src/core/load_single_shader.c \
-				src/core/set_attribute.c \
+				src/core/gl_attribute.c \
 				src/core/math_utils.c \
 				src/core/load_texture.c \
 				src/texture_loader/load_bitmap_file.c \
@@ -24,12 +24,14 @@ SRC +=	src/core/create_triangle.c \
 				src/core/count_vertices.c \
 				src/core/render.c \
 				src/core/gl_buffering.c \
+				src/core/gl_matrixing.c \
 				src/core/check_gl_error.c
 
 #
-# controls and toggle of the app
+# Controls and toggle of the app
 #
-SRC += src/controls/controls.c
+SRC += src/controls/controls.c \
+		src/controls/keyboards.c
 
 #
 # .obj loader
@@ -71,7 +73,7 @@ SRC +=	src/mtl_loader/load_mtl_file.c \
 SRC += src/core/gl_log.c
 
 #
-# utils
+# Utils
 #
 SRC +=	src/utils/ft_lstadd.c \
 		src/utils/ft_lstdel.c\

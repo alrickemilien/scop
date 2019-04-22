@@ -172,6 +172,7 @@ typedef struct	s_software_environ
 	int auto_rotate;
 	int	lighting;
 	int texturing;
+	float scale;
 
 	const char *path_to_texture;
 
@@ -264,9 +265,17 @@ void		set_attribute(GLuint id_program, const char *attribute_name);
 void		check_gl_error();
 
 void		gl_buffering(t_software_environ *env);
+void		gl_matrixing(t_software_environ *env);
 void		render(t_software_environ *env);
 
 unsigned char	*load_bitmap_file(const char *pathname, size_t *width, size_t *height);
+
+/*
+** Users inputs callbacks
+*/
+void			close_window_callback(t_software_environ *env, GLFWwindow* window);
+void			scale_up(t_software_environ *env, GLFWwindow* window);
+void			scale_down(t_software_environ *env, GLFWwindow* window);
 
 /*
 ** Math utils

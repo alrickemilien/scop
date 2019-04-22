@@ -75,12 +75,13 @@ set (SOURCES
 	src/lib/create_triangle.c
 	src/lib/exit_error_with_msg.c
 	src/lib/render.c
-	src/lib/set_attribute.c
+	src/lib/gl_attribute.c
 	src/lib/count_vertices.c
 	src/lib/load_shaders.c
 
 	src/lib/math_utils.c
 	src/lib/gl_buffering.c
+	src/lib/gl_matrixing.c
 	src/lib/load_texture.c
 	src/lib/check_gl_error.c
 
@@ -113,7 +114,7 @@ set (SOURCES
 
 	src/controls/controls.c
 	src/controls/toggles.c
-
+	src/controls/keyboards.c
 	src/utils/ft_lstadd.c
 	src/utils/ft_lstdel.c
 	src/utils/ft_lstdelone.c
