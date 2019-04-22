@@ -2,7 +2,7 @@
 
 void		render(t_software_environ *env)
 {
-	t_matrix *mvp;
+	t_mat4 *mvp;
 	size_t i;
 
 	i = 0;
@@ -10,28 +10,27 @@ void		render(t_software_environ *env)
 	//	if (env->auto_rotate)
 	//		rotate_x_matrix4x4(env->model_matrix, 1.0f);
 
- 	mvp = identity_matrix(4, 4);
-
-
-	multiply_matrix(mvp, env->model_matrix, mvp);
-
-	multiply_matrix(mvp, env->view_matrix, mvp);
+ 	mvp = identity_mat4();
 
 	multiply_matrix(mvp, env->projection_matrix, mvp);
 
-	i = 0;
-	while (i < mvp->lines * mvp->columns)
-	{
-		if (i && (i + 1) % 4 == 0) {
-			printf("%lf \n",mvp->value[i]);
-		} else {
-			printf("%lf ",mvp->value[i]);
-		}
+	multiply_matrix(mvp, env->view_matrix, mvp);
 
-		i++;
-	}
+	multiply_matrix(mvp, env->model_matrix, mvp);
 
-	printf("\n");
+	// i = 0;
+	// while (i < mvp->lines * mvp->columns)
+	// {
+	// 	if (i && (i + 1) % 4 == 0) {
+	// 		printf("%lf \n",mvp->value[i]);
+	// 	} else {
+	// 		printf("%lf ",mvp->value[i]);
+	// 	}
+
+	// 	i++;
+	// }
+
+	// printf("\n");
 
 	GLfloat b[16];
 
@@ -50,6 +49,20 @@ void		render(t_software_environ *env)
 		c[i] = (GLfloat)mvp->value[i];
 		i++;
 	}
+
+	i = 0;
+	while (i < mvp->lines * mvp->columns)
+	{
+		if (i && (i + 1) % 4 == 0) {
+			printf("%lf \n",c[i]);
+		} else {
+			printf("%lf ",c[i]);
+		}
+
+		i++;
+	}
+
+	printf("\n");
 
 	glUniformMatrix4fv(env->mvp_uni, 1, GL_FALSE, c);
 

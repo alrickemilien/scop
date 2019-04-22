@@ -45,7 +45,7 @@ all: gitsubmodule $(SCOP)
 $(SCOP): $(OBJ)
 	make -C ../src/libmatrix/make
 	mkdir -p ../bin
-	LIBRARY_PATH=$(LIBRARY_PATH) $(CC) $^ -o $@ $(INCLUDE) $(LIBS)
+	LIBRARY_PATH=$(LIBRARY_PATH) $(CC) $^ -o $@ $(INCLUDE) $(LIBS) $(CCFLAGS)
 
 %.o: %.c
 	C_INCLUDE_PATH=$(C_INCLUDE_PATH) $(CC) -o $@ -c $< $(INCLUDE) $(CCFLAGS)
