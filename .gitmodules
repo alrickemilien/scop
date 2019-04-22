@@ -6,11 +6,3 @@
 	path = external/glfw
 	url = https://github.com/glfw/glfw
 	branch = master
-[submodule "src/libft"]
-	path = src/libft
-	url = https://github.com/alrickemilien/libft.git
-	branch = master
-[submodule "src/libmatrix"]
-	path = src/libmatrix
-	url = https://gitlab.com/alrickemilien/libmatrix
-	branch = dev

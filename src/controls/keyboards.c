@@ -19,7 +19,7 @@ void scale_up(t_software_environ *env, GLFWwindow* window)
 
     env->scale += 0.1;
 
-	env->model_matrix = scale_matrix4x4(env->scale);
+	env->model_matrix = scale_mat4(env->scale);
 }
 
 void scale_down(t_software_environ *env, GLFWwindow* window)
@@ -30,5 +30,5 @@ void scale_down(t_software_environ *env, GLFWwindow* window)
 
     env->scale -= 0.1;
 
-	env->model_matrix = scale_matrix4x4(env->scale);
+	env->model_matrix = scale_mat4(env->scale);
 }

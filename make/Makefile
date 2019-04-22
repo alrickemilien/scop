@@ -2,7 +2,7 @@
 # Makefile only for Darwin / OSx
 #
 
-SCOP=bin/scop
+SCOP=../bin/scop
 
 OS := $(shell uname -s)
 
@@ -27,11 +27,11 @@ CCFLAGS= -Wall -Wextra -Werror
 LIBS := -framework OpenGL -framework Cocoa -framework IOkit -framework CoreVideo -lglfw3 -lGLEW
 
 GLEW := $(HOME)/.brew/include
-GLFW := external/glfw/include
+GLFW := ../external/glfw/include
 C_INCLUDE_PATH := $(GLEW):$(GLFW)
 
 GLEW_LIB := $(HOME)/.brew/lib
-GLFW_LIB := external/glfw/src
+GLFW_LIB := ../external/glfw/src
 LIBRARY_PATH := $(GLEW_LIB):$(GLFW_LIB)
 
 include scop.mk
@@ -43,10 +43,8 @@ OBJ=$(SRC:.c=.o)
 all: gitsubmodule $(SCOP)
 
 $(SCOP): $(OBJ)
-	make -C src/libft
-	make -C src/libmatrix
-	#make -C src/libvec
-	mkdir -p bin
+	make -C ../src/libmatrix/make
+	mkdir -p ../bin
 	LIBRARY_PATH=$(LIBRARY_PATH) $(CC) $^ -o $@ $(INCLUDE) $(LIBS)
 
 %.o: %.c
@@ -63,7 +61,7 @@ clean:
 	@rm -rf $(OBJ)
 
 fclean: clean
-	make fclean -C src/libmatrix
+	make fclean -C ../src/libmatrix/make
 	@rm -rf $(SCOP)
 
 re: fclean all

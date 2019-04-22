@@ -7,11 +7,11 @@
 
 void gl_matrixing(t_software_environ *env)
 {
-	env->view_matrix = identity_matrix(4, 4);
+	env->view_matrix = identity_mat4();
 
-	env->model_matrix = scale_matrix4x4(0.1);
+	env->model_matrix = scale_mat4(0.1);
 
-	env->projection_matrix = perspective_matrix4x4(
+	env->projection_matrix = perspective_mat4(
 		deg_to_rad(60.0),
 		800.0 / 600.0,
 		0.0,

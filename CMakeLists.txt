@@ -18,7 +18,7 @@ add_subdirectory (external/glfw)
 
 add_subdirectory (external/glew)
 
-add_subdirectory (src/libmatrix)
+add_subdirectory (src/libmatrix/cmake)
 
 # Includes directory (-I on Makefile)
 include_directories(

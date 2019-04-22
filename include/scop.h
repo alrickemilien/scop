@@ -200,9 +200,9 @@ typedef struct	s_software_environ
 	GLuint		col_attrib;
 	GLuint		texture;
 
-	t_matrix	*model_matrix;
-	t_matrix	*view_matrix;
-	t_matrix	*projection_matrix;
+	t_mat4	*model_matrix;
+	t_mat4	*view_matrix;
+	t_mat4	*projection_matrix;
 } t_software_environ;
 
 
