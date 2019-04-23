@@ -17,3 +17,4 @@ scop
 a.out
 *.DS_STORE
 .vscode
+*.a
