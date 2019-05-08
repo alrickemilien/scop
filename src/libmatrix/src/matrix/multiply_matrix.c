@@ -9,6 +9,10 @@ static bool are_matrix_same_size(t_matrix *a, t_matrix *b)
 	return (a->lines == b->lines && a->columns == b->columns);
 }
 
+/*
+** Multiply row major matrix between them
+*/
+
 int multiply_matrix(t_matrix *a, t_matrix *b, t_matrix *result)
 {
   size_t x;

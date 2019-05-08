@@ -88,13 +88,6 @@ t_mat4 *look_at_mat4_2(const t_vec3 *eye, const t_vec3 *center, const t_vec3 *up
 	matrix->value[14] =  0.f;
 	matrix->value[15] =  1.f;
 
-//	mat4_translate_in_place(matrix, -eye->x, -eye->y, -eye->z);
-
-	// set translation part
-    // matrix->value[12]= -left.x * eye->x - left.y * eye->y - left.z * eye->z;
-    // matrix->value[13]= -up.x * eye->x - up.y * eye->y - up.z * eye->z;
-    // matrix->value[14]= -forward.x * eye->x - forward.y * eye->y - forward.z * eye->z;
-
 	matrix->value[12]= -dot_product_vec3(&left, eye);
 	matrix->value[13]= -dot_product_vec3(&up, eye);
 	matrix->value[14]= dot_product_vec3(&forward, eye);

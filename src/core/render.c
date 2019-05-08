@@ -64,7 +64,8 @@ void		render(t_software_environ *env)
 
 	printf("\n");
 
-	glUniformMatrix4fv(env->mvp_uni, 1, GL_FALSE, c);
+	// GL_TRUE indicates that is is row major matrix
+	glUniformMatrix4fv(env->mvp_uni, 1, GL_TRUE, c);
 
 	// glUniformMatrix4fv(env->model_matrix_uni, 1, GL_FALSE, b);
 
@@ -72,7 +73,7 @@ void		render(t_software_environ *env)
 
 	glUseProgram(env->program_id);
 	glBindVertexArray(env->vao);
-	glDrawArrays(GL_TRIANGLES, 0, env->data.vertex_count);
+	glDrawArrays(GL_LINES, 0, env->data.vertex_count);
 
 	delete_matrix(mvp);
 }
