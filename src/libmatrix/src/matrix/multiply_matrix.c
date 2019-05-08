@@ -9,6 +9,12 @@ static bool are_matrix_same_size(t_matrix *a, t_matrix *b)
 	return (a->lines == b->lines && a->columns == b->columns);
 }
 
+/*
+** We have also learned that we can only multiply matrices
+** when the number of columns from the left matrix
+** and the number of rows from the right matrix are the same.
+*/
+
 int multiply_matrix(t_matrix *a, t_matrix *b, t_matrix *result)
 {
   size_t x;
