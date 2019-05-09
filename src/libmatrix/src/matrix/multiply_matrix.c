@@ -33,8 +33,10 @@ int multiply_matrix(t_matrix *a, t_matrix *b, t_matrix *result)
 
   fill_matrix(tmp, &i);
 
-	if (tmp == NULL)
+	if (tmp == NULL) {
 		return (CAN_NOT_CREATE_MATRIX);
+  }
+
 
 	x = 0;
   while (i < a->lines)
