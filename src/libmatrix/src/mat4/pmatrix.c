@@ -132,17 +132,22 @@ static int pvalue(const char *format, char **whole_buffer, void *value)
 int pmatrix(char *format, t_matrix *matrix)
 {
   size_t    i;
+  size_t    lines;
+  size_t    columns;
   int       ret;
   char      *buffer;
+
+  lines = 4;
+  columns = 4;
 
   i = 0;
   ret = 0;
   buffer = NULL;
-  while (i < matrix->lines * matrix->columns)
+  while (i < lines * columns)
   {
-      ret += pvalue(format, &buffer, &matrix->value[i]);
+      ret += pvalue(format, &buffer, &matrix->value[i % 4 + i]);
 
-			if ((i + 1) % matrix->columns == 0) {
+			if ((i + 1) % columns == 0) {
 				libmatrixutil_append_and_release_memory_static(&buffer, "\n");
 				ret++;
 			}

@@ -6,35 +6,26 @@
 ** according to camera position and look at direction
 */
 
-static void step_one(t_matrix *m, t_vec3 *f, t_vec3 *s, t_vec3 *u)
+static void compute_forward(const t_vec3 *eye, const t_vec3 *center, t_vec3 *f)
 {
-  m->value[0] = s->x;
-  m->value[4] = s->y;
-  m->value[8] = s->z;
-  m->value[1] = u->x;
-  m->value[5] = u->y;
-  m->value[9] = u->z;
-  m->value[2] = -f->x;
-}
-
-static void step_two(t_matrix *m, t_vec3 *f, t_vec3 *s, const t_vec3 *eye)
-{
-  m->value[6] = -f->y;
-  m->value[10] = -f->z;
-  m->value[12] = -dot_product_vec3(s, eye);
-}
-
-static void step_three(t_matrix *m, t_vec3 *f, t_vec3 *u, const t_vec3 *eye)
-{
-  m->value[14] = dot_product_vec3(f, eye);
-  m->value[13] = -dot_product_vec3(u, eye);
-}
-
-static void compute_direction(const t_vec3 *eye, const t_vec3 *center, t_vec3 *f)
-{
-	copy_vec3(f, center);
-	substract_vec3(f, eye);
+	copy_vec3(f, eye);
+	substract_vec3(f, center);
 	normalize_vec3(f);
+}
+
+
+static void compute_right(const t_vec3 *up, const t_vec3 *forward, t_vec3 *right)
+{
+	copy_vec3(right, up);
+	cross_vec3(right, forward);
+	normalize_vec3(right);
+}
+
+
+static void compute_cam_up(const t_vec3 *forward, const t_vec3 *right, t_vec3 *cam_up)
+{
+	copy_vec3(cam_up, forward);
+	cross_vec3(cam_up, right);
 }
 
 /*
@@ -51,30 +42,36 @@ static void compute_direction(const t_vec3 *eye, const t_vec3 *center, t_vec3 *f
 t_mat4	*look_at_mat4(
   const t_vec3 *eye,
   const t_vec3 *center,
-	const t_vec3 *up)
+  const t_vec3 *up)
 {
-	t_vec3	f;
-	t_vec3	s;
-	t_vec3	u;
+	t_vec3	forward;
+	t_vec3	right;
+	t_vec3	cam_up;
 	t_mat4 *m;
 
-	m = identity_matrix(4, 4);
+	m = identity_mat4();
 
-  if (are_vec3_equal(eye, center))
+  	if (are_vec3_equal(eye, center))
 		return (m);
 
-	compute_direction(eye, center, &f);
+	compute_forward(eye, center, &forward);
 
-	copy_vec3(&s, &f);
-	cross_vec3(&s, up);
-	normalize_vec3(&s);
+	compute_right(up, &forward, &right);
 
-	copy_vec3(&u, &s);
-	cross_vec3(&u, &f);
-
-	step_one(m, &f, &s, &u);
-	step_two(m, &f, &s, eye);
-	step_three(m, &f, &u, eye);
+	compute_cam_up(&forward, &right, &cam_up);
+	
+	m->value[0] = right.x;
+	m->value[1] = cam_up.x;
+	m->value[2] = forward.x;
+	m->value[4] = right.y;
+	m->value[5] = cam_up.y;
+	m->value[6] = forward.y;
+	m->value[8] = right.z;
+	m->value[9] = cam_up.z;
+	m->value[10] = forward.z;
+	m->value[12] = -dot_product_vec3(&right, eye);
+	m->value[13] = -dot_product_vec3(&cam_up, eye);
+	m->value[14] = -dot_product_vec3(&forward, eye);
 
   return (m);
 }

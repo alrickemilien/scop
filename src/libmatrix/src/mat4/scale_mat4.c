@@ -1,17 +1,26 @@
 #include "libmatrix.h"
 
-t_mat4	*scale_mat4(GLfloat amount)
+/*
+** Multiply a matrix by a scalar
+** 1 1 1 1
+** 1 1 1 1
+** 1 1 1 1
+** 1 1 1 1
+** x 2.5 becomes
+** 2.5 2.2 2.5 2.5
+** 2.5 2.2 2.5 2.5
+** 2.5 2.2 2.5 2.5
+** 2.5 2.2 2.5 2.5
+*/
+
+void scale_mat4(t_mat4 *a, GLfloat scalar)
 {
-  t_mat4	*m;
+  size_t  i;
 
-	m = identity_matrix(4, 4);
-
-	if (!m)
-		return (NULL);
-
-	m->value[0] = amount;
-	m->value[5] = amount;
-	m->value[10] = amount;
-
-  return (m);
+  i = 0;
+  while (i < 16)
+  {
+      a->value[i] = (GLfloat)a->value[i] * scalar;
+      i++;
+  }
 }

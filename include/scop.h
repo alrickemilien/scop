@@ -48,8 +48,6 @@
 # include <direct.h>
 
 #define _USE_MATH_DEFINES // for C
-#include <math.h>
-
 # define PATH_MAX 255
 
 # define PROT_READ  1
@@ -78,6 +76,7 @@ int		munmap(void *addr, size_t len);
 # include <unistd.h>
 # endif
 
+# include <math.h>
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -88,6 +87,7 @@ int		munmap(void *addr, size_t len);
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <limits.h>
+# include <math.h>
 
 /*
 ** LOCALS INCLUDES

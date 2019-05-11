@@ -12,11 +12,11 @@ void		render(t_software_environ *env)
 
  	mvp = identity_mat4();
 
-	multiply_matrix(mvp, env->projection_matrix, mvp);
+	multiply_mat4(mvp, env->view_matrix, mvp);
 
-	multiply_matrix(mvp, env->view_matrix, mvp);
+	multiply_mat4(mvp, env->projection_matrix, mvp);
 
-	multiply_matrix(mvp, env->model_matrix, mvp);
+	multiply_mat4(mvp, env->model_matrix, mvp);
 
 	// i = 0;
 	// while (i < mvp->lines * mvp->columns)
@@ -35,7 +35,7 @@ void		render(t_software_environ *env)
 	GLfloat b[16];
 
 	i = 0;
-	while (i < env->model_matrix->lines * env->model_matrix->columns)
+	while (i < 16)
 	{
 		b[i] = (GLfloat)env->model_matrix->value[i];
 		i++;
@@ -44,19 +44,19 @@ void		render(t_software_environ *env)
 	GLfloat c[16];
 
 	i = 0;
-	while (i < mvp->lines * mvp->columns)
+	while (i < 16)
 	{
 		c[i] = (GLfloat)mvp->value[i];
 		i++;
 	}
 
 	i = 0;
-	while (i < mvp->lines * mvp->columns)
+	while (i < 16)
 	{
 		if (i && (i + 1) % 4 == 0) {
-			printf("%lf \n",c[i]);
+			printf("%lf \n",c[(i % 4) * 4 + (i % 4)]);
 		} else {
-			printf("%lf ",c[i]);
+			printf("%lf ",c[(i % 4) * 4 + (i % 4)]);
 		}
 
 		i++;
@@ -65,7 +65,7 @@ void		render(t_software_environ *env)
 	printf("\n");
 
 	// GL_TRUE indicates that is is row major matrix
-	glUniformMatrix4fv(env->mvp_uni, 1, GL_TRUE, c);
+	glUniformMatrix4fv(env->mvp_uni, 1, GL_FALSE, c);
 
 	// glUniformMatrix4fv(env->model_matrix_uni, 1, GL_FALSE, b);
 
@@ -73,7 +73,7 @@ void		render(t_software_environ *env)
 
 	glUseProgram(env->program_id);
 	glBindVertexArray(env->vao);
-	glDrawArrays(GL_LINES, 0, env->data.vertex_count);
+	glDrawArrays(GL_TRIANGLES, 0, env->data.vertex_count);
 
 	delete_matrix(mvp);
 }
