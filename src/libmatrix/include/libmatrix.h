@@ -21,12 +21,13 @@
 */
 
 #ifdef _MSC_VER
+  #define _USE_MATH_DEFINES // for C
   # include <windows.h>
+  # include <math.h>
   # include <GL/gl.h>
 # else
   # include <OpenGL/gl.h>
   # include <unistd.h>
-  # include <math.h>
 #endif
 
 # include <stdio.h>
@@ -165,8 +166,8 @@ t_mat4	*look_at_mat4(
   const t_vec3 *center,
 	const t_vec3 *up);
 
-t_mat4 *look_at_mat4_2(
-    const t_vec3 *eye,
+t_mat4  *look_at_mat4_2(
+  const t_vec3 *eye,
   const t_vec3 *center,
 	const t_vec3 *up);
 

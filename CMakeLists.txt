@@ -6,7 +6,7 @@ find_package(OpenGL REQUIRED)
 
 # Sets the src directory
 set ( CMAKE_SOURCE_DIR
-	${CMAKE_CURRENT_SOURCE_DIR}/src
+	${CMAKE_CURRENT_SOURCE_DIR}/
 )
 
 set ( CMAKE_RUNTIME_OUTPUT_DIRECTORY
@@ -38,7 +38,7 @@ if(WIN32)
 
 		glfw
 
-		external/glew/lib/Debug/glewd
+		lib/Debug/glewd
 
 		src/libmatrix/Debug/libmatrix
 	)
@@ -68,22 +68,21 @@ set (WIN_SOURCES
 )
 
 set (OSX_SOURCES
-	src/lib/load_single_shader.c
+	src/core/load_single_shader.c
 )
 
 set (SOURCES
-	src/lib/create_triangle.c
-	src/lib/exit_error_with_msg.c
-	src/lib/render.c
-	src/lib/gl_attribute.c
-	src/lib/count_vertices.c
-	src/lib/load_shaders.c
+	src/core/exit_error_with_msg.c
+	src/core/render.c
+	src/core/gl_attribute.c
+	src/core/count_vertices.c
+	src/core/load_shaders.c
 
-	src/lib/math_utils.c
-	src/lib/gl_buffering.c
-	src/lib/gl_matrixing.c
-	src/lib/load_texture.c
-	src/lib/check_gl_error.c
+	src/core/math_utils.c
+	src/core/gl_buffering.c
+	src/core/gl_matrixing.c
+	src/core/load_texture.c
+	src/core/check_gl_error.c
 
 	src/object_loader/read_position.c
 	src/object_loader/read_mtl.c
@@ -124,13 +123,15 @@ set (SOURCES
 	src/utils/ft_strjoin.c
 	src/utils/lst_data_at.c
 
-	src/lib/gl_log.c
+	src/core/gl_log.c
 
 	src/main.c
 
 	shaders/SimpleVertexShader.glsl
 	shaders/SimpleFragmentShader.glsl
 )
+
+list(TRANSFORM SOURCES PREPEND ${CMAKE_SOURCE_DIR})
 
 # Create the executable
 if(WIN32)
@@ -144,8 +145,6 @@ else()
 		${OSX_SOURCES}
 	)
 endif()
-
-
 
 TARGET_LINK_LIBRARIES(scop ${ALL_LIBS})
 
