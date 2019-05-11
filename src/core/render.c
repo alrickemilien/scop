@@ -7,16 +7,17 @@ void		render(t_software_environ *env)
 
 	i = 0;
 
-	//	if (env->auto_rotate)
-	//		rotate_x_matrix4x4(env->model_matrix, 1.0f);
+	if (env->auto_rotate)
+			rotate_y_mat4(env->model_matrix, 1.0f);
 
  	mvp = identity_mat4();
+
+	multiply_mat4(mvp, env->model_matrix, mvp);
 
 	multiply_mat4(mvp, env->view_matrix, mvp);
 
 	multiply_mat4(mvp, env->projection_matrix, mvp);
 
-	multiply_mat4(mvp, env->model_matrix, mvp);
 
 	// i = 0;
 	// while (i < mvp->lines * mvp->columns)
