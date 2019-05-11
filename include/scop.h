@@ -184,6 +184,7 @@ typedef struct	s_software_environ
 
 	// Here we have a single VBO taht contains v/c/n
 	GLuint		vbo;
+	GLuint		plan_vbo;
 
 	GLuint vertex_shader_id;
 	GLuint fragment_shader_id;

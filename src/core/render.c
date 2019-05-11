@@ -7,8 +7,8 @@ void		render(t_software_environ *env)
 
 	i = 0;
 
-	if (env->auto_rotate)
-			rotate_y_mat4(env->model_matrix, 1.0f);
+	// if (env->auto_rotate)
+			// rotate_y_mat4(env->model_matrix, 1.0f);
 
  	mvp = identity_mat4();
 

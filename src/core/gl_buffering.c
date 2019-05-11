@@ -143,6 +143,40 @@ static void vertex_list_to_vbo(t_software_environ *env)
 							polygon_size * env->data.vertex_count,
 							buffer,
 							GL_STATIC_DRAW);
+
+/*
+	// Load plan vbo
+	size_t plan_vertex_number = 10 * 10 * 4 - 4;
+	void *plan_buffer = (GLfloat*)malloc(sizeof(t_vec3) * plan_vertex_number);
+	memset(plan_buffer, 0, sizeof(t_vec3) * plan_vertex_number);
+
+	i = 1;
+	t_vec3 v;
+	size_t j = 0;
+	while (i < 10)
+	{
+		v = (t_vec3){(float)i, 0.f, (float)i};
+		memcpy((uint8_t*)plan_buffer + j++ * vertex_size, &v, sizeof(t_vec3));
+		
+		v = (t_vec3){(float)-i, 0.f, (float)i};
+		memcpy((uint8_t*)plan_buffer + j++ * vertex_size, &v, sizeof(t_vec3));
+		
+		v = (t_vec3){(float)-i, 0.f, (float)-i};
+		memcpy((uint8_t*)plan_buffer + j++ * vertex_size, &v, sizeof(t_vec3));
+
+		v = (t_vec3){(float)i, 0.f, (float)-i};
+		memcpy((uint8_t*)plan_buffer + j++ * vertex_size, &v, sizeof(t_vec3));
+
+		i++;
+	}
+
+	glGenBuffers(1, &env->plan_vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, env->plan_vbo);
+	glBufferData(GL_ARRAY_BUFFER,
+							sizeof(t_vec3) * plan_vertex_number,
+							plan_buffer,
+							GL_STATIC_DRAW);
+							*/
 }
 
 void gl_buffering(t_software_environ *env)
