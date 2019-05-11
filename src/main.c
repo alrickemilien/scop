@@ -207,6 +207,8 @@ void init(int argc, char **argv)
 
 	glfwSetKeyCallback(WINDOW, key_callback);
 
+	glfwSetWindowSizeCallback(WINDOW, window_size_callback);
+
 	glfwMakeContextCurrent(WINDOW);
 	
 	printf("OpenGL %s, GLSL %s\n", 

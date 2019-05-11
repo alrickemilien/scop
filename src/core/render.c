@@ -73,8 +73,12 @@ void		render(t_software_environ *env)
 	// glUniform1f(env->texture_level_uni, env->texture_level);
 
 	glUseProgram(env->program_id);
+
 	glBindVertexArray(env->vao);
 	glDrawArrays(GL_TRIANGLES, 0, env->data.vertex_count);
+
+	glBindVertexArray(env->plan_vao);
+	glDrawArrays(GL_TRIANGLES, 0, 50 * 50 * 4);
 
 	delete_matrix(mvp);
 }

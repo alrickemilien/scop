@@ -181,6 +181,8 @@ typedef struct	s_software_environ
 
 	// OpenGL VAO and VBO
 	GLuint 		vao;
+	GLuint 		plan_vao;
+
 
 	// Here we have a single VBO taht contains v/c/n
 	GLuint		vbo;
@@ -260,6 +262,8 @@ shader_t	*load_single_shader(const char *path, GLuint id);
 void 		load_texture(t_software_environ *env);
 
 void		key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+
+void		window_size_callback(GLFWwindow* window, int width, int height);
 
 void		set_attribute(GLuint id_program, const char *attribute_name);
 

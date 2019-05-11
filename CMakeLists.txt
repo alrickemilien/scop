@@ -111,6 +111,7 @@ set (SOURCES
 	src/mtl_loader/read_comment.c
 	src/mtl_loader/read_new_mtl.c
 
+	src/controls/resize.c
 	src/controls/controls.c
 	src/controls/toggles.c
 	src/controls/keyboards.c

@@ -7,7 +7,7 @@
 
 void gl_matrixing(t_software_environ *env)
 {
-	t_vec3 camera_position = { 4.f, 4.f, 0.f };
+	t_vec3 camera_position = { 4.f, 4.f, 3.f };
     t_vec3 camera_look_at_position = { 0.f, 0.f, 0.f };
     t_vec3 camera_up = { 0.f, 1.f, 0.f };
 

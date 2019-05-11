@@ -35,6 +35,11 @@ SET (SRC
 	src/mat4/translate_mat4.c
 	src/mat4/perspective_mat4.c
 	src/mat4/rotate_mat4.c
+	src/mat4/pmatrix.c
+	src/mat4/add_mat4.c
+	src/mat4/fill_mat4.c
+	src/mat4/delete_matrix.c
+	src/mat4/multiply_mat4.c
 
 	# vec3
 	src/vec3/swap_vec3.c
@@ -50,23 +55,6 @@ SET (SRC
 	src/vec3/operations/substract_vec3.c
 	src/vec3/operations/add_vec3.c
 	src/vec3/operations/cross_vec3.c
-
-	# Libmatrix
-	src/matrix/pmatrix.c
-	src/matrix/determinant.c
-	src/matrix/minor.c
-	src/matrix/identity_matrix.c
-	src/matrix/inverse_matrix.c
-	src/matrix/compare_matrix.c
-	src/matrix/add_matrix.c
-	src/matrix/fill_matrix.c
-	src/matrix/copy_matrix.c
-	src/matrix/new_matrix.c
-	src/matrix/new_matrix_from_raw.c
-	src/matrix/delete_matrix.c
-	src/matrix/matrix_at.c
-	src/matrix/multiply_matrix_with_scalar.c
-	src/matrix/multiply_matrix.c
 )
 
 LIST(TRANSFORM SRC PREPEND ${CMAKE_SOURCE_DIR})

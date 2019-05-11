@@ -144,29 +144,46 @@ static void vertex_list_to_vbo(t_software_environ *env)
 							buffer,
 							GL_STATIC_DRAW);
 
-/*
+}
+
+void plan_to_vbo(t_software_environ *env) {
+	// Load vao
+	glGenVertexArrays(1, &env->plan_vao);
+	
+	check_gl_error();
+
+	glBindVertexArray(env->plan_vao);
+
 	// Load plan vbo
-	size_t plan_vertex_number = 10 * 10 * 4 - 4;
-	void *plan_buffer = (GLfloat*)malloc(sizeof(t_vec3) * plan_vertex_number);
-	memset(plan_buffer, 0, sizeof(t_vec3) * plan_vertex_number);
+	size_t plan_vertex_number = 50 * 50 * 4;
+	GLfloat *plan_buffer = (GLfloat*)malloc(sizeof(t_vec3) * plan_vertex_number);
 
-	i = 1;
 	t_vec3 v;
-	size_t j = 0;
-	while (i < 10)
-	{
-		v = (t_vec3){(float)i, 0.f, (float)i};
-		memcpy((uint8_t*)plan_buffer + j++ * vertex_size, &v, sizeof(t_vec3));
-		
-		v = (t_vec3){(float)-i, 0.f, (float)i};
-		memcpy((uint8_t*)plan_buffer + j++ * vertex_size, &v, sizeof(t_vec3));
-		
-		v = (t_vec3){(float)-i, 0.f, (float)-i};
-		memcpy((uint8_t*)plan_buffer + j++ * vertex_size, &v, sizeof(t_vec3));
 
-		v = (t_vec3){(float)i, 0.f, (float)-i};
-		memcpy((uint8_t*)plan_buffer + j++ * vertex_size, &v, sizeof(t_vec3));
+	GLfloat i = 0;
+	GLfloat j = 0;
+	size_t k = 0;
+	while (i < 50) {
+		j = 0;
+		while (j < 50) {
+			v = (t_vec3){i, 0, j};
+			memcpy((uint8_t*)plan_buffer + k * sizeof(t_vec3), &v, sizeof(t_vec3));
+			k++;
 
+			v = (t_vec3){i, 0, -j};
+			memcpy((uint8_t*)plan_buffer + k * sizeof(t_vec3), &v, sizeof(t_vec3));
+			k++;
+
+			v = (t_vec3){-i, 0, -j};
+			memcpy((uint8_t*)plan_buffer + k * sizeof(t_vec3), &v, sizeof(t_vec3));
+			k++;
+
+			v = (t_vec3){-i, 0, j};
+			memcpy((uint8_t*)plan_buffer + k * sizeof(t_vec3), &v, sizeof(t_vec3));
+			k++;
+
+			j++;
+		}
 		i++;
 	}
 
@@ -176,7 +193,6 @@ static void vertex_list_to_vbo(t_software_environ *env)
 							sizeof(t_vec3) * plan_vertex_number,
 							plan_buffer,
 							GL_STATIC_DRAW);
-							*/
 }
 
 void gl_buffering(t_software_environ *env)
@@ -191,6 +207,10 @@ void gl_buffering(t_software_environ *env)
 	// set_attribute(env->program_id, "color");
 	// set_attribute(env->program_id, "uv");
 	// set_attribute(env->program_id, "normal");
+
+	plan_to_vbo(env);
+
+	set_attribute(env->program_id, "position");
 
 	gl_matrixing(env);
 
