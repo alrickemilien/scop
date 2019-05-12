@@ -5,36 +5,28 @@
 
 #ifdef _MSC_VER
 
-shader_t	*load_single_shader(const char *path, GLuint id)
+int	load_single_shader(shader_t *shader, const char *path, GLuint id)
 {
 	FILE *f;
 	struct stat	stats;
-	shader_t	*shader;
-
-	shader = malloc(sizeof(shader_t));
-
-	if (shader == NULL)
-		return (NULL);
-
-	shader->id = id;
 
 	if (stat(path, &stats) == -1) {
 		fprintf(stderr, "%s: Could not read file size\n", path);
-		return (NULL);
+		return (-1);
 	}
 
 	shader->length = stats.st_size;
 
 	if (shader->length == 0) {
 		fprintf(stderr, "%s:Invalid file size\n", path);
-		return (NULL);
+		return (-1);
 	}
 
 	shader->content = (char*)malloc(sizeof(char) * shader->length + sizeof(char));
 
 	if (shader->content == NULL) {
 		free(shader);
-		return (NULL);
+		return (-1);
 	}
 
 	memset(shader->content, 0, sizeof(char) * shader->length + sizeof(char));
@@ -45,14 +37,18 @@ shader_t	*load_single_shader(const char *path, GLuint id)
 		fprintf(stderr, "Shader IO error : %s\n", strerror(errno));
 		free(shader->content);
 		free(shader);
-		return NULL;		
+		return (-1);		
 	}
 	
 	fread(shader->content, shader->length, sizeof(char), f);
 
-	fclose(f);
+	if (fclose(f) < 0)
+	{
+		fprintf(stderr, "Shader IO error : %s\n", strerror(errno));
+		return (-1);
+	}
 
-	return (shader);
+	return (0);
 }
 
 #endif

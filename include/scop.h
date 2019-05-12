@@ -257,7 +257,7 @@ void 		exit_error_with_message(const char *msg);
 void		create_triangle(t_software_environ *env);
 
 int			load_shaders(t_software_environ *env);
-shader_t	*load_single_shader(const char *path, GLuint id);
+int			load_single_shader(shader_t *shader, const char *path, GLui);
 
 void 		load_texture(t_software_environ *env);
 

@@ -1,5 +1,11 @@
 #include "scop.h"
 
+static void render_vao(GLuint vao, GLenum render_style, size_t vertex_number) {
+	glBindVertexArray(vao);
+	glDrawArrays(render_style, 0, vertex_number);
+	glBindVertexArray(0);
+}
+
 void		render(t_software_environ *env)
 {
 	t_mat4 *mvp;
@@ -7,8 +13,8 @@ void		render(t_software_environ *env)
 
 	i = 0;
 
-	// if (env->auto_rotate)
-			// rotate_y_mat4(env->model_matrix, 1.0f);
+	if (env->auto_rotate)
+		rotate_y_mat4(env->model_matrix, 0.1f);
 
  	mvp = identity_mat4();
 
@@ -18,52 +24,15 @@ void		render(t_software_environ *env)
 
 	multiply_mat4(mvp, env->projection_matrix, mvp);
 
-	GLfloat b[16];
-
-	i = 0;
-	while (i < 16)
-	{
-		b[i] = (GLfloat)env->model_matrix->value[i];
-		i++;
-	}
-
-	GLfloat c[16];
-
-	i = 0;
-	while (i < 16)
-	{
-		c[i] = (GLfloat)mvp->value[i];
-		i++;
-	}
-
-	i = 0;
-	while (i < 16)
-	{
-		if (i && (i + 1) % 4 == 0) {
-			printf("%lf \n",c[(i % 4) * 4 + (i % 4)]);
-		} else {
-			printf("%lf ",c[(i % 4) * 4 + (i % 4)]);
-		}
-
-		i++;
-	}
-
-	printf("\n");
-
 	// GL_TRUE indicates that is is row major matrix
-	glUniformMatrix4fv(env->mvp_uni, 1, GL_FALSE, c);
-
-	// glUniformMatrix4fv(env->model_matrix_uni, 1, GL_FALSE, b);
+	glUniformMatrix4fv(env->mvp_uni, 1, GL_FALSE, mvp);
 
 	// glUniform1f(env->texture_level_uni, env->texture_level);
 
 	glUseProgram(env->program_id);
 
-	glBindVertexArray(env->vao);
-	glDrawArrays(GL_TRIANGLES, 0, env->data.vertex_count);
-
-	glBindVertexArray(env->plan_vao);
-	glDrawArrays(GL_TRIANGLES, 0, 50 * 50 * 4);
+	render_vao(env->vao, GL_TRIANGLES, env->data.vertex_count);
+	render_vao(env->plan_vao, GL_LINES, 50 * 50 * 4);
 
 	delete_matrix(mvp);
 }

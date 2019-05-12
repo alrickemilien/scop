@@ -13,41 +13,36 @@ static const char *vertex_file_path = "/shaders/SimpleVertexShader.glsl";
 static const char *fragment_file_path = "/shaders/SimpleFragmentShader.glsl";
 #endif
 
-static void print_gl_shader_error(GLuint id, int info_log_length) {
-	char *error_message;
+/*
+** typedef struct	shader_s {
+** 	GLuint		id;
+** 	GLchar		*content;
+** 	GLint		length;
+** }				shader_t;
+*/
 
-	error_message = malloc(sizeof(char) * info_log_length + 1);
-	error_message[sizeof(char) * info_log_length] = 0;
-	glGetShaderInfoLog(id, sizeof(char) * info_log_length, NULL, error_message);
-	fprintf(stderr, "gl_shader_error : %s\n", error_message);
-	free(error_message);
-}
-
-static void print_gl_program_error(GLuint id, int info_log_length) {
-	char *error_message;
-
-	error_message = malloc(sizeof(char) * info_log_length + 1);
-	error_message[sizeof(char) * info_log_length] = 0;
-	glGetProgramInfoLog(id, sizeof(char) * info_log_length, NULL, error_message);
-	fprintf(stderr, "gl_program_error : %s\n", error_message);
-	free(error_message);
-}
-
-static int compile_single_shader(GLuint id, const shader_t *source, int *info_log_length, GLint *result)
+static int load_shader(t_software_environ *env, shader_t *shader, GLenum shader_type, const char *src_path)
 {
-	glShaderSource(id, 1, (const GLchar *const*)(&source->content), &source->length);
-	glCompileShader(id);
+	char *full_path;
+	GLuint shader_id;
+	GLint result;
+	int info_log_length;
+	
+	shader_id = glCreateShader(shader_type);
 
-	// Check Shader compilation
-	glGetShaderiv(id, GL_COMPILE_STATUS, result);
-	glGetShaderiv(id, GL_INFO_LOG_LENGTH, info_log_length);
+	full_path = ft_strjoin(env->cwd, src_path);
 
-	if (*result == GL_FALSE) {
-		print_gl_shader_error(id, *info_log_length);
+	if (full_path == NULL)
+		exit_error_with_message("An error occured when wanting to build shaders full path");
+
+	shader = load_single_shader(full_path, shader_id);
+
+	result = GL_FALSE;
+	info_log_length = 0;
+	if (compile_single_shader(shader_id, shader, &info_log_length, &result) < 0)
 		return (-1);
-	}
 
-	return (0);
+	return (1);
 }
 
 /*
@@ -67,6 +62,7 @@ int load_shaders(t_software_environ *env) {
 
 	// Build full path of the shaders
 	vertex_file_full_path = ft_strjoin(env->cwd, vertex_file_path);
+	char *vertex_file_full_path;
 	fragment_file_full_path = ft_strjoin(env->cwd, fragment_file_path);
 
 	if (!vertex_file_full_path || !fragment_file_full_path)

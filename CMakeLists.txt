@@ -76,7 +76,11 @@ set (SOURCES
 	src/core/render.c
 	src/core/gl_attribute.c
 	src/core/count_vertices.c
-	src/core/load_shaders.c
+
+	src/shader/load_shaders.c
+	src/shader/load_single_shaders.c
+	src/shader/compile_shader.c
+	src/shader/print_shader_error.c	
 
 	src/core/math_utils.c
 	src/core/gl_buffering.c
