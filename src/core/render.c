@@ -18,21 +18,6 @@ void		render(t_software_environ *env)
 
 	multiply_mat4(mvp, env->projection_matrix, mvp);
 
-
-	// i = 0;
-	// while (i < mvp->lines * mvp->columns)
-	// {
-	// 	if (i && (i + 1) % 4 == 0) {
-	// 		printf("%lf \n",mvp->value[i]);
-	// 	} else {
-	// 		printf("%lf ",mvp->value[i]);
-	// 	}
-
-	// 	i++;
-	// }
-
-	// printf("\n");
-
 	GLfloat b[16];
 
 	i = 0;

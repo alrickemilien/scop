@@ -11,7 +11,7 @@ typedef struct s_glx_attribute {
 } t_glx_attribute;
 
 //#define VERTEX_SIZE 3 * sizeof(t_vec3) + sizeof(t_vec2)
-#define VERTEX_SIZE sizeof(t_vec3)
+#define VERTEX_SIZE sizeof(t_vec3) * 2
 
 static const t_glx_attribute g_attribute_map[] = {
   {
@@ -28,7 +28,7 @@ static const t_glx_attribute g_attribute_map[] = {
     GL_FLOAT,
     GL_FALSE,
     VERTEX_SIZE,
-    (char *)NULL + (sizeof(t_vec3))
+    (uint8_t *)NULL + (sizeof(t_vec3))
   },
   {
     "uv",
@@ -36,7 +36,7 @@ static const t_glx_attribute g_attribute_map[] = {
     GL_FLOAT,
     GL_FALSE,
     VERTEX_SIZE,
-    (char *)NULL + (sizeof(t_vec3) + sizeof(t_vec3))
+    (uint8_t *)NULL + (sizeof(t_vec3) + sizeof(t_vec3))
   },
   {
     "normal",
@@ -44,7 +44,7 @@ static const t_glx_attribute g_attribute_map[] = {
     GL_FLOAT,
     GL_FALSE,
     VERTEX_SIZE,
-    (char *)NULL + (sizeof(t_vec3) + sizeof(t_vec3) + sizeof(t_vec2))
+    (uint8_t *)NULL + (sizeof(t_vec3) + sizeof(t_vec3) + sizeof(t_vec2))
   }
 };
 
