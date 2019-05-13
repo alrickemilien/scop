@@ -156,50 +156,28 @@ void plan_to_vbo(t_software_environ *env) {
 	glBindVertexArray(env->plan_vao);
 
 	// Load plan vbo
-	size_t plan_vertex_number = 50 * 50 * 4;
-	GLfloat *plan_buffer = (GLfloat*)malloc(sizeof(t_vec3) * 2 * plan_vertex_number);
+	//GLfloat *plan_buffer = (GLfloat*)malloc(sizeof(t_vec3) * 2);
+	GLfloat *plan_buffer = (GLfloat*)malloc(sizeof(t_vec3));
 
-	t_vec3 v;
-	t_vec3 color = { 165.f / 255.f, 165.f / 255.f, 165.f / 255.f };
 
-	GLfloat i = 0;
-	GLfloat j = 0;
-	size_t k = 0;
-	while (i < 50) {
-		j = 0;
-		while (j < 50) {
-			v = (t_vec3){i, 0, j};
-			memcpy((uint8_t*)plan_buffer + k++ * sizeof(t_vec3), &v, sizeof(t_vec3));
-			memcpy((uint8_t*)plan_buffer + k++ * sizeof(t_vec3), &color, sizeof(t_vec3));
+	t_vec3 v = {0.f, 0.f, 0.f};
+	// t_vec3 color = { 165.f / 255.f, 165.f / 255.f, 165.f / 255.f };
 
-			v = (t_vec3){i, 0, -j};
-			memcpy((uint8_t*)plan_buffer + k++ * sizeof(t_vec3), &v, sizeof(t_vec3));
-			memcpy((uint8_t*)plan_buffer + k++ * sizeof(t_vec3), &color, sizeof(t_vec3));
-
-			v = (t_vec3){-i, 0, -j};
-			memcpy((uint8_t*)plan_buffer + k++ * sizeof(t_vec3), &v, sizeof(t_vec3));
-			memcpy((uint8_t*)plan_buffer + k++ * sizeof(t_vec3), &color, sizeof(t_vec3));
-
-			v = (t_vec3){-i, 0, j};
-			memcpy((uint8_t*)plan_buffer + k++ * sizeof(t_vec3), &v, sizeof(t_vec3));
-			memcpy((uint8_t*)plan_buffer + k++ * sizeof(t_vec3), &color, sizeof(t_vec3));
-
-			j++;
-		}
-		i++;
-	}
+	memcpy((uint8_t*)plan_buffer, &v, sizeof(t_vec3));
+	// memcpy((uint8_t*)plan_buffer + sizeof(t_vec3), &color, sizeof(t_vec3));
 
 	glGenBuffers(1, &env->plan_vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, env->plan_vbo);
 	glBufferData(GL_ARRAY_BUFFER,
-							sizeof(t_vec3) * 2 * plan_vertex_number,
+							//sizeof(t_vec3) * 2,
+							sizeof(t_vec3),							
 							plan_buffer,
 							GL_STATIC_DRAW);
 
 	free(plan_buffer);
 }
 
-void gl_buffering(t_software_environ *env)
+int	gl_buffering(t_software_environ *env)
 {
 	// Load vertex only VBO
 	vertex_list_to_vbo(env);
@@ -207,15 +185,20 @@ void gl_buffering(t_software_environ *env)
 	// Load the vriables taht will be use into shaders
 	// the variables id will be stored in env structure
 	// with the fields of the same name
-	set_attribute(env->program_id, "position");
-	set_attribute(env->program_id, "color");
-	// set_attribute(env->program_id, "uv");
-	// set_attribute(env->program_id, "normal");
+	if (set_attribute(env->object_shader_program.id, "position", sizeof(t_vec3) * 2) < 0)
+		return(-1);
+	if (set_attribute(env->object_shader_program.id, "color", sizeof(t_vec3) * 2) < 0)
+		return(-1);
+
+	// if (set_attribute(env->object_shader_program.id, "uv") < 0)
+	// 	return(-1);
+	// if (set_attribute(env->object_shader_program.id, "normal") < 0)
+	// 	return(-1);
 
 	plan_to_vbo(env);
 
-	set_attribute(env->program_id, "position");
-	set_attribute(env->program_id, "color");	
+	if (set_attribute(env->internal_object_shader_program.id, "position", sizeof(t_vec3)) < 0)
+		return(-1);
 
 	gl_matrixing(env);
 
@@ -230,4 +213,6 @@ void gl_buffering(t_software_environ *env)
 //	glUniform1f(env->texture_level_uni, env->texture_level);
 
 //	set_light_uniforms(env);
+
+	return (0);
 }

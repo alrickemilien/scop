@@ -114,7 +114,16 @@ typedef struct	shader_s {
 	GLuint		id;
 	GLchar		*content;
 	GLint		length;
+	char		*path;
 }				shader_t;
+
+typedef struct	shader_program_s {
+	GLuint		id;
+	char		*cwd;
+	shader_t	*vertex_shader;
+	shader_t	*fragment_shader;
+	shader_t	*geometry_shader;
+}				shader_program_t;
 
 typedef struct	s_light
 {
@@ -176,13 +185,13 @@ typedef struct	s_software_environ
 
 	const char *path_to_texture;
 
-	// OpenGL progrm id
-	GLuint 		program_id;
+	// OpenGL programs
+	shader_program_t	object_shader_program;
+	shader_program_t	internal_object_shader_program;
 
 	// OpenGL VAO and VBO
 	GLuint 		vao;
 	GLuint 		plan_vao;
-
 
 	// Here we have a single VBO taht contains v/c/n
 	GLuint		vbo;
@@ -256,8 +265,15 @@ void 		exit_error_with_message(const char *msg);
 
 void		create_triangle(t_software_environ *env);
 
-int			load_shaders(t_software_environ *env);
-int			load_single_shader(shader_t *shader, const char *path, GLui);
+int 		load_program_shader(shader_program_t *env,
+				const char *vertex_file_path,
+				const char *fragment_file_path,
+				const char *geometry_file_path);
+int			load_single_shader(shader_t *shader, const char *path);
+void		print_gl_shader_error(GLuint id, int info_log_length);
+void		print_gl_program_error(GLuint id, int info_log_length);
+void		cleanup_shader_program(shader_program_t *p);
+int			compile_single_shader(shader_t *shader, int *info_log_length, GLint *result);
 
 void 		load_texture(t_software_environ *env);
 
@@ -265,11 +281,11 @@ void		key_callback(GLFWwindow* window, int key, int scancode, int action, int mo
 
 void		window_size_callback(GLFWwindow* window, int width, int height);
 
-void		set_attribute(GLuint id_program, const char *attribute_name);
+int			set_attribute(GLuint id_program, const char *attribute_name, size_t vertex_size);
 
-void		check_gl_error();
+int			check_gl_error(void);
 
-void		gl_buffering(t_software_environ *env);
+int			gl_buffering(t_software_environ *env);
 void		gl_matrixing(t_software_environ *env);
 void		render(t_software_environ *env);
 

@@ -25,14 +25,15 @@ void		render(t_software_environ *env)
 	multiply_mat4(mvp, env->projection_matrix, mvp);
 
 	// GL_TRUE indicates that is is row major matrix
-	glUniformMatrix4fv(env->mvp_uni, 1, GL_FALSE, mvp);
+	glUniformMatrix4fv(env->mvp_uni, 1, GL_FALSE, mvp->value);
 
 	// glUniform1f(env->texture_level_uni, env->texture_level);
 
-	glUseProgram(env->program_id);
-
+	glUseProgram(env->object_shader_program.id);
 	render_vao(env->vao, GL_TRIANGLES, env->data.vertex_count);
-	render_vao(env->plan_vao, GL_LINES, 50 * 50 * 4);
-
+	
+	glUseProgram(env->internal_object_shader_program.id);
+	render_vao(env->plan_vao, GL_POINTS, 1);
+	
 	delete_matrix(mvp);
 }

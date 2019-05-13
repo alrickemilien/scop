@@ -2,6 +2,28 @@
 
 t_software_environ *env = NULL;
 
+/*
+** This macro handles the fact that windows works with \ and not / as Unix
+** when it comes to treat with files ...
+*/
+
+#ifdef _MSC_VER
+static const char *vertex_file_path = "\x5c""shaders""\x5c""SimpleVertexShader.glsl";
+static const char *fragment_file_path = "\x5c""shaders""\x5c""SimpleFragmentShader.glsl";
+
+static const char *plan_vertex_file_path = "\x5c""shaders""\x5c""plan""\x5c""VertexShader.glsl";
+static const char *plan_fragment_file_path = "\x5c""shaders""\x5c""plan""\x5c""FragmentShader.glsl";
+static const char *plan_geometry_file_path = "\x5c""shaders""\x5c""plan""\x5c""GeometryShader.glsl";
+
+#else
+static const char *vertex_file_path = "/shaders/SimpleVertexShader.glsl";
+static const char *fragment_file_path = "/shaders/SimpleFragmentShader.glsl";
+
+static const char *plan_vertex_file_path = "/shader/plan/VertexShader.glsl";
+static const char *plan_fragment_file_path = "/shader/plan/FragmentShader.glsl";
+static const char *plan_geometry_file_path = "/shader/plan/GeometryShader.glsl";
+#endif
+
 static void glew_init(void)
 {
 	glewExperimental = GL_TRUE;
@@ -56,16 +78,11 @@ static void end_program(int code)
 {
 	printf("Closing app ...\n");
 
-	glDetachShader(env->program_id, env->vertex_shader_id);
-
-	glDetachShader(env->program_id, env->fragment_shader_id);
-
-	glDeleteShader(env->vertex_shader_id);
-	glDeleteShader(env->fragment_shader_id);
+	cleanup_shader_program(&env->object_shader_program);
+	cleanup_shader_program(&env->internal_object_shader_program);
 
 	// glDeleteBuffers(1, env->);
 	// glDeleteVertexArrays(1, env->);
-	glDeleteProgram(env->program_id);
 
 	glfwTerminate();
 
@@ -97,12 +114,29 @@ void run()
 	
 	print_object(&env->data);
 
-	if (load_shaders(env) < 0) {
+	// Load object shader
+
+	env->object_shader_program.cwd = (char*)env->cwd;
+	env->internal_object_shader_program.cwd = (char*)env->cwd;
+
+	if (load_program_shader(&env->object_shader_program, vertex_file_path, fragment_file_path, NULL) < 0)
+	{
 		end_program(-1);
-		return;
+		return ;
+	}
+	
+	if (load_program_shader(&env->internal_object_shader_program, plan_vertex_file_path, plan_fragment_file_path, plan_geometry_file_path) < 0)
+	{
+		end_program(-1);
+		return ;
 	}
 
-	gl_buffering(env);
+	if (gl_buffering(env) < 0)
+	{
+		end_program(-1);
+		return ;
+	}
+
 
 	printf("Preparation is done\n");
 

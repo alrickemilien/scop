@@ -68,7 +68,7 @@ set (WIN_SOURCES
 )
 
 set (OSX_SOURCES
-	src/core/load_single_shader.c
+	src/shader/load_single_shader.c
 )
 
 set (SOURCES
@@ -77,10 +77,10 @@ set (SOURCES
 	src/core/gl_attribute.c
 	src/core/count_vertices.c
 
-	src/shader/load_shaders.c
-	src/shader/load_single_shaders.c
+	src/shader/load_program_shader.c
 	src/shader/compile_shader.c
 	src/shader/print_shader_error.c	
+	src/shader/cleanup_shader_program.c	
 
 	src/core/math_utils.c
 	src/core/gl_buffering.c

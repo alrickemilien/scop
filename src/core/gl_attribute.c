@@ -6,12 +6,8 @@ typedef struct s_glx_attribute {
   GLint size;
   GLenum type;
   GLboolean normalized;
-  GLsizei stride;
   const GLvoid *pointer;
 } t_glx_attribute;
-
-//#define VERTEX_SIZE 3 * sizeof(t_vec3) + sizeof(t_vec2)
-#define VERTEX_SIZE sizeof(t_vec3) * 2
 
 static const t_glx_attribute g_attribute_map[] = {
   {
@@ -19,7 +15,6 @@ static const t_glx_attribute g_attribute_map[] = {
     3,
     GL_FLOAT,
     GL_FALSE,
-    VERTEX_SIZE,
     0
   },
   {
@@ -27,7 +22,6 @@ static const t_glx_attribute g_attribute_map[] = {
     3,
     GL_FLOAT,
     GL_FALSE,
-    VERTEX_SIZE,
     (uint8_t *)NULL + (sizeof(t_vec3))
   },
   {
@@ -35,7 +29,6 @@ static const t_glx_attribute g_attribute_map[] = {
     2,
     GL_FLOAT,
     GL_FALSE,
-    VERTEX_SIZE,
     (uint8_t *)NULL + (sizeof(t_vec3) + sizeof(t_vec3))
   },
   {
@@ -43,12 +36,11 @@ static const t_glx_attribute g_attribute_map[] = {
     3,
     GL_FLOAT,
     GL_FALSE,
-    VERTEX_SIZE,
     (uint8_t *)NULL + (sizeof(t_vec3) + sizeof(t_vec3) + sizeof(t_vec2))
   }
 };
 
-void set_attribute(GLuint id_program, const char *attribute_name)
+int set_attribute(GLuint id_program, const char *attribute_name, size_t vertex_size)
 {
   GLuint	id;
   size_t  i;
@@ -60,6 +52,8 @@ void set_attribute(GLuint id_program, const char *attribute_name)
           g_attribute_map[i].attribute_name,
           strlen(g_attribute_map[i].attribute_name)) == 0)
     {
+
+      printf("id_program : %d\n", id_program);
 
 			id = glGetAttribLocation(id_program, g_attribute_map[i].attribute_name);
 
@@ -73,24 +67,27 @@ void set_attribute(GLuint id_program, const char *attribute_name)
 			// if (id == -1) {
 			//
 			// }
-			check_gl_error();
+			if (check_gl_error() < 0)
+        return (-1);
 
 			glEnableVertexAttribArray(id);
 
 			fprintf(stderr, "id : %d\n", id);
+			fprintf(stderr, "g_attribute_map[i].attribute_name : %s\n", g_attribute_map[i].attribute_name);
 
       glVertexAttribPointer(id,
         g_attribute_map[i].size,
 				g_attribute_map[i].type,
         g_attribute_map[i].normalized,
-        g_attribute_map[i].stride,
+        (GLsizei)vertex_size,
 				(void*)(g_attribute_map[i].pointer));
 
-			check_gl_error();
-
-      return ;
+			if (check_gl_error() < 0)
+        return (-1);
     }
 
     i++;
   }
+
+  return (0);
 }

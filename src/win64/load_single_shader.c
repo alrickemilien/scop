@@ -5,7 +5,7 @@
 
 #ifdef _MSC_VER
 
-int	load_single_shader(shader_t *shader, const char *path, GLuint id)
+int	load_single_shader(shader_t *shader, const char *path)
 {
 	FILE *f;
 	struct stat	stats;

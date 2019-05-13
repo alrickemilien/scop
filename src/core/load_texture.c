@@ -30,7 +30,7 @@ void	load_texture(t_software_environ *env)
 
 	free(image_buffer);
 
-	glUniform1i(glGetUniformLocation(env->program_id, "texture"), 0);
+	glUniform1i(glGetUniformLocation(env->object_shader_program.id, "texture"), 0);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 

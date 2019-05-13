@@ -1,16 +1,19 @@
 #include "scop.h"
 
-int compile_single_shader(GLuint id, const shader_t *source, int *info_log_length, GLint *result)
+int compile_single_shader(shader_t *shader, int *info_log_length, GLint *result)
 {
-	glShaderSource(id, 1, (const GLchar *const*)(&source->content), &source->length);
-	glCompileShader(id);
+	// Compile Fragment Shader
+	printf("Compiling shader : %s\n", shader->path);
+
+	glShaderSource(shader->id, 1, (const GLchar *const*)(&shader->content), &shader->length);
+	glCompileShader(shader->id);
 
 	// Check Shader compilation
-	glGetShaderiv(id, GL_COMPILE_STATUS, result);
-	glGetShaderiv(id, GL_INFO_LOG_LENGTH, info_log_length);
+	glGetShaderiv(shader->id, GL_COMPILE_STATUS, result);
+	glGetShaderiv(shader->id, GL_INFO_LOG_LENGTH, info_log_length);
 
 	if (*result == GL_FALSE) {
-		print_gl_shader_error(id, *info_log_length);
+		print_gl_shader_error(shader->id, *info_log_length);
 		return (-1);
 	}
 
