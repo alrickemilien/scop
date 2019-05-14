@@ -15,6 +15,10 @@ static const char *plan_vertex_file_path = "\x5c""shaders""\x5c""plan""\x5c""Ver
 static const char *plan_fragment_file_path = "\x5c""shaders""\x5c""plan""\x5c""FragmentShader.glsl";
 static const char *plan_geometry_file_path = "\x5c""shaders""\x5c""plan""\x5c""GeometryShader.glsl";
 
+static const char * axis_vertex_file_path = "\x5c""shaders""\x5c""axis""\x5c""VertexShader.glsl";
+static const char * axis_fragment_file_path = "\x5c""shaders""\x5c""axis""\x5c""FragmentShader.glsl";
+static const char * axis_geometry_file_path = "\x5c""shaders""\x5c""axis""\x5c""GeometryShader.glsl";
+
 #else
 static const char *vertex_file_path = "/shaders/SimpleVertexShader.glsl";
 static const char *fragment_file_path = "/shaders/SimpleFragmentShader.glsl";
@@ -118,6 +122,7 @@ void run()
 
 	env->object_shader_program.cwd = (char*)env->cwd;
 	env->internal_object_shader_program.cwd = (char*)env->cwd;
+	env->axis_shader_program.cwd = (char*)env->cwd;
 
 	if (load_program_shader(&env->object_shader_program, vertex_file_path, fragment_file_path, NULL) < 0)
 	{
@@ -126,6 +131,12 @@ void run()
 	}
 	
 	if (load_program_shader(&env->internal_object_shader_program, plan_vertex_file_path, plan_fragment_file_path, plan_geometry_file_path) < 0)
+	{
+		end_program(-1);
+		return ;
+	}
+
+	if (load_program_shader(&env->axis_shader_program, axis_vertex_file_path, axis_fragment_file_path, axis_geometry_file_path) < 0)
 	{
 		end_program(-1);
 		return ;

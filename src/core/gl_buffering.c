@@ -177,6 +177,31 @@ void plan_to_vbo(t_software_environ *env) {
 	free(plan_buffer);
 }
 
+void axis_to_vbo(t_software_environ *env) {
+	// Load vao
+	glGenVertexArrays(1, &env->axis_vao);
+	
+	check_gl_error();
+
+	glBindVertexArray(env->axis_vao);
+
+	// Load axis vbo
+	GLfloat *axis_buffer = (GLfloat*)malloc(sizeof(t_vec3));
+
+	t_vec3 v = {0.f, 0.f, 0.f};
+
+	memcpy((uint8_t*)axis_buffer, &v, sizeof(t_vec3));
+
+	glGenBuffers(1, &env->axis_vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, env->axis_vbo);
+	glBufferData(GL_ARRAY_BUFFER,
+							sizeof(t_vec3),							
+							axis_buffer,
+							GL_STATIC_DRAW);
+
+	free(axis_buffer);
+}
+
 int	gl_buffering(t_software_environ *env)
 {
 	// Load vertex only VBO
@@ -198,6 +223,11 @@ int	gl_buffering(t_software_environ *env)
 	plan_to_vbo(env);
 
 	if (set_attribute(env->internal_object_shader_program.id, "position", sizeof(t_vec3)) < 0)
+		return(-1);
+
+	axis_to_vbo(env);
+
+	if (set_attribute(env->axis_shader_program.id, "position", sizeof(t_vec3)) < 0)
 		return(-1);
 
 	gl_matrixing(env);

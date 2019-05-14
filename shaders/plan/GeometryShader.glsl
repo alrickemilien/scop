@@ -5,7 +5,7 @@ layout (triangle_strip, max_vertices = 400) out;
 
 uniform mat4 mvp;
 
-void main() {   
+void main() {
     float i;
     float j;
 

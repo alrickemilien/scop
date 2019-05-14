@@ -188,28 +188,28 @@ typedef struct	s_software_environ
 	// OpenGL programs
 	shader_program_t	object_shader_program;
 	shader_program_t	internal_object_shader_program;
+	shader_program_t	axis_shader_program;
 
 	// OpenGL VAO and VBO
 	GLuint 		vao;
 	GLuint 		plan_vao;
+	GLuint 		axis_vao;
 
 	// Here we have a single VBO taht contains v/c/n
 	GLuint		vbo;
 	GLuint		plan_vbo;
-
-	GLuint vertex_shader_id;
-	GLuint fragment_shader_id;
+	GLuint		axis_vbo;
 
 	// OpenGL shaders variables
 	GLuint		mvp_uni;
+	GLuint		barycentre_uni;
+
 	GLuint		model_matrix_uni;
 	GLuint		lighting_uni;
 	GLuint		light_position_uni;
 	GLuint		texture_level;
 	GLuint		light_color_uni;
 	GLuint		texture_level_uni;
-	GLuint		pos_attrib;
-	GLuint		col_attrib;
 	GLuint		texture;
 
 	t_mat4	*model_matrix;
@@ -303,6 +303,7 @@ void			scale_down(t_software_environ *env, GLFWwindow* window);
 */
 
 double	deg_to_rad(double deg);
+t_vec3	compute_object_barycentre(t_list *positions);
 
 /*
 ** Utils

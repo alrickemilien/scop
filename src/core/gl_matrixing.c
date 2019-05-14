@@ -1,6 +1,10 @@
 #include "scop.h"
 
 /*
+** Compute rotation matrix according to object barycentre
+*/
+
+/*
 ** Setup matrix's for object transformation
 ** into gl context
 */
@@ -26,6 +30,8 @@ void gl_matrixing(t_software_environ *env)
 		2000.0f);
 
 	env->mvp_uni = glGetUniformLocation(env->object_shader_program.id, "mvp");
+	env->barycentre_uni = glGetUniformLocation(env->object_shader_program.id, "barycentre");
+
 	env->mvp_uni = glGetUniformLocation(env->internal_object_shader_program.id, "mvp");
 
 	// env->model_matrix_uni = glGetUniformLocation(env->program_id, "modelMatrix");
