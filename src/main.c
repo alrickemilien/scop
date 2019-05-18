@@ -77,9 +77,16 @@ static void clear_env_memory()
 	free(env);
 }
 
+static bool closing = false;
+
 // Close OpenGL window and terminate GLFW
 static void end_program(int code)
 {
+	if (closing)
+		return ;
+
+	closing = true;
+
 	printf("Closing app ...\n");
 
 	cleanup_shader_program(&env->object_shader_program);
@@ -112,6 +119,8 @@ void run()
 {
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
+
+	glDisable(GL_CULL_FACE);
 
 	// Dark blue background
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
@@ -148,12 +157,10 @@ void run()
 		return ;
 	}
 
-
 	printf("Preparation is done\n");
 
 	// Check if the ESC key was pressed or the window was closed
-	while (glfwGetKey(WINDOW, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
-		   glfwWindowShouldClose(WINDOW) == 0)
+	while (glfwWindowShouldClose(WINDOW) == 0)
 	{
 		// wipe the drawing surface clear
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -271,7 +278,6 @@ int main(int argc, char **argv)
 	// Could not continue if the system ressources are fully and successfully loaded
 	if (init_system_resources(argc, argv) < 0)
 		return (-1);
-
 
 	// printf("env->data.vertex_count : %ld\n", env->data.vertex_count);
 

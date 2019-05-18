@@ -24,9 +24,9 @@ static void	set_light_uniforms(t_software_environ *env)
 */
 
 /*
-* * This is the size of memory of polygon vertex
-* * It is composed of many vertices
-* * Each vertice is composed of position, color uv and normal
+** This is the size of memory of polygon vertex
+** It is composed of many vertices
+** Each vertice is composed of position, color uv and normal
 */
 
 static void load_polygon_into_data(t_polygon *polygon, void *buffer) {
@@ -140,7 +140,7 @@ static void vertex_list_to_vbo(t_software_environ *env)
 	glGenBuffers(1, &env->vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, env->vbo);
 	glBufferData(GL_ARRAY_BUFFER,
-							polygon_size * env->data.vertex_count,
+							polygon_size * i,
 							buffer,
 							GL_STATIC_DRAW);
 
@@ -160,7 +160,7 @@ void plan_to_vbo(t_software_environ *env) {
 	GLfloat *plan_buffer = (GLfloat*)malloc(sizeof(t_vec3));
 
 
-	t_vec3 v = {0.f, 0.f, 0.f};
+	t_vec3 v = {0.f, -3.f, 0.f};
 	// t_vec3 color = { 165.f / 255.f, 165.f / 255.f, 165.f / 255.f };
 
 	memcpy((uint8_t*)plan_buffer, &v, sizeof(t_vec3));
