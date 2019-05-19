@@ -5,8 +5,8 @@ in vec3 color;
 
 out vec4 _color;
 
+uniform vec3 barycentre;
 uniform mat4 mvp;
-// uniform vec3 barycentre;
 
 void main() {
   gl_Position = mvp * vec4(position, 1.0);

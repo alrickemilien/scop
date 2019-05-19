@@ -1,7 +1,7 @@
 #version 410
 
 layout (points) in;
-layout (line_strip, max_vertices = 400) out;
+layout (line_strip, max_vertices = 256) out;
 
 // points
 // line_strip
@@ -12,38 +12,29 @@ layout (line_strip, max_vertices = 400) out;
 uniform mat4 mvp;
 
 void main() {
-    float i = 4;
-    float j = 4;
+    float j;
 
-    gl_Position = gl_in[0].gl_Position + mvp * vec4(i, 0, j, 0);
-    EmitVertex();
+    float X = 5;
 
-    gl_Position = gl_in[0].gl_Position + mvp * vec4(-i, 0, j, 0);
-    EmitVertex();
+    for (j = -X; j < X + 1; j++)
+    {
+        gl_Position = gl_in[0].gl_Position + mvp * vec4(X, 0, j, 0);
+        EmitVertex();
 
-    gl_Position = gl_in[0].gl_Position + mvp * vec4(i, 0, -j, 0);
-    EmitVertex();
+        gl_Position = gl_in[0].gl_Position + mvp * vec4(-X, 0, j, 0);
+        EmitVertex();
 
-    gl_Position = gl_in[0].gl_Position + mvp * vec4(-i, 0, -j, 0);
-    EmitVertex();
+        EndPrimitive();
+    } 
 
-    //for (i = 0; i < 5.0; i++)
-    //{
-    //    for (j = 0; j < 5.0; j++)
-    //    {
-    //        gl_Position = gl_in[0].gl_Position + mvp * vec4(i, 0, j, 0);
-    //        EmitVertex();
-//
-    //        gl_Position = gl_in[0].gl_Position + mvp * vec4(-i, 0, j, 0);
-    //        EmitVertex();
-//
-    //        gl_Position = gl_in[0].gl_Position + mvp * vec4(i, 0, -j, 0);
-    //        EmitVertex();
-//
-    //        gl_Position = gl_in[0].gl_Position + mvp * vec4(-i, 0, -j, 0);
-    //        EmitVertex();
-    //    } 
-    //} 
-    
-    EndPrimitive();
+    for (j = -X; j < X + 1; j++)
+    {
+        gl_Position = gl_in[0].gl_Position + mvp * vec4(j, 0, X, 0);
+        EmitVertex();
+
+        gl_Position = gl_in[0].gl_Position + mvp * vec4(j, 0, -X, 0);
+        EmitVertex();
+
+        EndPrimitive();
+    }
 }  

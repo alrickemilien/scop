@@ -1,7 +1,7 @@
 #version 410
 
 layout (points) in;
-layout (line_strip, max_vertices = 7) out;
+layout (line_strip, max_vertices = 256) out;
 
 out vec4 axis[];
 
@@ -18,6 +18,8 @@ void main() {
     axis[1] = vec4(3, 0, 0, 0);
     EmitVertex();
 
+    EndPrimitive();
+
     gl_Position = gl_in[0].gl_Position;
     EmitVertex();
 
@@ -25,6 +27,8 @@ void main() {
     gl_Position = gl_in[0].gl_Position + mvp * vec4(0, 3, 0, 0);
     axis[2] = vec4(0, 3, 0, 0);
     EmitVertex();
+
+    EndPrimitive();
 
     gl_Position = gl_in[0].gl_Position;
     EmitVertex();

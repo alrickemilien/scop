@@ -30,7 +30,7 @@ void gl_matrixing(t_software_environ *env)
 		2000.0f);
 
 	env->mvp_uni = glGetUniformLocation(env->object_shader_program.id, "mvp");
-	env->barycentre_uni = glGetUniformLocation(env->object_shader_program.id, "barycentre");
+	// env->barycentre_uni = glGetUniformLocation(env->object_shader_program.id, "barycentre");
 
 	env->mvp_uni = glGetUniformLocation(env->internal_object_shader_program.id, "mvp");
 

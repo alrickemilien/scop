@@ -29,29 +29,20 @@ void		render(t_software_environ *env)
 
 	// b = compute_object_barycentre(env->data.positions); 
 	// glUniform3f(env->barycentre_uni, b.x, b.y, b.z);
-
-	// glUniform1f(env->texture_level_uni, env->texture_level);
-
-	// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	// printf("BARYCENTRE : .x %f .y %f .z %f \n", b.x, b.y, b.z);
 
 	glUseProgram(env->internal_object_shader_program.id);
 	render_vao(env->plan_vao, GL_POINTS, 1);
 
-
-	// GL_TRUE indicates that is is row major matrix
 	glUniformMatrix4fv(env->mvp_uni, 1, GL_FALSE, mvp->value);
 
 	glUseProgram(env->object_shader_program.id);
 	render_vao(env->vao, GL_TRIANGLES, env->data.vertex_count);
 	
-	// GL_TRUE indicates that is is row major matrix
-	// glUniformMatrix4fv(env->mvp_uni, 1, GL_FALSE, mvp->value);
+	glUniformMatrix4fv(env->mvp_uni, 1, GL_FALSE, mvp->value);
 
-	// glUseProgram(env->internal_object_shader_program.id);
-	// render_vao(env->plan_vao, GL_POINTS, 1);
-
-	// glUseProgram(env->axis_shader_program.id);
-	// render_vao(env->axis_vao, GL_POINTS, 1);
+	glUseProgram(env->axis_shader_program.id);
+	render_vao(env->axis_vao, GL_POINTS, 1);
 	
 	delete_matrix(mvp);
 }
