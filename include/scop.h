@@ -183,6 +183,8 @@ typedef struct	s_software_environ
 	int texturing;
 	float scale;
 
+	GLfloat y_auto_rotate_angle;
+
 	const char *path_to_texture;
 
 	// OpenGL programs
@@ -202,6 +204,7 @@ typedef struct	s_software_environ
 
 	// OpenGL shaders variables
 	GLuint		mvp_uni;
+	GLuint		internal_object_mvp_uni;
 	GLuint		barycentre_uni;
 
 	GLuint		model_matrix_uni;
@@ -211,6 +214,9 @@ typedef struct	s_software_environ
 	GLuint		light_color_uni;
 	GLuint		texture_level_uni;
 	GLuint		texture;
+
+	t_mat4	*translation_matrix;
+	t_mat4	*rotation_matrix;
 
 	t_mat4	*model_matrix;
 	t_mat4	*view_matrix;

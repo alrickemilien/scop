@@ -214,6 +214,7 @@ static int init_system_resources(int argc, char **argv)
 	count_vertices(&env->data);
 
 	env->scale = 1;
+	env->y_auto_rotate_angle = 0.f;
 
 	// All OK, start applicaton
 	return (0);

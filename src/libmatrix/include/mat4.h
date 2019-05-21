@@ -68,10 +68,10 @@ t_mat4 *perspective_mat4(
 	GLfloat near_plane,
 	GLfloat far_plane);
 
-void rotate_x_mat4(t_mat4 *m, GLfloat amount);
-void rotate_y_mat4(t_mat4 *m, GLfloat amount);
-void rotate_z_mat4(t_mat4 *m, GLfloat amount);
-t_mat4	*translate_mat4(t_mat4 *dest, const t_vec3 *amount);
+void  rotate_x_mat4(t_mat4 *m, GLfloat amount);
+void  rotate_y_mat4(t_mat4 *m, GLfloat amount);
+void  rotate_z_mat4(t_mat4 *m, GLfloat amount);
+void  translate_mat4(t_mat4 *dest, const t_vec3 *amount);
 
 /*
 ** Libmatrix utils
