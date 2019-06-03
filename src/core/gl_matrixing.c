@@ -21,8 +21,6 @@ void gl_matrixing(t_software_environ *env)
 		&camera_up
 	);
 
-	env->model_matrix = identity_mat4();
-
 	env->projection_matrix = perspective_mat4(
 		90.0f,
 		(GLfloat)(WINDOW_WIDTH / WINDOW_HEIGHT),
@@ -30,12 +28,6 @@ void gl_matrixing(t_software_environ *env)
 		2000.0f);
 
 	env->mvp_uni = glGetUniformLocation(env->object_shader_program.id, "mvp");
-	// env->barycentre_uni = glGetUniformLocation(env->object_shader_program.id, "barycentre");
 
 	env->internal_object_mvp_uni = glGetUniformLocation(env->internal_object_shader_program.id, "mvp");
-
-	printf("env->mvp_uni : %d\n", env->mvp_uni);
-	printf("env->internal_object_mvp_uni : %d\n", env->internal_object_mvp_uni);
-
-	// env->model_matrix_uni = glGetUniformLocation(env->program_id, "modelMatrix");
 }

@@ -72,6 +72,7 @@ void  rotate_x_mat4(t_mat4 *m, GLfloat amount);
 void  rotate_y_mat4(t_mat4 *m, GLfloat amount);
 void  rotate_z_mat4(t_mat4 *m, GLfloat amount);
 void  translate_mat4(t_mat4 *dest, const t_vec3 *amount);
+void	transpose_mat4(t_matrix *a);
 
 /*
 ** Libmatrix utils

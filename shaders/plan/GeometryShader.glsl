@@ -12,9 +12,9 @@ layout (line_strip, max_vertices = 256) out;
 uniform mat4 mvp;
 
 void main() {
-    float j;
+    int j;
 
-    float X = 5;
+    int X = 5;
 
     for (j = -X; j < X + 1; j++)
     {

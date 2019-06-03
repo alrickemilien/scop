@@ -15,6 +15,7 @@ SRC +=	../src/mat4/mat4.c \
 				../src/mat4/look_at_mat4_2.c \
 				../src/mat4/scale_mat4.c \
 				../src/mat4/translate_mat4.c \
+				../src/mat4/transpose_mat4.c \
 				../src/mat4/perspective_mat4.c \
 				../src/mat4/rotate_mat4.c
 
