@@ -80,7 +80,7 @@ static size_t read_index(t_obj_data *data, const t_token *tokens, size_t token_i
 }
 
 /*
-** Called from read_polygon
+** Called from read_face
 ** It is not a handler function
 ** for a type vertex that do not exists in obj file
 */

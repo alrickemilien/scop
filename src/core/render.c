@@ -1,11 +1,13 @@
 #include "scop.h"
 
-static void render_vao(GLuint vao, GLenum render_style, size_t vertex_number) {
+static void render_vao(GLuint vao, GLenum render_style, size_t vertex_number)
+{
 	glBindVertexArray(vao);
 	glDrawArrays(render_style, 0, vertex_number);
 }
 
-static t_matrix *rotate_object_around_point(t_software_environ *env, t_vec3 v) {
+static t_matrix *rotate_object_around_point(t_software_environ *env, t_vec3 v)
+{
 	t_matrix *model_matrix;
 	t_vec3 minus_v;
 
@@ -29,6 +31,17 @@ static t_matrix *rotate_object_around_point(t_software_environ *env, t_vec3 v) {
 	return model_matrix;
 }
 
+void print_mat4(t_mat4 *m)
+{
+	for (size_t i = 0; i < 4; i++) {
+		for (size_t j = 0; j < 4; j++) {
+			printf("%.3f ", m->value[j * 4 + i]);
+		}
+		printf("\n");
+	}
+	printf("\n");
+}
+
 static void apply_rotation(t_software_environ *env) {
 	t_vec3 minus_b;
 	t_vec3 b;
@@ -39,9 +52,7 @@ static void apply_rotation(t_software_environ *env) {
 
 	minus_b = (t_vec3){-b.x, -b.y, -b.z};
 
-	(void)minus_b;
- 
-	printf("BARYCENTRE : .x %f .y %f .z %f \n", b.x, b.y, b.z);
+	// printf("BARYCENTRE : .x %f .y %f .z %f \n", b.x, b.y, b.z);
 	
 	env->y_auto_rotate_angle += 0.5f;
 	if (env->y_auto_rotate_angle >= 360.f)
@@ -49,13 +60,7 @@ static void apply_rotation(t_software_environ *env) {
 
 	env->model_matrix = rotate_object_around_point(env, minus_b);
 
-	for (size_t i = 0; i < 4; i++) {
-		for (size_t j = 0; j < 4; j++) {
-			printf("%.3f ", env->model_matrix->value[j * 4 + i]);
-		}
-		printf("\n");
-	}
-	printf("\n");
+	// print_mat4(env->model_matrix->value);
 }
 
 t_mat4 *compute_mvp(t_software_environ *env) {

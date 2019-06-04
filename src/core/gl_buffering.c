@@ -76,12 +76,11 @@ static void vertex_list_to_vbo(t_software_environ *env)
 	size_t		i;
 	t_list		*x;
 	GLfloat			*buffer;
+	size_t poly_length;
 
 	// A polygon is three vertex length
 	// size_t vertex_size = sizeof(t_vec3) * 3 + sizeof(t_vec2);
 	size_t vertex_size = sizeof(t_vec3) * 2;
-
-	size_t polygon_size = 3 * vertex_size;
 
 	buffer = (GLfloat*)malloc(vertex_size * env->data.vertex_count);
 
@@ -95,18 +94,13 @@ static void vertex_list_to_vbo(t_software_environ *env)
 
 	i = 0;
 	x = env->data.polygons;
-	size_t poly_length;
 	while (x)
 	{
 		poly_length = ft_lstlen(((t_polygon*)x->content)->vertices);
+		
+		load_polygon_into_data(x->content, (GLfloat*)((char*)buffer + i));
 
-		if (poly_length == 3) {
-			// Load 3 polygons into data
-			load_polygon_into_data(x->content, (GLfloat*)((char*)buffer + i * polygon_size));
-
-			// Increase of three because a polygon is 3 vertex long
-			i++;
-		}
+		i += vertex_size * poly_length;
 
 		x = x->next;
 	}
@@ -140,7 +134,7 @@ static void vertex_list_to_vbo(t_software_environ *env)
 	glGenBuffers(1, &env->vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, env->vbo);
 	glBufferData(GL_ARRAY_BUFFER,
-							polygon_size * i,
+							i,
 							buffer,
 							GL_STATIC_DRAW);
 

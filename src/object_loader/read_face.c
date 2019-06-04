@@ -42,7 +42,7 @@ static int		read_face_components(
 
 	data->is_texture_set = false;
 
-	// Start at 1 becase of the f at the start of f X Y Z
+	// Start at 1 because of the f at the start of f X Y Z
 	i = 0;
 	while (tokens[i].cursor)
 	{
