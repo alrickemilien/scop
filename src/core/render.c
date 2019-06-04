@@ -5,6 +5,30 @@ static void render_vao(GLuint vao, GLenum render_style, size_t vertex_number) {
 	glDrawArrays(render_style, 0, vertex_number);
 }
 
+static t_matrix *rotate_object_around_point(t_software_environ *env, t_vec3 v) {
+	t_matrix *model_matrix;
+	t_vec3 minus_v;
+
+	minus_v = (t_vec3){-v.x, -v.y, -v.z};
+
+	model_matrix = identity_mat4();
+
+	env->translation_matrix = identity_mat4();
+	translate_mat4(env->translation_matrix, &v);
+	multiply_mat4(model_matrix, env->translation_matrix, model_matrix);
+
+	env->rotation_matrix = identity_mat4();
+	rotate_y_mat4(env->rotation_matrix, env->y_auto_rotate_angle);
+	multiply_mat4(model_matrix, env->rotation_matrix, model_matrix);
+
+	delete_matrix(env->translation_matrix);
+	env->translation_matrix = identity_mat4();
+	translate_mat4(env->translation_matrix, &minus_v);
+	multiply_mat4(model_matrix, env->translation_matrix, model_matrix);
+
+	return model_matrix;
+}
+
 static void apply_rotation(t_software_environ *env) {
 	t_vec3 minus_b;
 	t_vec3 b;
@@ -14,6 +38,8 @@ static void apply_rotation(t_software_environ *env) {
 	// b = (t_vec3){4.f, 4.f, 4.f};
 
 	minus_b = (t_vec3){-b.x, -b.y, -b.z};
+
+	(void)minus_b;
  
 	printf("BARYCENTRE : .x %f .y %f .z %f \n", b.x, b.y, b.z);
 	
@@ -21,15 +47,7 @@ static void apply_rotation(t_software_environ *env) {
 	if (env->y_auto_rotate_angle >= 360.f)
 		env->y_auto_rotate_angle = 30.f;
 
-	env->translation_matrix = identity_mat4();
-	env->rotation_matrix = identity_mat4();
-	
-	rotate_y_mat4(env->rotation_matrix, env->y_auto_rotate_angle);
-	
-	translate_mat4(env->translation_matrix, &minus_b);
-
-	env->model_matrix = identity_mat4();
-	multiply_mat4(env->rotation_matrix, env->translation_matrix, env->model_matrix);
+	env->model_matrix = rotate_object_around_point(env, minus_b);
 
 	for (size_t i = 0; i < 4; i++) {
 		for (size_t j = 0; j < 4; j++) {
