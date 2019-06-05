@@ -183,6 +183,9 @@ typedef struct	s_software_environ
 	int texturing;
 	float scale;
 
+	// render style value for glDrawArray()
+	GLenum render_style;
+
 	GLfloat y_auto_rotate_angle;
 
 	const char *path_to_texture;
@@ -291,6 +294,12 @@ int			set_attribute(GLuint id_program, const char *attribute_name, size_t vertex
 
 int			check_gl_error(void);
 
+void		smart_camera_position(
+				t_software_environ *env,
+				t_vec3 *camera_position,
+				t_vec3 *camera_look_at_position,
+				t_vec3 *camera_up);
+
 int			gl_buffering(t_software_environ *env);
 void		gl_matrixing(t_software_environ *env);
 void		render(t_software_environ *env);
@@ -303,6 +312,7 @@ unsigned char	*load_bitmap_file(const char *pathname, size_t *width, size_t *hei
 void			close_window_callback(t_software_environ *env, GLFWwindow* window);
 void			scale_up(t_software_environ *env, GLFWwindow* window);
 void			scale_down(t_software_environ *env, GLFWwindow* window);
+void			switch_render_style(t_software_environ *env, GLFWwindow* window);
 
 /*
 ** Math utils

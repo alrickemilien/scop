@@ -96,7 +96,7 @@ int				read_face(t_obj_data *data, const t_token *tokens)
   ft_lstreverse(&new_polygon.vertices);
 
   ft_lstadd(&data->polygons,
-		ft_lstnew(&new_polygon, sizeof(t_polygon)));
+	ft_lstnew(&new_polygon, sizeof(t_polygon)));
 
   return (0);
 }

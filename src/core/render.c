@@ -91,7 +91,7 @@ void		render(t_software_environ *env)
 
 	check_gl_error();
 
-	render_vao(env->vao, GL_TRIANGLES, env->data.vertex_count);
+	render_vao(env->vao, env->render_style, env->data.vertex_count);
 
 	delete_matrix(mvp);
 	delete_matrix(env->model_matrix);

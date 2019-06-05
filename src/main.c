@@ -118,14 +118,14 @@ void stop_on_sigint(int signo)
 void run()
 {
 	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LESS);
+	// glDepthFunc(GL_LESS);
 
 	glDisable(GL_CULL_FACE);
 
 	// Dark blue background
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
-	
-	print_object(&env->data);
+
+	// print_object(&env->data);
 
 	// Load object shader
 
@@ -215,6 +215,7 @@ static int init_system_resources(int argc, char **argv)
 
 	env->scale = 1;
 	env->y_auto_rotate_angle = 0.f;
+	env->render_style = GL_TRIANGLE_STRIP_ADJACENCY;
 
 	// All OK, start applicaton
 	return (0);
@@ -261,6 +262,7 @@ void init(int argc, char **argv)
 	glfwSetKeyCallback(WINDOW, key_callback);
 
 	glfwSetWindowSizeCallback(WINDOW, window_size_callback);
+	glfwSetFramebufferSizeCallback(WINDOW, window_size_callback);
 
 	glfwMakeContextCurrent(WINDOW);
 	

@@ -12,6 +12,7 @@ static const t_keyboard_callback_map g_keyboard_callback_map[] = {
 	{ GLFW_PRESS, GLFW_KEY_ESCAPE, &close_window_callback },
 	{ GLFW_PRESS, GLFW_KEY_KP_SUBTRACT, &scale_down },
 	{ GLFW_PRESS, GLFW_KEY_KP_ADD, &scale_up },
+	{ GLFW_PRESS, GLFW_KEY_R, &switch_render_style },
 };
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
