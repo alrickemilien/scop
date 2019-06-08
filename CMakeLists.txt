@@ -84,6 +84,7 @@ set (SOURCES
 
 	src/core/math_utils.c
 	src/core/gl_buffering.c
+	src/core/gl_indexing.c
 	src/core/gl_matrixing.c
 	src/core/load_texture.c
 	src/core/check_gl_error.c
@@ -120,6 +121,7 @@ set (SOURCES
 	src/controls/controls.c
 	src/controls/toggles.c
 	src/controls/keyboards.c
+
 	src/utils/ft_lstadd.c
 	src/utils/ft_lstdel.c
 	src/utils/ft_lstdelone.c
@@ -128,6 +130,8 @@ set (SOURCES
 	src/utils/ft_lstreverse.c
 	src/utils/ft_strjoin.c
 	src/utils/lst_data_at.c
+	src/utils/ft_lstfind.c
+	src/utils/ft_lstindex.c
 
 	src/core/gl_log.c
 

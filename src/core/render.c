@@ -6,6 +6,19 @@ static void render_vao(GLuint vao, GLenum render_style, size_t vertex_number)
 	glDrawArrays(render_style, 0, vertex_number);
 }
 
+void render_elements(GLuint vao, GLenum render_style, size_t vertex_number) 
+{
+ 		glBindVertexArray(vao);
+
+		 // Draw the triangles !
+ 		glDrawElements(
+     		render_style,      // mode
+     		vertex_number,    // count
+     		GL_UNSIGNED_INT,   	// type
+     		(void*)0           // element array buffer offset
+ 		);
+}
+
 static t_matrix *rotate_object_around_point(t_software_environ *env, t_vec3 v)
 {
 	t_matrix *model_matrix;
@@ -91,7 +104,10 @@ void		render(t_software_environ *env)
 
 	check_gl_error();
 
-	render_vao(env->vao, env->render_style, env->data.vertex_count);
+	if (env->indexation_mode)
+		render_elements(env->vao, env->render_style, env->data.vertex_count);
+	else
+		render_vao(env->vao, env->render_style, env->data.vertex_count);
 
 	delete_matrix(mvp);
 	delete_matrix(env->model_matrix);

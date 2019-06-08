@@ -15,14 +15,14 @@ static void update_max(const t_vec3 *barycentre, t_vec3 *max, t_polygon *polygon
 	while (y) {
 		vertex = (t_vertex*)y->content;
 
-		if (max->x < (vertex->position.x - barycentre->x))
-			max->x = vertex->position.x - barycentre->x;
+		if (max->x < (vertex->position->x - barycentre->x))
+			max->x = vertex->position->x - barycentre->x;
         
-        if (max->y < (vertex->position.y - barycentre->y))
-			max->y = vertex->position.y - barycentre->y;
+        if (max->y < (vertex->position->y - barycentre->y))
+			max->y = vertex->position->y - barycentre->y;
 
-        if (max->z < (vertex->position.z - barycentre->z))
-			max->z = vertex->position.z - barycentre->z;
+        if (max->z < (vertex->position->z - barycentre->z))
+			max->z = vertex->position->z - barycentre->z;
 
         y = y->next;
 	}

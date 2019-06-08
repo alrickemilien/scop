@@ -23,14 +23,18 @@ typedef struct	s_obj_data
 	t_list				*positions;
 	t_list				*uvs;
 	t_list				*normals;
+	
+	// A vertex is composed of one position, one uv and one normal
+	t_list				*vertices;
+
 	t_list				*polygons;
 	size_t				vertex_count;
 	bool				is_texture_set;
 }								t_obj_data;
 
 typedef struct	s_polygon {
-	t_list				*vertices;
-}								t_polygon;
+	t_list		*vertices;
+}				t_polygon;
 
 typedef struct	s_vertex
 {
@@ -39,10 +43,10 @@ typedef struct	s_vertex
 	size_t		normal_index;
 	size_t		uv_index;
 
-	t_vec3		position;
-	t_vec3		color;
-	t_vec2		uv;
-	t_vec3		normal;
+	t_vec3		*position;
+	t_vec3		*color;
+	t_vec2		*uv;
+	t_vec3		*normal;
 }				t_vertex;
 
 int				is_vec2_defined(t_vec2 *v);

@@ -183,6 +183,10 @@ typedef struct	s_software_environ
 	int texturing;
 	float scale;
 
+	// INDEXATION MODE
+	int		indexation_mode;
+	GLuint  ebo;
+
 	// render style value for glDrawArray()
 	GLenum render_style;
 
@@ -301,6 +305,9 @@ void		smart_camera_position(
 				t_vec3 *camera_up);
 
 int			gl_buffering(t_software_environ *env);
+int			gl_indexing(t_software_environ *env);
+void		plan_to_vbo(t_software_environ *env);
+void		axis_to_vbo(t_software_environ *env);
 void		gl_matrixing(t_software_environ *env);
 void		render(t_software_environ *env);
 

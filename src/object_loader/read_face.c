@@ -34,8 +34,8 @@ static int		read_face_components(
 					t_polygon *new_polygon)
 {
 	size_t			i;
-	t_token *ctokens;
-	char *tmp;
+	t_token			*ctokens;
+	char			*tmp;
 
 	if (!check_tokens_number(tokens, 3))
 		return (read_object_error("A face must declare at least three vertices."));
@@ -90,7 +90,7 @@ int				read_face(t_obj_data *data, const t_token *tokens)
 
 	new_polygon.vertices = NULL;
 
-  if (read_face_components(data, tokens, &new_polygon) < 0)
+	if (read_face_components(data, tokens, &new_polygon) < 0)
 		return (-1);
 
   ft_lstreverse(&new_polygon.vertices);

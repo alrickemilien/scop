@@ -122,6 +122,10 @@ void run()
 
 	glDisable(GL_CULL_FACE);
 
+	// glEnable(GL_CULL_FACE); // cull face
+	// glCullFace(GL_BACK); // cull back face
+	// glFrontFace(GL_CW); // GL_CCW for counter clock-wise
+
 	// Dark blue background
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
@@ -151,11 +155,19 @@ void run()
 		return ;
 	}
 
-	if (gl_buffering(env) < 0)
+	if (!env->indexation_mode && gl_buffering(env) < 0)
 	{
 		end_program(-1);
 		return ;
 	}
+	
+	if (env->indexation_mode && gl_indexing(env) < 0)
+	{
+		end_program(-1);
+		return ;
+	}
+
+	gl_matrixing(env);
 
 	printf("Preparation is done\n");
 
@@ -216,6 +228,7 @@ static int init_system_resources(int argc, char **argv)
 	env->scale = 1;
 	env->y_auto_rotate_angle = 0.f;
 	env->render_style = GL_TRIANGLE_STRIP_ADJACENCY;
+	env->indexation_mode = 1;
 
 	// All OK, start applicaton
 	return (0);

@@ -1,29 +1,6 @@
 #include "scop.h"
 
 /*
-static void	set_light_uniforms(t_software_environ *env)
-{
-	env->light_position_uni = glGetUniformLocation(env->program_id,
-		"lightPosition");
-
-	glUniform3f(
-		env->light_position_uni,
-		env->light.position.x,
-		env->light.position.y,
-		env->light.position.z);
-
-	env->light_color_uni = glGetUniformLocation(env->program_id,
-		"lightColor");
-
-	glUniform3f(
-		env->light_color_uni,
-		env->light.color.x,
-		env->light.color.y,
-		env->light.color.z);
-}
-*/
-
-/*
 ** This is the size of memory of polygon vertex
 ** It is composed of many vertices
 ** Each vertice is composed of position, color uv and normal
@@ -46,9 +23,9 @@ static void load_polygon_into_data(t_polygon *polygon, void *buffer) {
 	{
 		vertex = (t_vertex*)x->content;
 
-		memcpy((uint8_t*)buffer + i * vertex_size, &vertex->position, sizeof(t_vec3));
+		memcpy((uint8_t*)buffer + i * vertex_size, vertex->position, sizeof(t_vec3));
 
-		memcpy((uint8_t*)buffer + i * vertex_size + sizeof(t_vec3), &vertex->position, sizeof(t_vec3));
+		memcpy((uint8_t*)buffer + i * vertex_size + sizeof(t_vec3), vertex->position, sizeof(t_vec3));
 
 	//	memcpy(
 	//		(uint8_t*)buffer + i * vertex_size + sizeof(t_vec3) + sizeof(t_vec3),
@@ -223,8 +200,6 @@ int	gl_buffering(t_software_environ *env)
 
 	if (set_attribute(env->axis_shader_program.id, "position", sizeof(t_vec3)) < 0)
 		return(-1);
-
-	gl_matrixing(env);
 
 //	load_texture(env);
 

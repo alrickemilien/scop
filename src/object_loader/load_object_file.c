@@ -14,9 +14,12 @@ static int fill_faces_vertices_data(t_obj_data *data, t_list *polygons)
 
 	error = 0;
 
+	// For each polygon
 	while(polygons)
 	{
 		p = (t_polygon*)polygons->content;
+		
+		// For each vertex from the current polygon
 		x = p->vertices;
 		while (x)
 		{
@@ -30,6 +33,33 @@ static int fill_faces_vertices_data(t_obj_data *data, t_list *polygons)
 		}
 
 		polygons = polygons->next;
+	}
+
+	return error;
+}
+
+
+/*
+** Fill all vertices componenets
+** Done at the end after all vertices has been read
+*/
+
+static int fill_vertices_data(t_obj_data *data, t_list *vertices)
+{
+	int error;
+
+	error = 0;
+
+	// For each vertex from the mesh
+	while (vertices)
+	{
+		if (fill_vertex_position(data, vertices->content) < 0)
+			error = -1;
+		if (fill_vertex_color(data, vertices->content) < 0)
+			error = -1;
+		if (fill_vertex_normal(data, vertices->content) < 0)
+			error = -1;
+		vertices = vertices->next;
 	}
 
 	return error;
@@ -59,10 +89,16 @@ int		load_object_file(t_obj_data *data, const char *file_path)
 
 	fclose(fp);
 
+	ft_lstreverse(&data->uvs);
+	ft_lstreverse(&data->normals);
 	ft_lstreverse(&data->positions);
+	ft_lstreverse(&data->vertices);
 	ft_lstreverse(&data->polygons);
 
 	fill_faces_vertices_data(data, data->polygons);
+	fill_vertices_data(data, data->vertices);
+
+	printf("%ld polygons have been loaded.\n", ft_lstlen(data->polygons));
 
 	return (0);
 }
