@@ -24,7 +24,7 @@ t_list			*ft_lstfind(t_list *root,
     						const void *provided_content,
     						bool (*f)(const void *node_content, const void *provided_content));
 
-int				ft_lstindex(t_list *root,
+size_t			ft_lstindex(t_list *root,
     						const void *provided_content,
     						bool (*f)(const void *node_content, const void *provided_content));
 

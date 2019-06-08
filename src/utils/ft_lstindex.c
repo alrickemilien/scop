@@ -6,11 +6,11 @@
 ** or -1 if no found
 */
 
-int ft_lstindex(t_list *root,
-    const void *provided_content,
-    bool (*f)(const void *node_content, const void *provided_content))
+size_t  ft_lstindex(t_list *root,
+                    const void *provided_content,
+                    bool (*f)(const void *node_content, const void *provided_content))
 {
-    int i;
+    size_t i;
 
     i = 0;
     while (root)
@@ -22,5 +22,5 @@ int ft_lstindex(t_list *root,
         root = root->next;
     }
 
-    return (-1);
+    return ((size_t)-1);
 }

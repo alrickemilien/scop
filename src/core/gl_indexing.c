@@ -60,7 +60,7 @@ static GLfloat *vertex_list_to_vbo(t_software_environ *env)
 	glGenBuffers(1, &env->vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, env->vbo);
 	glBufferData(GL_ARRAY_BUFFER,
-							i,
+							i * sizeof(t_vec3) * 2,
 							buffer,
 							GL_STATIC_DRAW);
 	
@@ -91,7 +91,7 @@ static void load_polygon_into_index_buffer(t_software_environ *env, t_polygon *p
 	t_list		*x;
 	size_t		i;
 
-	size_t vertex_size = sizeof(GLuint) * 2;
+	size_t index_size = sizeof(GLuint);
 
 	GLuint index;
 
@@ -104,21 +104,11 @@ static void load_polygon_into_index_buffer(t_software_environ *env, t_polygon *p
 		if (index == -1)
 			printf("%s\n", "HEEEEEIN ???");
 
-		printf("index : %d\n", index);
-
 		memcpy(
-			(uint8_t*)index_buffer + i * vertex_size,
+			(uint8_t*)index_buffer + i * index_size,
 			// Look for the index of the vertex into list			
 			&index,
-			sizeof(GLuint));
-
-		index++;
-
-		memcpy(
-			(uint8_t*)index_buffer + i * vertex_size + sizeof(GLuint) ,
-			// Look for the index of the vertex into list			
-			&index,
-			sizeof(GLuint));
+			index_size);
 
 		i++;
 		x = x->next;
@@ -136,11 +126,11 @@ static void vertex_list_to_ebo(t_software_environ *env, GLfloat *vertex_buffer)
 	GLuint		*index_buffer;
 	size_t		poly_length;
 
-	size_t vertex_size = sizeof(GLuint) * 2;
+	size_t index_size = sizeof(GLuint);
 
-	index_buffer = (GLuint*)malloc(env->data.vertex_count * vertex_size);
+	index_buffer = (GLuint*)malloc(env->data.vertex_count * index_size);
 
-	memset(index_buffer, 0, env->data.vertex_count * vertex_size);
+	memset(index_buffer, 0, env->data.vertex_count * index_size);
 
 	printf("Load index of vertex\n");
 
@@ -153,14 +143,14 @@ static void vertex_list_to_ebo(t_software_environ *env, GLfloat *vertex_buffer)
 		
 		load_polygon_into_index_buffer(env, x->content, (GLuint*)((uint8_t*)index_buffer + i));
 
-		i += vertex_size * poly_length;
+		i += index_size * poly_length;
 		j++;
 
 		x = x->next;
 	}
 
-	printf("I resulted to %ld vertices into ebo buffering\n", i / vertex_size);
-	printf("I resulted to %ld polygons into ebo buffering\n", j);
+	printf("I resulted to %ld vertices into ebo buffering\n", i / index_size);
+	printf("I resulted to %ld 5polygons into ebo buffering\n", j);
 
 	printf("env->data.vertex_count : %ld\n", env->data.vertex_count);
 
