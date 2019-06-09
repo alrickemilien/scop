@@ -6,7 +6,7 @@
 ** and more accurate on render
 */
 
-static GLfloat *vertex_list_to_vbo(t_software_environ *env)
+static void vertex_list_to_vbo(t_software_environ *env)
 {
 	size_t		i;
 	t_list		*x;
@@ -64,7 +64,7 @@ static GLfloat *vertex_list_to_vbo(t_software_environ *env)
 							buffer,
 							GL_STATIC_DRAW);
 	
-	return (buffer);
+	free(buffer);	
 }
 
 static bool is_vertex_same(const void *a, const void *b) {
@@ -90,10 +90,7 @@ static void load_polygon_into_index_buffer(t_software_environ *env, t_polygon *p
 {
 	t_list		*x;
 	size_t		i;
-
-	size_t index_size = sizeof(GLuint);
-
-	GLuint index;
+	GLuint		index;
 
 	i = 0;
 	x = polygon->vertices;
@@ -101,14 +98,14 @@ static void load_polygon_into_index_buffer(t_software_environ *env, t_polygon *p
 	{
 		index = (GLuint)ft_lstindex(env->data.vertices, x->content, &is_vertex_same);
 
-		if (index == -1)
+		if (index == (GLuint)-1)
 			printf("%s\n", "HEEEEEIN ???");
 
 		memcpy(
-			(uint8_t*)index_buffer + i * index_size,
+			(uint8_t*)index_buffer + i * sizeof(GLuint),
 			// Look for the index of the vertex into list			
 			&index,
-			index_size);
+			sizeof(GLuint));
 
 		i++;
 		x = x->next;
@@ -118,7 +115,7 @@ static void load_polygon_into_index_buffer(t_software_environ *env, t_polygon *p
 /*
 * * Convert a list into a ebo ( GL vertex buffer object )
 */
-static void vertex_list_to_ebo(t_software_environ *env, GLfloat *vertex_buffer)
+static void vertex_list_to_ebo(t_software_environ *env)
 {
 	size_t		i;
 	size_t		j;
@@ -169,8 +166,6 @@ static void vertex_list_to_ebo(t_software_environ *env, GLfloat *vertex_buffer)
 
 static void vertex_list_to_vao(t_software_environ *env)
 {
-	GLfloat			*vertex_buffer;
-
 	if (glGenVertexArrays == NULL) {
 		fprintf(stderr, "glGenVertexArrays do not exist, exiting now ...\n");
 		exit(-1);
@@ -188,12 +183,10 @@ static void vertex_list_to_vao(t_software_environ *env)
 	glBindVertexArray(env->vao);
 
 	// 2 - Load VBO
-	vertex_buffer = vertex_list_to_vbo(env);
+	vertex_list_to_vbo(env);
 
 	// 3 - Load EBO
-	vertex_list_to_ebo(env, vertex_buffer);
-
-	free(vertex_buffer);
+	vertex_list_to_ebo(env);
 }
 
 int	gl_indexing(t_software_environ *env)

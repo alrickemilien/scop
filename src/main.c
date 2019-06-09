@@ -23,9 +23,13 @@ static const char * axis_geometry_file_path = "\x5c""shaders""\x5c""axis""\x5c""
 static const char *vertex_file_path = "/shaders/SimpleVertexShader.glsl";
 static const char *fragment_file_path = "/shaders/SimpleFragmentShader.glsl";
 
-static const char *plan_vertex_file_path = "/shader/plan/VertexShader.glsl";
-static const char *plan_fragment_file_path = "/shader/plan/FragmentShader.glsl";
-static const char *plan_geometry_file_path = "/shader/plan/GeometryShader.glsl";
+static const char *plan_vertex_file_path = "/shaders/plan/VertexShader.glsl";
+static const char *plan_fragment_file_path = "/shaders/plan/FragmentShader.glsl";
+static const char *plan_geometry_file_path = "/shaders/plan/GeometryShader.glsl";
+
+static const char * axis_vertex_file_path = "/shaders/axis/VertexShader.glsl";
+static const char * axis_fragment_file_path = "/shaders/axis/FragmentShader.glsl";
+static const char * axis_geometry_file_path = "/shaders/axis/GeometryShader.glsl";
 #endif
 
 static void glew_init(void)

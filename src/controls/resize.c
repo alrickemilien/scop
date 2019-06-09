@@ -4,6 +4,8 @@ extern t_software_environ *env;
 
 void window_size_callback(GLFWwindow* window, int width, int height)
 {
+	(void)window;
+
     WINDOW_WIDTH = width;
     WINDOW_HEIGHT = height;
 

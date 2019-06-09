@@ -112,7 +112,7 @@ int				read_vertex(t_obj_data *data, const t_token *tokens, t_polygon *polygon)
 	if (tokens_number > 2)
 		new_vertex.normal_index = read_index(data, tokens, 2);
 
-	if (ft_lstindex(data->vertices, &new_vertex, &is_vertex_same) == -1)
+	if (ft_lstindex(data->vertices, &new_vertex, &is_vertex_same) == (size_t)-1)
 		ft_lstadd(&data->vertices, ft_lstnew(&new_vertex, sizeof(t_vertex)));
 
 	ft_lstadd(&polygon->vertices, ft_lstnew(&new_vertex, sizeof(t_vertex)));
