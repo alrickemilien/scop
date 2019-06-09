@@ -24,6 +24,8 @@ void gl_matrixing(t_software_environ *env)
 		&camera_look_at_position,
 		&camera_up);
 
+	env->camera_position = camera_position;
+
 	env->view_matrix = look_at_mat4(
 		&camera_position,
 		&camera_look_at_position,
@@ -37,6 +39,8 @@ void gl_matrixing(t_software_environ *env)
 		2000.0f);
 
 	env->mvp_uni = glGetUniformLocation(env->object_shader_program.id, "mvp");
+
+	env->eye_uni = glGetUniformLocation(env->object_shader_program.id, "eye");
 
 	env->internal_object_mvp_uni = glGetUniformLocation(env->internal_object_shader_program.id, "mvp");
 }

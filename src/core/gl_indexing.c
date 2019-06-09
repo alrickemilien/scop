@@ -15,7 +15,7 @@ static void vertex_list_to_vbo(t_software_environ *env)
 
 	// A polygon is three vertex length
 	// size_t vertex_size = sizeof(t_vec3) * 3 + sizeof(t_vec2);
-	size_t vertex_size = sizeof(t_vec3) * 2;
+	size_t vertex_size = sizeof(t_vec3) * 3;
 
 	buffer = (GLfloat*)malloc(vertex_size * ft_lstlen(env->data.vertices));
 
@@ -29,25 +29,22 @@ static void vertex_list_to_vbo(t_software_environ *env)
 	{
 		vertex = (t_vertex*)x->content;
 
-		t_vec3 *u = vertex->position;
-
-		printf("BARYCENTRE : .x %f .y %f .z %f \n", u->x, u->y, u->z);
-
 		memcpy((uint8_t*)buffer + i * vertex_size, vertex->position, sizeof(t_vec3));
 
 		memcpy((uint8_t*)buffer + i * vertex_size + sizeof(t_vec3), vertex->position, sizeof(t_vec3));
 
-		//	memcpy(
-		//		(uint8_t*)buffer + i * vertex_size + sizeof(t_vec3) + sizeof(t_vec3),
-		//		&vertex->uv,
-		//		sizeof(t_vec2)
-		//	);
+		if (vertex->normal == NULL) {
+			t_vec3 computed_normal;
 
-		//	memcpy(
-		//		(uint8_t*)buffer + i * vertex_size + sizeof(t_vec3) + sizeof(t_vec3) + sizeof(t_vec2),
-		//		&vertex->normal,
-		//		sizeof(t_vec3)
-		//	);
+			t_vec3 b = compute_object_barycentre(env->data.positions);
+
+			// set_vec3(&computed_normal, vertex->position->x - b.x, vertex->position->y - b.y, vertex->position->z - b.z);
+			set_vec3(&computed_normal, vertex->position->x - b.x, vertex->position->y - b.y, vertex->position->z - b.z);
+
+			vertex->normal = &computed_normal;
+		}
+
+		memcpy((uint8_t*)buffer + i * vertex_size + sizeof(t_vec3) + sizeof(t_vec3), vertex->normal, sizeof(t_vec3));
 
 		i++;
 		x = x->next;
@@ -60,7 +57,7 @@ static void vertex_list_to_vbo(t_software_environ *env)
 	glGenBuffers(1, &env->vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, env->vbo);
 	glBufferData(GL_ARRAY_BUFFER,
-							i * sizeof(t_vec3) * 2,
+							i * vertex_size,
 							buffer,
 							GL_STATIC_DRAW);
 	
@@ -101,11 +98,7 @@ static void load_polygon_into_index_buffer(t_software_environ *env, t_polygon *p
 		if (index == (GLuint)-1)
 			printf("%s\n", "HEEEEEIN ???");
 
-		memcpy(
-			(uint8_t*)index_buffer + i * sizeof(GLuint),
-			// Look for the index of the vertex into list			
-			&index,
-			sizeof(GLuint));
+		memcpy((uint8_t*)index_buffer + i * sizeof(GLuint), &index, sizeof(GLuint));
 
 		i++;
 		x = x->next;
@@ -196,15 +189,12 @@ int	gl_indexing(t_software_environ *env)
 	// Load the vriables taht will be use into shaders
 	// the variables id will be stored in env structure
 	// with the fields of the same name
-	if (set_attribute(env->object_shader_program.id, "position", sizeof(t_vec3) * 2) < 0)
+	if (set_attribute(env->object_shader_program.id, "position", sizeof(t_vec3) * 3) < 0)
 		return(-1);
-	if (set_attribute(env->object_shader_program.id, "color", sizeof(t_vec3) * 2) < 0)
+	if (set_attribute(env->object_shader_program.id, "color", sizeof(t_vec3) * 3) < 0)
 		return(-1);
-
-	// if (set_attribute(env->object_shader_program.id, "uv") < 0)
-	// 	return(-1);
-	// if (set_attribute(env->object_shader_program.id, "normal") < 0)
-	// 	return(-1);
+	if (set_attribute(env->object_shader_program.id, "normal", sizeof(t_vec3) * 3) < 0)
+		return(-1);
 
 	plan_to_vbo(env);
 

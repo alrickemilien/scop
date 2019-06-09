@@ -89,6 +89,7 @@ set (SOURCES
 	src/core/load_texture.c
 	src/core/check_gl_error.c
 	src/core/smart_camera_position.c
+	src/core/gl_lighting.c
 
 	src/object_loader/read_position.c
 	src/object_loader/read_mtl.c

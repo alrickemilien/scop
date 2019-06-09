@@ -177,22 +177,29 @@ typedef struct	s_software_environ
 	t_light			light;
 
 	// Scop options that can evolve during software run
-	int wireframe;
-	int auto_rotate;
-	int	lighting;
-	int texturing;
-	float scale;
+	int			wireframe;
+	int			auto_rotate;
+	int			texturing;
+	float		scale;
 
-	// INDEXATION MODE
-	int		indexation_mode;
-	GLuint  ebo;
+	GLfloat		ambient_lighting;
+	GLfloat		specular_lighting;
+
+	// Ligting
+	GLuint		ambient_lighting_uni;
+	GLuint		specular_lighting_uni;
+	GLuint		light_uni;
+	GLuint		eye_uni;
+
+	t_vec3		camera_position;
+	t_vec3		light_position;
 
 	// render style value for glDrawArray()
-	GLenum render_style;
+	GLenum		render_style;
 
-	GLfloat y_auto_rotate_angle;
+	GLfloat		y_auto_rotate_angle;
 
-	const char *path_to_texture;
+	const char	*path_to_texture;
 
 	// OpenGL programs
 	shader_program_t	object_shader_program;
@@ -204,6 +211,10 @@ typedef struct	s_software_environ
 	GLuint 		plan_vao;
 	GLuint 		axis_vao;
 
+	// INDEXATION MODE
+	int			indexation_mode;
+	GLuint		ebo;
+
 	// Here we have a single VBO taht contains v/c/n
 	GLuint		vbo;
 	GLuint		plan_vbo;
@@ -212,11 +223,7 @@ typedef struct	s_software_environ
 	// OpenGL shaders variables
 	GLuint		mvp_uni;
 	GLuint		internal_object_mvp_uni;
-	GLuint		barycentre_uni;
 
-	GLuint		model_matrix_uni;
-	GLuint		lighting_uni;
-	GLuint		light_position_uni;
 	GLuint		texture_level;
 	GLuint		light_color_uni;
 	GLuint		texture_level_uni;
@@ -309,6 +316,7 @@ int			gl_indexing(t_software_environ *env);
 void		plan_to_vbo(t_software_environ *env);
 void		axis_to_vbo(t_software_environ *env);
 void		gl_matrixing(t_software_environ *env);
+int			gl_lighting(t_software_environ *env);
 void		render(t_software_environ *env);
 
 unsigned char	*load_bitmap_file(const char *pathname, size_t *width, size_t *height);
@@ -320,6 +328,8 @@ void			close_window_callback(t_software_environ *env, GLFWwindow* window);
 void			scale_up(t_software_environ *env, GLFWwindow* window);
 void			scale_down(t_software_environ *env, GLFWwindow* window);
 void			switch_render_style(t_software_environ *env, GLFWwindow* window);
+void			reduce_ambient_lighting(t_software_environ *env, GLFWwindow* window);
+void			increase_ambient_lighting(t_software_environ *env, GLFWwindow* window);
 
 /*
 ** Math utils
