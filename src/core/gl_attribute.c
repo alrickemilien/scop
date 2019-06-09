@@ -25,18 +25,11 @@ static const t_glx_attribute g_attribute_map[] = {
     (uint8_t *)NULL + (sizeof(t_vec3))
   },
   {
-    "uv",
-    2,
-    GL_FLOAT,
-    GL_FALSE,
-    (uint8_t *)NULL + (sizeof(t_vec3) + sizeof(t_vec3))
-  },
-  {
     "normal",
     3,
     GL_FLOAT,
     GL_FALSE,
-    (uint8_t *)NULL + (sizeof(t_vec3) + sizeof(t_vec3) + sizeof(t_vec2))
+    (uint8_t *)NULL + (sizeof(t_vec3) + sizeof(t_vec3))
   }
 };
 
@@ -58,15 +51,8 @@ int set_attribute(GLuint id_program, const char *attribute_name, size_t vertex_s
 			id = glGetAttribLocation(id_program, g_attribute_map[i].attribute_name);
 
       fprintf(stderr, "glGetAttribLocation returned id : %d\n", id);
+      fprintf(stderr, "attribute name : %s\n", attribute_name);
 
-			// glBindAttribLocation(id_program, i, g_attribute_map[i].attribute_name);
-
-     // id = (GLint)i;
-
-			// If the named attribute variable is not an active attribute in the specified program object
-			// if (id == -1) {
-			//
-			// }
 			if (check_gl_error() < 0)
         return (-1);
 

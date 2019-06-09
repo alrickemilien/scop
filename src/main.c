@@ -133,9 +133,11 @@ void run()
 	// Dark blue background
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
-	// print_object(&env->data);
-
 	// Load object shader
+
+	memset(&env->object_shader_program, 0, sizeof(shader_program_t));
+	memset(&env->internal_object_shader_program, 0, sizeof(shader_program_t));
+	memset(&env->axis_shader_program, 0, sizeof(shader_program_t));
 
 	env->object_shader_program.cwd = (char*)env->cwd;
 	env->internal_object_shader_program.cwd = (char*)env->cwd;
@@ -172,6 +174,8 @@ void run()
 	}
 
 	gl_matrixing(env);
+
+	gl_lighting(env);
 
 	printf("Preparation is done\n");
 
@@ -233,6 +237,8 @@ static int init_system_resources(int argc, char **argv)
 	env->y_auto_rotate_angle = 0.f;
 	env->render_style = GL_TRIANGLE_STRIP_ADJACENCY;
 	env->indexation_mode = 1;
+	env->ambient_lighting = 1;
+	env->specular_lighting = 0.5f;
 
 	// All OK, start applicaton
 	return (0);
@@ -273,9 +279,6 @@ void init(int argc, char **argv)
 		exit_error_with_message("Failed to open GLFW window. Need GPU compatible with 4.0 OpenGL library");
 	};
 
-	// Ensure we can capture the escape key being pressed below
-	//	glfwSetInputMode(WINDOW, GLFW_STICKY_KEYS, GL_TRUE);
-
 	glfwSetKeyCallback(WINDOW, key_callback);
 
 	glfwSetWindowSizeCallback(WINDOW, window_size_callback);
@@ -298,8 +301,6 @@ int main(int argc, char **argv)
 	// Could not continue if the system ressources are fully and successfully loaded
 	if (init_system_resources(argc, argv) < 0)
 		return (-1);
-
-	// printf("env->data.vertex_count : %ld\n", env->data.vertex_count);
 
 	// print_object((const void*)&env->data);
 

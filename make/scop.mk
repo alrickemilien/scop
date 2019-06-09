@@ -23,6 +23,7 @@ SRC +=	../src/core/render.c \
 	../src/core/gl_log.c \
 	../src/core/exit_error_with_msg.c \
 	../src/core/gl_matrixing.c \
+	../src/core/gl_lighting.c \
 	../src/core/count_vertices.c \
 	../src/core/math_utils.c \
 	../src/core/gl_indexing.c \

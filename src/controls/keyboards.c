@@ -16,8 +16,6 @@ void scale_up(t_software_environ *env, GLFWwindow* window)
 	(void)window;
 
     env->scale += 0.1f;
-
-	scale_mat4(env->model_matrix, env->scale);
 }
 
 void scale_down(t_software_environ *env, GLFWwindow* window)
@@ -25,8 +23,6 @@ void scale_down(t_software_environ *env, GLFWwindow* window)
 	(void)window;
 
     env->scale -= 0.1f;
-
-	scale_mat4(env->model_matrix, env->scale);
 }
 
 static const GLenum g_render_styles[] = {
@@ -63,4 +59,25 @@ void switch_render_style(t_software_environ *env, GLFWwindow* window)
 
 		i++;
 	}
+}
+
+void reduce_ambient_lighting(t_software_environ *env, GLFWwindow* window)
+{
+	(void)window;
+
+    env->ambient_lighting -= 0.1f;
+
+	if (env->ambient_lighting < 0.0f)
+		env->ambient_lighting = 0.0f;
+}
+
+
+void increase_ambient_lighting(t_software_environ *env, GLFWwindow* window)
+{
+	(void)window;
+
+    env->ambient_lighting += 0.1f;
+
+	if (env->ambient_lighting > 1.0f)
+		env->ambient_lighting = 1.0f;
 }

@@ -61,8 +61,6 @@ static void apply_rotation(t_software_environ *env) {
 
 	b = compute_object_barycentre(env->data.positions);
 
-	// b = (t_vec3){4.f, 4.f, 4.f};
-
 	minus_b = (t_vec3){-b.x, -b.y, -b.z};
 
 	// printf("BARYCENTRE : .x %f .y %f .z %f \n", b.x, b.y, b.z);
@@ -76,8 +74,8 @@ static void apply_rotation(t_software_environ *env) {
 	// print_mat4(env->model_matrix->value);
 }
 
-t_mat4 *compute_mvp(t_software_environ *env) {
-	t_mat4 *mvp;
+t_mat4		*compute_mvp(t_software_environ *env) {
+	t_mat4	*mvp;
 
  	mvp = identity_mat4();
 
@@ -101,6 +99,11 @@ void		render(t_software_environ *env)
 	glUseProgram(env->object_shader_program.id);
 
 	glUniformMatrix4fv(env->mvp_uni, 1, GL_FALSE, mvp->value);
+	
+	glUniform1f(env->ambient_lighting_uni, env->ambient_lighting);
+	glUniform1f(env->specular_lighting_uni, env->specular_lighting);
+	glUniform3fv(env->light_uni, 1, (GLfloat*)(&env->light_position));
+    glUniform3fv(env->eye_uni, 1, (GLfloat*)(&env->camera_position));
 
 	check_gl_error();
 
