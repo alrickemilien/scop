@@ -67,6 +67,10 @@ int load_program_shader(shader_program_t *program,
 {
 	program->id = glCreateProgram();
 
+	program->vertex_shader = NULL;
+	program->fragment_shader = NULL;
+	program->geometry_shader = NULL;
+
 	if (vertex 
 		&& (program->vertex_shader = load_shader(
 				GL_VERTEX_SHADER, ft_strjoin(program->cwd, vertex))) == NULL)
