@@ -16,8 +16,7 @@ void		toggle_texturing(t_software_environ *env)
 
 void		toggle_lighting(t_software_environ *env)
 {
-	env->ambient_lighting = !env->ambient_lighting;
-	glUniform1f(env->ambient_lighting, env->ambient_lighting);
+	(void)env;
 }
 
 void		switch_clear_color(t_software_environ *env)

@@ -1,6 +1,79 @@
 #include <string.h>
 #include "object_loader.h"
 
+static int read_polygon_vertex(
+	t_obj_data *data,
+	t_polygon *new_polygon,
+	t_token t)
+{
+	t_token			*ctokens;
+	char			*tmp;
+
+	tmp = strndup(t.cursor, t.size);
+
+	// Split the token 12/888/3018
+	// Into three sub tokens 12, 888, and 3018
+	// Split the token without slash 12
+	// Into one sub token 12
+	ctokens = split_into_tokens(tmp, "/");
+
+    if (read_vertex(data, (const t_token *)ctokens, new_polygon) < 0)
+	{
+		free(tmp);
+		free(ctokens);
+		return (-1);
+	}
+
+    free(tmp);
+    free(ctokens);
+
+	return (0);
+}
+
+static int	read_quadrilateral_face_component(
+	t_obj_data *data,
+	const t_token *tokens,
+	t_polygon *new_polygon)
+{
+	size_t		i;
+	t_polygon	new_polygon_a;
+	t_polygon	new_polygon_b;
+
+	memset(&new_polygon_a, 0, sizeof(t_polygon));
+	memset(&new_polygon_b, 0, sizeof(t_polygon));
+	
+	i = 0;
+	while (tokens[i].cursor)
+	{
+	    if (strstr(tokens[i].cursor, "//"))
+			data->is_texture_set = true;
+		i++;
+	}
+	
+	if (read_polygon_vertex(data, &new_polygon_a, tokens[0]) == -1)
+		return (-1);
+	if (read_polygon_vertex(data, &new_polygon_a, tokens[1]) == -1)
+		return (-1);
+	if (read_polygon_vertex(data, &new_polygon_a, tokens[2]) == -1)
+		return (-1);
+	
+	ft_lstreverse(&new_polygon_a.vertices);
+	ft_lstadd(&data->polygons,
+		ft_lstnew(&new_polygon_a, sizeof(t_polygon)));
+	
+	if (read_polygon_vertex(data, &new_polygon_b, tokens[2]) == -1)
+		return (-1);
+	if (read_polygon_vertex(data, &new_polygon_b, tokens[3]) == -1)
+		return (-1);
+	if (read_polygon_vertex(data, &new_polygon_b, tokens[0]) == -1)
+		return (-1);
+	
+	ft_lstreverse(&new_polygon_b.vertices);
+	ft_lstadd(&data->polygons,
+		ft_lstnew(&new_polygon_b, sizeof(t_polygon)));
+	return (0);
+}
+
 /*
 ** Face elements
 **
@@ -29,18 +102,22 @@
 */
 
 static int		read_face_components(
-          t_obj_data *data,
-					const t_token *tokens,
-					t_polygon *new_polygon)
+			t_obj_data *data,
+			const t_token *tokens)
 {
 	size_t			i;
-	t_token			*ctokens;
-	char			*tmp;
+	t_polygon		new_polygon;
 
+	new_polygon.vertices = NULL;
 	if (!check_tokens_number(tokens, 3))
 		return (read_object_error("A face must declare at least three vertices."));
 
-	data->is_texture_set = false;
+	i = 0;
+	while (tokens[i].cursor)
+		i++;
+
+	if (i == 4)
+		return (read_quadrilateral_face_component(data, tokens, &new_polygon));
 
 	// Start at 1 because of the f at the start of f X Y Z
 	i = 0;
@@ -51,26 +128,16 @@ static int		read_face_components(
     	if (strstr(tokens[i].cursor, "//"))
 			data->is_texture_set = true;
 
-		tmp = strndup(tokens[i].cursor, tokens[i].size);
-
-		// Split the token 12/888/3018
-		// Into three sub tokens 12, 888, and 3018
-		// Split the token without slash 12
-		// Into one sub token 12
-		ctokens = split_into_tokens(tmp, "/");
-
-    	if (read_vertex(data, (const t_token *)ctokens, new_polygon) < 0)
-		{
-			free(tmp);
-			free(ctokens);
+		if (read_polygon_vertex(data, &new_polygon, tokens[i]) == -1)
 			return (-1);
-		}
-
-    	i++;
-
-    	free(tmp);
-    	free(ctokens);
+		
+		i++;
 	}
+	
+	ft_lstreverse(&new_polygon.vertices);
+
+	ft_lstadd(&data->polygons,
+		ft_lstnew(&new_polygon, sizeof(t_polygon)));
 
 	return (0);
 }
@@ -86,17 +153,8 @@ static int		read_face_components(
 
 int				read_face(t_obj_data *data, const t_token *tokens)
 {
-	t_polygon	new_polygon;
-
-	new_polygon.vertices = NULL;
-
-	if (read_face_components(data, tokens, &new_polygon) < 0)
+	if (read_face_components(data, tokens) < 0)
 		return (-1);
-
-	ft_lstreverse(&new_polygon.vertices);
-
-	ft_lstadd(&data->polygons,
-		ft_lstnew(&new_polygon, sizeof(t_polygon)));
 
 	return (0);
 }
