@@ -34,6 +34,9 @@ typedef struct	s_obj_data
 
 typedef struct	s_polygon {
 	t_list		*vertices;
+
+	// Provide storing space for polygon's normal
+	// t_vec3		normal;
 }				t_polygon;
 
 typedef struct	s_vertex

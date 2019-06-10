@@ -28,7 +28,7 @@ void main() {
   // viewDir = normalize(_eye - _position);
   // reflectDir = reflect(-lightDir, _normal);
   // specular = vec4( specular_light * pow(max(dot(viewDir, reflectDir), 0.0), 32) * vec3(255.0, 255.0, 255.0), 1.0 );
-  
+
   fragColour = (ambient_light + diffuse) * _color;
 
   fragColour.w = 255.0;

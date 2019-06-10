@@ -139,7 +139,7 @@ static void vertex_list_to_ebo(t_software_environ *env)
 	}
 
 	printf("I resulted to %ld vertices into ebo buffering\n", i / sizeof(GLuint));
-	printf("I resulted to %ld 5polygons into ebo buffering\n", j);
+	printf("I resulted to %ld polygons into ebo buffering\n", j);
 
 	printf("env->data.vertex_count : %ld\n", env->data.vertex_count);
 

@@ -2,54 +2,15 @@
 #include "object_loader.h"
 
 /*
-** Fill all faces vertices componenets
-** Done at the end after all vertices has been read
-*/
-
-static int fill_faces_vertices_data(t_obj_data *data, t_list *polygons)
-{
-	t_list *x;
-	t_polygon *p;
-	int error;
-
-	error = 0;
-
-	// For each polygon
-	while(polygons)
-	{
-		p = (t_polygon*)polygons->content;
-		
-		// For each vertex from the current polygon
-		x = p->vertices;
-		while (x)
-		{
-			if (fill_vertex_position(data, x->content) < 0)
-				error = -1;
-			if (fill_vertex_color(data, x->content) < 0)
-				error = -1;
-			if (fill_vertex_normal(data, x->content) < 0)
-				error = -1;
-			x = x->next;
-		}
-
-		polygons = polygons->next;
-	}
-
-	return error;
-}
-
-
-/*
 ** Fill all vertices componenets
 ** Done at the end after all vertices has been read
 */
 
 static int fill_vertices_data(t_obj_data *data, t_list *vertices)
 {
-	int error;
+	int		error;
 
 	error = 0;
-
 	// For each vertex from the mesh
 	while (vertices)
 	{
@@ -62,7 +23,51 @@ static int fill_vertices_data(t_obj_data *data, t_list *vertices)
 		vertices = vertices->next;
 	}
 
-	return error;
+	return (error);
+}
+
+// static void	fill_face_normal(t_polygon* polygon)
+// {
+// 	t_vec3 v1;
+// 	t_vec3 v2;
+
+// 	v1 = *(t_vec3*)polygon->vertices->content;
+// 	v2 = *(t_vec3*)polygon->vertices->next->content;
+
+// 	cross_vec3(&v1, &v2);
+
+// 	polygon->normal = v1;
+// }
+
+/*
+** Fill all faces vertices componenets
+** Done at the end after all vertices has been read
+*/
+
+static int	fill_poylgons_vertices_data(t_obj_data *data, t_list *polygons)
+{
+	t_polygon	*p;
+	int			error;
+
+	error = 0;
+
+	// For each polygon
+	while(polygons)
+	{
+		p = (t_polygon*)polygons->content;
+
+		// For each vertex from the current polygon
+		if (fill_vertices_data(data, p->vertices) == -1)
+			return (-1);
+
+
+		// Setup polygon's normal
+		// fill_face_normal(p);
+
+		polygons = polygons->next;
+	}
+
+	return (error);
 }
 
 int		load_object_file(t_obj_data *data, const char *file_path)
@@ -95,7 +100,8 @@ int		load_object_file(t_obj_data *data, const char *file_path)
 	ft_lstreverse(&data->vertices);
 	ft_lstreverse(&data->polygons);
 
-	fill_faces_vertices_data(data, data->polygons);
+	fill_poylgons_vertices_data(data, data->polygons);
+
 	fill_vertices_data(data, data->vertices);
 
 	printf("%ld polygons have been loaded.\n", ft_lstlen(data->polygons));
