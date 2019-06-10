@@ -58,7 +58,7 @@ static int	fill_poylgons_vertices_data(t_obj_data *data, t_list *polygons)
 
 		// For each vertex from the current polygon
 		if (fill_vertices_data(data, p->vertices) == -1)
-			return (-1);
+			error = -1;
 
 
 		// Setup polygon's normal
