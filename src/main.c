@@ -233,11 +233,11 @@ static int init_system_resources(int argc, char **argv)
 
 	count_vertices(&env->data);
 
-	env->scale = 1;
+	env->scale = 1.0f;
 	env->y_auto_rotate_angle = 0.f;
 	env->render_style = GL_TRIANGLE_STRIP_ADJACENCY;
 	env->indexation_mode = 1;
-	env->ambient_lighting = 1;
+	env->ambient_lighting = 0.45f;
 	env->specular_lighting = 0.5f;
 
 	// All OK, start applicaton

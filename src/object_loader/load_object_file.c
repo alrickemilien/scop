@@ -26,18 +26,23 @@ static int fill_vertices_data(t_obj_data *data, t_list *vertices)
 	return (error);
 }
 
-// static void	fill_face_normal(t_polygon* polygon)
-// {
-// 	t_vec3 v1;
-// 	t_vec3 v2;
+/*
+** @TODO Correct this function
+** The computed normal is wrong here
+*/
 
-// 	v1 = *(t_vec3*)polygon->vertices->content;
-// 	v2 = *(t_vec3*)polygon->vertices->next->content;
+static void	fill_face_normal(t_polygon* polygon)
+{
+	t_vec3 v1;
+	t_vec3 v2;
 
-// 	cross_vec3(&v1, &v2);
+	v1 = *(t_vec3*)polygon->vertices->content;
+	v2 = *(t_vec3*)polygon->vertices->next->content;
 
-// 	polygon->normal = v1;
-// }
+	cross_vec3(&v1, &v2);
+
+	polygon->normal = v1;
+}
 
 /*
 ** Fill all faces vertices componenets
@@ -60,9 +65,8 @@ static int	fill_poylgons_vertices_data(t_obj_data *data, t_list *polygons)
 		if (fill_vertices_data(data, p->vertices) == -1)
 			error = -1;
 
-
 		// Setup polygon's normal
-		// fill_face_normal(p);
+		fill_face_normal(p);
 
 		polygons = polygons->next;
 	}

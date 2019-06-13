@@ -90,6 +90,7 @@ set (SOURCES
 	src/core/check_gl_error.c
 	src/core/smart_camera_position.c
 	src/core/gl_lighting.c
+	src/core/compute_vertex_normal.c
 
 	src/object_loader/read_position.c
 	src/object_loader/read_mtl.c

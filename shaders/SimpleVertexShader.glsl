@@ -11,6 +11,7 @@ out vec4 _light;
 out vec4 _eye;
 
 uniform mat4 mvp;
+uniform mat4 m;
 uniform vec3 eye;
 uniform vec3 light;
 uniform float ambient_light;
@@ -18,9 +19,9 @@ uniform float specular_light;
 
 void main() {
   gl_Position = mvp * vec4(position, 1.0);
-  _position = gl_Position;
+  _position = m * vec4(position, 1.0);
   _color = vec4(color, 255.0);
-  _normal = mvp * vec4(normal, 1.0);
-  _light = mvp * vec4(light, 1.0);
-  _eye = mvp * vec4(eye, 1.0);
+  _normal = vec4(normal, 1.0);
+  _light = vec4(light, 1.0);
+  _eye = vec4(eye, 1.0);
 }

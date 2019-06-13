@@ -39,6 +39,7 @@ void gl_matrixing(t_software_environ *env)
 		2000.0f);
 
 	env->mvp_uni = glGetUniformLocation(env->object_shader_program.id, "mvp");
+	env->m_uni = glGetUniformLocation(env->object_shader_program.id, "m");
 
 	env->eye_uni = glGetUniformLocation(env->object_shader_program.id, "eye");
 

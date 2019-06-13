@@ -17,7 +17,8 @@ SRC +=	../src/mat4/mat4.c \
 				../src/mat4/translate_mat4.c \
 				../src/mat4/transpose_mat4.c \
 				../src/mat4/perspective_mat4.c \
-				../src/mat4/rotate_mat4.c
+				../src/mat4/rotate_mat4.c \
+				../src/mat4/mat4_on_vec3.c
 
 SRC +=	../src/vec3/swap_vec3.c \
 				../src/vec3/constant.c \

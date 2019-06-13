@@ -22,7 +22,7 @@ int		fill_vertex_color(t_obj_data *data, t_vertex *vertex)
 	printf("Fill vertex color\n");
 
 	// Substract 1 because stored indexes is the index of obj object that do not start at 0
-	color = lst_data_at(data->uvs, vertex->position_index - 1);
+	color = lst_data_at(data->uvs, vertex->color_index - 1);
 
 	if (!color)
 		return (read_object_error("Invalid index for color."));
@@ -36,10 +36,10 @@ int		fill_vertex_normal(t_obj_data *data, t_vertex *vertex)
 {
 	t_vec3		*normal;
 
-	printf("Fill vertex normal\n");
+	printf("Fill vertex normal : vertex->normal_index %ld\n", vertex->normal_index);
 	
 	// Substract 1 because stored indexes is the index of obj object that do not start at 0
-	normal = lst_data_at(data->normals, vertex->position_index - 1);
+	normal = lst_data_at(data->normals, vertex->normal_index - 1);
 
 	if (!normal)
     	return (read_object_error("Invalid index for normal."));
@@ -49,7 +49,11 @@ int		fill_vertex_normal(t_obj_data *data, t_vertex *vertex)
 	return (0);
 }
 
-static size_t read_index(t_obj_data *data, const t_token *tokens, size_t token_index)
+static size_t read_index(
+	t_obj_data *data, 
+	const t_token *tokens, 
+	size_t token_index,
+	size_t max)
 {
 	int			index;
 
@@ -63,7 +67,7 @@ static size_t read_index(t_obj_data *data, const t_token *tokens, size_t token_i
 
 	// Handle negative
   	if (index < 0)
-		index = ft_lstlen(data->positions) + index;
+		index = max + index;
 
 	return ((size_t)index);
 }
@@ -95,7 +99,7 @@ int				read_vertex(t_obj_data *data, const t_token *tokens, t_polygon *polygon)
 
 	memset(&new_vertex, 0, sizeof(t_vertex));
 
-	if (!tokens->cursor[0])
+	if (!tokens->cursor[0] || strcmp(tokens->cursor, "//") == 0)
 		return (read_object_error("A face component can't be empty."));
 
 	// Compute tokens array length
@@ -103,14 +107,23 @@ int				read_vertex(t_obj_data *data, const t_token *tokens, t_polygon *polygon)
 	while (tokens[tokens_number].cursor)
 		tokens_number++;
 
+	// Only last component is given like //z, its wrong
+	if (tokens_number == 1 && strcmp(tokens->cursor, "//") != 0)
+		return (read_object_error("A face component can't be empty."));
+
 	// Fill index of each components
-	new_vertex.position_index = read_index(data, tokens, 0);
+	new_vertex.position_index = read_index(data, tokens, 0, ft_lstlen(data->positions));
 
-	if (tokens_number > 1)
-		new_vertex.color_index = read_index(data, tokens, 1);
+	// When x/y/ or x/y/z
+	if (tokens_number > 1 && !strstr(tokens->cursor, "//"))
+		new_vertex.color_index = read_index(data, tokens, 1, ft_lstlen(data->uvs));
 
+	// When x/y/z
 	if (tokens_number > 2)
-		new_vertex.normal_index = read_index(data, tokens, 2);
+		new_vertex.normal_index = read_index(data, tokens, 2, ft_lstlen(data->normals));
+	// When x//z
+	else if (tokens_number > 1 && strstr(tokens->cursor, "//"))
+		new_vertex.normal_index = read_index(data, tokens, 1, ft_lstlen(data->normals));
 
 	if (ft_lstindex(data->vertices, &new_vertex, &is_vertex_same) == (size_t)-1)
 		ft_lstadd(&data->vertices, ft_lstnew(&new_vertex, sizeof(t_vertex)));

@@ -12,6 +12,7 @@ static void vertex_list_to_vbo(t_software_environ *env)
 	t_list		*x;
 	GLfloat		*buffer;
 	t_vertex	*vertex;
+	t_vec3		normal;
 
 	// A polygon is three vertex length
 	// size_t vertex_size = sizeof(t_vec3) * 3 + sizeof(t_vec2);
@@ -23,6 +24,8 @@ static void vertex_list_to_vbo(t_software_environ *env)
 
 	printf("Load vertex into vbo\n");
 
+	t_vec3 color = {1.0f, 1.0f, 1.0f};
+
 	i = 0;
 	x = env->data.vertices;
 	while (x)
@@ -31,17 +34,11 @@ static void vertex_list_to_vbo(t_software_environ *env)
 
 		memcpy((uint8_t*)buffer + i * vertex_size, vertex->position, sizeof(t_vec3));
 
-		memcpy((uint8_t*)buffer + i * vertex_size + sizeof(t_vec3), vertex->position, sizeof(t_vec3));
+		memcpy((uint8_t*)buffer + i * vertex_size + sizeof(t_vec3), &color, sizeof(t_vec3));
 
 		if (vertex->normal == NULL) {
-			t_vec3 computed_normal;
-
-			t_vec3 b = compute_object_barycentre(env->data.positions);
-
-			// set_vec3(&computed_normal, vertex->position->x - b.x, vertex->position->y - b.y, vertex->position->z - b.z);
-			set_vec3(&computed_normal, vertex->position->x - b.x, vertex->position->y - b.y, vertex->position->z - b.z);
-
-			vertex->normal = &computed_normal;
+			compute_vertex_normal(&env->data, vertex, &normal);
+			vertex->normal = &normal;
 		}
 
 		memcpy((uint8_t*)buffer + i * vertex_size + sizeof(t_vec3) + sizeof(t_vec3), vertex->normal, sizeof(t_vec3));

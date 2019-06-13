@@ -222,6 +222,7 @@ typedef struct	s_software_environ
 
 	// OpenGL shaders variables
 	GLuint		mvp_uni;
+	GLuint		m_uni;
 	GLuint		internal_object_mvp_uni;
 
 	GLuint		texture_level;
@@ -310,6 +311,10 @@ void		smart_camera_position(
 				t_vec3 *camera_position,
 				t_vec3 *camera_look_at_position,
 				t_vec3 *camera_up);
+void compute_vertex_normal(
+				t_obj_data *mesh, 
+				t_vertex* vertex, 
+				t_vec3 *normal);
 
 int			gl_buffering(t_software_environ *env);
 int			gl_indexing(t_software_environ *env);

@@ -23,10 +23,13 @@ void			normalize_vec3(t_vec3 *vector);
 
 GLfloat		magnitude_vec3(const t_vec3 *vector);
 
+t_vec3			return_add_vec3(t_vec3 vector, t_vec3 modifier);
 void			add_vec3(t_vec3 *vector, const t_vec3 *modifier);
 
 void			substract_vec3(t_vec3 *vector, const t_vec3 *modifier);
+t_vec3			return_sub_vec3(t_vec3 vector, t_vec3 modifier);
 
+t_vec3			return_cross_vec3(t_vec3 vector1, t_vec3 vector2);
 void			cross_vec3(t_vec3 *vector1, const t_vec3 *vector2);
 
 void			set_vec3(t_vec3 *vector, GLfloat x, GLfloat y, GLfloat z);
