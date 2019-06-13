@@ -108,7 +108,7 @@ int				read_vertex(t_obj_data *data, const t_token *tokens, t_polygon *polygon)
 		tokens_number++;
 
 	// Only last component is given like //z, its wrong
-	if (tokens_number == 1 && strcmp(tokens->cursor, "//") != 0)
+	if (strstr(tokens->cursor, "//") && tokens->cursor[0] == '/')
 		return (read_object_error("A face component can't be empty."));
 
 	// Fill index of each components
