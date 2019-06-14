@@ -45,6 +45,7 @@ int		fill_vertex_normal(t_obj_data *data, t_vertex *vertex)
     	return (read_object_error("Invalid index for normal."));
 
 	vertex->normal = normal;
+	printf("N : .x %lf - .y %lf - .z %lf\n", normal->x, normal->y, normal->z);
 
 	return (0);
 }

@@ -41,6 +41,9 @@ static void vertex_list_to_vbo(t_software_environ *env)
 			vertex->normal = &normal;
 		}
 
+		printf("N : .x %lf - .y %lf - .z %lf\n", vertex->normal->x, vertex->normal->y, vertex->normal->z);
+
+
 		memcpy((uint8_t*)buffer + i * vertex_size + sizeof(t_vec3) + sizeof(t_vec3), vertex->normal, sizeof(t_vec3));
 
 		i++;

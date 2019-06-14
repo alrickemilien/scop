@@ -100,6 +100,7 @@ void		render(t_software_environ *env)
 
 	glUniformMatrix4fv(env->mvp_uni, 1, GL_FALSE, mvp->value);
 	glUniformMatrix4fv(env->m_uni, 1, GL_FALSE, env->model_matrix->value);
+	glUniformMatrix4fv(env->v_uni, 1, GL_FALSE, env->view_matrix->value);
 	
 	glUniform1f(env->ambient_lighting_uni, env->ambient_lighting);
 	glUniform1f(env->specular_lighting_uni, env->specular_lighting);

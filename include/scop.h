@@ -223,6 +223,7 @@ typedef struct	s_software_environ
 	// OpenGL shaders variables
 	GLuint		mvp_uni;
 	GLuint		m_uni;
+	GLuint		v_uni;
 	GLuint		internal_object_mvp_uni;
 
 	GLuint		texture_level;
