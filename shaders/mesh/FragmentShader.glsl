@@ -1,12 +1,12 @@
 #version 410
 
+out vec4 fragColour;
+
 in vec4 _position;
 in vec4 _color;
 in vec4 _normal;
 in vec4 _light;
 in vec4 _eye;
-
-out vec4 fragColour;
 
 uniform float ambient_light;
 uniform float specular_light;

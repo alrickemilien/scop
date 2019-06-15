@@ -65,9 +65,9 @@ static void apply_rotation(t_software_environ *env) {
 
 	// printf("BARYCENTRE : .x %f .y %f .z %f \n", b.x, b.y, b.z);
 	
-	env->y_auto_rotate_angle += 0.5f;
-	if (env->y_auto_rotate_angle >= 360.f)
-		env->y_auto_rotate_angle = 30.f;
+	// env->y_auto_rotate_angle += 0.5f;
+	// if (env->y_auto_rotate_angle >= 360.f)
+	// 	env->y_auto_rotate_angle = 30.f;
 
 	env->model_matrix = rotate_object_around_point(env, minus_b);
 
@@ -101,6 +101,7 @@ void		render(t_software_environ *env)
 	glUniformMatrix4fv(env->mvp_uni, 1, GL_FALSE, mvp->value);
 	glUniformMatrix4fv(env->m_uni, 1, GL_FALSE, env->model_matrix->value);
 	glUniformMatrix4fv(env->v_uni, 1, GL_FALSE, env->view_matrix->value);
+	glUniformMatrix4fv(env->p_uni, 1, GL_FALSE, env->projection_matrix->value);
 	
 	glUniform1f(env->ambient_lighting_uni, env->ambient_lighting);
 	glUniform1f(env->specular_lighting_uni, env->specular_lighting);
@@ -113,6 +114,27 @@ void		render(t_software_environ *env)
 		render_elements(env->vao, env->render_style, env->data.vertex_count);
 	else
 		render_vao(env->vao, env->render_style, env->data.vertex_count);
+
+	//
+	// Normals
+	//
+
+	if (env->render_style == GL_TRIANGLES)
+	{
+		glUseProgram(env->normals_shader_program.id);
+
+		glUniformMatrix4fv(env->normal_mvp_uni, 1, GL_FALSE, mvp->value);
+		glUniformMatrix4fv(env->normal_m_uni, 1, GL_FALSE, env->model_matrix->value);
+		glUniformMatrix4fv(env->normal_v_uni, 1, GL_FALSE, env->view_matrix->value);
+		glUniformMatrix4fv(env->normal_p_uni, 1, GL_FALSE, env->projection_matrix->value);
+
+		check_gl_error();
+
+		if (env->indexation_mode)
+			render_elements(env->vao, env->render_style, env->data.vertex_count);
+		else
+			render_vao(env->vao, env->render_style, env->data.vertex_count);
+	}
 
 	delete_matrix(mvp);
 	delete_matrix(env->model_matrix);

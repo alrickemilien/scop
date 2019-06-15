@@ -41,8 +41,16 @@ void gl_matrixing(t_software_environ *env)
 	env->mvp_uni = glGetUniformLocation(env->object_shader_program.id, "mvp");
 	env->m_uni = glGetUniformLocation(env->object_shader_program.id, "m");
 	env->v_uni = glGetUniformLocation(env->object_shader_program.id, "v");
+	env->p_uni = glGetUniformLocation(env->object_shader_program.id, "p");
 
 	env->eye_uni = glGetUniformLocation(env->object_shader_program.id, "eye");
 
 	env->internal_object_mvp_uni = glGetUniformLocation(env->internal_object_shader_program.id, "mvp");
+
+	env->normal_mvp_uni = glGetUniformLocation(env->normals_shader_program.id, "mvp");
+	env->normal_m_uni = glGetUniformLocation(env->normals_shader_program.id, "m");
+	env->normal_v_uni = glGetUniformLocation(env->normals_shader_program.id, "v");
+	env->normal_p_uni = glGetUniformLocation(env->normals_shader_program.id, "p");
+
+	
 }

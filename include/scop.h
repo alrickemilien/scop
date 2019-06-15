@@ -205,6 +205,7 @@ typedef struct	s_software_environ
 	shader_program_t	object_shader_program;
 	shader_program_t	internal_object_shader_program;
 	shader_program_t	axis_shader_program;
+	shader_program_t	normals_shader_program;
 
 	// OpenGL VAO and VBO
 	GLuint 		vao;
@@ -224,7 +225,13 @@ typedef struct	s_software_environ
 	GLuint		mvp_uni;
 	GLuint		m_uni;
 	GLuint		v_uni;
+	GLuint		p_uni;
 	GLuint		internal_object_mvp_uni;
+
+	GLuint normal_mvp_uni;
+	GLuint normal_m_uni;
+	GLuint normal_v_uni;
+	GLuint normal_p_uni;
 
 	GLuint		texture_level;
 	GLuint		light_color_uni;

@@ -43,7 +43,6 @@ static void vertex_list_to_vbo(t_software_environ *env)
 
 		printf("N : .x %lf - .y %lf - .z %lf\n", vertex->normal->x, vertex->normal->y, vertex->normal->z);
 
-
 		memcpy((uint8_t*)buffer + i * vertex_size + sizeof(t_vec3) + sizeof(t_vec3), vertex->normal, sizeof(t_vec3));
 
 		i++;
@@ -71,7 +70,8 @@ static bool is_vertex_same(const void *a, const void *b) {
 	va = (t_vertex*)a;
 	vb = (t_vertex*)b;
 	
-	if (va->position_index == vb->position_index)
+	if (va->position_index == vb->position_index
+		&& va->normal_index == vb->normal_index)
 		return true;
 
 	return false;
@@ -158,16 +158,6 @@ static void vertex_list_to_ebo(t_software_environ *env)
 
 static void vertex_list_to_vao(t_software_environ *env)
 {
-	if (glGenVertexArrays == NULL) {
-		fprintf(stderr, "glGenVertexArrays do not exist, exiting now ...\n");
-		exit(-1);
-	}
-
-	if (glBindVertexArray == NULL) {
-		fprintf(stderr, "glBindVertexArray do not exist, exiting now ...\n");
-		exit(-1);
-	}
-
 	// 1 - Load VAO
 	printf("Load VAO\n");
 	glGenVertexArrays(1, &env->vao);
@@ -183,6 +173,16 @@ static void vertex_list_to_vao(t_software_environ *env)
 
 int	gl_indexing(t_software_environ *env)
 {
+	if (glGenVertexArrays == NULL) {
+		fprintf(stderr, "glGenVertexArrays do not exist, exiting now ...\n");
+		exit(-1);
+	}
+
+	if (glBindVertexArray == NULL) {
+		fprintf(stderr, "glBindVertexArray do not exist, exiting now ...\n");
+		exit(-1);
+	}
+
 	// Load vertex only EBO
 	vertex_list_to_vao(env);
 
@@ -205,6 +205,6 @@ int	gl_indexing(t_software_environ *env)
 
 	if (set_attribute(env->axis_shader_program.id, "position", sizeof(t_vec3)) < 0)
 		return(-1);
-	
+
 	return (0);
 }
