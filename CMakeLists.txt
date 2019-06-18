@@ -121,7 +121,6 @@ set (SOURCES
 
 	src/controls/resize.c
 	src/controls/controls.c
-	src/controls/toggles.c
 	src/controls/keyboards.c
 
 	src/utils/ft_lstadd.c
@@ -138,9 +137,6 @@ set (SOURCES
 	src/core/gl_log.c
 
 	src/main.c
-
-	shaders/SimpleVertexShader.glsl
-	shaders/SimpleFragmentShader.glsl
 )
 
 list(TRANSFORM SOURCES PREPEND ${CMAKE_SOURCE_DIR})

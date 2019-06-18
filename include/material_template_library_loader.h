@@ -33,7 +33,7 @@
 ** Struct returned by parse_mlt
 */
 
-typedef struct	s_mtl_data
+typedef struct				 s_mtl_data
 {
 	char					*label;
 	float					ambient;
@@ -42,21 +42,28 @@ typedef struct	s_mtl_data
 	float					dissolved;
 	float					transparency;
 	float					illumination;
-}								t_mtl_data;
+}							t_mtl_data;
 
-typedef t_list** t_mtl_list;
+typedef t_list**			t_mtl_list;
 
-typedef int	(*t_parse_function)(t_mtl_list, const t_token *);
+typedef int					(*t_parse_function)(
+								t_mtl_list l,
+								const t_token *t);
 
-typedef struct			s_type_match
+typedef struct				s_type_match
 {
 	const char				*token;
-	t_parse_function	f;
-}										t_type_match;
+	t_parse_function		f;
+}							t_type_match;
 
-int			read_mtl_file_line(t_mtl_list data, const char *line);
-
-int			read_mtl_comment(t_mtl_list data, const t_token *tokens);
-int				read_new_mtl(t_mtl_list data, const t_token *tokens);
+int							read_mtl_file_line(
+								t_mtl_list data,
+								const char *line);
+int							read_mtl_comment(
+								t_mtl_list data,
+								const t_token *tokens);
+int							read_new_mtl(
+								t_mtl_list data,
+								const t_token *tokens);
 
 #endif

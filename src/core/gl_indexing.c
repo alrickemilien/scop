@@ -34,7 +34,11 @@ static void vertex_list_to_vbo(t_software_environ *env)
 
 		memcpy((uint8_t*)buffer + i * vertex_size, vertex->position, sizeof(t_vec3));
 
-		memcpy((uint8_t*)buffer + i * vertex_size + sizeof(t_vec3), &color, sizeof(t_vec3));
+		if (vertex->color == NULL) {
+			vertex->color = &color;
+		}
+
+		memcpy((uint8_t*)buffer + i * vertex_size + sizeof(t_vec3), vertex->color, sizeof(t_vec3));
 
 		if (vertex->normal == NULL) {
 			compute_vertex_normal(&env->data, vertex, &normal);

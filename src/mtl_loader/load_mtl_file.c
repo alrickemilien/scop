@@ -1,11 +1,14 @@
 #include "material_template_library_loader.h"
 
-static size_t				g_current_line;
-
 int		load_mtl_file(t_mtl_list data, const char *mtl_file_path)
 {
 	FILE		*fp;
 	char		line[LOADER_LINE_BUFF_SIZE];
+	size_t		g_current_line;
+
+	g_current_line = 0;
+
+	memset(data, 0, sizeof(t_mtl_list));
 
 	if (!(fp = fopen(mtl_file_path, "r")))
 		return (-1);
