@@ -65,9 +65,9 @@ static void apply_rotation(t_software_environ *env) {
 
 	// printf("BARYCENTRE : .x %f .y %f .z %f \n", b.x, b.y, b.z);
 	
-	// env->y_auto_rotate_angle += 0.5f;
-	// if (env->y_auto_rotate_angle >= 360.f)
-	// 	env->y_auto_rotate_angle = 30.f;
+	env->y_auto_rotate_angle += 0.5f;
+	if (env->y_auto_rotate_angle >= 360.f)
+		env->y_auto_rotate_angle = 30.f;
 
 	env->model_matrix = rotate_object_around_point(env, minus_b);
 
@@ -119,7 +119,7 @@ void		render(t_software_environ *env)
 	// Normals
 	//
 
-	if (env->render_style == GL_TRIANGLES)
+	if (env->render_style == GL_TRIANGLES && env->render_normals)
 	{
 		glUseProgram(env->normals_shader_program.id);
 

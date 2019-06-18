@@ -216,6 +216,9 @@ typedef struct	s_software_environ
 	int			indexation_mode;
 	GLuint		ebo;
 
+	// Render normals mode
+	bool		render_normals;
+
 	// Here we have a single VBO taht contains v/c/n
 	GLuint		vbo;
 	GLuint		plan_vbo;
@@ -228,10 +231,10 @@ typedef struct	s_software_environ
 	GLuint		p_uni;
 	GLuint		internal_object_mvp_uni;
 
-	GLuint normal_mvp_uni;
-	GLuint normal_m_uni;
-	GLuint normal_v_uni;
-	GLuint normal_p_uni;
+	GLuint		normal_mvp_uni;
+	GLuint		normal_m_uni;
+	GLuint		normal_v_uni;
+	GLuint		normal_p_uni;
 
 	GLuint		texture_level;
 	GLuint		light_color_uni;
@@ -343,6 +346,8 @@ void			scale_down(t_software_environ *env, GLFWwindow* window);
 void			switch_render_style(t_software_environ *env, GLFWwindow* window);
 void			reduce_ambient_lighting(t_software_environ *env, GLFWwindow* window);
 void			increase_ambient_lighting(t_software_environ *env, GLFWwindow* window);
+void			render_normals(t_software_environ *env, GLFWwindow* window);
+void			render_texture(t_software_environ *env, GLFWwindow* window);
 
 /*
 ** Math utils

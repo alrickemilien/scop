@@ -81,3 +81,17 @@ void increase_ambient_lighting(t_software_environ *env, GLFWwindow* window)
 	if (env->ambient_lighting > 1.0f)
 		env->ambient_lighting = 1.0f;
 }
+
+void render_normals(t_software_environ *env, GLFWwindow* window)
+{
+	(void)window;
+
+    env->render_normals = !env->render_normals;
+}
+
+void		render_texture(t_software_environ *env, GLFWwindow* window)
+{
+	(void)window;
+
+	env->texturing = !env->texturing;
+}

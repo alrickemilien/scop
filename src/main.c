@@ -251,10 +251,11 @@ static int init_system_resources(int argc, char **argv)
 
 	env->scale = 1.0f;
 	env->y_auto_rotate_angle = 0.f;
-	env->render_style = GL_TRIANGLE_STRIP_ADJACENCY;
+	env->render_style = GL_TRIANGLES;
 	env->indexation_mode = 1;
 	env->ambient_lighting = 0.45f;
 	env->specular_lighting = 0.5f;
+	env->render_normals = false;
 
 	// All OK, start applicaton
 	return (0);
@@ -293,7 +294,7 @@ void init(int argc, char **argv)
 	{
 		glfwTerminate();
 		exit_error_with_message("Failed to open GLFW window. Need GPU compatible with 4.0 OpenGL library");
-	};
+	}
 
 	glfwSetKeyCallback(WINDOW, key_callback);
 
