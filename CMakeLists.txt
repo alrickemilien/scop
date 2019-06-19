@@ -93,7 +93,8 @@ set (SOURCES
 	src/core/compute_vertex_normal.c
 
 	src/object_loader/read_position.c
-	src/object_loader/read_mtl.c
+	src/object_loader/read_usemtl.c
+	src/object_loader/read_mtllib.c
 	src/object_loader/read_comment.c
 	src/object_loader/read_color.c
 	src/object_loader/read_object_file_line.c
@@ -115,6 +116,7 @@ set (SOURCES
 	src/texture_loader/load_bitmap_file.c
 
 	src/mtl_loader/load_mtl_file.c
+	src/mtl_loader/load_mtllib.c
 	src/mtl_loader/read_mtl_file_line.c
 	src/mtl_loader/read_comment.c
 	src/mtl_loader/read_new_mtl.c

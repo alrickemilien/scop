@@ -29,6 +29,11 @@
 # define TRANSPARENCY_TOKEN "Tr"
 # define ILLUMINATION_TOKEN "illum"
 
+typedef struct				s_mtllib {
+	char					*path;
+	t_list					*materials_list;
+}							t_mtllib;
+
 /*
 ** Struct returned by parse_mlt
 */
@@ -44,26 +49,27 @@ typedef struct				 s_mtl_data
 	float					illumination;
 }							t_mtl_data;
 
-typedef t_list**			t_mtl_list;
-
-typedef int					(*t_parse_function)(
-								t_mtl_list l,
+typedef int					(*t_mtl_parse_function)(
+								t_mtllib *l,
 								const t_token *t);
 
-typedef struct				s_type_match
+typedef struct				s_mtl_type_match
 {
 	const char				*token;
-	t_parse_function		f;
-}							t_type_match;
+	t_mtl_parse_function	f;
+}							t_mtl_type_match;
 
 int							read_mtl_file_line(
-								t_mtl_list data,
+								t_mtllib *data,
 								const char *line);
 int							read_mtl_comment(
-								t_mtl_list data,
+								t_mtllib *data,
 								const t_token *tokens);
 int							read_new_mtl(
-								t_mtl_list data,
+								t_mtllib *data,
 								const t_token *tokens);
+
+int							load_mtllib(t_list *mtllib);
+int							load_mtl_file(t_mtllib *data);
 
 #endif

@@ -66,6 +66,8 @@ static void del(void *p, size_t s)
 
 static void clear_env_memory()
 {
+	t_list	*x;
+
 	printf("Clearing environnement ...\n");
 
 	if (!env)
@@ -81,6 +83,24 @@ static void clear_env_memory()
 		ft_lstdel(&env->data.uvs, &del);
 	if (env->data.normals)
 		ft_lstdel(&env->data.normals, &del);
+
+	// Delete usemtl
+	x = env->data.usemtl;
+	while (x)
+	{
+		free(((t_usemtl*)x->content)->mtl);
+		ft_lstdelone(x, &del);
+		x = x->next;
+	}
+
+	// Delete mttlib
+	x = env->data.usemtl;
+	while (x)
+	{
+		free(*(char**)x->content);
+		ft_lstdelone(x, &del);
+		x = x->next;
+	}
 
 	// @TODO ==> need to clear sublist
 	if (env->data.polygons)
@@ -104,8 +124,16 @@ static void end_program(int code)
 	cleanup_shader_program(&env->object_shader_program);
 	cleanup_shader_program(&env->internal_object_shader_program);
 
-	// glDeleteBuffers(1, env->);
-	// glDeleteVertexArrays(1, env->);
+	glDeleteBuffers(1, env->vbo);
+	glDeleteBuffers(1, env->plan_vbo);
+	glDeleteBuffers(1, env->axis_vbo);
+
+	if (env->indexation_mode)
+		glDeleteBuffers(1, env->ebo);
+
+	glDeleteVertexArrays(1, env->vao);
+	glDeleteVertexArrays(1, env->plan_vao);
+	glDeleteVertexArrays(1, env->axis_vao);
 
 	glfwTerminate();
 
@@ -245,6 +273,10 @@ static int init_system_resources(int argc, char **argv)
 
 	// Load provided object file
 	if (load_object_file(&env->data, argv[1]) < 0)
+		return (-1);
+
+	// Load mtllib files if any provided
+	if (load_mtllib(env->data.mtllib) < 0)
 		return (-1);
 
 	count_vertices(&env->data);

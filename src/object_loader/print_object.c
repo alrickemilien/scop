@@ -59,7 +59,7 @@ void		print_polygons(void *data)
 	puts("---\n");
 }
 
-void			print_object(const t_obj_data *data)
+void			print_object(const t_mesh *data)
 {
 	// puts("--- POSITIONS ---");
 	// lst_print(data->positions, print_vec3);

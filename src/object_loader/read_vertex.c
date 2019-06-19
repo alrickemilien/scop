@@ -1,6 +1,6 @@
 #include "object_loader.h"
 
-int		fill_vertex_position(t_obj_data *data, t_vertex *vertex)
+int		fill_vertex_position(t_mesh *data, t_vertex *vertex)
 {
 	t_vec3		*pos;
 
@@ -15,7 +15,7 @@ int		fill_vertex_position(t_obj_data *data, t_vertex *vertex)
 	return (0);
 }
 
-int		fill_vertex_color(t_obj_data *data, t_vertex *vertex)
+int		fill_vertex_color(t_mesh *data, t_vertex *vertex)
 {
 	t_vec2		*color;
 
@@ -32,7 +32,7 @@ int		fill_vertex_color(t_obj_data *data, t_vertex *vertex)
 	return (0);
 }
 
-int		fill_vertex_normal(t_obj_data *data, t_vertex *vertex)
+int		fill_vertex_normal(t_mesh *data, t_vertex *vertex)
 {
 	t_vec3		*normal;
 
@@ -51,7 +51,7 @@ int		fill_vertex_normal(t_obj_data *data, t_vertex *vertex)
 }
 
 static size_t read_index(
-	t_obj_data *data, 
+	t_mesh *data, 
 	const t_token *tokens, 
 	size_t token_index,
 	size_t max)
@@ -94,7 +94,7 @@ static bool is_vertex_same(const void *a, const void *b)
 ** for a type vertex that do not exists in obj file
 */
 
-int				read_vertex(t_obj_data *data, const t_token *tokens, t_polygon *polygon)
+int				read_vertex(t_mesh *data, const t_token *tokens, t_polygon *polygon)
 {
 	t_vertex	new_vertex;
 	size_t		tokens_number;

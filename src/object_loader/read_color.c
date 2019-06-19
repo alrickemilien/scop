@@ -1,6 +1,6 @@
 #include "object_loader.h"
 
-int			read_color(t_obj_data *data, const t_token *token)
+int			read_color(t_mesh *data, const t_token *token)
 {
 	t_vec2	new_color;
 

@@ -19,19 +19,19 @@
 */
 
 typedef struct	s_token {
-								char *cursor;
-								size_t size;
-}								t_token;
+				char *cursor;
+				size_t size;
+}				t_token;
 
-int			token_to_int(const t_token *tokens, size_t index);
-bool		check_tokens_number(const t_token *tokens, size_t size);
-bool 		is_printable(char c);
-t_token *split_into_tokens(const char *line, const char *delimiters);
-float		n_atof(const char* str, size_t size);
-void print_token(const t_token *tokens);
+int				token_to_int(const t_token *tokens, size_t index);
+bool			check_tokens_number(const t_token *tokens, size_t size);
+bool			is_printable(char c);
+t_token			*split_into_tokens(const char *line, const char *delimiters);
+float			n_atof(const char* str, size_t size);
+void			print_token(const t_token *tokens);
 
-#ifdef _MSC_VER
-char	*strndup(char *str, int chars);
-#endif
+# ifdef _MSC_VER
+char			*strndup(char *str, int chars);
+# endif
 
 #endif

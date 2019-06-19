@@ -163,43 +163,43 @@ typedef struct	s_camera {
 **   to normalized device coordinates (-1.0, 1.0).
 */
 
-typedef struct	s_software_environ
+typedef struct			s_software_environ
 {
-	int			window_width;
-	int			window_height;
-	GLFWwindow     *window;
+	int					window_width;
+	int					window_height;
+	GLFWwindow			*window;
 
 	// Path to the current directory where the binary file ./scop is executed
-	char 					cwd[PATH_MAX];
+	char				cwd[PATH_MAX];
 
 	// The data that will be flled during object file loading
-	t_obj_data		data;
-	t_light			light;
+	t_mesh				data;
+	t_light				light;
 
 	// Scop options that can evolve during software run
-	int			wireframe;
-	int			auto_rotate;
-	int			texturing;
-	float		scale;
+	int					wireframe;
+	int					auto_rotate;
+	int					texturing;
+	float				scale;
 
-	GLfloat		ambient_lighting;
-	GLfloat		specular_lighting;
+	GLfloat				ambient_lighting;
+	GLfloat				specular_lighting;
 
 	// Ligting
-	GLuint		ambient_lighting_uni;
-	GLuint		specular_lighting_uni;
-	GLuint		light_uni;
-	GLuint		eye_uni;
+	GLuint				ambient_lighting_uni;
+	GLuint				specular_lighting_uni;
+	GLuint				light_uni;
+	GLuint				eye_uni;
 
-	t_vec3		camera_position;
-	t_vec3		light_position;
+	t_vec3				camera_position;
+	t_vec3				light_position;
 
 	// render style value for glDrawArray()
-	GLenum		render_style;
+	GLenum				render_style;
 
-	GLfloat		y_auto_rotate_angle;
+	GLfloat				y_auto_rotate_angle;
 
-	const char	*path_to_texture;
+	const char			*path_to_texture;
 
 	// OpenGL programs
 	shader_program_t	object_shader_program;
@@ -208,54 +208,54 @@ typedef struct	s_software_environ
 	shader_program_t	normals_shader_program;
 
 	// OpenGL VAO and VBO
-	GLuint 		vao;
-	GLuint 		plan_vao;
-	GLuint 		axis_vao;
+	GLuint				vao;
+	GLuint				plan_vao;
+	GLuint				axis_vao;
 
 	// INDEXATION MODE
-	int			indexation_mode;
-	GLuint		ebo;
+	int					indexation_mode;
+	GLuint				ebo;
 
 	// Render normals mode
-	bool		render_normals;
+	bool				render_normals;
 
 	// Here we have a single VBO taht contains v/c/n
-	GLuint		vbo;
-	GLuint		plan_vbo;
-	GLuint		axis_vbo;
+	GLuint				vbo;
+	GLuint				plan_vbo;
+	GLuint				axis_vbo;
 
 	// OpenGL shaders variables
-	GLuint		mvp_uni;
-	GLuint		m_uni;
-	GLuint		v_uni;
-	GLuint		p_uni;
-	GLuint		internal_object_mvp_uni;
+	GLuint				mvp_uni;
+	GLuint				m_uni;
+	GLuint				v_uni;
+	GLuint				p_uni;
+	GLuint				internal_object_mvp_uni;
 
-	GLuint		normal_mvp_uni;
-	GLuint		normal_m_uni;
-	GLuint		normal_v_uni;
-	GLuint		normal_p_uni;
+	GLuint				normal_mvp_uni;
+	GLuint				normal_m_uni;
+	GLuint				normal_v_uni;
+	GLuint				normal_p_uni;
 
-	GLuint		texture_level;
-	GLuint		light_color_uni;
-	GLuint		texture_level_uni;
-	GLuint		texture;
+	GLuint				texture_level;
+	GLuint				light_color_uni;
+	GLuint				texture_level_uni;
+	GLuint				texture;
 
-	t_mat4	*translation_matrix;
-	t_mat4	*rotation_matrix;
+	t_mat4				*translation_matrix;
+	t_mat4				*rotation_matrix;
 
-	t_mat4	*model_matrix;
-	t_mat4	*view_matrix;
-	t_mat4	*projection_matrix;
-} t_software_environ;
+	t_mat4				*model_matrix;
+	t_mat4				*view_matrix;
+	t_mat4				*projection_matrix;
+}						t_software_environ;
 
 
-typedef struct	s_color
+typedef struct			s_color
 {
-	unsigned char	red;
-	unsigned char	green;
-	unsigned char	blue;
-} t_color;
+	unsigned char		red;
+	unsigned char		green;
+	unsigned char		blue;
+}						t_color;
 
 # define DEFAULT_WINDOW_WIDTH 600
 # define DEFAULT_WINDOW_HEIGHT 600
@@ -291,7 +291,7 @@ typedef struct s_gl_info {
 	int maxTextureStacks;
 } t_gl_info;
 
-void		count_vertices(t_obj_data *data);
+void		count_vertices(t_mesh *data);
 
 void 		exit_error_with_message(const char *msg);
 
@@ -323,7 +323,7 @@ void		smart_camera_position(
 				t_vec3 *camera_look_at_position,
 				t_vec3 *camera_up);
 void compute_vertex_normal(
-				t_obj_data *mesh, 
+				t_mesh *mesh, 
 				t_vertex* vertex, 
 				t_vec3 *normal);
 

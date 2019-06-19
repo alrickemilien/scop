@@ -6,7 +6,7 @@
 ** Done at the end after all vertices has been read
 */
 
-static int fill_vertices_data(t_obj_data *data, t_list *vertices)
+static int fill_vertices_data(t_mesh *data, t_list *vertices)
 {
 	int		error;
 
@@ -49,7 +49,7 @@ static void	fill_face_normal(t_polygon* polygon)
 ** Done at the end after all vertices has been read
 */
 
-static int	fill_poylgons_vertices_data(t_obj_data *data, t_list *polygons)
+static int	fill_poylgons_vertices_data(t_mesh *data, t_list *polygons)
 {
 	t_polygon	*p;
 	int			error;
@@ -74,7 +74,7 @@ static int	fill_poylgons_vertices_data(t_obj_data *data, t_list *polygons)
 	return (error);
 }
 
-int		load_object_file(t_obj_data *data, const char *file_path)
+int		load_object_file(t_mesh *data, const char *file_path)
 {
 	FILE		*fp;
 	char		line[LOADER_LINE_BUFF_SIZE];
@@ -82,7 +82,7 @@ int		load_object_file(t_obj_data *data, const char *file_path)
 
 	g_current_line = 0;
 
-	memset(data, 0, sizeof(t_obj_data));
+	memset(data, 0, sizeof(t_mesh));
 
 	if (!(fp = fopen(file_path, "r")))
 		return (-1);
@@ -103,6 +103,10 @@ int		load_object_file(t_obj_data *data, const char *file_path)
 	ft_lstreverse(&data->positions);
 	ft_lstreverse(&data->vertices);
 	ft_lstreverse(&data->polygons);
+
+	// Set up end of last usemtl instance
+	if (data->usemtl != NULL)
+		((t_usemtl*)data->usemtl->content)->end = data->faces_count - 1;
 
 	fill_poylgons_vertices_data(data, data->polygons);
 

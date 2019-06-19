@@ -73,7 +73,7 @@ static void look_at_polygon(
 ** and set the vertex's normal
 */
 
-void compute_vertex_normal(t_obj_data *mesh, t_vertex* vertex, t_vec3 *normal)
+void compute_vertex_normal(t_mesh *mesh, t_vertex* vertex, t_vec3 *normal)
 {
 	t_polygon	*p;
 	t_list		*x;

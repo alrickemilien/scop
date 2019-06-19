@@ -1,6 +1,6 @@
 #include "object_loader.h"
 
-static const t_type_match	g_type_matches[7] = {
+static const t_type_match	g_type_matches[8] = {
 	{
 		COMMENT_TOKEN,
 		&read_comment,
@@ -26,8 +26,12 @@ static const t_type_match	g_type_matches[7] = {
 		&read_name,
 	},
 	{
-		MTL_TOKEN,
-		&read_mtl,
+		USEMTL_TOKEN,
+		&read_usemtl,
+	},
+	{
+		MTLLIB_TOKEN,
+		&read_mtllib,
 	},
 };
 
@@ -47,7 +51,7 @@ static t_parse_function get_parse_func(const t_token *token)
   return (NULL);
 }
 
-int			read_object_file_line(t_obj_data *data, const char *line)
+int			read_object_file_line(t_mesh *data, const char *line)
 {
 	t_token	*tokens;
 	t_parse_function parse_function;

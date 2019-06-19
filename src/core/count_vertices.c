@@ -1,6 +1,6 @@
 #include "scop.h"
 
-void	count_vertices(t_obj_data *data)
+void	count_vertices(t_mesh *data)
 {
 	size_t	count;
 	t_list	*x;
@@ -18,7 +18,7 @@ void	count_vertices(t_obj_data *data)
 	data->vertex_count = count;
 }
 
-// void	count_vertices(t_obj_data *data)
+// void	count_vertices(t_mesh *data)
 // {
 // 	size_t	count;
 // 	size_t	poly_length;

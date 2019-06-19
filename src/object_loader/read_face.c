@@ -2,7 +2,7 @@
 #include "object_loader.h"
 
 static int read_polygon_vertex(
-	t_obj_data *data,
+	t_mesh *data,
 	t_polygon *new_polygon,
 	t_token t)
 {
@@ -36,7 +36,7 @@ static int read_polygon_vertex(
 }
 
 static int	read_quadrilateral_face_component(
-	t_obj_data *data,
+	t_mesh *data,
 	const t_token *tokens,
 	t_polygon *new_polygon)
 {
@@ -107,7 +107,7 @@ static int	read_quadrilateral_face_component(
 */
 
 static int		read_face_components(
-			t_obj_data *data,
+			t_mesh *data,
 			const t_token *tokens)
 {
 	size_t			i;
@@ -156,8 +156,10 @@ static int		read_face_components(
 ** ...
 */
 
-int				read_face(t_obj_data *data, const t_token *tokens)
+int				read_face(t_mesh *data, const t_token *tokens)
 {
+	data->faces_count++;
+
 	if (read_face_components(data, tokens) < 0)
 		return (-1);
 

@@ -1,6 +1,6 @@
 #include "material_template_library_loader.h"
 
-static const t_type_match	g_type_matches[9] = {
+static const t_mtl_type_match	g_type_matches[9] = {
 	{
 		COMMENT_TOKEN,
 		&read_mtl_comment,
@@ -39,12 +39,12 @@ static const t_type_match	g_type_matches[9] = {
 	// },
 };
 
-static t_parse_function get_parse_func(const t_token *token)
+static t_mtl_parse_function get_parse_func(const t_token *token)
 {
 	size_t		i;
 
 	i = 0;
-	while (i * sizeof(t_type_match) < sizeof(g_type_matches))
+	while (i * sizeof(t_mtl_type_match) < sizeof(g_type_matches))
 	{
 		if (!strncmp(g_type_matches[i].token, token->cursor, token->size))
 			return (g_type_matches[i].f);
@@ -56,11 +56,11 @@ static t_parse_function get_parse_func(const t_token *token)
 }
 
 int						read_mtl_file_line(
-	t_mtl_list data,
+	t_mtllib *data,
 	const char *line)
 {
-	t_token				*tokens;
-	t_parse_function	parse_function;
+	t_token					*tokens;
+	t_mtl_parse_function	parse_function;
 
 	printf("line : %s\n", line);
 

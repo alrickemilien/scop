@@ -1,6 +1,6 @@
 #include "object_loader.h"
 
-int			read_normal_vector(t_obj_data *data, const t_token *tokens)
+int			read_normal_vector(t_mesh *data, const t_token *tokens)
 {
 	t_vec3	normal;
 
