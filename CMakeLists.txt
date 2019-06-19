@@ -120,6 +120,7 @@ set (SOURCES
 	src/mtl_loader/read_mtl_file_line.c
 	src/mtl_loader/read_comment.c
 	src/mtl_loader/read_new_mtl.c
+	src/mtl_loader/read_specular_color_exponent.c
 
 	src/controls/resize.c
 	src/controls/controls.c

@@ -17,7 +17,9 @@ int	load_mtl_file(t_mtllib *data)
 			continue ;
 
 		if (read_mtl_file_line(data, line) < 0)
+		{
 			return (-1);
+		}
 	}
 
 	fclose(fp);

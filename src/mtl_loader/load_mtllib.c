@@ -9,6 +9,7 @@ int     load_mtllib(t_list *mtllib)
             printf("Unable to load mtllib %s, exit.\n", ((t_mtllib*)mtllib->content)->path);
             return (-1);
         }
+
         mtllib = mtllib->next;
     }
     printf("Load mtllibs done ...\n");

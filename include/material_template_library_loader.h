@@ -38,7 +38,7 @@ typedef struct				s_mtllib {
 ** Struct returned by parse_mlt
 */
 
-typedef struct				 s_mtl_data
+typedef struct				s_mtl_data
 {
 	char					*label;
 	float					ambient;
@@ -51,6 +51,7 @@ typedef struct				 s_mtl_data
 
 typedef int					(*t_mtl_parse_function)(
 								t_mtllib *l,
+								t_mtl_data *material,
 								const t_token *t);
 
 typedef struct				s_mtl_type_match
@@ -60,13 +61,19 @@ typedef struct				s_mtl_type_match
 }							t_mtl_type_match;
 
 int							read_mtl_file_line(
-								t_mtllib *data,
+								t_mtllib *lib,
 								const char *line);
 int							read_mtl_comment(
-								t_mtllib *data,
+								t_mtllib *lib,
+								t_mtl_data *material,
 								const t_token *tokens);
 int							read_new_mtl(
-								t_mtllib *data,
+								t_mtllib *lib,
+								t_mtl_data *material,
+								const t_token *tokens);
+int							read_specular_color_exponent(
+								t_mtllib *lib,
+								t_mtl_data *material,
 								const t_token *tokens);
 
 int							load_mtllib(t_list *mtllib);
