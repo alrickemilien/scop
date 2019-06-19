@@ -43,6 +43,7 @@ typedef struct			s_usemtl {
 typedef struct			s_mesh
 {
 	char				*name;
+	char				*path;
 	char				*mtl;
 	t_list				*positions;
 	t_list				*uvs;

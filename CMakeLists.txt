@@ -135,6 +135,7 @@ set (SOURCES
 	src/utils/lst_data_at.c
 	src/utils/ft_lstfind.c
 	src/utils/ft_lstindex.c
+	src/utils/extract_folder_from_path.c
 
 	src/core/gl_log.c
 

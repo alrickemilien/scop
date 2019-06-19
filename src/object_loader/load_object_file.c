@@ -84,6 +84,8 @@ int		load_object_file(t_mesh *data, const char *file_path)
 
 	memset(data, 0, sizeof(t_mesh));
 
+	data->path = strdup(file_path);
+
 	if (!(fp = fopen(file_path, "r")))
 		return (-1);
 

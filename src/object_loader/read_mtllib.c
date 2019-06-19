@@ -1,4 +1,21 @@
 #include "object_loader.h"
+#include "utils.h"
+
+static char    *build_mtllib_full_path(
+    const char *object_file_path,
+    const char *mtllib_filename)
+{
+    char    *ret;
+    char    *tmp;
+
+    tmp = extract_folder_from_path(object_file_path);
+
+    ret = ft_strjoin(tmp, mtllib_filename);
+
+    free(tmp);
+
+    return (ret);
+}
 
 int				read_mtllib(t_mesh *data, const t_token *tokens)
 {
@@ -16,9 +33,15 @@ int				read_mtllib(t_mesh *data, const t_token *tokens)
         if (tmp == NULL)
             return (-1);
 
-        lib.path = tmp;
+        printf("data->path : %s\n", data->path);
+
+        lib.path = build_mtllib_full_path(data->path, tmp);
+
+        printf("lib.path : %s\n", lib.path);
 
 	    ft_lstadd(&data->mtllib, ft_lstnew(&lib, sizeof(t_mtllib)));
+
+        free(tmp);
         
         i++;
     }
