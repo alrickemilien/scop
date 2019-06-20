@@ -52,7 +52,7 @@ int set_attribute(GLuint id_program, const char *attribute_name, size_t vertex_s
 
 			// id = glGetAttribLocation(id_program, g_attribute_map[i].attribute_name);
 
-      fprintf(stderr, "glGetAttribLocation returned id : %d\n", i);
+      fprintf(stderr, "glGetAttribLocation returned id : %ld\n", i);
       fprintf(stderr, "attribute name : %s\n", attribute_name);
 
 			if (check_gl_error() < 0)
@@ -60,7 +60,7 @@ int set_attribute(GLuint id_program, const char *attribute_name, size_t vertex_s
 
 			glEnableVertexAttribArray(i);
 
-			fprintf(stderr, "id : %d\n", i);
+			fprintf(stderr, "id : %ld\n", i);
 			fprintf(stderr, "g_attribute_map[i].attribute_name : %s\n", g_attribute_map[i].attribute_name);
 
       glVertexAttribPointer(i,

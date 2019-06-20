@@ -36,4 +36,5 @@ size_t				ft_lstindex(t_list *root,
 								const void *node_content,
 								const void *provided_content));
 char				*extract_folder_from_path(const char *path);
+char				*ft_strjoin(char const *s1, char const *s2);
 #endif

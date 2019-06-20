@@ -89,7 +89,7 @@ static void clear_env_memory()
 	while (x)
 	{
 		free(((t_usemtl*)x->content)->mtl);
-		ft_lstdelone(x, &del);
+		ft_lstdelone(&x, &del);
 		x = x->next;
 	}
 
@@ -98,7 +98,7 @@ static void clear_env_memory()
 	while (x)
 	{
 		free(*(char**)x->content);
-		ft_lstdelone(x, &del);
+		ft_lstdelone(&x, &del);
 		x = x->next;
 	}
 
@@ -124,16 +124,16 @@ static void end_program(int code)
 	cleanup_shader_program(&env->object_shader_program);
 	cleanup_shader_program(&env->internal_object_shader_program);
 
-	glDeleteBuffers(1, env->vbo);
-	glDeleteBuffers(1, env->plan_vbo);
-	glDeleteBuffers(1, env->axis_vbo);
+	glDeleteBuffers(1, &env->vbo);
+	glDeleteBuffers(1, &env->plan_vbo);
+	glDeleteBuffers(1, &env->axis_vbo);
 
 	if (env->indexation_mode)
-		glDeleteBuffers(1, env->ebo);
+		glDeleteBuffers(1, &env->ebo);
 
-	glDeleteVertexArrays(1, env->vao);
-	glDeleteVertexArrays(1, env->plan_vao);
-	glDeleteVertexArrays(1, env->axis_vao);
+	glDeleteVertexArrays(1, &env->vao);
+	glDeleteVertexArrays(1, &env->plan_vao);
+	glDeleteVertexArrays(1, &env->axis_vao);
 
 	glfwTerminate();
 

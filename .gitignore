@@ -18,3 +18,4 @@ a.out
 *.DS_STORE
 .vscode
 *.a
+*.nfs.*

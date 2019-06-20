@@ -1,20 +1,5 @@
 #include "object_loader.h"
 
-/*
-** Consider we are on a delimiter
-*/
-
-static size_t skip_delimiters(const char *line, const char *delimiters)
-{
-	size_t 		i;
-
-	i = 0;
-	while (delimiters[i] && line[i] == delimiters[i])
-		i++;
-
-	return (i);
-}
-
 // Get number of token
 static size_t count_words(const char *line)
 {

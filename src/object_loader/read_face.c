@@ -44,6 +44,8 @@ static int	read_quadrilateral_face_component(
 	t_polygon	new_polygon_a;
 	t_polygon	new_polygon_b;
 
+	(void)new_polygon;
+
 	memset(&new_polygon_a, 0, sizeof(t_polygon));
 	memset(&new_polygon_b, 0, sizeof(t_polygon));
 	

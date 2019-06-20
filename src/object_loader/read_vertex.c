@@ -58,6 +58,8 @@ static size_t read_index(
 {
 	int			index;
 
+	(void)data;
+
 	index = token_to_int(tokens, token_index);
 
 	if (index == 0)
