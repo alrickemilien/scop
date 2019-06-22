@@ -120,7 +120,13 @@ set (SOURCES
 	src/mtl_loader/read_mtl_file_line.c
 	src/mtl_loader/read_comment.c
 	src/mtl_loader/read_new_mtl.c
-	src/mtl_loader/read_specular_color_exponent.c
+	src/mtl_loader/read_specular_color.c
+	src/mtl_loader/read_ambient_color.c
+	src/mtl_loader/read_diffuse_color.c	
+	src/mtl_loader/read_optical_density.c
+	src/mtl_loader/read_dissolved.c
+	src/mtl_loader/read_transparency.c
+	src/mtl_loader/read_illumination.c
 
 	src/controls/resize.c
 	src/controls/controls.c

@@ -1,6 +1,6 @@
 #include "material_template_library_loader.h"
 
-static const t_mtl_type_match	g_type_matches[3] = {
+static const t_mtl_type_match	g_type_matches[10] = {
 	{
 		COMMENT_TOKEN,
 		&read_mtl_comment,
@@ -9,34 +9,38 @@ static const t_mtl_type_match	g_type_matches[3] = {
 		NEWMTL_TOKEN,
 		&read_new_mtl,
 	},
-	// {
-	// 	AMBIENT_COLOR_TOKEN,
-	// 	&read_ambient_color,
-	// },
-	// {
-	// 	DIFFUSE_COLOR_TOKEN,
-	// 	&read_diffuse_color,
-	// },
-	// {
-	// 	SPECULAR_COLOR_TOKEN,
-	// 	&read_specular_color,
-	// },
+	{
+		AMBIENT_COLOR_TOKEN,
+		&read_ambient_color,
+	},
+	{
+		DIFFUSE_COLOR_TOKEN,
+		&read_diffuse_color,
+	},
+	{
+		SPECULAR_COLOR_TOKEN,
+		&read_specular_color,
+	},
 	{
 		SPECULAR_COLOR_EXPONENT_TOKEN,
 		&read_specular_color_exponent,
 	},
-	// {
-	// 	DISSOLVED_TOKEN,
-	// 	&read_dissolved,
-	// },
-	// {
-	// 	TRANSPARENCY_TOKEN,
-	// 	&read_transparency,
-	// },
-	// {
-	// 	ILLUMINATION_TOKEN,
-	// 	&read_illumination,
-	// },
+	{
+		DISSOLVED_TOKEN,
+		&read_dissolved,
+	},
+	{
+		TRANSPARENCY_TOKEN,
+		&read_transparency,
+	},
+	{
+		ILLUMINATION_TOKEN,
+		&read_illumination,
+	},
+	{
+		OPTICAL_DENSITY_TOKEN,
+		&read_optical_density,
+	}
 };
 
 static t_mtl_parse_function get_parse_func(const t_token *token)
