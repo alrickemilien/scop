@@ -1,6 +1,6 @@
 #include "object_loader.h"
 
-static const t_type_match	g_type_matches[8] = {
+static const t_type_match	g_type_matches[9] = {
 	{
 		COMMENT_TOKEN,
 		&read_comment,
@@ -32,6 +32,10 @@ static const t_type_match	g_type_matches[8] = {
 	{
 		MTLLIB_TOKEN,
 		&read_mtllib,
+	},
+	{
+		SMOOTH_SHADING_AROUND_POLYGON_TOKEN,
+		&read_smooth_shading,
 	},
 };
 
