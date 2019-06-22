@@ -127,7 +127,8 @@ set (SOURCES
 	src/mtl_loader/read_dissolved.c
 	src/mtl_loader/read_transparency.c
 	src/mtl_loader/read_illumination.c
-
+	src/mtl_loader/read_mtl_error.c
+	
 	src/controls/resize.c
 	src/controls/controls.c
 	src/controls/keyboards.c

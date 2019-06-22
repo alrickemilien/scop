@@ -60,11 +60,11 @@ typedef struct				s_mtl_data
 {
 	char					*label;
 	
-	float					specular;
-	float					specular_exponent;
+	t_vec3					specular;
+	float					specular_exponent; // ranges between 0 and 1000
 
-	float					ambient;
-	float					diffuse;
+	t_vec3					ambient;
+	t_vec3					diffuse;
 
 	float					optical_density;
 
@@ -129,5 +129,5 @@ int							read_illumination(
 							    const t_token *tokens);
 int							load_mtllib(t_list *mtllib);
 int							load_mtl_file(t_mtllib *data);
-
+int							read_mtl_error(const char *msg);
 #endif
