@@ -1,16 +1,17 @@
 #include "object_loader.h"
 #include <math.h>
+
 /*
 ** Convert string of size n into float
 */
 
-float n_atof(const char* str, size_t size)
+float	n_atof(const char* str, size_t size)
 {
-  float  ret;
-	float  negate;
-	int 	 point_seen;
-	int i;
-	int		 digit;
+	float	ret;
+	float	negate;
+	int		point_seen;
+	int		i;
+	int		digit;
 
 	ret = 0;
 

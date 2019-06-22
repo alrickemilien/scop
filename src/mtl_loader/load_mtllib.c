@@ -1,17 +1,69 @@
-#include "material_template_library_loader.h"
+#include "scop.h"
 
-int     load_mtllib(t_list *mtllib)
+static void asscoiate_materials_to_mesh(
+    t_mtllib *lib, const char *mtl, t_list *usemtl)
 {
-    printf("Load mtllibs ...\n");
-    while (mtllib)
+    t_list  *x;
+
+    x = lib->materials_list;
+    while (x)
     {
-        if (load_mtl_file(mtllib->content) < 0) {
-            printf("Unable to load mtllib %s, exit.\n", ((t_mtllib*)mtllib->content)->path);
+        printf("Test %s on %s\n",
+                mtl,
+                ((t_mtl_data*)x->content)->label);
+                
+        if (memcmp(
+                mtl,
+                ((t_mtl_data*)x->content)->label,
+                strlen(mtl) * sizeof(char)) == 0)
+        {
+            printf("Associate %s with %s\n",
+            mtl,
+            ((t_mtl_data*)x->content)->label);
+
+            ((t_usemtl*)usemtl->content)->material = x->content;
+                    
+            break;
+        }
+        x = x->next;
+    }
+}
+
+int     load_mtllib(t_list *mtllib, t_list *usemtl)
+{
+    t_list  *x;
+
+    printf("Load mtllibs ...\n");
+    x = mtllib;
+    while (x)
+    {
+        if (load_mtl_file(x->content) < 0) {
+            printf("Unable to load mtllib %s, exit.\n", ((t_mtllib*)x->content)->path);
             return (-1);
         }
 
-        mtllib = mtllib->next;
+        x = x->next;
     }
-    printf("Load mtllibs done ...\n");
+    
+    printf("Load mtllibs done, association process ...\n");
+
+    // Now associate each material of each loaded mtllib
+    while (usemtl)
+    {
+        // Find the data for the current usemtl
+        x = mtllib;
+        while (x)
+        {
+            asscoiate_materials_to_mesh(
+                x->content,
+                ((t_usemtl*)usemtl->content)->mtl,
+                usemtl);
+
+            x = x->next;
+        }
+
+        usemtl = usemtl->next;
+    }
+
 	return (0);
 }

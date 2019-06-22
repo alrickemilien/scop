@@ -106,10 +106,12 @@ set (SOURCES
 	src/object_loader/load_object_file.c
 	src/object_loader/read_object_error.c
 	src/object_loader/read_face.c
+	src/object_loader/read_smooth_shading.c
 	src/object_loader/print_object.c
 	src/object_loader/print_token.c
 
 	src/loader_utils/n_atof.c
+	src/loader_utils/n_atoi.c
 	src/loader_utils/split_into_tokens.c
 	src/loader_utils/utils.c
 
@@ -148,6 +150,7 @@ set (SOURCES
 	src/core/gl_log.c
 
 	src/main.c
+	src/end_program.c
 )
 
 list(TRANSFORM SOURCES PREPEND ${CMAKE_SOURCE_DIR})

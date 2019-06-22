@@ -19,6 +19,9 @@
 # define MTLLIB_TOKEN "mtllib"
 # define USEMTL_TOKEN "usemtl"
 
+// @TODO need to implement this shit
+# define SMOOTH_SHADING_AROUND_POLYGON_TOKEN "s"
+
 /*
 ** In order to reference material
 */
@@ -27,6 +30,9 @@ typedef struct			s_usemtl {
 	size_t				start;
 	size_t				end;
 	char				*mtl;
+
+	// Keep NULL until it has not been filled
+	t_mtl_data			*material;
 }						t_usemtl;
 
 /*
@@ -64,6 +70,7 @@ typedef struct			s_mesh
 	size_t				vertex_count;
 	size_t				faces_count;
 	bool				is_texture_set;
+	GLint				smooth_shading;
 }						t_mesh;
 
 typedef struct			s_polygon {
@@ -120,6 +127,7 @@ int							read_mtllib(t_mesh *data, const t_token *tokens);
 int							read_vertex(t_mesh *data, const t_token *tokens, t_polygon *polygon);
 
 int							read_object_file_line(t_mesh *data, const char *line);
+int							read_smooth_shading(t_mesh *data, const t_token *tokens);
 
 int 						read_object_error(const char *msg);
 

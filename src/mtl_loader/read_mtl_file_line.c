@@ -74,9 +74,10 @@ int						read_mtl_file_line(
 
 	if (!parse_function)
 	{
-		puts(tokens[0].cursor);
+		read_mtl_error("Unrecognized file line\n");
+		read_mtl_error(tokens[0].cursor);
 		free(tokens);
-    	return (-1);
+    	return (0);
 	}
 
 	(*parse_function)(

@@ -54,102 +54,10 @@ static void glew_init(void)
 	}
 }
 
-/*
-** Clear the environnement in memory
-*/
-
-static void del(void *p, size_t s)
-{
-	(void)s;
-	free(p);
-}
-
-static void clear_env_memory()
-{
-	t_list	*x;
-
-	printf("Clearing environnement ...\n");
-
-	if (!env)
-		return;
-
-	if (env->data.name)
-		free(env->data.name);
-	if (env->data.mtl)
-		free(env->data.mtl);
-	if (env->data.positions)
-		ft_lstdel(&env->data.positions, &del);
-	if (env->data.uvs)
-		ft_lstdel(&env->data.uvs, &del);
-	if (env->data.normals)
-		ft_lstdel(&env->data.normals, &del);
-
-	// Delete usemtl
-	x = env->data.usemtl;
-	while (x)
-	{
-		free(((t_usemtl*)x->content)->mtl);
-		ft_lstdelone(&x, &del);
-		x = x->next;
-	}
-
-	// Delete mttlib
-	x = env->data.usemtl;
-	while (x)
-	{
-		free(*(char**)x->content);
-		ft_lstdelone(&x, &del);
-		x = x->next;
-	}
-
-	// @TODO ==> need to clear sublist
-	if (env->data.polygons)
-		ft_lstdel(&env->data.polygons, &del);
-
-	free(env);
-}
-
-static bool closing = false;
-
-// Close OpenGL window and terminate GLFW
-static void end_program(int code)
-{
-	if (closing)
-		return ;
-
-	closing = true;
-
-	printf("Closing app ...\n");
-
-	cleanup_shader_program(&env->object_shader_program);
-	cleanup_shader_program(&env->internal_object_shader_program);
-
-	glDeleteBuffers(1, &env->vbo);
-	glDeleteBuffers(1, &env->plan_vbo);
-	glDeleteBuffers(1, &env->axis_vbo);
-
-	if (env->indexation_mode)
-		glDeleteBuffers(1, &env->ebo);
-
-	glDeleteVertexArrays(1, &env->vao);
-	glDeleteVertexArrays(1, &env->plan_vao);
-	glDeleteVertexArrays(1, &env->axis_vao);
-
-	glfwTerminate();
-
-	clear_env_memory();
-
-	printf("Closed.\n");
-
-	exit(code);
-}
-
 void stop_on_sigint(int signo)
 {
 	if (signo == SIGINT && env != NULL)
-	{
 		glfwSetWindowShouldClose(WINDOW, GLFW_TRUE);
-	}
 }
 
 /*
@@ -158,13 +66,8 @@ void stop_on_sigint(int signo)
 void run()
 {
 	glEnable(GL_DEPTH_TEST);
-	// glDepthFunc(GL_LESS);
 
 	glDisable(GL_CULL_FACE);
-
-	// glEnable(GL_CULL_FACE); // cull face
-	// glCullFace(GL_BACK); // cull back face
-	// glFrontFace(GL_CW); // GL_CCW for counter clock-wise
 
 	// Dark blue background
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
@@ -276,7 +179,7 @@ static int init_system_resources(int argc, char **argv)
 		return (-1);
 
 	// Load mtllib files if any provided
-	if (load_mtllib(env->data.mtllib) < 0)
+	if (load_mtllib(env->data.mtllib, env->data.usemtl) < 0)
 		return (-1);
 
 	count_vertices(&env->data);

@@ -110,39 +110,42 @@ int		munmap(void *addr, size_t len);
 # define SOFT_GLFW_CONTEXT_VERSION_MAJOR 4
 # define SOFT_GLFW_CONTEXT_VERSION_MINOR 1
 
-typedef struct	shader_s {
-	GLuint		id;
-	GLchar		*content;
-	GLint		length;
-	char		*path;
-}				shader_t;
+# define DEFAULT_WINDOW_WIDTH 600
+# define DEFAULT_WINDOW_HEIGHT 600
 
-typedef struct	shader_program_s {
-	GLuint		id;
-	char		*cwd;
-	shader_t	*vertex_shader;
-	shader_t	*fragment_shader;
-	shader_t	*geometry_shader;
-}				shader_program_t;
+typedef struct		shader_s {
+	GLuint			id;
+	GLchar			*content;
+	GLint			length;
+	char			*path;
+}					shader_t;
 
-typedef struct	s_light
+typedef struct		shader_program_s {
+	GLuint			id;
+	char			*cwd;
+	shader_t		*vertex_shader;
+	shader_t		*fragment_shader;
+	shader_t		*geometry_shader;
+}					shader_program_t;
+
+typedef struct		s_light
 {
-	t_vec3		position;
-	t_vec3		color;
-}				t_light;
+	t_vec3			position;
+	t_vec3			color;
+}					t_light;
 
 /*
 ** Provides all maths parameters that are required
 ** to build view matrix
 */
 
-typedef struct	s_camera {
-				t_vec3 position;
-				t_vec3 target;
-				t_vec3 direction;
-				t_vec3 up;
-				t_vec3 right;
-}				t_camera;
+typedef struct		s_camera {
+					t_vec3 position;
+					t_vec3 target;
+					t_vec3 direction;
+					t_vec3 up;
+					t_vec3 right;
+}					t_camera;
 
 /*
 ** - The model matrix is a transformation matrix
@@ -257,9 +260,6 @@ typedef struct			s_color
 	unsigned char		blue;
 }						t_color;
 
-# define DEFAULT_WINDOW_WIDTH 600
-# define DEFAULT_WINDOW_HEIGHT 600
-
 /*
 **                    _     _        __
 **      ___      __ _| |   (_)_ __  / _| ___
@@ -269,92 +269,149 @@ typedef struct			s_color
 **        |_____|___/ |_____|
 */
 
-typedef struct s_gl_info {
-	const char *vendor;
-	const char *renderer;
-	const char *version;
-	const char *extensions;
-	const char *glsl_version;
+typedef struct			s_gl_info {
+	const char			*vendor;
+	const char			*renderer;
+	const char			*version;
+	const char			*extensions;
+	const char			*glsl_version;
 
-	int redBits;
-	int greenBits;
-	int blueBits;
-	int alphaBits;
-	int depthBits;
-	int stencilBits;
-	int maxLights;
-	int maxTextureSize;
-	int maxClipPlanes;
-	int maxModelViewStacks;
-	int maxProjectionStacks;
-	int maxAttribStacks;
-	int maxTextureStacks;
-} t_gl_info;
+	int					redBits;
+	int					greenBits;
+	int					blueBits;
+	int					alphaBits;
+	int					depthBits;
+	int					stencilBits;
+	int					maxLights;
+	int					maxTextureSize;
+	int					maxClipPlanes;
+	int					maxModelViewStacks;
+	int					maxProjectionStacks;
+	int					maxAttribStacks;
+	int					maxTextureStacks;
+}						t_gl_info;
 
-void		count_vertices(t_mesh *data);
+void					count_vertices(
+							t_mesh *data);
 
-void 		exit_error_with_message(const char *msg);
+void 					exit_error_with_message(
+							const char *msg);
 
-void		create_triangle(t_software_environ *env);
+void					create_triangle(
+							t_software_environ *env);
 
-int 		load_program_shader(shader_program_t *env,
-				const char *vertex_file_path,
-				const char *fragment_file_path,
-				const char *geometry_file_path);
-int			load_single_shader(shader_t *shader, const char *path);
-void		print_gl_shader_error(GLuint id, int info_log_length);
-void		print_gl_program_error(GLuint id, int info_log_length);
-void		cleanup_shader_program(shader_program_t *p);
-int			compile_single_shader(shader_t *shader, int *info_log_length, GLint *result);
+int						load_program_shader(
+							shader_program_t *env,
+							const char *vertex_file_path,
+							const char *fragment_file_path,
+							const char *geometry_file_path);
+int						load_single_shader(
+							shader_t *shader,
+							const char *path);
+void					print_gl_shader_error(
+							GLuint id,
+							int info_log_length);
+void					print_gl_program_error(
+							GLuint id,
+							int info_log_length);
+void					cleanup_shader_program(
+							shader_program_t *p);
+int						compile_single_shader(
+							shader_t *shader,
+							int *info_log_length,
+							GLint *result);
 
-void 		load_texture(t_software_environ *env);
+void					load_texture(t_software_environ *env);
 
-void		key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+void					key_callback(
+							GLFWwindow* window,
+							int key,
+							int scancode,
+							int action,
+							int mods);
 
-void		window_size_callback(GLFWwindow* window, int width, int height);
+void					window_size_callback(
+							GLFWwindow* window,
+							 int width,
+							int height);
 
-int			set_attribute(GLuint id_program, const char *attribute_name, size_t vertex_size);
+int						set_attribute(
+							GLuint id_program,
+							const char *attribute_name,
+							size_t vertex_size);
 
-int			check_gl_error(void);
+int						check_gl_error(void);
 
-void		smart_camera_position(
-				t_software_environ *env,
-				t_vec3 *camera_position,
-				t_vec3 *camera_look_at_position,
-				t_vec3 *camera_up);
-void compute_vertex_normal(
-				t_mesh *mesh, 
-				t_vertex* vertex, 
-				t_vec3 *normal);
+void					smart_camera_position(
+							t_software_environ *env,
+							t_vec3 *camera_position,
+							t_vec3 *camera_look_at_position,
+							t_vec3 *camera_up);
 
-int			gl_buffering(t_software_environ *env);
-int			gl_indexing(t_software_environ *env);
-void		plan_to_vbo(t_software_environ *env);
-void		axis_to_vbo(t_software_environ *env);
-void		gl_matrixing(t_software_environ *env);
-int			gl_lighting(t_software_environ *env);
-void		render(t_software_environ *env);
+void					compute_vertex_normal(
+							t_mesh *mesh, 
+							t_vertex* vertex, 
+							t_vec3 *normal);
 
-unsigned char	*load_bitmap_file(const char *pathname, size_t *width, size_t *height);
+int						gl_buffering(
+							t_software_environ *env);
+int						gl_indexing(
+							t_software_environ *env);
+void					plan_to_vbo(
+							t_software_environ *env);
+void					axis_to_vbo(
+							t_software_environ *env);
+void					gl_matrixing(
+							t_software_environ *env);
+int						gl_lighting(
+							t_software_environ *env);
+void					render(
+							t_software_environ *env);
+
+unsigned char			*load_bitmap_file(
+							const char *pathname,
+							size_t *width,
+							size_t *height);
+int						load_mtllib(
+							t_list *mtllib,
+							t_list *usemtl);
 
 /*
 ** Users inputs callbacks
 */
-void			close_window_callback(t_software_environ *env, GLFWwindow* window);
-void			scale_up(t_software_environ *env, GLFWwindow* window);
-void			scale_down(t_software_environ *env, GLFWwindow* window);
-void			switch_render_style(t_software_environ *env, GLFWwindow* window);
-void			reduce_ambient_lighting(t_software_environ *env, GLFWwindow* window);
-void			increase_ambient_lighting(t_software_environ *env, GLFWwindow* window);
-void			render_normals(t_software_environ *env, GLFWwindow* window);
-void			render_texture(t_software_environ *env, GLFWwindow* window);
+
+void					close_window_callback(
+							t_software_environ *env,
+							GLFWwindow* window);
+void					scale_up(
+							t_software_environ *env,
+							GLFWwindow* window);
+void					scale_down(
+							t_software_environ *env,
+							GLFWwindow* window);
+void					switch_render_style(
+							t_software_environ *env,
+							GLFWwindow* window);
+void					reduce_ambient_lighting(
+							t_software_environ *env,
+							GLFWwindow* window);
+void					increase_ambient_lighting(
+							t_software_environ *env,
+							GLFWwindow* window);
+void					render_normals(
+							t_software_environ *env,
+							GLFWwindow* window);
+void					render_texture(
+							t_software_environ *env,
+							GLFWwindow* window);
 
 /*
 ** Math utils
 */
 
-double	deg_to_rad(double deg);
-t_vec3	compute_object_barycentre(t_list *positions);
+double					deg_to_rad(double deg);
+t_vec3					compute_object_barycentre(
+							t_list *positions);
 
 /*
 ** Utils
@@ -372,5 +429,11 @@ char	*strndup(char *str, int chars);
 bool	restart_gl_log();
 bool	gl_log(const char* message, ...);
 bool	gl_log_err(const char* message, ...);
+
+/*
+**
+*/
+
+void end_program(int code);
 
 #endif

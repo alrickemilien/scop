@@ -28,6 +28,7 @@ bool			check_tokens_number(const t_token *tokens, size_t size);
 bool			is_printable(char c);
 t_token			*split_into_tokens(const char *line, const char *delimiters);
 float			n_atof(const char* str, size_t size);
+int				n_atoi(const char* str, size_t size);
 void			print_token(const t_token *tokens);
 
 # ifdef _MSC_VER

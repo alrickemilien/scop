@@ -127,7 +127,6 @@ int							read_illumination(
 							    t_mtllib *lib,
 							    t_mtl_data *material,
 							    const t_token *tokens);
-int							load_mtllib(t_list *mtllib);
 int							load_mtl_file(t_mtllib *data);
 int							read_mtl_error(const char *msg);
 #endif
