@@ -6,18 +6,22 @@
 ** Each vertice is composed of position, color uv and normal
 */
 
-static void load_polygon_into_data(t_polygon *polygon, void *buffer) {
-	t_list	*x;
-	size_t	i;
+static void load_polygon_into_data(
+	t_software_environ *env,
+	t_polygon *polygon,
+	void *buffer)
+{
+	t_list		*x;
+	size_t		i;
 	t_vertex	*vertex;
+	t_vec3		normal;
 
-	// t_vec3 color = { 240.f / 255.f, 0.f / 255.f, 0.f / 255.f };
+	t_vec3 color = {1.0f, 1.0f, 1.0f};
 
 	i = 0;
 	x = polygon->vertices;
 
-//	size_t vertex_size = sizeof(t_vec3) * 3 + sizeof(t_vec2);
-	size_t vertex_size = sizeof(t_vec3) * 2;
+	size_t vertex_size = sizeof(t_vec3) * 3;
 
 	while (x)
 	{
@@ -25,19 +29,16 @@ static void load_polygon_into_data(t_polygon *polygon, void *buffer) {
 
 		memcpy((uint8_t*)buffer + i * vertex_size, vertex->position, sizeof(t_vec3));
 
-		memcpy((uint8_t*)buffer + i * vertex_size + sizeof(t_vec3), vertex->position, sizeof(t_vec3));
+		memcpy((uint8_t*)buffer + i * vertex_size + sizeof(t_vec3), &color, sizeof(t_vec3));
 
-	//	memcpy(
-	//		(uint8_t*)buffer + i * vertex_size + sizeof(t_vec3) + sizeof(t_vec3),
-	//		&vertex->uv,
-	//		sizeof(t_vec2)
-	//	);
+		if (vertex->normal == NULL) {
+			compute_vertex_normal(&env->data, vertex, &normal);
+			vertex->normal = &normal;
+		}
 
-	//	memcpy(
-	//		(uint8_t*)buffer + i * vertex_size + sizeof(t_vec3) + sizeof(t_vec3) + sizeof(t_vec2),
-	//		&vertex->normal,
-	//		sizeof(t_vec3)
-	//	);
+		printf("N : .x %lf - .y %lf - .z %lf\n", vertex->normal->x, vertex->normal->y, vertex->normal->z);
+
+		memcpy((uint8_t*)buffer + i * vertex_size + sizeof(t_vec3) + sizeof(t_vec3), vertex->normal, sizeof(t_vec3));
 
 		i++;
 
@@ -56,8 +57,7 @@ static void vertex_list_to_vbo(t_software_environ *env)
 	size_t poly_length;
 
 	// A polygon is three vertex length
-	// size_t vertex_size = sizeof(t_vec3) * 3 + sizeof(t_vec2);
-	size_t vertex_size = sizeof(t_vec3) * 2;
+	size_t vertex_size = sizeof(t_vec3) * 3;
 
 	buffer = (GLfloat*)malloc(vertex_size * env->data.vertex_count);
 
@@ -75,7 +75,7 @@ static void vertex_list_to_vbo(t_software_environ *env)
 	{
 		poly_length = ft_lstlen(((t_polygon*)x->content)->vertices);
 		
-		load_polygon_into_data(x->content, (GLfloat*)((char*)buffer + i));
+		load_polygon_into_data(env, x->content, (GLfloat*)((char*)buffer + i));
 
 		i += vertex_size * poly_length;
 
@@ -130,7 +130,6 @@ void plan_to_vbo(t_software_environ *env) {
 	//GLfloat *plan_buffer = (GLfloat*)malloc(sizeof(t_vec3) * 2);
 	GLfloat *plan_buffer = (GLfloat*)malloc(sizeof(t_vec3));
 
-
 	t_vec3 v = {0.f, -3.f, 0.f};
 	// t_vec3 color = { 165.f / 255.f, 165.f / 255.f, 165.f / 255.f };
 
@@ -181,15 +180,12 @@ int	gl_buffering(t_software_environ *env)
 	// Load the vriables taht will be use into shaders
 	// the variables id will be stored in env structure
 	// with the fields of the same name
-	if (set_attribute(env->object_shader_program.id, "position", sizeof(t_vec3) * 2) < 0)
+	if (set_attribute(env->object_shader_program.id, "position", sizeof(t_vec3) * 3) < 0)
 		return(-1);
-	if (set_attribute(env->object_shader_program.id, "color", sizeof(t_vec3) * 2) < 0)
+	if (set_attribute(env->object_shader_program.id, "color", sizeof(t_vec3) * 3) < 0)
 		return(-1);
-
-	// if (set_attribute(env->object_shader_program.id, "uv") < 0)
-	// 	return(-1);
-	// if (set_attribute(env->object_shader_program.id, "normal") < 0)
-	// 	return(-1);
+	if (set_attribute(env->object_shader_program.id, "normal", sizeof(t_vec3) * 3) < 0)
+	 	return(-1);
 
 	plan_to_vbo(env);
 

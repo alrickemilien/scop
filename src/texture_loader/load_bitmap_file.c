@@ -1,39 +1,83 @@
 #include "scop.h"
-#include "bitmap.h"
 
-unsigned char	*load_bitmap_file(const char *pathname, size_t *width, size_t *height)
+int		load_bitmap_file(
+	t_bitmap *bmp,
+	const char *pathname)
 {
-	FILE				*file;
-	t_bmp_header		header;
-	t_bmp_dib_header	dib_header;
-	unsigned char		*data;
-	unsigned			size_read;
+	FILE				*stream;
+	size_t				size_read;
 
-	file = fopen(pathname, "r+b");
+	printf("Start loading bitmap file %s\n", pathname);
 
-  if (file == NULL)
-		return (NULL);
+	memset(bmp, 0, sizeof(t_bitmap));
 
-  if (fread(&header, 1, sizeof(t_bmp_header), file) != sizeof(t_bmp_header))
-		return (NULL);
+	printf("a\n");
 
-  if (header.data_offset > header.data_offset)
-		return (NULL);
+	bmp->path = strdup(pathname);
 
-  if (fread(&dib_header, 1, sizeof(dib_header), file) != sizeof(dib_header))
-		return (NULL);
+	printf("b\n");
 
-  *width = dib_header.image_width;
-	*height = dib_header.image_height;
+	stream = fopen(pathname, "rb");
 
-  fseek(file, header.data_offset, SEEK_SET);
+	printf("c\n");
 
-  data = (unsigned char*)calloc(dib_header.image_size, sizeof(unsigned char));
+	if (stream == NULL) {
+		fprintf(stderr, "Unable to load file %s\n", pathname);
+		return (-1);
+	}
 
-  size_read = fread(data, 1, dib_header.image_size, file);
+	printf("d\n");
 
-  if (size_read != dib_header.image_size)
-		return (NULL);
+	if ((size_read = fread(&bmp->header, 1, sizeof(t_bmp_header), stream)) != sizeof(t_bmp_header)) {
+		fprintf(stderr, "%ld has been read\n", size_read);
+		fclose(stream);
+		return (-1);
+	}
 
-  return (data);
+	printf("e\n");
+
+	if (bmp->header.data_offset > bmp->header.data_offset) {
+		fclose(stream);
+		return (-1);
+	}
+
+	printf("f\n");
+
+	if (fread(&bmp->dib_header, 1, sizeof(t_bmp_dib_header), stream) != sizeof(t_bmp_dib_header)) {
+		fclose(stream);
+		return (-1);
+	}
+
+	printf("g\n");
+
+	bmp->width = (size_t)bmp->dib_header.image_width;
+	bmp->height = (size_t)bmp->dib_header.image_height;
+
+	fseek(stream, bmp->header.data_offset, SEEK_SET);
+
+	printf("h\n");
+
+	bmp->buffer = (uint8_t*)malloc(bmp->dib_header.image_size * sizeof(uint8_t));
+
+	memset(bmp->buffer, 0, bmp->dib_header.image_size * sizeof(uint8_t));
+
+	printf("i\n");
+
+	printf("bmp->dib_header.image_size : %ld\n", bmp->dib_header.image_size);
+
+	size_read = fread(bmp->buffer, 1, bmp->dib_header.image_size, stream);
+
+	printf("j\n");
+
+	if (size_read != bmp->dib_header.image_size) {
+		fprintf(stderr, "%ld has been read\n", size_read);
+		fclose(stream);
+		return (-1);
+	}
+
+	printf("k\n");
+
+	fclose(stream);
+
+	return (0);
 }

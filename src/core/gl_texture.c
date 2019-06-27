@@ -6,29 +6,21 @@
 
 void	load_texture(t_software_environ *env)
 {
-	size_t						width;
-	size_t						height;
-	unsigned char	*image_buffer;
-
-	glGenTextures(1, &env->texture);
+	glGenTextures(1, env->bmp.buffer);
 
 	glActiveTexture(GL_TEXTURE0);
 
-	glBindTexture(GL_TEXTURE_2D, env->texture);
-
-	image_buffer = load_bitmap_file(env->path_to_texture, &width, &height);
+	glBindTexture(GL_TEXTURE_2D, env->bmp.buffer);
 
 	glTexImage2D(GL_TEXTURE_2D,
-								0,
-								GL_RGB,
-								width,
-								height,
-								0,
-								GL_BGR,
-								GL_UNSIGNED_BYTE,
-								image_buffer);
-
-	free(image_buffer);
+					0,
+					GL_RGB,
+					env->bmp.width,
+					env->bmp.height,
+					0,
+					GL_BGR,
+					GL_UNSIGNED_BYTE,
+					env->bmp.buffer);
 
 	glUniform1i(glGetUniformLocation(env->object_shader_program.id, "texture"), 0);
 

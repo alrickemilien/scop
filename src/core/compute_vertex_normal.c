@@ -82,6 +82,7 @@ void compute_vertex_normal(t_mesh *mesh, t_vertex* vertex, t_vec3 *normal)
     printf("%s\n", "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALLLL");
 
 	memset(normal, 0, sizeof(t_vec3));
+
 	// Look each each polygon
 	x = mesh->polygons;
 	n = 0;
@@ -97,8 +98,6 @@ void compute_vertex_normal(t_mesh *mesh, t_vertex* vertex, t_vec3 *normal)
 		
 		x = x->next;
 	}
-
-    // printf("%s\n", "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 
     if (n == 0)
         return ;

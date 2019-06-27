@@ -86,7 +86,6 @@ set (SOURCES
 	src/core/gl_buffering.c
 	src/core/gl_indexing.c
 	src/core/gl_matrixing.c
-	src/core/load_texture.c
 	src/core/check_gl_error.c
 	src/core/smart_camera_position.c
 	src/core/gl_lighting.c
@@ -130,7 +129,7 @@ set (SOURCES
 	src/mtl_loader/read_transparency.c
 	src/mtl_loader/read_illumination.c
 	src/mtl_loader/read_mtl_error.c
-	
+
 	src/controls/resize.c
 	src/controls/controls.c
 	src/controls/keyboards.c

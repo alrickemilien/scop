@@ -96,6 +96,7 @@ int		munmap(void *addr, size_t len);
 # include "utils.h"
 # include "libmatrix.h"
 # include "object_loader.h"
+# include "bitmap.h"
 
 /*
 ** MACROS to access more easily to x server pointeurs to variables
@@ -202,7 +203,8 @@ typedef struct			s_software_environ
 
 	GLfloat				y_auto_rotate_angle;
 
-	const char			*path_to_texture;
+	// Texture
+	t_bitmap			bmp;
 
 	// OpenGL programs
 	shader_program_t	object_shader_program;
@@ -367,11 +369,6 @@ int						gl_lighting(
 							t_software_environ *env);
 void					render(
 							t_software_environ *env);
-
-unsigned char			*load_bitmap_file(
-							const char *pathname,
-							size_t *width,
-							size_t *height);
 int						load_mtllib(
 							t_list *mtllib,
 							t_list *usemtl);
