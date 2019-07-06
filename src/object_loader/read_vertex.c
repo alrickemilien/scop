@@ -36,7 +36,7 @@ int		fill_vertex_normal(t_mesh *data, t_vertex *vertex)
 {
 	t_vec3		*normal;
 
-	printf("Fill vertex normal : vertex->normal_index %ld\n", vertex->normal_index);
+	// printf("Fill vertex normal : vertex->normal_index %ld\n", vertex->normal_index);
 	
 	// Substract 1 because stored indexes is the index of obj object that do not start at 0
 	normal = lst_data_at(data->normals, vertex->normal_index - 1);

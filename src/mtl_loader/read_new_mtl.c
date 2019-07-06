@@ -12,6 +12,8 @@ int				read_new_mtl(t_mtllib *lib,
 
 	mtl.label = strndup(tokens[0].cursor, tokens[0].size);
 
+	printf("MEZ MTL\n");
+
 	ft_lstadd(&lib->materials_list,
 		ft_lstnew(&mtl, sizeof(t_mtl_data)));
 

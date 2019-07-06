@@ -96,19 +96,52 @@ void		render(t_software_environ *env)
 
 	mvp = compute_mvp(env);
 
+	// printf("ici\n");
+	// check_gl_error();
+
 	glUseProgram(env->object_shader_program.id);
+	// printf("la\n");
+	// check_gl_error();
 
 	glUniformMatrix4fv(env->mvp_uni, 1, GL_FALSE, mvp->value);
-	glUniformMatrix4fv(env->m_uni, 1, GL_FALSE, env->model_matrix->value);
-	glUniformMatrix4fv(env->v_uni, 1, GL_FALSE, env->view_matrix->value);
-	glUniformMatrix4fv(env->p_uni, 1, GL_FALSE, env->projection_matrix->value);
-	
-	glUniform1f(env->ambient_lighting_uni, env->ambient_lighting);
-	glUniform1f(env->specular_lighting_uni, env->specular_lighting);
-	glUniform3fv(env->light_uni, 1, (GLfloat*)(&env->light_position));
-    glUniform3fv(env->eye_uni, 1, (GLfloat*)(&env->camera_position));
+	// printf("1\n");
+	// check_gl_error();
 
-	check_gl_error();
+
+	glUniformMatrix4fv(env->m_uni, 1, GL_FALSE, env->model_matrix->value);
+	// printf("2\n");
+	// check_gl_error();
+
+	glUniformMatrix4fv(env->v_uni, 1, GL_FALSE, env->view_matrix->value);
+	// printf("3\n");
+	// check_gl_error();
+
+
+	glUniformMatrix4fv(env->p_uni, 1, GL_FALSE, env->projection_matrix->value);
+	// printf("3bis\n");
+	// check_gl_error();
+
+	glUniform1f(env->ambient_lighting_uni, env->ambient_lighting);
+	// printf("4\n");
+	// check_gl_error();
+
+
+	glUniform1f(env->specular_lighting_uni, env->specular_lighting);
+	// printf("5\n");
+	// check_gl_error();
+
+
+	glUniform3fv(env->light_uni, 1, (GLfloat*)(&env->light_position));
+	// printf("6\n");
+	// check_gl_error();
+
+
+    glUniform3fv(env->eye_uni, 1, (GLfloat*)(&env->camera_position));
+	// printf("7\n");
+
+	// check_gl_error();
+
+	glUniform1i(env->texture_uni, 0);
 
 	if (env->indexation_mode)
 		render_elements(env->vao, env->render_style, env->data.vertex_count);

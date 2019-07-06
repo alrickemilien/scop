@@ -120,9 +120,23 @@ void run()
 		return ;
 	}
 
+	printf("gl_buffering done\n");
+	check_gl_error();
+
 	gl_matrixing(env);
 
+		printf("matrixing done\n");
+	check_gl_error();
+
+	gl_texturing(env);
+
+		printf("textureuing done\n");
+	check_gl_error();
+
 	gl_lighting(env);
+
+		printf("lighting done\n");
+	check_gl_error();
 
 	printf("Preparation is done\n");
 
@@ -182,6 +196,7 @@ static int init_system_resources(int argc, char **argv)
 	if (load_mtllib(env->data.mtllib, env->data.usemtl) < 0)
 		return (-1);
 
+	env->bmp.buffer = NULL;
 	if (argc > 2 && load_bitmap_file(&env->bmp, argv[2]) < 0)
 		return (-1);
 
@@ -263,5 +278,7 @@ int main(int argc, char **argv)
 
 	run();
 
-	return 0;
+	end_program(0);
+
+	return (0);
 }

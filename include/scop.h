@@ -234,6 +234,7 @@ typedef struct			s_software_environ
 	GLuint				m_uni;
 	GLuint				v_uni;
 	GLuint				p_uni;
+
 	GLuint				internal_object_mvp_uni;
 
 	GLuint				normal_mvp_uni;
@@ -245,6 +246,7 @@ typedef struct			s_software_environ
 	GLuint				light_color_uni;
 	GLuint				texture_level_uni;
 	GLuint				texture_id;
+	GLuint				texture_uni;
 
 	t_mat4				*translation_matrix;
 	t_mat4				*rotation_matrix;
@@ -323,8 +325,6 @@ int						compile_single_shader(
 							int *info_log_length,
 							GLint *result);
 
-void					load_texture(t_software_environ *env);
-
 void					key_callback(
 							GLFWwindow* window,
 							int key,
@@ -366,6 +366,8 @@ void					axis_to_vbo(
 void					gl_matrixing(
 							t_software_environ *env);
 int						gl_lighting(
+							t_software_environ *env);
+int						gl_texturing(
 							t_software_environ *env);
 void					render(
 							t_software_environ *env);

@@ -5,7 +5,6 @@ extern t_software_environ *env;
 
 static bool closing = false;
 
-
 /*
 ** Clear the environnement in memory
 */
@@ -16,43 +15,51 @@ static void del(void *p, size_t s)
 	free(p);
 }
 
+/*
+** Clear the environnement in memory
+*/
+
+static void del_usemtl(void *p, size_t s)
+{
+	t_usemtl *u;
+
+	(void)s;
+	u = (t_usemtl*)p;
+	free(u->mtl);
+	free(u);
+}
+
 static void clear_env_memory()
 {
-	t_list	*x;
-
 	printf("Clearing environnement ...\n");
 
 	if (!env)
 		return;
 
+	// Destory texture memory buffer
+	if (env->bmp.buffer)
+		free(env->bmp.buffer);
+
 	if (env->data.name)
 		free(env->data.name);
+
 	if (env->data.mtl)
 		free(env->data.mtl);
+
 	if (env->data.positions)
 		ft_lstdel(&env->data.positions, &del);
+	
 	if (env->data.uvs)
 		ft_lstdel(&env->data.uvs, &del);
+	
 	if (env->data.normals)
 		ft_lstdel(&env->data.normals, &del);
 
 	// Delete usemtl
-	x = env->data.usemtl;
-	while (x)
-	{
-		free(((t_usemtl*)x->content)->mtl);
-		ft_lstdelone(&x, &del);
-		x = x->next;
-	}
+	ft_lstdel(&env->data.usemtl, &del_usemtl);
 
-	// Delete mttlib
-	x = env->data.usemtl;
-	while (x)
-	{
-		free(*(char**)x->content);
-		ft_lstdelone(&x, &del);
-		x = x->next;
-	}
+	// Delete mtllib
+	ft_lstdel(&env->data.mtllib, &del);
 
 	// @TODO ==> need to clear sublist
 	if (env->data.polygons)

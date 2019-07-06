@@ -86,6 +86,7 @@ set (SOURCES
 	src/core/gl_buffering.c
 	src/core/gl_indexing.c
 	src/core/gl_matrixing.c
+	src/core/gl_texturing.c
 	src/core/check_gl_error.c
 	src/core/smart_camera_position.c
 	src/core/gl_lighting.c

@@ -61,7 +61,7 @@ static size_t count_words(const char *line, const char *delimiters)
 			i++;
 	}
 
-	printf("return n %ld\n", n);
+	// printf("return n %ld\n", n);
 
 	return (n);
 }

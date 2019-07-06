@@ -79,7 +79,7 @@ void compute_vertex_normal(t_mesh *mesh, t_vertex* vertex, t_vec3 *normal)
 	t_list		*x;
 	size_t		n;
 
-    printf("%s\n", "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALLLL");
+    // printf("%s\n", "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALLLL");
 
 	memset(normal, 0, sizeof(t_vec3));
 
@@ -102,8 +102,8 @@ void compute_vertex_normal(t_mesh *mesh, t_vertex* vertex, t_vec3 *normal)
     if (n == 0)
         return ;
 
-    printf("n : %ld\n", n);
+    // printf("n : %ld\n", n);
 	*normal = (t_vec3){normal->x / n, normal->y / n, normal->z / n};
 
-	printf("N : .x %f .y %f .z %f \n", normal->x, normal->y, normal->z);
+	// printf("N : .x %f .y %f .z %f \n", normal->x, normal->y, normal->z);
 }

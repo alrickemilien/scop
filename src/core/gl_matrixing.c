@@ -39,13 +39,25 @@ void gl_matrixing(t_software_environ *env)
 		2000.0f);
 
 	env->mvp_uni = glGetUniformLocation(env->object_shader_program.id, "mvp");
+		printf("a\n");
+	check_gl_error();
 	env->m_uni = glGetUniformLocation(env->object_shader_program.id, "m");
+		printf("b\n");
+	check_gl_error();
 	env->v_uni = glGetUniformLocation(env->object_shader_program.id, "v");
+		printf("c\n");
+	check_gl_error();
 	env->p_uni = glGetUniformLocation(env->object_shader_program.id, "p");
+		printf("d\n");
+	check_gl_error();
 
 	env->eye_uni = glGetUniformLocation(env->object_shader_program.id, "eye");
+		printf("e\n");
+	check_gl_error();
 
 	env->internal_object_mvp_uni = glGetUniformLocation(env->internal_object_shader_program.id, "mvp");
+		printf("f\n");
+	check_gl_error();
 
 	env->normal_mvp_uni = glGetUniformLocation(env->normals_shader_program.id, "mvp");
 	env->normal_m_uni = glGetUniformLocation(env->normals_shader_program.id, "m");

@@ -15,7 +15,6 @@ endif
 #
 SRC += ../src/core/render.c \
 ../src/core/smart_camera_position.c \
-../src/core/load_texture.c \
 ../src/core/gl_lighting.c \
 ../src/core/gl_attribute.c \
 ../src/core/create_triangle.c \
@@ -28,6 +27,7 @@ SRC += ../src/core/render.c \
 ../src/core/compute_vertex_normal.c \
 ../src/core/math_utils.c \
 ../src/core/gl_indexing.c \
+../src/core/gl_texturing.c \
 	../src/shader/print_shader_error.c \
 	../src/shader/load_single_shader.c \
 	../src/shader/load_program_shader.c \
