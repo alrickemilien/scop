@@ -30,6 +30,13 @@ static const t_glx_attribute g_attribute_map[] = {
     GL_FLOAT,
     GL_FALSE,
     (uint8_t *)NULL + sizeof(t_vec3) + sizeof(t_vec3)
+  },
+  {
+    "uv",
+    2,
+    GL_FLOAT,
+    GL_FALSE,
+    (uint8_t *)NULL + sizeof(t_vec3) + sizeof(t_vec3) + sizeof(t_vec3),
   }
 };
 

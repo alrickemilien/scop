@@ -244,7 +244,7 @@ typedef struct			s_software_environ
 	GLuint				texture_level;
 	GLuint				light_color_uni;
 	GLuint				texture_level_uni;
-	GLuint				texture;
+	GLuint				texture_id;
 
 	t_mat4				*translation_matrix;
 	t_mat4				*rotation_matrix;
