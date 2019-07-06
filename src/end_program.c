@@ -92,6 +92,8 @@ void end_program(int code)
 	glDeleteVertexArrays(1, &env->plan_vao);
 	glDeleteVertexArrays(1, &env->axis_vao);
 
+	glDeleteTextures(1, &env->texture_uni);
+
 	glfwTerminate();
 
 	clear_env_memory();
