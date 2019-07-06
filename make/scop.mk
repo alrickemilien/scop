@@ -47,6 +47,7 @@ SRC += ../src/controls/resize.c \
 #
 SRC +=	../src/object_loader/read_position.c \
 ../src/object_loader/read_comment.c \
+../src/object_loader/read_smooth_shading.c \
 ../src/object_loader/read_color.c \
 ../src/object_loader/print_token.c \
 ../src/object_loader/read_object_file_line.c \
@@ -66,19 +67,28 @@ SRC +=	../src/object_loader/read_position.c \
 #
 # .mtl loader
 #
-SRC += ../src/mtl_loader//load_mtl_file.c \
-../src/mtl_loader//read_mtl_file_line.c \
-../src/mtl_loader//read_comment.c \
-../src/mtl_loader//read_new_mtl.c \
-../src/mtl_loader//load_mtllib.c \
-../src/mtl_loader//read_specular_color_exponent.c
+SRC += ../src/mtl_loader/read_mtl_error.c \
+../src/mtl_loader/read_dissolved.c \
+../src/mtl_loader/read_specular_color.c \
+../src/mtl_loader/load_mtl_file.c \
+../src/mtl_loader/read_illumination.c \
+../src/mtl_loader/read_mtl_file_line.c \
+../src/mtl_loader/read_comment.c \
+../src/mtl_loader/read_ambient_color.c \
+../src/mtl_loader/read_diffuse_color.c \
+../src/mtl_loader/read_optical_density.c \
+../src/mtl_loader/read_transparency.c \
+../src/mtl_loader/read_new_mtl.c \
+../src/mtl_loader/load_mtllib.c
 
 #
 # Loader utils
 #
-SRC +=	../src/loader_utils/split_whitespaces.c \
+SRC +=	../src/loader_utils/utils.c \
+../src/loader_utils/split_whitespaces.c \
 ../src/loader_utils/n_atof.c \
-../src/loader_utils/split_into_tokens.c
+../src/loader_utils/split_into_tokens.c \
+../src/loader_utils/n_atoi.c
 
 #
 # .mtl loader
@@ -105,9 +115,11 @@ SRC +=	../src/utils/ft_strjoin.c \
 		../src/utils/ft_lstdel.c \
 		../src/utils/ft_lstreverse.c \
 		../src/utils/ft_lstdelone.c \
-		../src/utils/ft_lstfind.c
+		../src/utils/ft_lstfind.c \
+		../src/utils/extract_folder_from_path.c
 
-SRC += ../src/main.c
+SRC += ../src/main.c \
+		../src/end_program.c
 
 INCLUDE += -I ../include -I ../src/libmatrix/include
 

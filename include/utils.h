@@ -1,6 +1,11 @@
 #ifndef UTILS_H
 # define UTILS_H
 
+#ifdef __APPLE__
+# include <unistd.h>
+# include <libgen.h>
+#endif 
+
 # include <stdlib.h>
 # include <string.h>
 # include <stdbool.h>

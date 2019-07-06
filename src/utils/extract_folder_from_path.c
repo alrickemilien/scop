@@ -1,4 +1,5 @@
 #include "utils.h"
+#include <stdio.h>
 
 /*
 ** This function extract the folder from the provided path
@@ -21,22 +22,16 @@
 
 char    *extract_folder_from_path(const char *path)
 {
-	char				cwd[PATH_MAX];
-    char                *ret;
+    char *tmp;
+    char *ret;
 
-	if (getcwd(cwd, sizeof(cwd)) == NULL)
-	    return (NULL);
-        
-	if (_getcwd(cwd, sizeof(cwd)) == NULL)
-	    return (NULL);
-    
-    char* ts1 = strdup(path);
-    char* ts2 = strdup(path);
+    tmp = strdup(path);
 
-    char* dir = dirname(ts1);
-    char* filename = basename(ts2);
+    ret = dirname(tmp);
 
+    free(tmp);
 
+    return (ret);
 }
 #else
 char    *extract_folder_from_path(const char *path)

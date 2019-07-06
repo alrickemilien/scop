@@ -57,13 +57,13 @@ int		load_bitmap_file(
 
 	printf("h\n");
 
-	bmp->buffer = (uint8_t*)malloc(bmp->dib_header.image_size * sizeof(uint8_t));
+	bmp->buffer = (char*)(uint8_t*)malloc(bmp->dib_header.image_size * sizeof(uint8_t));
 
 	memset(bmp->buffer, 0, bmp->dib_header.image_size * sizeof(uint8_t));
 
 	printf("i\n");
 
-	printf("bmp->dib_header.image_size : %ld\n", bmp->dib_header.image_size);
+	printf("bmp->dib_header.image_size : %d\n", bmp->dib_header.image_size);
 
 	size_read = fread(bmp->buffer, 1, bmp->dib_header.image_size, stream);
 

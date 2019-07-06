@@ -11,16 +11,13 @@ static int read_polygon_vertex(
 
 	tmp = strndup(t.cursor, t.size);
 
-	printf("t.cursor : %s\n", t.cursor);
+	// printf("t.cursor : %s\n", t.cursor);
 
 	// Split the token 12/888/3018
 	// Into three sub tokens 12, 888, and 3018
 	// Split the token without slash 12
 	// Into one sub token 12
 	ctokens = split_into_tokens(tmp, "/");
-
-	printf("ctokens[0].cursor : %s\n", ctokens[0].cursor);
-	printf("ctokens[1].cursor : %s\n", ctokens[1].cursor);
 
     if (read_vertex(data, (const t_token *)ctokens, new_polygon) < 0)
 	{
