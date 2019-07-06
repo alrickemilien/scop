@@ -119,6 +119,8 @@ SRC +=	../src/utils/ft_strjoin.c \
 		../src/utils/extract_folder_from_path.c
 
 SRC += ../src/main.c \
+		../src/glfw_init.c \
+		../src/system_init.c \
 		../src/end_program.c
 
 INCLUDE += -I ../include -I ../src/libmatrix/include

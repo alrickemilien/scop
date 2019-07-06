@@ -40,20 +40,6 @@ static const char *normals_fragment_file_path = "/shaders/normals/FragmentShader
 static const char *normals_geometry_file_path = "/shaders/normals/GeometryShader.glsl";
 #endif
 
-static void glew_init(void)
-{
-	glewExperimental = GL_TRUE;
-
-	GLenum err = glewInit();
-
-	// Problem: glewInit failed, something is seriously wrong.
-	if (err != GLEW_OK)
-	{
-		fprintf(stderr, "glewInit failed, aborting. Code %d.\n", err);
-		exit(err);
-	}
-}
-
 void stop_on_sigint(int signo)
 {
 	if (signo == SIGINT && env != NULL)
@@ -158,123 +144,18 @@ void run()
 	end_program(0);
 }
 
-static void glfw_error_callback(int error, const char *description)
-{
-	fprintf(stderr, "Error: %s (%d)\n", description, error);
-	gl_log_err("GLFW ERROR: code %i msg: %s\n", error, description);
-}
-
-/*
-** Initialize the system with the provided resources
-** - Register the current
-** - Find the shader folder and register the path
-** - Read the resources into the object folder
-** When all ok, start the application
-*/
-
-static int init_system_resources(int argc, char **argv)
-{
-	if (NULL == (env = malloc(sizeof(t_software_environ))))
-		exit_error_with_message("Not enought memory to run the program");
-
-	if (argc < 2)
-		exit_error_with_message("Input file missing.");
-
-#ifdef __APPLE__
-	if (getcwd(env->cwd, sizeof(env->cwd)) == NULL)
-		exit_error_with_message("An error occured when oading the pwd path of the program.");
-#else
-	if (_getcwd(env->cwd, sizeof(env->cwd)) == NULL)
-		exit_error_with_message("An error occured when oading the pwd path of the program.");
-#endif
-
-	// Load provided object file
-	if (load_object_file(&env->data, argv[1]) < 0)
-		return (-1);
-
-	// Load mtllib files if any provided
-	if (load_mtllib(env->data.mtllib, env->data.usemtl) < 0)
-		return (-1);
-
-	env->bmp.buffer = NULL;
-	if (argc > 2 && load_bitmap_file(&env->bmp, argv[2]) < 0)
-		return (-1);
-
-	count_vertices(&env->data);
-
-	env->scale = 1.0f;
-	env->y_auto_rotate_angle = 0.f;
-	env->render_style = GL_TRIANGLES;
-	env->indexation_mode = env->data.smooth_shading ? 1 : 0;
-	env->ambient_lighting = 0.45f;
-	env->specular_lighting = 0.5f;
-	env->render_normals = true;
-
-	// All OK, start applicaton
-	return (0);
-}
-
-/*
-** Init the system display using OpenGL library
-*/
-
-void init(int argc, char **argv)
-{
-	WINDOW_WIDTH = DEFAULT_WINDOW_WIDTH;
-	WINDOW_HEIGHT = DEFAULT_WINDOW_HEIGHT;
-
-	(void)argv;
-	(void)argc;
-
-	glfwSetErrorCallback(glfw_error_callback);
-
-	if (!glfwInit())
-		exit_error_with_message("Failed to initialize GLFW");
-
-	// Se the antialiasing => pixels are subdivided by X
-		// glfwWindowHint(GLFW_SAMPLES, 4);
-
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, SOFT_GLFW_CONTEXT_VERSION_MAJOR);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, SOFT_GLFW_CONTEXT_VERSION_MINOR);
-
-	// To make MacOS happy; should not be needed
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-	WINDOW = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_NAME, NULL, NULL);
-
-	if (!WINDOW)
-	{
-		glfwTerminate();
-		exit_error_with_message("Failed to open GLFW window. Need GPU compatible with 4.0 OpenGL library");
-	}
-
-	glfwSetKeyCallback(WINDOW, key_callback);
-
-	glfwSetWindowSizeCallback(WINDOW, window_size_callback);
-	glfwSetFramebufferSizeCallback(WINDOW, window_size_callback);
-
-	glfwMakeContextCurrent(WINDOW);
-	
-	printf("OpenGL %s, GLSL %s\n", 
-    		glGetString(GL_VERSION),
-    		glGetString(GL_SHADING_LANGUAGE_VERSION));
-
-	glew_init();
-}
-
 int main(int argc, char **argv)
 {
 	if (signal(SIGINT, stop_on_sigint) == SIG_ERR)
 		fprintf(stderr, "Can't catch SIGINT\n");
 
 	// Could not continue if the system ressources are fully and successfully loaded
-	if (init_system_resources(argc, argv) < 0)
+	if (system_init(env, argc, argv) < 0)
 		return (-1);
 
 	// print_object((const void*)&env->data);
 
-	init(argc, argv);
+	glfw_init(env, argc, argv);
 
 	run();
 

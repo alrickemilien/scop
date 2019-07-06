@@ -1,4 +1,3 @@
-need to get not relative path to shader dir
 need to improve load object file (handle \n grabage, etc)
 compute window size dynamically
 read command line options

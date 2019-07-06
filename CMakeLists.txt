@@ -150,6 +150,8 @@ set (SOURCES
 	src/core/gl_log.c
 
 	src/main.c
+	src/glfw_init.c
+	src/system_init.c
 	src/end_program.c
 )
 

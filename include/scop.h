@@ -433,6 +433,15 @@ bool	gl_log_err(const char* message, ...);
 **
 */
 
-void end_program(int code);
+void						end_program(
+								int code);
+int							system_init(
+								t_software_environ *env,
+								int argc,
+								char **argv);
+void						glfw_init(
+								t_software_environ *env,
+								int argc,
+								char **argv);
 
 #endif
