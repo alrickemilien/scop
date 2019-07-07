@@ -106,9 +106,13 @@ void		set_default_uvs(t_polygon *polygon)
 	while (x)
 	{
 		vertex = (t_vertex*)x->content;
+
+		prev_vertex = vertex;
 		
-		if (vertex->uv)
+		if (vertex->uv) {
+			x = x->next;
 			continue ;
+		}
 
 		if (prev_vertex == NULL
 			|| (prev_vertex->uv->x == 0.0f && prev_vertex->uv->y == 1.0f))
@@ -119,8 +123,6 @@ void		set_default_uvs(t_polygon *polygon)
 			vertex->uv = new_vec2(1.0f, 1.0f);
 		else if (prev_vertex->uv->x == 1.0f && prev_vertex->uv->y == 1.0f)
 			vertex->uv = new_vec2(0.0f, 1.0f);
-		
-		prev_vertex = vertex;
 
 		x = x->next;
 	}
@@ -141,6 +143,7 @@ void	fill_uvs(t_list *polygon)
 	while (polygon)
 	{
 		set_default_uvs(polygon->content);
+
 
         polygon = polygon->next;
 	}

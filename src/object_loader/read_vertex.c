@@ -19,13 +19,14 @@ int		fill_vertex_color(t_mesh *data, t_vertex *vertex)
 {
 	t_vec2		*color;
 
-	printf("Fill vertex color\n");
+	// printf("Fill vertex color\n");
 
 	// Substract 1 because stored indexes is the index of obj object that do not start at 0
 	color = lst_data_at(data->uvs, vertex->color_index - 1);
 
 	if (!color)
-		return (read_object_error("Invalid index for color."));
+		return (-1);
+		// return (read_object_error("Invalid index for color."));
 
 	vertex->uv = color;
 
@@ -42,7 +43,8 @@ int		fill_vertex_normal(t_mesh *data, t_vertex *vertex)
 	normal = lst_data_at(data->normals, vertex->normal_index - 1);
 
 	if (!normal)
-    	return (read_object_error("Invalid index for normal."));
+		return (-1);
+    	// return (read_object_error("Invalid index for normal."));
 
 	vertex->normal = normal;
 	printf("N : .x %lf - .y %lf - .z %lf\n", normal->x, normal->y, normal->z);
