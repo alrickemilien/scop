@@ -10,9 +10,6 @@
 
 int system_init(t_software_environ *env, int argc, char **argv)
 {
-	if (NULL == (env = malloc(sizeof(t_software_environ))))
-		exit_error_with_message("Not enought memory to run the program");
-
 	if (argc < 2)
 		exit_error_with_message("Input file missing.");
 
@@ -44,7 +41,7 @@ int system_init(t_software_environ *env, int argc, char **argv)
 	env->indexation_mode = env->data.smooth_shading ? 1 : 0;
 	env->ambient_lighting = 0.45f;
 	env->specular_lighting = 0.5f;
-	env->render_normals = true;
+	env->render_normals = false;
 
 	// All OK, start applicaton
 	return (0);

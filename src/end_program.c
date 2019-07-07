@@ -29,6 +29,35 @@ static void del_usemtl(void *p, size_t s)
 	free(u);
 }
 
+
+/*
+** Clear the environnement in memory
+*/
+
+static void del_vertex(void *p, size_t s)
+{
+	t_vertex	*vertex;
+
+	(void)s;
+	vertex = (t_vertex*)p;
+	free(vertex->uv);
+	free(vertex);
+}
+
+/*
+** Clear the environnement in memory
+*/
+
+static void del_polygon(void *p, size_t s)
+{
+	t_polygon	*polygon;
+
+	(void)s;
+	polygon = (t_polygon*)p;
+	ft_lstdel(&polygon->vertices, &del_vertex);
+	free(polygon);
+}
+
 static void clear_env_memory()
 {
 	printf("Clearing environnement ...\n");
@@ -63,7 +92,7 @@ static void clear_env_memory()
 
 	// @TODO ==> need to clear sublist
 	if (env->data.polygons)
-		ft_lstdel(&env->data.polygons, &del);
+		ft_lstdel(&env->data.polygons, &del_polygon);
 
 	free(env);
 }

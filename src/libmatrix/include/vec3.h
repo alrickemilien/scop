@@ -13,7 +13,12 @@ typedef struct	s_vec3 {
 }								t_vec3;
 #pragma pack(pop)
 
-GLfloat		dot_product_vec3(const t_vec3 *vector1, const t_vec3 *vector2);
+t_vec3 			*new_vec3(
+    GLfloat x,
+    GLfloat y,
+    GLfloat z);
+
+GLfloat			dot_product_vec3(const t_vec3 *vector1, const t_vec3 *vector2);
 
 int				are_vec3_equal(const t_vec3 *vector1, const t_vec3 *vector2);
 

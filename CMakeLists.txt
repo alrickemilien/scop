@@ -91,6 +91,7 @@ set (SOURCES
 	src/core/smart_camera_position.c
 	src/core/gl_lighting.c
 	src/core/compute_vertex_normal.c
+	src/core/compute_vertex_uvs.c
 
 	src/object_loader/read_position.c
 	src/object_loader/read_usemtl.c
@@ -115,7 +116,11 @@ set (SOURCES
 	src/loader_utils/split_into_tokens.c
 	src/loader_utils/utils.c
 
-	src/texture_loader/load_bitmap_file.c
+	src/texture_loader/bmp/load_bitmap_file.c
+
+	src/texture_loader/tga/decode_tga.c
+	src/texture_loader/tga/load_tga_file.c
+	src/texture_loader/tga/utils.c
 
 	src/mtl_loader/load_mtl_file.c
 	src/mtl_loader/load_mtllib.c

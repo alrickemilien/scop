@@ -94,6 +94,8 @@ void run()
 		return ;
 	}
 
+	fill_uvs(env->data.polygons);
+
 	if (!env->indexation_mode && gl_buffering(env) < 0)
 	{
 		end_program(-1);
@@ -146,6 +148,9 @@ void run()
 
 int main(int argc, char **argv)
 {
+	if (NULL == (env = malloc(sizeof(t_software_environ))))
+		exit_error_with_message("Not enought memory to run the program");
+
 	if (signal(SIGINT, stop_on_sigint) == SIG_ERR)
 		fprintf(stderr, "Can't catch SIGINT\n");
 

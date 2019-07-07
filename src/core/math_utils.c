@@ -1,8 +1,8 @@
 #include "scop.h"
 
-double	deg_to_rad(double deg)
+float	deg_to_rad(float deg)
 {
-	return (deg * ((double)M_PI / 180.0f));
+	return (deg * ((float)M_PI / 180.0f));
 }
 
 /*
@@ -36,4 +36,21 @@ t_vec3 compute_object_barycentre(t_list *positions)
 	barycentre.z /= (GLfloat)i;
 
 	return (barycentre);
+}
+
+float	minf(float a, float b)
+{
+	return (a < b ? a : b);
+}
+
+float	maxf(float a, float b)
+{
+	return (a > b ? a : b);
+}
+
+float	percentage_f(float min, float max, float f)
+{
+	if (min == max)
+		return (0);
+	return ((f - min) / (max - min));
 }

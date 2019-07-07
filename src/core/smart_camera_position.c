@@ -51,7 +51,7 @@ void smart_camera_position(t_software_environ *env,
 	if (magnitude_vec3(&max) == 0)
 		max = (t_vec3){2.f, 2.f, 2.f};
     // Get the module of the distance between the barycentre and the most far point
-    GLfloat coeff = 1.5f;
+    GLfloat coeff = 1.2f;
     *camera_position = (t_vec3){barycentre.x + coeff * magnitude_vec3(&max), barycentre.y + coeff * magnitude_vec3(&max), barycentre.z + coeff * magnitude_vec3(&max)};
     *camera_look_at_position = barycentre;
     *camera_up = (t_vec3){ 0.f, 1.f, 0.f };

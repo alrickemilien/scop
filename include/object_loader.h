@@ -90,6 +90,7 @@ typedef struct			s_vertex
 	t_vec3				*position;
 	t_vec3				*color;
 	t_vec2				*uv;
+	t_vec2				uv_sphere;
 	t_vec3				*normal;
 }						t_vertex;
 

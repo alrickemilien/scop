@@ -1,11 +1,13 @@
 #include "scop.h"
 
 /*
-** Load a txture int OpenGL soft
+** Load a texture into OpenGL soft
 */
 
 int	gl_texturing(t_software_environ *env)
 {
+	GLenum format;
+
 	printf("0\n");
 	check_gl_error();
 	
@@ -23,13 +25,20 @@ int	gl_texturing(t_software_environ *env)
 	printf("3\n");
 	check_gl_error();
 
+	printf("env->bmp.width : %d\n", env->bmp.width);
+	printf("env->bmp.height : %d\n", env->bmp.height);
+
+	format = GL_BGR;
+	if (env->bmp.dib_header.bits_per_pixel == 32)
+		format = GL_BGRA;
+
 	glTexImage2D(GL_TEXTURE_2D,
 					0,
 					GL_RGB,
 					env->bmp.width,
 					env->bmp.height,
 					0,
-					GL_BGR,
+					format,
 					GL_UNSIGNED_BYTE,
 					env->bmp.buffer);
 	printf("4\n");
@@ -40,21 +49,12 @@ int	gl_texturing(t_software_environ *env)
 	check_gl_error();
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		printf("8\n");
+	printf("8\n");
 	check_gl_error();
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	printf("7\n");
 	check_gl_error();
-
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	return (0);
 }

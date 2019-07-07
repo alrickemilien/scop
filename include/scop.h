@@ -97,6 +97,7 @@ int		munmap(void *addr, size_t len);
 # include "libmatrix.h"
 # include "object_loader.h"
 # include "bitmap.h"
+# include "tga.h"
 
 /*
 ** MACROS to access more easily to x server pointeurs to variables
@@ -256,7 +257,6 @@ typedef struct			s_software_environ
 	t_mat4				*projection_matrix;
 }						t_software_environ;
 
-
 typedef struct			s_color
 {
 	unsigned char		red;
@@ -297,6 +297,8 @@ typedef struct			s_gl_info {
 
 void					count_vertices(
 							t_mesh *data);
+
+void					fill_uvs(t_list *polygon);
 
 void 					exit_error_with_message(
 							const char *msg);
@@ -408,9 +410,14 @@ void					render_texture(
 ** Math utils
 */
 
-double					deg_to_rad(double deg);
+float					deg_to_rad(float deg);
 t_vec3					compute_object_barycentre(
 							t_list *positions);
+float					minf(float a, float b);
+float					maxf(float a, float b);
+float					percentage_f(float min,
+									float max,
+									float f);
 
 /*
 ** Utils
