@@ -201,6 +201,8 @@ int gl_buffering(t_software_environ *env)
 
 	size_t size = sizeof(t_vec3) * 3 + sizeof(t_vec2);
 
+	printf("env->object_shader_program.id, : %d\n", env->object_shader_program.id);
+
 	// Load the vriables taht will be use into shaders
 	// the variables id will be stored in env structure
 	// with the fields of the same name

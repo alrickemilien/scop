@@ -88,13 +88,18 @@ void run()
 		return ;
 	}
 
+	printf("About to fill load program shader ...\n");
+
 	if (load_program_shader(&env->normals_shader_program, normals_vertex_file_path, normals_fragment_file_path, normals_geometry_file_path) < 0)
 	{
 		end_program(-1);
 		return ;
 	}
+	printf("About to fill uvs ...\n");
 
 	fill_uvs(env->data.polygons);
+
+	printf("About to start buffering ...\n");
 
 	if (!env->indexation_mode && gl_buffering(env) < 0)
 	{

@@ -33,7 +33,8 @@ SRC += ../src/core/render.c \
 	../src/shader/load_program_shader.c \
 	../src/shader/cleanup_shader_program.c \
 	../src/shader/compile_shader.c \
-	../src/texture_loader/load_bitmap_file.c
+	../src/texture_loader/bmp/load_bitmap_file.c \
+	../src/core/compute_vertex_uvs.c
 
 #
 # Controls and toggle of the app

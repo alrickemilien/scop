@@ -25,8 +25,8 @@ int	gl_texturing(t_software_environ *env)
 	printf("3\n");
 	check_gl_error();
 
-	printf("env->bmp.width : %d\n", env->bmp.width);
-	printf("env->bmp.height : %d\n", env->bmp.height);
+	// printf("env->bmp.width : %d\n", env->bmp.width);
+	// printf("env->bmp.height : %d\n", env->bmp.height);
 
 	format = GL_BGR;
 	if (env->bmp.dib_header.bits_per_pixel == 32)
