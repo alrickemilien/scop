@@ -206,6 +206,7 @@ typedef struct			s_software_environ
 
 	// Texture
 	t_bitmap			bmp;
+	t_tga				tga;
 
 	// OpenGL programs
 	shader_program_t	object_shader_program;
@@ -370,6 +371,8 @@ void					gl_matrixing(
 int						gl_lighting(
 							t_software_environ *env);
 int						gl_texturing(
+							t_software_environ *env);
+t_mat4					*compute_mvp(
 							t_software_environ *env);
 void					render(
 							t_software_environ *env);

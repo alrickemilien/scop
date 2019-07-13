@@ -92,6 +92,7 @@ set (SOURCES
 	src/core/gl_lighting.c
 	src/core/compute_vertex_normal.c
 	src/core/compute_vertex_uvs.c
+	src/core/compute_mvp.c
 
 	src/object_loader/read_position.c
 	src/object_loader/read_usemtl.c

@@ -115,6 +115,8 @@ int				load_tga_file(
 		return (-1);
 	}
 
+	printf("FILL TGA HEADER\n");
+
 	if (fill_tga_header(&tga->header, stream))
 	{
 		fclose(stream);
@@ -128,6 +130,8 @@ int				load_tga_file(
 		fclose(stream);
 		return (-1);
 	}
+
+	printf("LALALALA\n");
 
 	tga->width = (size_t)tga->header.x;
 	tga->height = (size_t)tga->header.y;

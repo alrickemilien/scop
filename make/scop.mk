@@ -25,6 +25,7 @@ SRC += ../src/core/render.c \
 ../src/core/gl_matrixing.c \
 ../src/core/count_vertices.c \
 ../src/core/compute_vertex_normal.c \
+../src/core/compute_mvp.c \
 ../src/core/math_utils.c \
 ../src/core/gl_indexing.c \
 ../src/core/gl_texturing.c \
@@ -35,6 +36,13 @@ SRC += ../src/core/render.c \
 	../src/shader/compile_shader.c \
 	../src/texture_loader/bmp/load_bitmap_file.c \
 	../src/core/compute_vertex_uvs.c
+
+#
+# TGA files
+#
+SRC += ../src/texture_loader/tga/load_tga_file.c \
+../src/texture_loader/tga/utils.c \
+../src/texture_loader/tga/decode_tga.c
 
 #
 # Controls and toggle of the app
@@ -80,7 +88,11 @@ SRC += ../src/mtl_loader/read_mtl_error.c \
 ../src/mtl_loader/read_optical_density.c \
 ../src/mtl_loader/read_transparency.c \
 ../src/mtl_loader/read_new_mtl.c \
-../src/mtl_loader/load_mtllib.c
+../src/mtl_loader/load_mtllib.c \
+../src/mtl_loader/load_mtl_file.c \
+				../src/mtl_loader/read_mtl_file_line.c \
+				../src/mtl_loader/read_new_mtl.c \
+				../src/mtl_loader/read_comment.c
 
 #
 # Loader utils
@@ -90,14 +102,6 @@ SRC +=	../src/loader_utils/utils.c \
 ../src/loader_utils/n_atof.c \
 ../src/loader_utils/split_into_tokens.c \
 ../src/loader_utils/n_atoi.c
-
-#
-# .mtl loader
-#
-SRC +=	../src/mtl_loader/load_mtl_file.c \
-				../src/mtl_loader/read_mtl_file_line.c \
-				../src/mtl_loader/read_new_mtl.c \
-				../src/mtl_loader/read_comment.c
 
 #
 # Logs

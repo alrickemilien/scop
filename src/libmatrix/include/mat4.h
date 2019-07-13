@@ -44,7 +44,8 @@ void    copy_mat4(t_mat4 *a, t_mat4 *destination);
    t_pmatrix_format_map identifier;
  }               t_pmatrix_format_value;
 
-int  pmatrix(char *format, t_mat4 *matrix);
+int     pmatrix(char *format, t_mat4 *matrix);
+void    printmat4(const t_mat4 *m);
 
 /*
 ** Specific matrix

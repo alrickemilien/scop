@@ -44,6 +44,8 @@ SRC +=	../src/mat4/pmatrix.c \
 				../src/mat4/add_mat4.c \
 				../src/mat4/fill_mat4.c \
 				../src/mat4/delete_matrix.c \
-				../src/mat4/multiply_mat4.c
+				../src/mat4/multiply_mat4.c \
+				../src/mat4/printmat4.c
+
 
 INCLUDE += -I ../include

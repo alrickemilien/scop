@@ -41,6 +41,7 @@ SET (SRC
 	src/mat4/delete_matrix.c
 	src/mat4/multiply_mat4.c
 	src/mat4/mat4_on_vec3.c
+	src/mat4/printmat4.c
 
 	# vec3
 	src/vec3/swap_vec3.c

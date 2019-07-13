@@ -6,16 +6,16 @@ static void render_vao(GLuint vao, GLenum render_style, size_t vertex_number)
 	glDrawArrays(render_style, 0, vertex_number);
 }
 
-void render_elements(GLuint vao, GLenum render_style, size_t vertex_number) 
+static void render_elements(GLuint vao, GLenum render_style, size_t vertex_number) 
 {
  		glBindVertexArray(vao);
 
 		 // Draw the triangles !
  		glDrawElements(
-     		render_style,      // mode
-     		vertex_number,    // count
-     		GL_UNSIGNED_INT,   	// type
-     		(void*)0           // element array buffer offset
+     		render_style,
+     		vertex_number,
+     		GL_UNSIGNED_INT,
+     		(void*)0
  		);
 }
 
@@ -44,17 +44,6 @@ static t_matrix *rotate_object_around_point(t_software_environ *env, t_vec3 v)
 	return model_matrix;
 }
 
-void print_mat4(t_mat4 *m)
-{
-	for (size_t i = 0; i < 4; i++) {
-		for (size_t j = 0; j < 4; j++) {
-			printf("%.3f ", m->value[j * 4 + i]);
-		}
-		printf("\n");
-	}
-	printf("\n");
-}
-
 static void apply_rotation(t_software_environ *env) {
 	t_vec3 minus_b;
 	t_vec3 b;
@@ -71,31 +60,11 @@ static void apply_rotation(t_software_environ *env) {
 
 	env->model_matrix = rotate_object_around_point(env, minus_b);
 
-	// print_mat4(env->model_matrix->value);
+	// printmat4(env->model_matrix->value);
 }
 
-t_mat4		*compute_mvp(t_software_environ *env) {
-	t_mat4	*mvp;
-
- 	mvp = identity_mat4();
-
-	multiply_mat4(mvp, env->model_matrix, mvp);
-
-	multiply_mat4(mvp, env->view_matrix, mvp);
-
-	multiply_mat4(mvp, env->projection_matrix, mvp);
-
-	return (mvp);
-}
-
-void		render(t_software_environ *env)
+void		render_mesh(t_software_environ *env, t_matrix *mvp)
 {
-	t_mat4 *mvp;
-
-	apply_rotation(env);
-
-	mvp = compute_mvp(env);
-
 	// printf("ici\n");
 	// check_gl_error();
 
@@ -141,17 +110,24 @@ void		render(t_software_environ *env)
 
 	// check_gl_error();
 
+
+	printf("8\n");
+
 	glUniform1i(env->texture_uni, 0);
+	 check_gl_error();
+
+	printf("9\n");
+	 check_gl_error();
 
 	if (env->indexation_mode)
 		render_elements(env->vao, env->render_style, env->data.vertex_count);
 	else
 		render_vao(env->vao, env->render_style, env->data.vertex_count);
 
-	//
-	// Normals
-	//
+}
 
+void		render_meshs_normals(t_software_environ *env, t_matrix *mvp)
+{
 	if (env->render_style == GL_TRIANGLES && env->render_normals)
 	{
 		glUseProgram(env->normals_shader_program.id);
@@ -161,23 +137,17 @@ void		render(t_software_environ *env)
 		glUniformMatrix4fv(env->normal_v_uni, 1, GL_FALSE, env->view_matrix->value);
 		glUniformMatrix4fv(env->normal_p_uni, 1, GL_FALSE, env->projection_matrix->value);
 
-		check_gl_error();
-
 		if (env->indexation_mode)
 			render_elements(env->vao, env->render_style, env->data.vertex_count);
 		else
 			render_vao(env->vao, env->render_style, env->data.vertex_count);
 	}
+}
 
-	delete_matrix(mvp);
-	delete_matrix(env->model_matrix);
-	delete_matrix(env->translation_matrix);
-	delete_matrix(env->rotation_matrix);
-
-	//
-	// PLAN
-	//
-
+void		render_plan(t_software_environ *env)
+{
+	t_matrix *mvp;
+	
 	env->model_matrix = identity_mat4();
 
 	mvp = compute_mvp(env);
@@ -187,16 +157,15 @@ void		render(t_software_environ *env)
 	// GL_TRUE indicates that is is row major matrix
 	glUniformMatrix4fv(env->internal_object_mvp_uni, 1, GL_FALSE, mvp->value);
 
-	check_gl_error();
-
 	render_vao(env->plan_vao, GL_POINTS, 1);
 
 	delete_matrix(mvp);
 	delete_matrix(env->model_matrix);
+}
 
-	//
-	// AXIS
-	//
+void		render_axis(t_software_environ *env)
+{
+	t_matrix *mvp;
 
 	env->model_matrix = identity_mat4();
 
@@ -207,7 +176,45 @@ void		render(t_software_environ *env)
 	glUniformMatrix4fv(env->internal_object_mvp_uni, 1, GL_FALSE, mvp->value);
 
 	render_vao(env->axis_vao, GL_POINTS, 1);
-	
+
 	delete_matrix(mvp);
 	delete_matrix(env->model_matrix);
+}
+
+void		render(t_software_environ *env)
+{
+	t_mat4 *mvp;
+
+	apply_rotation(env);
+
+	mvp = compute_mvp(env);
+
+	//
+	// MESH
+	//
+
+	render_mesh(env, mvp);
+
+	//
+	// MESH NORMALS
+	//
+
+	render_meshs_normals(env, mvp);
+
+	delete_matrix(mvp);
+	delete_matrix(env->model_matrix);
+	delete_matrix(env->translation_matrix);
+	delete_matrix(env->rotation_matrix);
+
+	//
+	// PLAN
+	//
+
+	render_plan(env);
+
+	//
+	// AXIS
+	//
+
+	render_axis(env);
 }

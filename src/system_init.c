@@ -30,7 +30,11 @@ int system_init(t_software_environ *env, int argc, char **argv)
 		return (-1);
 
 	env->bmp.buffer = NULL;
-	if (argc > 2 && load_bitmap_file(&env->bmp, argv[2]) < 0)
+	env->tga.buffer = NULL;
+	env->tga.image = NULL;
+	//if (argc > 2 && load_bitmap_file(&env->bmp, argv[2]) < 0)
+	//	return (-1);
+	if (argc > 2 && load_tga_file(&env->tga, argv[2]) < 0)
 		return (-1);
 
 	count_vertices(&env->data);
