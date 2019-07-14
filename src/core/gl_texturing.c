@@ -6,7 +6,10 @@
 
 int	gl_texturing(t_software_environ *env)
 {
-	GLenum format;
+    env->grey_scale_uni = glGetUniformLocation(env->object_shader_program.id, "grey_scale");
+
+	if (!env->texture.is_texture_loaded)
+		return (0);
 
 	printf("0\n");
 	check_gl_error();
@@ -25,37 +28,17 @@ int	gl_texturing(t_software_environ *env)
 	printf("3\n");
 	check_gl_error();
 
-	// printf("env->bmp.width : %d\n", env->bmp.width);
-	// printf("env->bmp.height : %d\n", env->bmp.height);
-
-	// format = GL_BGR;
-	if (env->bmp.dib_header.bits_per_pixel == 32)
-		format = GL_BGRA;
-
-	// glTexImage2D(GL_TEXTURE_2D,
-	// 				0,
-	// 				GL_RGB,
-	// 				env->bmp.width,
-	// 				env->bmp.height,
-	// 				0,
-	// 				format,
-	// 				GL_UNSIGNED_BYTE,
-	// 				env->bmp.buffer);
-
-	format = GL_BGRA;
-
-	printf("env->tga.width : %ld\n", env->tga.width);
-	printf("env->tga.height : %ld\n", env->tga.height);
+	// gl_bmp_texturing(env);
 
 	glTexImage2D(GL_TEXTURE_2D,
 					0,
 					GL_RGB,
-					env->tga.width,
-					env->tga.height,
+					env->texture.width,
+					env->texture.height,
 					0,
-					format,
+					env->texture.format,
 					GL_UNSIGNED_BYTE,
-					env->tga.image);
+					env->texture.data);
 
 	printf("4\n");
 	check_gl_error();

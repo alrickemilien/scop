@@ -28,6 +28,7 @@ static int				fill_tga_header(
 	header->id_length = buff[0];
 	header->color_map_type = buff[1];
 	header->image_type = buff[2];
+
 	i = 3;
 	while (i < 18)
 	{
@@ -39,6 +40,20 @@ static int				fill_tga_header(
 	}
 
 	extract_tga_infos_from_header(tga, header);
+
+	
+	printf("header->id_length: %ld\n"
+		"header->color_map_type: %ld\n"
+		"header->image_type: %ld\n"
+		"header->width: %ld\n"
+		"header->height: %ld\n"
+		"header->pixel_depth: %ld\n",
+		header->id_length,
+		header->color_map_type,
+		header->image_type,
+		tga->width,
+		tga->height,
+		tga->pixel_depth);
 
 	return (0);
 }

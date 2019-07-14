@@ -104,12 +104,10 @@ void		render_mesh(t_software_environ *env, t_matrix *mvp)
 	// printf("6\n");
 	// check_gl_error();
 
-
     glUniform3fv(env->eye_uni, 1, (GLfloat*)(&env->camera_position));
 	// printf("7\n");
 
 	// check_gl_error();
-
 
 	// printf("8\n");
 
@@ -118,6 +116,8 @@ void		render_mesh(t_software_environ *env, t_matrix *mvp)
 
 	// printf("9\n");
 	//  check_gl_error();
+
+    glUniform1i(env->grey_scale_uni, env->grey_scale);
 
 	if (env->indexation_mode)
 		render_elements(env->vao, env->render_style, env->data.vertex_count);

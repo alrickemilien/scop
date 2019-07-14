@@ -123,6 +123,8 @@ set (SOURCES
 	src/texture_loader/tga/load_tga_file.c
 	src/texture_loader/tga/utils.c
 
+	src/texture_loader/load_texture_file.c
+
 	src/mtl_loader/load_mtl_file.c
 	src/mtl_loader/load_mtllib.c
 	src/mtl_loader/read_mtl_file_line.c

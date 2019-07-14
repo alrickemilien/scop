@@ -66,8 +66,8 @@ static void clear_env_memory()
 		return;
 
 	// Destory texture memory buffer
-	if (env->bmp.buffer)
-		free(env->bmp.buffer);
+	if (env->texture.is_texture_loaded)
+		free(env->texture.data);
 
 	if (env->data.name)
 		free(env->data.name);

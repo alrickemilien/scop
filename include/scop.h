@@ -115,6 +115,9 @@ int		munmap(void *addr, size_t len);
 # define DEFAULT_WINDOW_WIDTH 600
 # define DEFAULT_WINDOW_HEIGHT 600
 
+# define BMP_TEXTURE 1
+# define TGA_TEXTURE 2
+
 typedef struct		shader_s {
 	GLuint			id;
 	GLchar			*content;
@@ -148,6 +151,18 @@ typedef struct		s_camera {
 					t_vec3 up;
 					t_vec3 right;
 }					t_camera;
+
+typedef struct		s_texture {
+	bool			is_texture_loaded;
+	void			*data;
+	size_t			width;
+	size_t			height;
+	size_t			pixel_depth;
+	GLenum			format;
+	int				type;
+	t_bitmap		bmp;
+	t_tga			tga;
+}					t_texture;
 
 /*
 ** - The model matrix is a transformation matrix
@@ -189,12 +204,14 @@ typedef struct			s_software_environ
 
 	GLfloat				ambient_lighting;
 	GLfloat				specular_lighting;
+	GLint				grey_scale;
 
 	// Ligting
 	GLuint				ambient_lighting_uni;
 	GLuint				specular_lighting_uni;
 	GLuint				light_uni;
 	GLuint				eye_uni;
+	GLuint				grey_scale_uni;
 
 	t_vec3				camera_position;
 	t_vec3				light_position;
@@ -205,8 +222,7 @@ typedef struct			s_software_environ
 	GLfloat				y_auto_rotate_angle;
 
 	// Texture
-	t_bitmap			bmp;
-	t_tga				tga;
+	t_texture			texture;
 
 	// OpenGL programs
 	shader_program_t	object_shader_program;
@@ -306,7 +322,9 @@ void 					exit_error_with_message(
 
 void					create_triangle(
 							t_software_environ *env);
-
+int						load_texture_file(
+							t_texture *texture,
+							const char *pathname);
 int						load_program_shader(
 							shader_program_t *env,
 							const char *vertex_file_path,
