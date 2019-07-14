@@ -1,21 +1,34 @@
 #include "scop.h"
 
-static int				fill_tga_header(t_tga_header *header, FILE *stream)
+static void extract_tga_infos_from_header(
+	t_tga *tga,
+	t_tga_header *header)
+{
+	tga->width = (size_t)*(uint16_t*)&header->image_spec[0x6];
+	tga->height = (size_t)*(uint16_t*)&header->image_spec[0x4];
+	tga->pixel_depth = (size_t)header->image_spec[0x8];
+}
+
+static int				fill_tga_header(
+	t_tga *tga,
+	t_tga_header *header,
+	FILE *stream)
 {
 	uint8_t				buff[18];
 	size_t				i;
 	size_t				size_read;
 
-	if ((size_read = fread(header, 1, 18, stream)) != 18)
+	if ((size_read = fread(buff, 1, 18, stream)) != 18)
 	{
 		fprintf(stderr, "%ld has been read\n", size_read);
+		
 		return (-1);
 	}
 
 	header->id_length = buff[0];
 	header->color_map_type = buff[1];
 	header->image_type = buff[2];
-	i = 2;
+	i = 3;
 	while (i < 18)
 	{
 		if (i < 8)
@@ -24,20 +37,10 @@ static int				fill_tga_header(t_tga_header *header, FILE *stream)
 			header->image_spec[i - 8] = buff[i];
 		i++;
 	}
+
+	extract_tga_infos_from_header(tga, header);
+
 	return (0);
-}
-
-static void				fill_tga_size(t_tga_header *header)
-{
-	uint8_t	x[2];
-	uint8_t	y[2];
-
-	x[0] = header->image_spec[0x4];
-	x[1] = header->image_spec[0x5];
-	y[0] = header->image_spec[0x6];
-	y[1] = header->image_spec[0x7];
-	header->x = *(short*)x;
-	header->y = *(short*)y;
 }
 
 static int	load_tga_image(t_tga *tga, FILE *stream)
@@ -46,7 +49,7 @@ static int	load_tga_image(t_tga *tga, FILE *stream)
 	size_t			size_read;
 
 	tga->buffer = NULL;
-	size = tga->header.x * tga->header.y * 4;
+	size = tga->width * tga->height * 4;
 	
 	if (!(tga->buffer = (uint8_t*)malloc(sizeof(uint8_t) * size + 1)))
 		return (-1);
@@ -69,15 +72,15 @@ static void				fill_tga_image(t_tga *tga)
 
 	x = 0;
 	y = 0;
-	z = ((tga->header.y - 1) * tga->header.x) * 4;
+	z = (tga->height - 1) * tga->width * 4;
 	i = 0;
-	while (i < (size_t)((tga->header.x * tga->header.y)))
+	while (i < tga->width * tga->height)
 	{
-		if (x > (size_t)(tga->header.x - 1))
+		if (x > tga->width - 1)
 		{
 			x = 0;
 			y++;
-			z = ((tga->header.y - (y + 1)) * tga->header.x) * 4;
+			z = (tga->height - (y + 1)) * tga->width * 4;
 		}
 
 		tga->image[x + (y * tga->width)] = uint32_color(
@@ -115,9 +118,7 @@ int				load_tga_file(
 		return (-1);
 	}
 
-	printf("FILL TGA HEADER\n");
-
-	if (fill_tga_header(&tga->header, stream))
+	if (fill_tga_header(tga, &tga->header, stream))
 	{
 		fclose(stream);
 		return (-1);
@@ -131,19 +132,15 @@ int				load_tga_file(
 		return (-1);
 	}
 
-	printf("LALALALA\n");
-
-	tga->width = (size_t)tga->header.x;
-	tga->height = (size_t)tga->header.y;
 	tga->image = (uint32_t*)malloc(sizeof(uint32_t) * tga->width * tga->height);
-
-	fill_tga_size(&tga->header);
 
 	load_tga_image(tga, stream);
 
 	tga->buffer = decode_tga(tga);
 	
 	fill_tga_image(tga);
+
+	free(tga->buffer);
 
 	fclose(stream);
 	

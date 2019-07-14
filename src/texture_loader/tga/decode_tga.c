@@ -19,7 +19,7 @@ static uint8_t		*decode_tga_little_endian(t_tga *tga, uint8_t *image)
 	uint8_t	argb[4];
 
 	begin = image;
-	end = image + (tga->header.x * tga->header.y * 4);
+	end = image + (tga->width * tga->height * 4);
 	while (image < end)
 	{
 		argb[0] = *(image + 0);
@@ -44,7 +44,7 @@ static uint8_t		*decode_tga_big_endian(t_tga *tga, uint8_t *image)
 	uint8_t	argb[4];
 
 	begin = image;
-	end = image + (tga->header.x * tga->header.y * 4);
+	end = image + (tga->width * tga->height * 4);
 	while (image < end)
 	{
 		argb[0] = *(image + 0);

@@ -111,13 +111,13 @@ void		render_mesh(t_software_environ *env, t_matrix *mvp)
 	// check_gl_error();
 
 
-	printf("8\n");
+	// printf("8\n");
 
 	glUniform1i(env->texture_uni, 0);
-	 check_gl_error();
+	//  check_gl_error();
 
-	printf("9\n");
-	 check_gl_error();
+	// printf("9\n");
+	//  check_gl_error();
 
 	if (env->indexation_mode)
 		render_elements(env->vao, env->render_style, env->data.vertex_count);

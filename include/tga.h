@@ -14,9 +14,7 @@ typedef struct			s_tga_header
 	uint8_t				color_map_type;
 	uint8_t				image_type;
 	uint8_t				color_map_spec[5];
-	uint8_t				image_spec[15];
-	short				x;
-	short				y;
+	uint8_t				image_spec[10];
 }						t_tga_header;
 #pragma pack(pop)
 
@@ -28,6 +26,7 @@ typedef struct			s_tga
 	uint32_t			*image;
 	size_t				width;
 	size_t				height;
+	size_t				pixel_depth;
 }						t_tga;
 
 uint32_t				uint32_color(

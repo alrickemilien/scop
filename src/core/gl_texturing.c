@@ -29,8 +29,8 @@ int	gl_texturing(t_software_environ *env)
 	// printf("env->bmp.height : %d\n", env->bmp.height);
 
 	// format = GL_BGR;
-	// if (env->bmp.dib_header.bits_per_pixel == 32)
-	// 	format = GL_BGRA;
+	if (env->bmp.dib_header.bits_per_pixel == 32)
+		format = GL_BGRA;
 
 	// glTexImage2D(GL_TEXTURE_2D,
 	// 				0,
@@ -44,7 +44,7 @@ int	gl_texturing(t_software_environ *env)
 
 	format = GL_BGRA;
 
-		printf("env->tga.width : %ld\n", env->tga.width);
+	printf("env->tga.width : %ld\n", env->tga.width);
 	printf("env->tga.height : %ld\n", env->tga.height);
 
 	glTexImage2D(GL_TEXTURE_2D,
