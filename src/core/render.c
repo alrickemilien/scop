@@ -50,6 +50,10 @@ static void apply_rotation(t_software_environ *env) {
 
 	b = compute_object_barycentre(env->data.positions);
 
+	b.x += env->mesh_offset.x;
+	b.y += env->mesh_offset.y;
+	b.z += env->mesh_offset.z;
+
 	minus_b = (t_vec3){-b.x, -b.y, -b.z};
 
 	// printf("BARYCENTRE : .x %f .y %f .z %f \n", b.x, b.y, b.z);
@@ -105,6 +109,11 @@ void		render_mesh(t_software_environ *env, t_matrix *mvp)
 	// check_gl_error();
 
     glUniform3fv(env->eye_uni, 1, (GLfloat*)(&env->camera_position));
+	// printf("7\n");
+
+	// check_gl_error();
+
+    glUniform3fv(env->mesh_offset_uni, 1, (GLfloat*)(&env->mesh_offset));
 	// printf("7\n");
 
 	// check_gl_error();

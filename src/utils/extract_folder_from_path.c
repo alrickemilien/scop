@@ -22,31 +22,30 @@
 
 char    *extract_folder_from_path(const char *path)
 {
-    char *tmp;
-    char *ret;
+	char *tmp;
+	char *ret;
 
-    tmp = strdup(path);
+	tmp = strdup(path);
 
-    ret = dirname(tmp);
+	ret = dirname(tmp);
 
-    free(tmp);
+	free(tmp);
 
-    return (ret);
+	return (ret);
 }
 #else
 char    *extract_folder_from_path(const char *path)
 {
-    char dir[_MAX_DIR];
+	char dir[_MAX_DIR];
 
-    if (_splitpath_s(path,
-        NULL, 0,             // Don't need drive
-        dir, sizeof(dir),    // Just the directory
-        NULL, 0,             // Don't need filename
-        NULL, 0) != 0)
-        {
-            return (NULL);
-        }
-    
-    return strdup(dir);
+	if (_splitpath_s(path, NULL, 0,    // Don't need drive
+	                 dir, sizeof(dir), // Just the directory
+	                 NULL, 0,          // Don't need filename
+	                 NULL, 0) != 0)
+	{
+		return (NULL);
+	}
+
+	return strdup(dir);
 }
 #endif

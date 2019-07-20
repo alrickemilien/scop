@@ -16,11 +16,12 @@ uniform mat4 mvp;
 uniform mat4 m;
 uniform mat4 v;
 uniform vec3 eye;
+uniform vec3 mesh_offset;
 uniform vec3 light;
 
 void main() {
-  gl_Position = mvp * vec4(position, 1.0);
-  _position = vec3(m * vec4(position, 1.0));
+  gl_Position = mvp * vec4(position + mesh_offset, 1.0);
+  _position = vec3(m * vec4(position + mesh_offset, 1.0));
   _color = vec4(color, 255.0);
   _normal = mat3(v * m) * normal;
   _uv = uv;

@@ -11,7 +11,7 @@ static bool closing = false;
 
 static void del(void *p, size_t s)
 {
-	(void)s;
+	(void) s;
 	free(p);
 }
 
@@ -19,27 +19,26 @@ static void del(void *p, size_t s)
 ** Clear the environnement in memory
 */
 
-static void del_usemtl(void *p, size_t s)
+static void	del_usemtl(void *p, size_t s)
 {
 	t_usemtl *u;
 
-	(void)s;
-	u = (t_usemtl*)p;
+	(void) s;
+	u = (t_usemtl *) p;
 	free(u->mtl);
 	free(u);
 }
-
 
 /*
 ** Clear the environnement in memory
 */
 
-static void del_vertex(void *p, size_t s)
+static void	del_vertex(void *p, size_t s)
 {
-	t_vertex	*vertex;
+	t_vertex *vertex;
 
-	(void)s;
-	vertex = (t_vertex*)p;
+	(void) s;
+	vertex = (t_vertex *) p;
 	free(vertex);
 }
 
@@ -47,24 +46,24 @@ static void del_vertex(void *p, size_t s)
 ** Clear the environnement in memory
 */
 
-static void del_polygon(void *p, size_t s)
+static void	del_polygon(void *p, size_t s)
 {
-	t_polygon	*polygon;
+	t_polygon *polygon;
 
-	(void)s;
-	polygon = (t_polygon*)p;
+	(void) s;
+	polygon = (t_polygon *) p;
 	ft_lstdel(&polygon->vertices, &del_vertex);
 	free(polygon);
 }
 
-static void clear_env_memory()
+static void	clear_env_memory()
 {
 	printf("Clearing environnement ...\n");
 
 	if (!env)
 		return;
 
-		printf("A\n");
+	printf("A\n");
 
 	// Destory texture memory buffer
 	if (env->texture.is_texture_loaded)
@@ -76,32 +75,32 @@ static void clear_env_memory()
 	printf("C\n");
 	if (env->data.mtl)
 		free(env->data.mtl);
-		printf("D\n");
+	printf("D\n");
 	if (env->data.positions)
 		ft_lstdel(&env->data.positions, &del);
-		printf("=E\n");	
+	printf("=E\n");
 	if (env->data.uvs)
 		ft_lstdel(&env->data.uvs, &del);
-		printf("F\n");	
+	printf("F\n");
 	if (env->data.normals)
 		ft_lstdel(&env->data.normals, &del);
 	if (env->data.uvs)
 		ft_lstdel(&env->data.uvs, &del);
 
-		printf("G\n");	
+	printf("G\n");
 	// Delete usemtl
 	ft_lstdel(&env->data.usemtl, &del_usemtl);
 
-		printf("H\n");	
+	printf("H\n");
 	// Delete mtllib
 	ft_lstdel(&env->data.mtllib, &del);
 
-	printf("I\n");	
+	printf("I\n");
 	// @TODO ==> need to clear sublist
 	if (env->data.polygons)
 		ft_lstdel(&env->data.polygons, &del_polygon);
 
-	printf("J\n");	
+	printf("J\n");
 	free(env);
 }
 
@@ -109,7 +108,7 @@ static void clear_env_memory()
 void end_program(int code)
 {
 	if (closing)
-		return ;
+		return;
 
 	closing = true;
 

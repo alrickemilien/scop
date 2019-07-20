@@ -8,17 +8,19 @@
 ** When all ok, start the application
 */
 
-int system_init(t_software_environ *env, int argc, char **argv)
+int	system_init(t_software_environ *env, int argc, char **argv)
 {
 	if (argc < 2)
 		exit_error_with_message("Input file missing.");
 
 #ifdef __APPLE__
 	if (getcwd(env->cwd, sizeof(env->cwd)) == NULL)
-		exit_error_with_message("An error occured when oading the pwd path of the program.");
+		exit_error_with_message("An error occured when oading the pwd path of "
+		                        "the program.");
 #else
 	if (_getcwd(env->cwd, sizeof(env->cwd)) == NULL)
-		exit_error_with_message("An error occured when oading the pwd path of the program.");
+		exit_error_with_message("An error occured when oading the pwd path of "
+		                        "the program.");
 #endif
 
 	// Load provided object file
@@ -43,6 +45,12 @@ int system_init(t_software_environ *env, int argc, char **argv)
 	env->render_normals = false;
 	env->grey_scale = 0;
 	env->is_texture_rendered = 0;
+
+	env->x_axis = 0;
+	env->y_axis = 0;
+	env->z_axis = 0;
+
+	env->mesh_offset = (t_vec3){0, 0, 0};
 
 	// All OK, start applicaton
 	return (0);

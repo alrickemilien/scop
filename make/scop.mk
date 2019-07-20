@@ -50,6 +50,7 @@ SRC += ../src/texture_loader/tga/load_tga_file.c \
 #
 SRC += ../src/controls/resize.c \
 		../src/controls/controls.c \
+		../src/controls/lock.c \
 		../src/controls/keyboards.c
 
 #

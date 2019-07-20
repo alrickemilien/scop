@@ -213,9 +213,11 @@ typedef struct			s_software_environ
 	GLuint				eye_uni;
 	GLuint				grey_scale_uni;
 	GLuint				is_texture_uni;
+	GLuint				mesh_offset_uni;
 
 	t_vec3				camera_position;
 	t_vec3				light_position;
+	t_vec3				mesh_offset;
 
 	// render style value for glDrawArray()
 	GLenum				render_style;
@@ -273,6 +275,11 @@ typedef struct			s_software_environ
 	t_mat4				*model_matrix;
 	t_mat4				*view_matrix;
 	t_mat4				*projection_matrix;
+
+	// Axis lock for moves
+	int x_axis;
+	int y_axis;
+	int z_axis;
 }						t_software_environ;
 
 typedef struct			s_color
@@ -428,6 +435,34 @@ void					render_texture(
 							t_software_environ *env,
 							GLFWwindow* window);
 void					render_greyscale(
+							t_software_environ *env,
+							GLFWwindow *window);
+void					move_forward_on_axis(
+							t_software_environ *env,
+							GLFWwindow *window);
+void					move_backward_on_axis(
+							t_software_environ *env,
+							GLFWwindow *window);
+
+/*
+** Lock/Unlock axis
+*/
+void					lock_z_axis(
+							t_software_environ *env,
+							GLFWwindow *window);
+void					unlock_z_axis(
+							t_software_environ *env,
+							GLFWwindow *window);
+void					lock_y_axis(
+							t_software_environ *env,
+							GLFWwindow *window);
+void					unlock_y_axis(
+							t_software_environ *env,
+							GLFWwindow *window);
+void					lock_x_axis(
+							t_software_environ *env,
+							GLFWwindow *window);
+void					unlock_x_axis(
 							t_software_environ *env,
 							GLFWwindow *window);
 
