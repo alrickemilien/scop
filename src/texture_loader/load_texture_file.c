@@ -15,9 +15,9 @@ int load_texture_file(
 	if (load_bitmap_file(&texture->bmp, pathname) != -1)
     {
         texture->data = texture->bmp.buffer;
-        texture->width = texture->bmp.dib_header.bits_per_pixel;
-        texture->height = texture->bmp.width;
-        texture->pixel_depth = texture->bmp.height;
+        texture->width = texture->bmp.width;
+        texture->height = texture->bmp.height;
+        texture->pixel_depth = texture->bmp.dib_header.bits_per_pixel;
         texture->format = GL_BGR;
 	    if (texture->bmp.dib_header.bits_per_pixel == 32)
 		    texture->format = GL_BGRA;

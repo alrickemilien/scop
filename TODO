@@ -1,5 +1,4 @@
-need to improve load object file (handle \n grabage, etc)
-compute window size dynamically through arguments command line
-handle grey scale object
-move object
-compute the all the matrix out of the shader
+- need to improve load object file (handle \n garbage, etc)
+- compute window size dynamically through arguments command line
+- move object
+- compute the all the matrix out of the shader

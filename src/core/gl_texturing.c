@@ -34,7 +34,8 @@ int	gl_texturing(t_software_environ *env)
 					env->texture.width,
 					env->texture.height,
 					0,
-					env->texture.format,
+					// env->texture.format,
+					GL_BGR,
 					GL_UNSIGNED_BYTE,
 					env->texture.data);
 
