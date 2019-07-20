@@ -42,7 +42,8 @@ SRC += ../src/core/render.c \
 #
 SRC += ../src/texture_loader/tga/load_tga_file.c \
 ../src/texture_loader/tga/utils.c \
-../src/texture_loader/tga/decode_tga.c
+../src/texture_loader/tga/decode_tga.c \
+../src/texture_loader/load_texture_file.c
 
 #
 # Controls and toggle of the app
@@ -57,7 +58,7 @@ SRC += ../src/controls/resize.c \
 SRC +=	../src/object_loader/read_position.c \
 ../src/object_loader/read_comment.c \
 ../src/object_loader/read_smooth_shading.c \
-../src/object_loader/read_color.c \
+../src/object_loader/read_uv.c \
 ../src/object_loader/print_token.c \
 ../src/object_loader/read_object_file_line.c \
 ../src/object_loader/read_vertex.c \

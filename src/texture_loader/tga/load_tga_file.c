@@ -48,12 +48,12 @@ static int				fill_tga_header(
 		"header->width: %ld\n"
 		"header->height: %ld\n"
 		"header->pixel_depth: %ld\n",
-		header->id_length,
-		header->color_map_type,
-		header->image_type,
-		tga->width,
-		tga->height,
-		tga->pixel_depth);
+		(size_t)header->id_length,
+		(size_t)header->color_map_type,
+		(size_t)header->image_type,
+		(size_t)tga->width,
+		(size_t)tga->height,
+		(size_t)tga->pixel_depth);
 
 	return (0);
 }

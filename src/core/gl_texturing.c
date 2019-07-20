@@ -28,8 +28,6 @@ int	gl_texturing(t_software_environ *env)
 	printf("3\n");
 	check_gl_error();
 
-	// gl_bmp_texturing(env);
-
 	glTexImage2D(GL_TEXTURE_2D,
 					0,
 					GL_RGB,

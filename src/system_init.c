@@ -41,7 +41,8 @@ int system_init(t_software_environ *env, int argc, char **argv)
 	env->ambient_lighting = 0.45f;
 	env->specular_lighting = 0.5f;
 	env->render_normals = false;
-	env->grey_scale = 1;
+	env->grey_scale = 0;
+	env->is_texture_rendered = 0;
 
 	// All OK, start applicaton
 	return (0);

@@ -83,7 +83,6 @@ typedef struct			s_polygon {
 typedef struct			s_vertex
 {
 	size_t				position_index;
-	size_t				color_index;
 	size_t				normal_index;
 	size_t				uv_index;
 
@@ -118,7 +117,7 @@ int							read_vec2(const t_token *tokens, t_vec3 *vector);
 
 int							read_comment(t_mesh *data, const t_token *tokens);
 int							read_position(t_mesh *data, const t_token *tokens);
-int							read_color(t_mesh *data, const t_token *tokens);
+int							read_uv(t_mesh *data, const t_token *tokens);
 int							read_normal_vector(t_mesh *data, const t_token *tokens);
 int							read_face(t_mesh *data, const t_token *tokens);
 int							read_name(t_mesh *data, const t_token *tokens);
@@ -141,7 +140,7 @@ int							add_vertex(
 void						print_object(const t_mesh *data);
 
 int							fill_vertex_position(t_mesh *data, t_vertex *vertex);
-int							fill_vertex_color(t_mesh *data, t_vertex *vertex);
+int							fill_vertex_uv(t_mesh *data, t_vertex *vertex);
 int							fill_vertex_normal(t_mesh *data, t_vertex *vertex);
 
 #endif

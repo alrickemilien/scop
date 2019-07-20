@@ -11,7 +11,7 @@ static const t_type_match	g_type_matches[9] = {
 	},
 	{
 		COLOR_TOKEN,
-		&read_color,
+		&read_uv,
 	},
 	{
 		NORMAL_TOKEN,

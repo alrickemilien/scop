@@ -16,6 +16,7 @@ static const t_keyboard_callback_map g_keyboard_callback_map[] = {
 	{ GLFW_PRESS, GLFW_KEY_1, &reduce_ambient_lighting },
 	{ GLFW_PRESS, GLFW_KEY_2, &increase_ambient_lighting },
 	{ GLFW_PRESS, GLFW_KEY_N, &render_normals },
+	{ GLFW_PRESS, GLFW_KEY_G, &render_greyscale },
 	{ GLFW_PRESS, GLFW_KEY_T, &render_texture },
 };
 

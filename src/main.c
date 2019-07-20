@@ -8,36 +8,95 @@ t_software_environ *env = NULL;
 */
 
 #ifdef _MSC_VER
-static const char *vertex_file_path = "\x5c""shaders""\x5c""mesh""\x5c""VertexShader.glsl";
-static const char *fragment_file_path = "\x5c""shaders""\x5c""mesh""\x5c""FragmentShader.glsl";
+static const char *vertex_file_path = "\x5c"
+                                      "shaders"
+                                      "\x5c"
+                                      "mesh"
+                                      "\x5c"
+                                      "VertexShader.glsl";
+static const char *fragment_file_path = "\x5c"
+                                        "shaders"
+                                        "\x5c"
+                                        "mesh"
+                                        "\x5c"
+                                        "FragmentShader.glsl";
 
-static const char *plan_vertex_file_path = "\x5c""shaders""\x5c""plan""\x5c""VertexShader.glsl";
-static const char *plan_fragment_file_path = "\x5c""shaders""\x5c""plan""\x5c""FragmentShader.glsl";
-static const char *plan_geometry_file_path = "\x5c""shaders""\x5c""plan""\x5c""GeometryShader.glsl";
+static const char *plan_vertex_file_path = "\x5c"
+                                           "shaders"
+                                           "\x5c"
+                                           "plan"
+                                           "\x5c"
+                                           "VertexShader.glsl";
+static const char *plan_fragment_file_path = "\x5c"
+                                             "shaders"
+                                             "\x5c"
+                                             "plan"
+                                             "\x5c"
+                                             "FragmentShader.glsl";
+static const char *plan_geometry_file_path = "\x5c"
+                                             "shaders"
+                                             "\x5c"
+                                             "plan"
+                                             "\x5c"
+                                             "GeometryShader.glsl";
 
-static const char *axis_vertex_file_path = "\x5c""shaders""\x5c""axis""\x5c""VertexShader.glsl";
-static const char *axis_fragment_file_path = "\x5c""shaders""\x5c""axis""\x5c""FragmentShader.glsl";
-static const char *axis_geometry_file_path = "\x5c""shaders""\x5c""axis""\x5c""GeometryShader.glsl";
+static const char *axis_vertex_file_path = "\x5c"
+                                           "shaders"
+                                           "\x5c"
+                                           "axis"
+                                           "\x5c"
+                                           "VertexShader.glsl";
+static const char *axis_fragment_file_path = "\x5c"
+                                             "shaders"
+                                             "\x5c"
+                                             "axis"
+                                             "\x5c"
+                                             "FragmentShader.glsl";
+static const char *axis_geometry_file_path = "\x5c"
+                                             "shaders"
+                                             "\x5c"
+                                             "axis"
+                                             "\x5c"
+                                             "GeometryShader.glsl";
 
-static const char *normals_vertex_file_path = "\x5c""shaders""\x5c""normals\x5c""VertexShader.glsl";
-static const char *normals_fragment_file_path = "\x5c""shaders""\x5c""normals\x5c""FragmentShader.glsl";
-static const char *normals_geometry_file_path = "\x5c""shaders""\x5c""normals\x5c""GeometryShader.glsl";
+static const char *normals_vertex_file_path = "\x5c"
+                                              "shaders"
+                                              "\x5c"
+                                              "normals\x5c"
+                                              "VertexShader.glsl";
+static const char *normals_fragment_file_path = "\x5c"
+                                                "shaders"
+                                                "\x5c"
+                                                "normals\x5c"
+                                                "FragmentShader.glsl";
+static const char *normals_geometry_file_path = "\x5c"
+                                                "shaders"
+                                                "\x5c"
+                                                "normals\x5c"
+                                                "GeometryShader.glsl";
 
 #else
 static const char *vertex_file_path = "/shaders/mesh/VertexShader.glsl";
 static const char *fragment_file_path = "/shaders/mesh/FragmentShader.glsl";
 
 static const char *plan_vertex_file_path = "/shaders/plan/VertexShader.glsl";
-static const char *plan_fragment_file_path = "/shaders/plan/FragmentShader.glsl";
-static const char *plan_geometry_file_path = "/shaders/plan/GeometryShader.glsl";
+static const char *plan_fragment_file_path = "/shaders/plan/"
+                                             "FragmentShader.glsl";
+static const char *plan_geometry_file_path = "/shaders/plan/"
+                                             "GeometryShader.glsl";
 
-static const char * axis_vertex_file_path = "/shaders/axis/VertexShader.glsl";
-static const char * axis_fragment_file_path = "/shaders/axis/FragmentShader.glsl";
-static const char * axis_geometry_file_path = "/shaders/axis/GeometryShader.glsl";
+static const char *axis_vertex_file_path = "/shaders/axis/VertexShader.glsl";
+static const char *axis_fragment_file_path = "/shaders/axis/"
+                                             "FragmentShader.glsl";
+static const char *axis_geometry_file_path = "/shaders/axis/"
+                                             "GeometryShader.glsl";
 
-static const char *normals_vertex_file_path = "/shaders/normals/VertexShader.glsl";
-static const char *normals_fragment_file_path = "/shaders/normals/FragmentShader.glsl";
-static const char *normals_geometry_file_path = "/shaders/normals/GeometryShader.glsl";
+static const char *normals_vertex_file_path = "/shaders/normals/"
+                                              "VertexShader.glsl";
+static const char *normals_fragment_file_path = "/shaders/normals/"
+                                                "FragmentShader.glsl";
+static const char *normals_geometry_file_path = "/shaders/normals/"
+                                                "GeometryShader.glsl";
 #endif
 
 void stop_on_sigint(int signo)
@@ -49,6 +108,7 @@ void stop_on_sigint(int signo)
 /*
 **
 */
+
 void run()
 {
 	glEnable(GL_DEPTH_TEST);
@@ -65,36 +125,25 @@ void run()
 	memset(&env->axis_shader_program, 0, sizeof(shader_program_t));
 	memset(&env->normals_shader_program, 0, sizeof(shader_program_t));
 
-	env->object_shader_program.cwd = (char*)env->cwd;
-	env->internal_object_shader_program.cwd = (char*)env->cwd;
-	env->axis_shader_program.cwd = (char*)env->cwd;
-	env->normals_shader_program.cwd = (char*)env->cwd;
+	env->object_shader_program.cwd = (char *) env->cwd;
+	env->internal_object_shader_program.cwd = (char *) env->cwd;
+	env->axis_shader_program.cwd = (char *) env->cwd;
+	env->normals_shader_program.cwd = (char *) env->cwd;
 
 	if (load_program_shader(&env->object_shader_program, vertex_file_path, fragment_file_path, NULL) < 0)
-	{
 		end_program(-1);
-		return ;
-	}
-	
+
 	if (load_program_shader(&env->internal_object_shader_program, plan_vertex_file_path, plan_fragment_file_path, plan_geometry_file_path) < 0)
-	{
 		end_program(-1);
-		return ;
-	}
 
 	if (load_program_shader(&env->axis_shader_program, axis_vertex_file_path, axis_fragment_file_path, axis_geometry_file_path) < 0)
-	{
 		end_program(-1);
-		return ;
-	}
 
 	printf("About to fill load program shader ...\n");
 
 	if (load_program_shader(&env->normals_shader_program, normals_vertex_file_path, normals_fragment_file_path, normals_geometry_file_path) < 0)
-	{
 		end_program(-1);
-		return ;
-	}
+
 	printf("About to fill uvs ...\n");
 
 	fill_uvs(env->data.polygons);
@@ -102,33 +151,27 @@ void run()
 	printf("About to start buffering ...\n");
 
 	if (!env->indexation_mode && gl_buffering(env) < 0)
-	{
 		end_program(-1);
-		return ;
-	}
-	
+
 	if (env->indexation_mode && gl_indexing(env) < 0)
-	{
 		end_program(-1);
-		return ;
-	}
 
 	printf("gl_buffering done\n");
 	check_gl_error();
 
 	gl_matrixing(env);
 
-		printf("matrixing done\n");
+	printf("matrixing done\n");
 	check_gl_error();
 
 	gl_texturing(env);
 
-		printf("textureuing done\n");
+	printf("textureuing done\n");
 	check_gl_error();
 
 	gl_lighting(env);
 
-		printf("lighting done\n");
+	printf("lighting done\n");
 	check_gl_error();
 
 	printf("Preparation is done\n");

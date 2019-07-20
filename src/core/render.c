@@ -119,6 +119,8 @@ void		render_mesh(t_software_environ *env, t_matrix *mvp)
 
     glUniform1i(env->grey_scale_uni, env->grey_scale);
 
+    glUniform1i(env->is_texture_uni, env->is_texture_rendered);
+
 	if (env->indexation_mode)
 		render_elements(env->vao, env->render_style, env->data.vertex_count);
 	else

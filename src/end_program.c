@@ -40,7 +40,6 @@ static void del_vertex(void *p, size_t s)
 
 	(void)s;
 	vertex = (t_vertex*)p;
-	free(vertex->uv);
 	free(vertex);
 }
 
@@ -65,35 +64,44 @@ static void clear_env_memory()
 	if (!env)
 		return;
 
+		printf("A\n");
+
 	// Destory texture memory buffer
 	if (env->texture.is_texture_loaded)
 		free(env->texture.data);
 
+	printf("B\n");
 	if (env->data.name)
 		free(env->data.name);
-
+	printf("C\n");
 	if (env->data.mtl)
 		free(env->data.mtl);
-
+		printf("D\n");
 	if (env->data.positions)
 		ft_lstdel(&env->data.positions, &del);
-	
+		printf("=E\n");	
 	if (env->data.uvs)
 		ft_lstdel(&env->data.uvs, &del);
-	
+		printf("F\n");	
 	if (env->data.normals)
 		ft_lstdel(&env->data.normals, &del);
+	if (env->data.uvs)
+		ft_lstdel(&env->data.uvs, &del);
 
+		printf("G\n");	
 	// Delete usemtl
 	ft_lstdel(&env->data.usemtl, &del_usemtl);
 
+		printf("H\n");	
 	// Delete mtllib
 	ft_lstdel(&env->data.mtllib, &del);
 
+	printf("I\n");	
 	// @TODO ==> need to clear sublist
 	if (env->data.polygons)
 		ft_lstdel(&env->data.polygons, &del_polygon);
 
+	printf("J\n");	
 	free(env);
 }
 
@@ -121,7 +129,8 @@ void end_program(int code)
 	glDeleteVertexArrays(1, &env->plan_vao);
 	glDeleteVertexArrays(1, &env->axis_vao);
 
-	glDeleteTextures(1, &env->texture_uni);
+	if (env->texture.is_texture_loaded)
+		glDeleteTextures(1, &env->texture_uni);
 
 	glfwTerminate();
 

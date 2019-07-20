@@ -153,7 +153,7 @@ typedef struct		s_camera {
 }					t_camera;
 
 typedef struct		s_texture {
-	bool			is_texture_loaded;
+	int				is_texture_loaded;
 	void			*data;
 	size_t			width;
 	size_t			height;
@@ -199,8 +199,8 @@ typedef struct			s_software_environ
 	// Scop options that can evolve during software run
 	int					wireframe;
 	int					auto_rotate;
-	int					texturing;
 	float				scale;
+	int					is_texture_rendered;
 
 	GLfloat				ambient_lighting;
 	GLfloat				specular_lighting;
@@ -212,6 +212,7 @@ typedef struct			s_software_environ
 	GLuint				light_uni;
 	GLuint				eye_uni;
 	GLuint				grey_scale_uni;
+	GLuint				is_texture_uni;
 
 	t_vec3				camera_position;
 	t_vec3				light_position;
@@ -426,6 +427,9 @@ void					render_normals(
 void					render_texture(
 							t_software_environ *env,
 							GLFWwindow* window);
+void					render_greyscale(
+							t_software_environ *env,
+							GLFWwindow *window);
 
 /*
 ** Math utils

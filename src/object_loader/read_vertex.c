@@ -15,20 +15,20 @@ int		fill_vertex_position(t_mesh *data, t_vertex *vertex)
 	return (0);
 }
 
-int		fill_vertex_color(t_mesh *data, t_vertex *vertex)
+int		fill_vertex_uv(t_mesh *data, t_vertex *vertex)
 {
-	t_vec2		*color;
+	t_vec2		*uv;
 
-	// printf("Fill vertex color\n");
+	// printf("Fill vertex uv\n");
 
 	// Substract 1 because stored indexes is the index of obj object that do not start at 0
-	color = lst_data_at(data->uvs, vertex->color_index - 1);
+	uv = lst_data_at(data->uvs, vertex->uv_index - 1);
 
-	if (!color)
+	if (!uv)
 		return (-1);
-		// return (read_object_error("Invalid index for color."));
+		// return (read_object_error("Invalid index for uv."));
 
-	vertex->uv = color;
+	vertex->uv = uv;
 
 	return (0);
 }
@@ -47,7 +47,6 @@ int		fill_vertex_normal(t_mesh *data, t_vertex *vertex)
     	// return (read_object_error("Invalid index for normal."));
 
 	vertex->normal = normal;
-	printf("N : .x %lf - .y %lf - .z %lf\n", normal->x, normal->y, normal->z);
 
 	return (0);
 }
@@ -122,7 +121,7 @@ int				read_vertex(t_mesh *data, const t_token *tokens, t_polygon *polygon)
 
 	// When x/y/ or x/y/z
 	if (tokens_number > 1 && !strstr(tokens->cursor, "//"))
-		new_vertex.color_index = read_index(data, tokens, 1, ft_lstlen(data->uvs));
+		new_vertex.uv_index = read_index(data, tokens, 1, ft_lstlen(data->uvs));
 
 	// When x/y/z
 	if (tokens_number > 2)

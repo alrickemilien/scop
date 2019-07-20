@@ -6,7 +6,6 @@ layout (location = 2) in vec3 normal;
 layout (location = 3) in vec2 uv;
 
 out vec3 _position;
-//out vec4 _clip_position;
 out vec4 _color;
 out vec3 _normal;
 out vec2 _uv;
@@ -22,7 +21,6 @@ uniform vec3 light;
 void main() {
   gl_Position = mvp * vec4(position, 1.0);
   _position = vec3(m * vec4(position, 1.0));
-  //_clip_position = gl_Position;
   _color = vec4(color, 255.0);
   _normal = mat3(v * m) * normal;
   _uv = uv;

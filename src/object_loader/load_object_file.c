@@ -16,7 +16,7 @@ static int fill_vertices_data(t_mesh *data, t_list *vertices)
 	{
 		if (fill_vertex_position(data, vertices->content) < 0)
 			error = -1;
-		if (fill_vertex_color(data, vertices->content) < 0)
+		if (fill_vertex_uv(data, vertices->content) < 0)
 			error = -1;
 		if (fill_vertex_normal(data, vertices->content) < 0)
 			error = -1;

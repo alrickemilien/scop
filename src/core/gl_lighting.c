@@ -12,5 +12,7 @@ int gl_lighting(t_software_environ *env)
 
     env->light_uni = glGetUniformLocation(env->object_shader_program.id, "light");
 
+    env->is_texture_uni = glGetUniformLocation(env->object_shader_program.id, "is_texture_rendered");
+
     return (0);
 }
