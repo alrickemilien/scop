@@ -50,10 +50,10 @@ int			load_bitmap_file(
 	t_bitmap *bmp,
 	const char *pathname)
 {
-	FILE				*stream;
-	size_t				size_read;
-	int					endian;
-	int					bmp_endian;
+	FILE	*stream;
+	size_t	size_read;
+	int		endian;
+	int		bmp_endian;
 
 	printf("Start loading bitmap file %s\n", pathname);
 

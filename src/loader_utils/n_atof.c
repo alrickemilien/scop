@@ -14,13 +14,11 @@ float	n_atof(const char* str, size_t size)
 	int		digit;
 
 	ret = 0;
-
 	negate = 1;
 	if (str[0] == '-') {
-    str++;
-    negate = -1;
-  }
-
+		str++;
+		negate = -1;
+	}
 	i = 0;
 	point_seen = -1;
 	while (i < (int) size && str[i]) {
@@ -28,20 +26,15 @@ float	n_atof(const char* str, size_t size)
 			point_seen = i;
 		} else {
 			digit = str[i] - '0';
-
 			if (digit >= 0 && digit <= 9) {
-				if (point_seen > -1) {
+				if (point_seen > -1)
 					ret +=  powf(0.1f, (float)(i - point_seen)) * (float)digit;
-				} else {
+				else
 					ret = ret * 10.0f + (float)digit;
-				}
-			} else {
+			} else
 				break;
-			}
 		}
-
 		i++;
 	}
-
 	return (ret * negate);
 }

@@ -2,7 +2,7 @@
 
 #ifdef __APPLE__
 
-int	load_single_shader(shader_t	*shader, const char *path)
+int				load_single_shader(shader_t	*shader, const char *path)
 {
 	int			fd;
 	struct stat	stats;

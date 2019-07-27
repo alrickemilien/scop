@@ -64,7 +64,7 @@ static uint8_t		*decode_tga_big_endian(t_tga *tga, uint8_t *image)
 
 uint8_t				*decode_tga(t_tga *tga)
 {
-	int		endian;
+	int	endian;
 
 	endian = find_endian();
 	return endian == 0 ? decode_tga_little_endian(tga, tga->buffer)

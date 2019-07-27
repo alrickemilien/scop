@@ -8,94 +8,94 @@ t_software_environ *env = NULL;
 */
 
 #ifdef _MSC_VER
-static const char *vertex_file_path = "\x5c"
+static const char *g_vertex_file_path = "\x5c"
                                       "shaders"
                                       "\x5c"
                                       "mesh"
                                       "\x5c"
                                       "VertexShader.glsl";
-static const char *fragment_file_path = "\x5c"
+static const char *g_fragment_file_path = "\x5c"
                                         "shaders"
                                         "\x5c"
                                         "mesh"
                                         "\x5c"
                                         "FragmentShader.glsl";
 
-static const char *plan_vertex_file_path = "\x5c"
+static const char *g_plan_vertex_file_path = "\x5c"
                                            "shaders"
                                            "\x5c"
                                            "plan"
                                            "\x5c"
                                            "VertexShader.glsl";
-static const char *plan_fragment_file_path = "\x5c"
+static const char *g_plan_fragment_file_path = "\x5c"
                                              "shaders"
                                              "\x5c"
                                              "plan"
                                              "\x5c"
                                              "FragmentShader.glsl";
-static const char *plan_geometry_file_path = "\x5c"
+static const char *g_plan_geometry_file_path = "\x5c"
                                              "shaders"
                                              "\x5c"
                                              "plan"
                                              "\x5c"
                                              "GeometryShader.glsl";
 
-static const char *axis_vertex_file_path = "\x5c"
+static const char *g_axis_vertex_file_path = "\x5c"
                                            "shaders"
                                            "\x5c"
                                            "axis"
                                            "\x5c"
                                            "VertexShader.glsl";
-static const char *axis_fragment_file_path = "\x5c"
+static const char *g_axis_fragment_file_path = "\x5c"
                                              "shaders"
                                              "\x5c"
                                              "axis"
                                              "\x5c"
                                              "FragmentShader.glsl";
-static const char *axis_geometry_file_path = "\x5c"
+static const char *g_axis_geometry_file_path = "\x5c"
                                              "shaders"
                                              "\x5c"
                                              "axis"
                                              "\x5c"
                                              "GeometryShader.glsl";
 
-static const char *normals_vertex_file_path = "\x5c"
+static const char *g_normals_vertex_file_path = "\x5c"
                                               "shaders"
                                               "\x5c"
                                               "normals\x5c"
                                               "VertexShader.glsl";
-static const char *normals_fragment_file_path = "\x5c"
+static const char *g_normals_fragment_file_path = "\x5c"
                                                 "shaders"
                                                 "\x5c"
                                                 "normals\x5c"
                                                 "FragmentShader.glsl";
-static const char *normals_geometry_file_path = "\x5c"
+static const char *g_normals_geometry_file_path = "\x5c"
                                                 "shaders"
                                                 "\x5c"
                                                 "normals\x5c"
                                                 "GeometryShader.glsl";
 
 #else
-static const char *vertex_file_path = "/shaders/mesh/VertexShader.glsl";
-static const char *fragment_file_path = "/shaders/mesh/FragmentShader.glsl";
+static const char *g_vertex_file_path = "/shaders/mesh/VertexShader.glsl";
+static const char *g_fragment_file_path = "/shaders/mesh/FragmentShader.glsl";
 
-static const char *plan_vertex_file_path = "/shaders/plan/VertexShader.glsl";
-static const char *plan_fragment_file_path = "/shaders/plan/"
+static const char *g_plan_vertex_file_path = "/shaders/plan/VertexShader.glsl";
+static const char *g_plan_fragment_file_path = "/shaders/plan/"
                                              "FragmentShader.glsl";
-static const char *plan_geometry_file_path = "/shaders/plan/"
+static const char *g_plan_geometry_file_path = "/shaders/plan/"
                                              "GeometryShader.glsl";
 
-static const char *axis_vertex_file_path = "/shaders/axis/VertexShader.glsl";
-static const char *axis_fragment_file_path = "/shaders/axis/"
+static const char *g_axis_vertex_file_path = "/shaders/axis/VertexShader.glsl";
+static const char *g_axis_fragment_file_path = "/shaders/axis/"
                                              "FragmentShader.glsl";
-static const char *axis_geometry_file_path = "/shaders/axis/"
+static const char *g_axis_geometry_file_path = "/shaders/axis/"
                                              "GeometryShader.glsl";
 
-static const char *normals_vertex_file_path = "/shaders/normals/"
+static const char *g_normals_vertex_file_path = "/shaders/normals/"
                                               "VertexShader.glsl";
-static const char *normals_fragment_file_path = "/shaders/normals/"
+static const char *g_normals_fragment_file_path = "/shaders/normals/"
                                                 "FragmentShader.glsl";
-static const char *normals_geometry_file_path = "/shaders/normals/"
+static const char *g_normals_geometry_file_path = "/shaders/normals/"
                                                 "GeometryShader.glsl";
 #endif
 
@@ -130,18 +130,18 @@ void run()
 	env->axis_shader_program.cwd = (char *) env->cwd;
 	env->normals_shader_program.cwd = (char *) env->cwd;
 
-	if (load_program_shader(&env->object_shader_program, vertex_file_path, fragment_file_path, NULL) < 0)
+	if (load_program_shader(&env->object_shader_program, g_vertex_file_path, g_fragment_file_path, NULL) < 0)
 		end_program(-1);
 
-	if (load_program_shader(&env->internal_object_shader_program, plan_vertex_file_path, plan_fragment_file_path, plan_geometry_file_path) < 0)
+	if (load_program_shader(&env->internal_object_shader_program, g_plan_vertex_file_path, g_plan_fragment_file_path, g_plan_geometry_file_path) < 0)
 		end_program(-1);
 
-	if (load_program_shader(&env->axis_shader_program, axis_vertex_file_path, axis_fragment_file_path, axis_geometry_file_path) < 0)
+	if (load_program_shader(&env->axis_shader_program, g_axis_vertex_file_path, g_axis_fragment_file_path, g_axis_geometry_file_path) < 0)
 		end_program(-1);
 
 	printf("About to fill load program shader ...\n");
 
-	if (load_program_shader(&env->normals_shader_program, normals_vertex_file_path, normals_fragment_file_path, normals_geometry_file_path) < 0)
+	if (load_program_shader(&env->normals_shader_program, g_normals_vertex_file_path, g_normals_fragment_file_path, g_normals_geometry_file_path) < 0)
 		end_program(-1);
 
 	printf("About to fill uvs ...\n");

@@ -4,12 +4,7 @@
 ** Provides gl error string message if any
 */
 
-typedef struct glmaperror_s {
-							GLenum err;
-							char *string_error;
-}							 glmaperror_t;
-
-static const glmaperror_t glmaperror[] = {
+static const glmaperror_t	glmaperror[] = {
 	{ GL_INVALID_OPERATION, "GL_INVALID_OPERATION", },
 	{ GL_INVALID_ENUM, "GL_INVALID_ENUM", },
 	{ GL_INVALID_VALUE, "GL_INVALID_VALUE", },
@@ -17,7 +12,7 @@ static const glmaperror_t glmaperror[] = {
 	{ GL_INVALID_FRAMEBUFFER_OPERATION, "GL_INVALID_FRAMEBUFFER_OPERATION", },
 };
 
-int check_gl_error(void)
+int							check_gl_error(void)
 {
 	GLenum	err;
 	char	*error;

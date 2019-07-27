@@ -1,12 +1,12 @@
 #include "scop.h"
 
-static void render_vao(GLuint vao, GLenum render_style, size_t vertex_number)
+static void		render_vao(GLuint vao, GLenum render_style, size_t vertex_number)
 {
 	glBindVertexArray(vao);
 	glDrawArrays(render_style, 0, vertex_number);
 }
 
-static void render_elements(GLuint vao, GLenum render_style, size_t vertex_number) 
+static void		render_elements(GLuint vao, GLenum render_style, size_t vertex_number) 
 {
  		glBindVertexArray(vao);
 
@@ -19,7 +19,7 @@ static void render_elements(GLuint vao, GLenum render_style, size_t vertex_numbe
  		);
 }
 
-static t_matrix *rotate_object_around_point(t_software_environ *env, t_vec3 v)
+static t_matrix	*rotate_object_around_point(t_software_environ *env, t_vec3 v)
 {
 	t_matrix *model_matrix;
 	t_vec3 minus_v;
@@ -44,9 +44,9 @@ static t_matrix *rotate_object_around_point(t_software_environ *env, t_vec3 v)
 	return model_matrix;
 }
 
-static void apply_rotation(t_software_environ *env) {
-	t_vec3 minus_b;
-	t_vec3 b;
+static void		apply_rotation(t_software_environ *env) {
+	t_vec3	minus_b;
+	t_vec3	b;
 
 	b = compute_object_barycentre(env->data.positions);
 
@@ -67,7 +67,7 @@ static void apply_rotation(t_software_environ *env) {
 	// printmat4(env->model_matrix->value);
 }
 
-void		render_mesh(t_software_environ *env, t_matrix *mvp)
+void			render_mesh(t_software_environ *env, t_matrix *mvp)
 {
 	// printf("ici\n");
 	// check_gl_error();
@@ -137,7 +137,7 @@ void		render_mesh(t_software_environ *env, t_matrix *mvp)
 
 }
 
-void		render_meshs_normals(t_software_environ *env, t_matrix *mvp)
+void			render_meshs_normals(t_software_environ *env, t_matrix *mvp)
 {
 	if (env->render_style == GL_TRIANGLES && env->render_normals)
 	{
@@ -155,7 +155,7 @@ void		render_meshs_normals(t_software_environ *env, t_matrix *mvp)
 	}
 }
 
-void		render_plan(t_software_environ *env)
+void			render_plan(t_software_environ *env)
 {
 	t_matrix *mvp;
 	
@@ -174,7 +174,7 @@ void		render_plan(t_software_environ *env)
 	delete_matrix(env->model_matrix);
 }
 
-void		render_axis(t_software_environ *env)
+void			render_axis(t_software_environ *env)
 {
 	t_matrix *mvp;
 
@@ -192,7 +192,7 @@ void		render_axis(t_software_environ *env)
 	delete_matrix(env->model_matrix);
 }
 
-void		render(t_software_environ *env)
+void			render(t_software_environ *env)
 {
 	t_mat4 *mvp;
 

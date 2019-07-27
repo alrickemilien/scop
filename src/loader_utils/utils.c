@@ -1,8 +1,8 @@
 #include "loader.h"
 
-bool			check_tokens_number(const t_token *token, size_t size)
+bool	check_tokens_number(const t_token *token, size_t size)
 {
-	size_t		i;
+	size_t	i;
 
 	i = 0;
 	while (token[i].cursor)
@@ -14,7 +14,7 @@ bool			check_tokens_number(const t_token *token, size_t size)
 	return (true);
 }
 
-bool is_printable(char c)
+bool	is_printable(char c)
 {
   if (c >= 1 && c <= 32 && c != 127)
     return (false);
@@ -23,7 +23,7 @@ bool is_printable(char c)
 
 int			token_to_int(const t_token *token, size_t index)
 {
-	size_t		j;
+	size_t	j;
 	int		ret;
 
 	j = 0;
@@ -32,8 +32,6 @@ int			token_to_int(const t_token *token, size_t index)
 		if (!token[j++].cursor)
 			return (-1);
 	}
-
 	ret = (int)n_atof(token[index].cursor, token[index].size);
-
 	return (ret);
 }

@@ -1,10 +1,10 @@
 #include "object_loader.h"
 
 // Get number of token
-static size_t count_words(const char *line)
+static size_t	count_words(const char *line)
 {
-	size_t 		i;
-	size_t 		n;
+	size_t	i;
+	size_t	n;
 
 	i = 0;
 	n = 0;
@@ -23,10 +23,10 @@ static size_t count_words(const char *line)
 	return (n);
 }
 
-static t_token* bufferize(const char *line)
+static t_token	*bufferize(const char *line)
 {
-	size_t		n;
-	t_token		*array;
+	size_t	n;
+	t_token	*array;
 
     n = count_words(line);
 	if (NULL == (array = (t_token*)malloc(sizeof(t_token) * (n + 1))))

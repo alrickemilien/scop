@@ -8,13 +8,14 @@
 ** }				shader_t;
 */
 
-static shader_t *load_shader(GLenum shader_type, char *src_path)
+static shader_t	*load_shader(GLenum shader_type, char *src_path)
 {
-	GLint result;
-	int info_log_length;
-	shader_t *shader;
+	GLint		result;
+	int			info_log_length;
+	shader_t	*shader;
 
-	if (src_path == NULL) {
+	if (src_path == NULL)
+	{
 		fprintf(stderr, "An error occured when wanting to build shaders full path");
 		return (NULL);
 	}
@@ -37,22 +38,20 @@ static shader_t *load_shader(GLenum shader_type, char *src_path)
 	return (shader);
 }
 
-static int link_program(shader_program_t *program) {
+static int		link_program(
+	shader_program_t *program)
+{
 	GLint result;
 	int info_log_length;
 
 	glLinkProgram(program->id);
-
-	// Check the program
 	glGetProgramiv(program->id, GL_LINK_STATUS, &result);
 	glGetProgramiv(program->id, GL_INFO_LOG_LENGTH, &info_log_length);
-
 	if (result == GL_FALSE)
 	{
 		print_gl_program_error(program->id, info_log_length);
 		return (-1);
 	}
-
 	return (0);
 }
 
@@ -60,7 +59,8 @@ static int link_program(shader_program_t *program) {
 ** Load shaders
 */
 
-int load_program_shader(shader_program_t *program,
+int				load_program_shader(
+	shader_program_t *program,
 	const char *vertex,
 	const char *fragment,
 	const char *geometry)
@@ -99,9 +99,9 @@ int load_program_shader(shader_program_t *program,
 
 	fprintf(stderr, "program->vertex_shader.content \n");
 	fprintf(stderr, "program->vertex_shader.path %s \n", program->vertex_shader->path);
-	for (int i = 0; i < program->vertex_shader->length; i++) {
+	for (int i = 0; i < program->vertex_shader->length; i++)
 		fprintf(stderr, "%c", ((char*)program->vertex_shader->content)[i]);
-	}
+
 	fprintf(stderr, "\n");
 
 	return link_program(program);

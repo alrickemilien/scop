@@ -1,8 +1,8 @@
 #include "scop.h"
 
 static bool is_vertex_same(const void *a, const void *b) {
-	t_vertex *va;
-	t_vertex *vb;
+	t_vertex    *va;
+	t_vertex    *vb;
 
 	va = (t_vertex*)a;
 	vb = (t_vertex*)b;
@@ -73,16 +73,14 @@ static void look_at_polygon(
 ** and set the vertex's normal
 */
 
-void compute_vertex_normal(
+void        compute_vertex_normal(
     t_mesh *mesh,
     t_vertex *vertex,
     t_vec3 *normal)
 {
-	t_polygon	*p;
-	t_list		*x;
-	size_t		n;
-
-    // printf("%s\n", "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALLLL");
+	t_polygon   *p;
+	t_list	    *x;
+	size_t	    n;
 
 	memset(normal, 0, sizeof(t_vec3));
 
@@ -105,7 +103,6 @@ void compute_vertex_normal(
     if (n == 0)
         return ;
 
-    // printf("n : %ld\n", n);
 	*normal = (t_vec3){normal->x / n, normal->y / n, normal->z / n};
 
 	// printf("N : .x %f .y %f .z %f \n", normal->x, normal->y, normal->z);

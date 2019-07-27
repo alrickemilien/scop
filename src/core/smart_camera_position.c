@@ -5,7 +5,7 @@
 ** and barycentre it must face
 */
 
-static void update_max(const t_vec3 *barycentre, t_vec3 *max, t_polygon *polygon)
+static void	update_max(const t_vec3 *barycentre, t_vec3 *max, t_polygon *polygon)
 {
 	t_list		*y;
 	t_vertex	*vertex;
@@ -28,7 +28,7 @@ static void update_max(const t_vec3 *barycentre, t_vec3 *max, t_polygon *polygon
 	}
 }
 
-void smart_camera_position(t_software_environ *env,
+void		smart_camera_position(t_software_environ *env,
     t_vec3 *camera_position,
     t_vec3 *camera_look_at_position,
     t_vec3 *camera_up)
@@ -43,7 +43,6 @@ void smart_camera_position(t_software_environ *env,
 	while (x)
 	{
         update_max(&barycentre, &max, x->content);
-
 		x = x->next;
 	}
 	printf("MAX : .x %f .y %f .z %f \n", max.x, max.y, max.z);
@@ -52,7 +51,11 @@ void smart_camera_position(t_software_environ *env,
 		max = (t_vec3){2.f, 2.f, 2.f};
     // Get the module of the distance between the barycentre and the most far point
     GLfloat coeff = 1.2f;
-    *camera_position = (t_vec3){barycentre.x + coeff * magnitude_vec3(&max), barycentre.y + coeff * magnitude_vec3(&max), barycentre.z + coeff * magnitude_vec3(&max)};
+    *camera_position = (t_vec3){
+		barycentre.x + coeff * magnitude_vec3(&max),
+		barycentre.y + coeff * magnitude_vec3(&max),
+		barycentre.z + coeff * magnitude_vec3(&max)
+	};
     *camera_look_at_position = barycentre;
     *camera_up = (t_vec3){ 0.f, 1.f, 0.f };
 }

@@ -1,6 +1,6 @@
 #include "scop.h"
 
-static void extract_tga_infos_from_header(
+static void				extract_tga_infos_from_header(
 	t_tga *tga,
 	t_tga_header *header)
 {
@@ -14,9 +14,9 @@ static int				fill_tga_header(
 	t_tga_header *header,
 	FILE *stream)
 {
-	uint8_t				buff[18];
-	size_t				i;
-	size_t				size_read;
+	uint8_t	buff[18];
+	size_t	i;
+	size_t	size_read;
 
 	if ((size_read = fread(buff, 1, 18, stream)) != 18)
 	{
@@ -58,10 +58,12 @@ static int				fill_tga_header(
 	return (0);
 }
 
-static int	load_tga_image(t_tga *tga, FILE *stream)
+static int				load_tga_image(
+	t_tga *tga,
+	FILE *stream)
 {
-	size_t			size;
-	size_t			size_read;
+	size_t	size;
+	size_t	size_read;
 
 	tga->buffer = NULL;
 	size = tga->width * tga->height * 4;
@@ -110,14 +112,15 @@ static void				fill_tga_image(t_tga *tga)
 	}
 }
 
-/**
- * 
- */
+/*
+**
+*/
+
 int				load_tga_file(
 	t_tga *tga,
 	const char *pathname)
 {
-	FILE				*stream;
+	FILE	*stream;
 
 	printf("Start loading tga file %s\n", pathname);
 

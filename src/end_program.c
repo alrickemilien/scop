@@ -105,7 +105,7 @@ static void	clear_env_memory()
 }
 
 // Close OpenGL window and terminate GLFW
-void end_program(int code)
+void		end_program(int code)
 {
 	if (closing)
 		return;

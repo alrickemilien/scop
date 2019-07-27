@@ -9,9 +9,7 @@ int load_texture_file(
         texture->is_texture_loaded = false;
         return (0);
     }
-
     texture->is_texture_loaded = true;
-
 	if (load_bitmap_file(&texture->bmp, pathname) != -1)
     {
         texture->data = texture->bmp.buffer;
@@ -34,8 +32,6 @@ int load_texture_file(
 		    texture->format = GL_RGBA;
 		return (0);
     }
-
     texture->is_texture_loaded = false;
-
     return (0);
 }

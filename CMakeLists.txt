@@ -98,7 +98,7 @@ set (SOURCES
 	src/object_loader/read_usemtl.c
 	src/object_loader/read_mtllib.c
 	src/object_loader/read_comment.c
-	src/object_loader/read_color.c
+	src/object_loader/read_uv.c
 	src/object_loader/read_object_file_line.c
 	src/object_loader/read_vertex.c
 	src/object_loader/read_vec2.c
@@ -139,9 +139,15 @@ set (SOURCES
 	src/mtl_loader/read_illumination.c
 	src/mtl_loader/read_mtl_error.c
 
-	src/controls/resize.c
+	src/controls/close.c
 	src/controls/controls.c
-	src/controls/keyboards.c
+	src/controls/light.c
+	src/controls/lock.c
+	src/controls/move.c
+	src/controls/render.c
+	src/controls/resize.c
+	src/controls/scale.c
+	src/controls/unlock.c
 
 	src/utils/ft_lstadd.c
 	src/utils/ft_lstdel.c

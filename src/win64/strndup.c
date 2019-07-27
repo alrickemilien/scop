@@ -1,9 +1,9 @@
 #include "scop.h"
 
-char *strndup(char *str, int chars)
+char    *strndup(char *str, int chars)
 {
-    char *buffer;
-    int n;
+    char    *buffer;
+    int     n;
 
     buffer = (char *) malloc(chars +1);
     if (buffer)

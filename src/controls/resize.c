@@ -1,8 +1,11 @@
 #include "scop.h"
 
-extern t_software_environ *env;
+extern t_software_environ	*env;
 
-void window_size_callback(GLFWwindow* window, int width, int height)
+void						window_size_callback(
+	GLFWwindow* window, 
+	int width, 
+	int height)
 {
 	(void)window;
 

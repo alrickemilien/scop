@@ -1,7 +1,9 @@
 #include "scop.h"
 
 static void asscoiate_materials_to_mesh(
-    t_mtllib *lib, const char *mtl, t_list *usemtl)
+    t_mtllib *lib,
+    const char *mtl,
+    t_list *usemtl)
 {
     t_list  *x;
 
@@ -11,7 +13,6 @@ static void asscoiate_materials_to_mesh(
         printf("Test %s on %s\n",
                 mtl,
                 ((t_mtl_data*)x->content)->label);
-                
         if (memcmp(
                 mtl,
                 ((t_mtl_data*)x->content)->label,
@@ -20,9 +21,7 @@ static void asscoiate_materials_to_mesh(
             printf("Associate %s with %s\n",
             mtl,
             ((t_mtl_data*)x->content)->label);
-
             ((t_usemtl*)usemtl->content)->material = x->content;
-                    
             break;
         }
         x = x->next;
@@ -37,11 +36,11 @@ int     load_mtllib(t_list *mtllib, t_list *usemtl)
     x = mtllib;
     while (x)
     {
-        if (load_mtl_file(x->content) < 0) {
+        if (load_mtl_file(x->content) < 0)
+        {
             printf("Unable to load mtllib %s, exit.\n", ((t_mtllib*)x->content)->path);
             return (-1);
         }
-
         x = x->next;
     }
     
@@ -58,12 +57,9 @@ int     load_mtllib(t_list *mtllib, t_list *usemtl)
                 x->content,
                 ((t_usemtl*)usemtl->content)->mtl,
                 usemtl);
-
             x = x->next;
         }
-
         usemtl = usemtl->next;
     }
-
 	return (0);
 }

@@ -6,7 +6,8 @@
 
 int	gl_texturing(t_software_environ *env)
 {
-    env->grey_scale_uni = glGetUniformLocation(env->object_shader_program.id, "grey_scale");
+    env->grey_scale_uni = glGetUniformLocation(
+		env->object_shader_program.id, "grey_scale");
 
 	if (!env->texture.is_texture_loaded)
 		return (0);
@@ -42,7 +43,8 @@ int	gl_texturing(t_software_environ *env)
 	printf("4\n");
 	check_gl_error();
 
-	env->texture_uni = glGetUniformLocation(env->object_shader_program.id, "texture_sample");
+	env->texture_uni = glGetUniformLocation(
+		env->object_shader_program.id, "texture_sample");
 	printf("5\n");
 	check_gl_error();
 

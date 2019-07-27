@@ -7,7 +7,7 @@
 
 int	load_single_shader(shader_t *shader, const char *path)
 {
-	FILE *f;
+	FILE		*f;
 	struct stat	stats;
 
 	if (stat(path, &stats) == -1) {

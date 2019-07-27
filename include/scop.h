@@ -366,10 +366,24 @@ void					window_size_callback(
 							 int width,
 							int height);
 
+typedef struct			s_glx_attribute
+{
+	const char			*attribute_name;
+	GLint				size;
+	GLenum				type;
+	GLboolean			normalized;
+	const GLvoid		*pointer;
+}						t_glx_attribute;
+
 int						set_attribute(
 							GLuint id_program,
 							const char *attribute_name,
 							size_t vertex_size);
+
+typedef struct			glmaperror_s {
+	GLenum				err;
+	char				*string_error;
+}						glmaperror_t;
 
 int						check_gl_error(void);
 
@@ -409,6 +423,14 @@ int						load_mtllib(
 /*
 ** Users inputs callbacks
 */
+
+typedef struct			s_keyboard_callback_map
+{
+	int					action;
+	int					key;
+	void				(*f)(t_software_environ *env,
+							GLFWwindow *window);
+}						t_keyboard_callback_map;
 
 void					close_window_callback(
 							t_software_environ *env,

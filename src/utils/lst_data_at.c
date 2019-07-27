@@ -19,7 +19,7 @@
 
 void	*lst_data_at(t_list *list, size_t n)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (list)

@@ -1,6 +1,6 @@
 #include "scop.h"
 
-static void glew_init(void)
+static void	glew_init(void)
 {
 	glewExperimental = GL_TRUE;
 
@@ -14,7 +14,7 @@ static void glew_init(void)
 	}
 }
 
-static void glfw_error_callback(int error, const char *description)
+static void	glfw_error_callback(int error, const char *description)
 {
 	fprintf(stderr, "Error: %s (%d)\n", description, error);
 	gl_log_err("GLFW ERROR: code %i msg: %s\n", error, description);
@@ -24,7 +24,7 @@ static void glfw_error_callback(int error, const char *description)
 ** Init the system display using OpenGL library
 */
 
-void glfw_init(t_software_environ *env, int argc, char **argv)
+void		glfw_init(t_software_environ *env, int argc, char **argv)
 {
 	WINDOW_WIDTH = DEFAULT_WINDOW_WIDTH;
 	WINDOW_HEIGHT = DEFAULT_WINDOW_HEIGHT;

@@ -6,7 +6,7 @@ uint32_t	uint32_color(
     uint8_t green,
     uint8_t blue)
 {
-	uint32_t    color;
+	uint32_t	color;
 
 	color = alpha;
 	color = (color * 256) + red;
