@@ -2,12 +2,11 @@
 
 void	transpose_mat4(t_matrix *a)
 {
-	size_t		h;
-	size_t		w;
-	t_mat4		*t;
+	size_t	h;
+	size_t	w;
+	t_mat4	*t;
 
 	t = identity_mat4();
-
 	h = 0;
 	while (h < 4)
 	{
@@ -18,8 +17,6 @@ void	transpose_mat4(t_matrix *a)
 		}
 		h++;
 	}
-
 	memcpy(a->value, t->value, 16 * sizeof(GLfloat));
-
 	delete_matrix(t);
 }

@@ -20,6 +20,5 @@ void    mat4_on_vec3(t_vec3 *v, const t_mat4 *m)
             + m->value[7] * v->y
 		    + m->value[11] * v->z
             + m->value[15];
-
     *v = (t_vec3){v->x / w, v->y / w, v->z / w};
 }

@@ -1,7 +1,7 @@
 #ifndef BMP_H
 # define BMP_H
 
-#pragma pack(push, 1)
+# pragma pack(push, 1)
 typedef struct			s_bmp_header
 {
 	uint8_t				type[2];
@@ -10,9 +10,9 @@ typedef struct			s_bmp_header
 	uint16_t			reserved2;
 	uint32_t			data_offset;
 }						t_bmp_header;
-#pragma pack(pop)
+# pragma pack(pop)
 
-#pragma pack(push, 1)
+# pragma pack(push, 1)
 typedef struct			s_bmp_dib_header
 {
 	uint32_t			header_size;
@@ -27,9 +27,8 @@ typedef struct			s_bmp_dib_header
 	uint32_t			colors;
 	uint32_t			important_colors;
 }						t_bmp_dib_header;
-#pragma pack(pop)
+# pragma pack(pop)
 
-#pragma pack(push, 1)
 typedef struct			s_bitmap {
 	char				*path;
 	t_bmp_header		header;
@@ -39,7 +38,6 @@ typedef struct			s_bitmap {
 	size_t				height;
 	size_t				size;
 }						t_bitmap;
-#pragma pack(pop)
 
 int						load_bitmap_file(
 							t_bitmap *bmp,

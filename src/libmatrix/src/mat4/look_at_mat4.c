@@ -6,7 +6,10 @@
 ** according to camera position and look at direction
 */
 
-static void compute_forward(const t_vec3 *eye, const t_vec3 *center, t_vec3 *f)
+static void	compute_forward(
+	const t_vec3 *eye,
+	const t_vec3 *center,
+	t_vec3 *f)
 {
 	copy_vec3(f, eye);
 	substract_vec3(f, center);
@@ -14,7 +17,10 @@ static void compute_forward(const t_vec3 *eye, const t_vec3 *center, t_vec3 *f)
 }
 
 
-static void compute_right(const t_vec3 *up, const t_vec3 *forward, t_vec3 *right)
+static void	compute_right(
+	const t_vec3 *up,
+	const t_vec3 *forward,
+	t_vec3 *right)
 {
 	copy_vec3(right, up);
 	cross_vec3(right, forward);
@@ -22,7 +28,10 @@ static void compute_right(const t_vec3 *up, const t_vec3 *forward, t_vec3 *right
 }
 
 
-static void compute_cam_up(const t_vec3 *forward, const t_vec3 *right, t_vec3 *cam_up)
+static void	compute_cam_up(
+	const t_vec3 *forward,
+	const t_vec3 *right,
+	t_vec3 *cam_up)
 {
 	copy_vec3(cam_up, forward);
 	cross_vec3(cam_up, right);
@@ -39,7 +48,7 @@ static void compute_cam_up(const t_vec3 *forward, const t_vec3 *right, t_vec3 *c
 ** 3. Compute (still in world coordinates) the direction y of the y axis of the view coordinate system
 */
 
-t_mat4	*look_at_mat4(
+t_mat4		*look_at_mat4(
   const t_vec3 *eye,
   const t_vec3 *center,
   const t_vec3 *up)
@@ -47,19 +56,14 @@ t_mat4	*look_at_mat4(
 	t_vec3	forward;
 	t_vec3	right;
 	t_vec3	cam_up;
-	t_mat4 *m;
+	t_mat4	*m;
 
 	m = identity_mat4();
-
   	if (are_vec3_equal(eye, center))
 		return (m);
-
 	compute_forward(eye, center, &forward);
-
 	compute_right(up, &forward, &right);
-
 	compute_cam_up(&forward, &right, &cam_up);
-	
 	m->value[0] = right.x;
 	m->value[1] = cam_up.x;
 	m->value[2] = forward.x;
@@ -72,6 +76,5 @@ t_mat4	*look_at_mat4(
 	m->value[12] = -dot_product_vec3(&right, eye);
 	m->value[13] = -dot_product_vec3(&cam_up, eye);
 	m->value[14] = -dot_product_vec3(&forward, eye);
-
-  return (m);
+	return (m);
 }

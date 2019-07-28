@@ -110,37 +110,37 @@ typedef struct			s_type_match
 ** Parse functions
 */
 
-int							load_object_file(t_mesh *data, const char *file_path);
+int						load_object_file(t_mesh *data, const char *file_path);
 
-int							read_vec3(const t_token *tokens, t_vec3 *vector);
-int							read_vec2(const t_token *tokens, t_vec3 *vector);
+int						read_vec3(const t_token *tokens, t_vec3 *vector);
+int						read_vec2(const t_token *tokens, t_vec3 *vector);
 
-int							read_comment(t_mesh *data, const t_token *tokens);
-int							read_position(t_mesh *data, const t_token *tokens);
-int							read_uv(t_mesh *data, const t_token *tokens);
-int							read_normal_vector(t_mesh *data, const t_token *tokens);
-int							read_face(t_mesh *data, const t_token *tokens);
-int							read_name(t_mesh *data, const t_token *tokens);
-int							read_usemtl(t_mesh *data, const t_token *tokens);
-int							read_mtllib(t_mesh *data, const t_token *tokens);
+int						read_comment(t_mesh *data, const t_token *tokens);
+int						read_position(t_mesh *data, const t_token *tokens);
+int						read_uv(t_mesh *data, const t_token *tokens);
+int						read_normal_vector(t_mesh *data, const t_token *tokens);
+int						read_face(t_mesh *data, const t_token *tokens);
+int						read_name(t_mesh *data, const t_token *tokens);
+int						read_usemtl(t_mesh *data, const t_token *tokens);
+int						read_mtllib(t_mesh *data, const t_token *tokens);
 
-int							read_vertex(t_mesh *data, const t_token *tokens, t_polygon *polygon);
+int						read_vertex(t_mesh *data, const t_token *tokens, t_polygon *polygon);
 
-int							read_object_file_line(t_mesh *data, const char *line);
-int							read_smooth_shading(t_mesh *data, const t_token *tokens);
+int						read_object_file_line(t_mesh *data, const char *line);
+int						read_smooth_shading(t_mesh *data, const t_token *tokens);
 
-int 						read_object_error(const char *msg);
+int 					read_object_error(const char *msg);
 
-int							add_vertex(
-								t_mesh *data,
-								const t_token *tokens,
-								int no_texture,
-								t_list *vertices);
+int						add_vertex(
+							t_mesh *data,
+							const t_token *tokens,
+							int no_texture,
+							t_list *vertices);
 
-void						print_object(const t_mesh *data);
+void					print_object(const t_mesh *data);
 
-int							fill_vertex_position(t_mesh *data, t_vertex *vertex);
-int							fill_vertex_uv(t_mesh *data, t_vertex *vertex);
-int							fill_vertex_normal(t_mesh *data, t_vertex *vertex);
+int						fill_vertex_position(t_mesh *data, t_vertex *vertex);
+int						fill_vertex_uv(t_mesh *data, t_vertex *vertex);
+int						fill_vertex_normal(t_mesh *data, t_vertex *vertex);
 
 #endif

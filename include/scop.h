@@ -469,6 +469,7 @@ void					move_backward_on_axis(
 /*
 ** Lock/Unlock axis
 */
+
 void					lock_z_axis(
 							t_software_environ *env,
 							GLFWwindow *window);
@@ -505,32 +506,40 @@ float					percentage_f(float min,
 ** Utils
 */
 
-char	*ft_strjoin(char const *s1, char const *s2);
+char					*ft_strjoin(
+							char const *s1,
+							char const *s2);
 #ifdef _MSC_VER
-char	*strndup(char *str, int chars);
+char					*strndup(
+							char *str,
+							int chars);
 #endif
 
 /*
 ** Logs
 */
 
-bool	restart_gl_log();
-bool	gl_log(const char* message, ...);
-bool	gl_log_err(const char* message, ...);
+bool					restart_gl_log();
+bool					gl_log(
+							const char* message,
+							...);
+bool					gl_log_err(
+							const char* message,
+							...);
 
 /*
 **
 */
 
-void						end_program(
-								int code);
-int							system_init(
-								t_software_environ *env,
-								int argc,
-								char **argv);
-void						glfw_init(
-								t_software_environ *env,
-								int argc,
-								char **argv);
+void					end_program(
+							int code);
+int						system_init(
+							t_software_environ *env,
+							int argc,
+							char **argv);
+void					glfw_init(
+							t_software_environ *env,
+							int argc,
+							char **argv);
 
 #endif

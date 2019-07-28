@@ -1,31 +1,31 @@
 #include "libmatrix.h"
 
+static const GLfloat g_max = 1000;
+
 /*
 ** Provides 2 types of projection matrixes
 */
 
-t_mat4 *orthograhic_mat4(
+t_mat4	*orthograhic_mat4(
 	GLfloat fov,
 	GLfloat aspect_ratio,
 	GLfloat znear,
 	GLfloat zfar)
 {
-	t_mat4			*ret;
-	GLfloat			l;
-	GLfloat			r;
-	GLfloat			t;
-	GLfloat			b;
-	GLfloat			MAX;
+	t_mat4	*ret;
+	GLfloat	l;
+	GLfloat	r;
+	GLfloat	t;
+	GLfloat	b;
 
 	(void)fov;
 
 	// float maxx = std::max(fabs(minCamera.x), fabs(maxCamera.x));
 	// float maxy = std::max(fabs(minCamera.y), fabs(maxCamera.y));
 	// float max = std::max(maxx, maxy); 
-	MAX = 1000;
  
-    r = MAX * aspect_ratio;
-	t = MAX;
+    r = g_max * aspect_ratio;
+	t = g_max;
     l = -r;
 	b = -t;
 
@@ -48,17 +48,16 @@ t_mat4 *orthograhic_mat4(
 ** Upload to your shader as usual.
 */
 
-t_mat4 *perspective_mat4(
+t_mat4	*perspective_mat4(
 	GLfloat fov,
 	GLfloat aspect_ratio,
 	GLfloat znear,
 	GLfloat zfar)
 {
-	t_mat4			*ret;
+	t_mat4	*ret;
+	GLfloat	tan_half_fov;
 
 	ret = identity_mat4();
-	
-	GLfloat	tan_half_fov;
 
 	tan_half_fov = tanf(fov * 0.5f * M_PI / 180.0f);
 
@@ -70,29 +69,3 @@ t_mat4 *perspective_mat4(
 
 	return (ret);
 }
-
-/*
-t_mat4 *perspective_mat4(
-	GLfloat fov,
-	GLfloat aspect,
-    GLfloat znear,
-	GLfloat zfar)
-{
-		GLfloat top;
-		GLfloat right;
-
-		t_mat4 *ret;
-		ret = identity_mat4();
-
-		top = tanf(deg_to_rad(fov) / 2.0f) * znear;
-		right = top * aspect;
-
-		ret->value[0] = znear / right;
-		ret->value[5] = znear / top;
-		ret->value[10] = -(zfar + znear) / (zfar - znear);
-		ret->value[11] = -2.0f * zfar * znear / (zfar - znear);
-		ret->value[14] = -1.0f;
-
-    return ret;
-}
-*/

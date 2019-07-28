@@ -1,6 +1,6 @@
 #include "libmatrix.h"
 
-void     add_mat4(t_matrix *a, t_matrix *b, t_matrix *result)
+void  add_mat4(t_matrix *a, t_matrix *b, t_matrix *result)
 {
   size_t  i;
 

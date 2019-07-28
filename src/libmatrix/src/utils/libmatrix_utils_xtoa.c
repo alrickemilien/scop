@@ -6,19 +6,16 @@ int itoa_hex(uint64_t value, char *buffer, uint64_t base) {
   char  *str;
   int   rem;
 
-	libmatrixutil_bzero(buffer, 514 * sizeof(char));
-
+  libmatrixutil_bzero(buffer, 514 * sizeof(char));
   str = buffer;
-
   isNegative = false;
   i = 0;
-
   // Handle 0 explicitely, otherwise empty string is printed for 0
   if (value == 0)
   {
       str[i++] = '0';
       str[i] = '\0';
-      return i;
+      return (i);
   }
 
   // In standard itoa(), negative numbers are handled only with
@@ -65,7 +62,7 @@ int ltoa_hex(uint64_t value, char *buffer, uint64_t base) {
   {
       str[i++] = '0';
       str[i] = '\0';
-      return i;
+      return (i);
   }
 
   // In standard itoa(), negative numbers are handled only with
@@ -93,26 +90,23 @@ int ltoa_hex(uint64_t value, char *buffer, uint64_t base) {
 
   // Reverse the string
   libmatrixutil_reverse_string(str, i);
-
-  return i;
+  return (i);
 }
 
 int libmatrix_itoa(void *param, char *buffer)
 {
-  int   value;
+  int value;
 
   libmatrixutil_memcpy(&value, param, sizeof(int));
-
-  return (int)itoa_hex(value, buffer, 10);
+  return ((int)itoa_hex(value, buffer, 10));
 }
 
 int libmatrix_ltoa(void *param, char *buffer)
 {
-  long   value;
+  long  value;
 
   libmatrixutil_memcpy(&value, param, sizeof(long));
-
-  return (int)ltoa_hex(value, buffer, 10);
+  return ((int)ltoa_hex(value, buffer, 10));
 }
 
 /*
@@ -124,20 +118,16 @@ int libmatrix_ltoa(void *param, char *buffer)
 
 int libmatrix_ftoa(void *param, char *buffer)
 {
-  float value;
-  // Extract integer part
-  int   integer_part;
-  // Extract floating part
-  float float_part;
-
-  char  integer_part_str[514];
-  size_t i;
-
-  // Magick number 38
-  int precision_afterpoint = 38;
+  float   value;
+  int     integer_part;
+  float   float_part;
+  char    integer_part_str[514];
+  size_t  i;
+  int     precision_afterpoint;
+  
+  precision_afterpoint = 38;
 
   libmatrixutil_memcpy(&value, param, sizeof(float));
-
   libmatrixutil_bzero(buffer, sizeof(char) * 41);
 
   integer_part = (int)value;

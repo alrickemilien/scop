@@ -4,7 +4,7 @@
 ** Fill the matrix with the value past as parameter
 */
 
-void fill_mat4(t_mat4 *m, void *value)
+void  fill_mat4(t_mat4 *m, void *value)
 {
   size_t  i;
 

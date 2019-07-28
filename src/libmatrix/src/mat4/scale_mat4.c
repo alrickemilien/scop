@@ -13,7 +13,7 @@
 ** 2.5 2.2 2.5 2.5
 */
 
-void scale_mat4(t_mat4 *a, GLfloat scalar)
+void  scale_mat4(t_mat4 *a, GLfloat scalar)
 {
   size_t  i;
 

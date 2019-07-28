@@ -1,6 +1,6 @@
 #include "libmatrix.h"
 
-void			cross_vec3(t_vec3 *vector1, const t_vec3 *vector2)
+void	cross_vec3(t_vec3 *vector1, const t_vec3 *vector2)
 {
 	GLfloat	x;
 	GLfloat	y;

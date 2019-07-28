@@ -1,6 +1,6 @@
 #include "libmatrix.h"
 
-void libmatrixutil_reverse_string(char *str, int n)
+void  libmatrixutil_reverse_string(char *str, int n)
 {
   int start;
   int end;
@@ -17,9 +17,9 @@ void libmatrixutil_reverse_string(char *str, int n)
   }
 }
 
-void *libmatrixutil_memcpy(void *dest, const void *src, size_t n)
+void  *libmatrixutil_memcpy(void *dest, const void *src, size_t n)
 {
-  size_t		i;
+  size_t  i;
 
 	i = 0;
 	while (i < n)
@@ -33,7 +33,7 @@ void *libmatrixutil_memcpy(void *dest, const void *src, size_t n)
 
 int libmatrixutil_memcmp(const void *s1, const void *s2, size_t n)
 {
-  	size_t	i;
+  	size_t i;
 
   	if (!n)
   		return (0);
@@ -47,9 +47,9 @@ int libmatrixutil_memcmp(const void *s1, const void *s2, size_t n)
   return (0);
 }
 
-void	libmatrixutil_bzero(void *s, size_t n)
+void  libmatrixutil_bzero(void *s, size_t n)
 {
-	size_t	i;
+	size_t i;
 
 	i = 0;
 	while (i < n)
@@ -59,9 +59,9 @@ void	libmatrixutil_bzero(void *s, size_t n)
 	}
 }
 
-void	*libmatrixutil_memchr(const void *s, int c, size_t n)
+void  *libmatrixutil_memchr(const void *s, int c, size_t n)
 {
-  size_t	i;
+  size_t i;
 
   i = 0;
   while (i < n)

@@ -1,6 +1,6 @@
 #include "libmatrix.h"
 
-const float DEG2RAD = 3.141593f / 180.0f;
+const float	g_DEG2RAD = 3.141593f / 180.0f;
 
 // void	rotate_x_mat4(t_mat4 *m, GLfloat angle)
 // {
@@ -50,8 +50,9 @@ const float DEG2RAD = 3.141593f / 180.0f;
 
 void	rotate_x_mat4(t_mat4 *m, GLfloat angle)
 {
-    GLfloat alpha = angle * DEG2RAD;
+    GLfloat alpha;
 
+    alpha = angle * g_DEG2RAD;
 	m->value[5] = cosf(alpha);
 	m->value[6] = sinf(alpha);
 	m->value[9] = -sinf(alpha);
@@ -60,8 +61,9 @@ void	rotate_x_mat4(t_mat4 *m, GLfloat angle)
 
 void	rotate_y_mat4(t_mat4 *m, GLfloat angle)
 {
-    GLfloat alpha = angle * DEG2RAD;
+    GLfloat alpha;
 
+    alpha = angle * g_DEG2RAD;
 	m->value[0] = cosf(alpha);
 	m->value[2] = -sinf(alpha);
 	m->value[8] = sinf(alpha);
@@ -70,8 +72,9 @@ void	rotate_y_mat4(t_mat4 *m, GLfloat angle)
 
 void	rotate_z_mat4(t_mat4 *m, GLfloat angle)
 {
-    GLfloat alpha = angle * DEG2RAD;
+    GLfloat alpha;
 
+    alpha = angle * g_DEG2RAD;
 	m->value[0] = cosf(alpha);
 	m->value[1] = sinf(alpha);
 	m->value[4] = -sinf(alpha);

@@ -36,9 +36,11 @@
 # define TRANSPARENCY_TOKEN "Tr"
 # define ILLUMINATION_TOKEN "illum"
 
-// !!
-// Not actually implemented
-// !!
+/*
+** !!
+** Not actually implemented
+** !!
+*/
 
 # define FRESNEL_REFLECTANCE_TOKEN "Ft"	// Fresnel reflectance
 # define FRESNEL_TRANSMITTANCE_TOKEN "Ft"	// Fresnel transmittance

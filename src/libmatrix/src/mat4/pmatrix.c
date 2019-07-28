@@ -1,6 +1,10 @@
+#ifdef _MSC_VER
+# include <io.h>
+#endif
+
 #include "libmatrix.h"
 
-static const t_pmatrix_format_map g_pmatrix_format_function[] = {
+static const t_pmatrix_fmt  g_pmatrix_format_function[] = {
   { "d", &libmatrix_itoa },
   { "ld", &libmatrix_ltoa },
   { "f", &libmatrix_ftoa },
@@ -10,19 +14,21 @@ static const t_pmatrix_format_map g_pmatrix_format_function[] = {
   #endif
 };
 
-static inline bool is_flag(char c)
+static inline bool          is_flag(char c)
 {
   if (strchr(".0#+", c) == NULL)
     return (false);
   return (true);
 }
 
-static int apply_identifier(char *format, t_pmatrix_format_value *options)
+static int                  apply_identifier(
+  char *format,
+  t_pmatrix_format_value *options)
 {
   int i;
 
   i = 0;
-  while (i * sizeof(t_pmatrix_format_map) < sizeof(g_pmatrix_format_function))
+  while (i * sizeof(t_pmatrix_fmt) < sizeof(g_pmatrix_format_function))
 	{
     if (!libmatrixutil_memcmp(
 			g_pmatrix_format_function[i].key,
@@ -39,7 +45,9 @@ static int apply_identifier(char *format, t_pmatrix_format_value *options)
   return (0);
 }
 
-static int apply_flag(char *format, t_pmatrix_format_value *options)
+static int                  apply_flag(
+  char *format,
+  t_pmatrix_format_value *options)
 {
   int i;
 
@@ -61,7 +69,10 @@ static int apply_flag(char *format, t_pmatrix_format_value *options)
   return (0);
 }
 
-static int get_string_value_according_to_format(t_pmatrix_format_value *options, char *buffer, void *value)
+static int                  get_string_value_according_to_format(
+  t_pmatrix_format_value *options,
+  char *buffer,
+  void *value)
 {
   return options->identifier.func(value, buffer);
 }
@@ -71,7 +82,10 @@ static int get_string_value_according_to_format(t_pmatrix_format_value *options,
 ** return the size of the buffer
 */
 
-static int pvalue(const char *format, char **whole_buffer, void *value)
+static int                  pvalue(
+  const char *format,
+  char **whole_buffer,
+  void *value)
 {
   char                    *buffer;
   char                    *cursor_of_format;
@@ -84,16 +98,12 @@ static int pvalue(const char *format, char **whole_buffer, void *value)
   while (*format)
   {
     cursor_of_format = libmatrixutil_strchr(format, '%');
-
-
     if (cursor_of_format == NULL)
     {
       // Minus 1 to not take the % character
       libmatrixutil_append_and_release_memory(&buffer,
         libmatrixutil_strdup(format));
-
         ret += libmatrixutil_strlen(format);
-
         return (ret);
     }
 
@@ -129,7 +139,9 @@ static int pvalue(const char *format, char **whole_buffer, void *value)
 ** matrix - The matrix to print
 */
 
-int pmatrix(char *format, t_matrix *matrix)
+int                         pmatrix(
+  char *format,
+  t_matrix *matrix)
 {
   size_t    i;
   size_t    lines;
@@ -139,7 +151,6 @@ int pmatrix(char *format, t_matrix *matrix)
 
   lines = 4;
   columns = 4;
-
   i = 0;
   ret = 0;
   buffer = NULL;
@@ -147,19 +158,19 @@ int pmatrix(char *format, t_matrix *matrix)
   {
       ret += pvalue(format, &buffer, &matrix->value[i % 4 + i]);
 
-			if ((i + 1) % columns == 0) {
+			if ((i + 1) % columns == 0)
+      {
 				libmatrixutil_append_and_release_memory_static(&buffer, "\n");
 				ret++;
 			}
-
       i++;
   }
-
-  if (write(1, buffer, ret) == -1) {
+  #ifdef _MSC_VER
+  if (_write(1, buffer, ret) == -1)
+  #else
+  if (write(1, buffer, ret) == -1)
+  #endif
     ret = -1;
-  }
-
   free(buffer);
-
   return (ret);
 }

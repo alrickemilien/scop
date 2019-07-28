@@ -3,7 +3,7 @@
 
 extern t_software_environ *env;
 
-static bool closing = false;
+static bool	closing = false;
 
 /*
 ** Clear the environnement in memory
