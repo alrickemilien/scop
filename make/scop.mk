@@ -17,7 +17,6 @@ SRC += ../src/core/render.c \
 ../src/core/smart_camera_position.c \
 ../src/core/gl_lighting.c \
 ../src/core/gl_attribute.c \
-../src/core/create_triangle.c \
 ../src/core/gl_buffering.c \
 ../src/core/check_gl_error.c \
 ../src/core/gl_log.c \
@@ -48,10 +47,15 @@ SRC += ../src/texture_loader/tga/load_tga_file.c \
 #
 # Controls and toggle of the app
 #
-SRC += ../src/controls/resize.c \
-		../src/controls/controls.c \
-		../src/controls/lock.c \
-		../src/controls/keyboards.c
+SRC += ../src/controls/close.c \
+	../src/controls/controls.c \
+	../src/controls/light.c \
+	../src/controls/lock.c \
+	../src/controls/move.c \
+	../src/controls/render.c \
+	../src/controls/resize.c \
+	../src/controls/scale.c \
+	../src/controls/unlock.c
 
 #
 # .obj loader

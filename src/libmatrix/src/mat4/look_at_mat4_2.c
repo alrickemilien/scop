@@ -8,6 +8,7 @@ void	mat4_row(t_vec4 *v, t_mat4 *matrix, size_t i)
 	size_t	k;
 	GLfloat	*r;
 
+	k = 0;
 	r = (GLfloat*)v;
 	while (k < 4)
 	{
@@ -26,6 +27,7 @@ GLfloat	vec4_mul_inner(t_vec4 v1, t_vec4 v2)
 	a = (GLfloat*)&v1;
 	b = (GLfloat*)&v2;
     p = 0.f;
+    i = 0;
 	while (i < 4)
 	{
 		p += b[i] * a[i];
