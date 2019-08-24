@@ -32,7 +32,6 @@ static size_t	skip_delimiters(const char *line, const char *delimiters)
 	return (i);
 }
 
-// Get number of token
 static size_t	count_words(const char *line, const char *delimiters)
 {
 	size_t	i;
@@ -42,20 +41,20 @@ static size_t	count_words(const char *line, const char *delimiters)
 	n = 0;
 	while (line[i])
 	{
-		// Skip whitespaces and non printable
 		while (line[i] && !is_printable(line[i]))
 			i++;
 		if (is_on_delimiter(line + i, delimiters))
 			i += skip_delimiters(line + i, delimiters);
 		if (line[i] && !is_on_delimiter(line + i, delimiters))
 			n++;
-		while (line[i] && is_printable(line[i]) && !is_on_delimiter(line + i, delimiters))
+		while (line[i] && is_printable(line[i])
+				&& !is_on_delimiter(line + i, delimiters))
 			i++;
 	}
 	return (n);
 }
 
-t_token *split_into_tokens(const char *line, const char *delimiters)
+t_token	*split_into_tokens(const char *line, const char *delimiters)
 {
 	size_t	i;
 	size_t	n;
@@ -70,9 +69,8 @@ t_token *split_into_tokens(const char *line, const char *delimiters)
 	array[n] = (t_token){ 0, 0 };
 	i = 0;
 	n = 0;
-	while(line[i])
+	while (line[i])
 	{
-		// Skip whitespaces and non printable
 		while (line[i] && !is_printable(line[i]))
 			i++;
 		if (is_on_delimiter(line + i, delimiters))
@@ -81,13 +79,13 @@ t_token *split_into_tokens(const char *line, const char *delimiters)
 		{
 			token.cursor = (char*)((size_t)line + i);
 			token.size = 0;
-			while (line[i] && is_printable(line[i]) && !is_on_delimiter(line + i, delimiters))
+			while (line[i] && is_printable(line[i])
+				&& !is_on_delimiter(line + i, delimiters))
 			{
 				token.size++;
 				i++;
 			}
-			memcpy(&array[n], &token, sizeof(t_token));
-			n++;
+			memcpy(&array[n++], &token, sizeof(t_token));
 		}
 	}
 	return (array);

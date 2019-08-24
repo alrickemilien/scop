@@ -104,10 +104,11 @@ int		munmap(void *addr, size_t len);
 ** that will be always manipulated
 ** like x_server, window, image_buffer, etc
 */
-# define WINDOW env->window
-# define WINDOW_WIDTH env->window_width
-# define WINDOW_HEIGHT env->window_height
+# define WINDOW g_env->window
+# define WINDOW_WIDTH g_env->window_width
+# define WINDOW_HEIGHT g_env->window_height
 # define WINDOW_NAME "scop"
+# define SCOP_BACKGROUND 0.0f, 0.0f, 0.4f, 0.0f
 
 # define SOFT_GLFW_CONTEXT_VERSION_MAJOR 4
 # define SOFT_GLFW_CONTEXT_VERSION_MINOR 1
@@ -281,6 +282,9 @@ typedef struct			s_software_environ
 	int y_axis;
 	int z_axis;
 }						t_software_environ;
+
+void					run(
+    						t_software_environ *env);
 
 typedef struct			s_color
 {

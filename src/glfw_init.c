@@ -2,11 +2,10 @@
 
 static void	glew_init(void)
 {
+	GLenum err;
+
+	err = glewInit();
 	glewExperimental = GL_TRUE;
-
-	GLenum err = glewInit();
-
-	// Problem: glewInit failed, something is seriously wrong.
 	if (err != GLEW_OK)
 	{
 		fprintf(stderr, "glewInit failed, aborting. Code %d.\n", err);
@@ -20,51 +19,48 @@ static void	glfw_error_callback(int error, const char *description)
 	gl_log_err("GLFW ERROR: code %i msg: %s\n", error, description);
 }
 
+static void	glfw_init_hint()
+{
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, SOFT_GLFW_CONTEXT_VERSION_MAJOR);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, SOFT_GLFW_CONTEXT_VERSION_MINOR);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+}
+
 /*
 ** Init the system display using OpenGL library
+** To make MacOS happy; should not be needed
+**	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+**	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 */
 
 void		glfw_init(t_software_environ *env, int argc, char **argv)
 {
-	WINDOW_WIDTH = DEFAULT_WINDOW_WIDTH;
-	WINDOW_HEIGHT = DEFAULT_WINDOW_HEIGHT;
-
+	env->window_width = DEFAULT_WINDOW_WIDTH;
+	env->window_height = DEFAULT_WINDOW_HEIGHT;
 	(void)argv;
 	(void)argc;
-
 	glfwSetErrorCallback(glfw_error_callback);
-
 	if (!glfwInit())
 		exit_error_with_message("Failed to initialize GLFW");
-
-	// Se the antialiasing => pixels are subdivided by X
-		// glfwWindowHint(GLFW_SAMPLES, 4);
-
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, SOFT_GLFW_CONTEXT_VERSION_MAJOR);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, SOFT_GLFW_CONTEXT_VERSION_MINOR);
-
-	// To make MacOS happy; should not be needed
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-	WINDOW = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_NAME, NULL, NULL);
-
-	if (!WINDOW)
+	glfw_init_hint();
+	env->window = glfwCreateWindow(
+			env->window_width,
+			env->window_height,
+			WINDOW_NAME, NULL, NULL);
+	if (!env->window)
 	{
 		glfwTerminate();
-		exit_error_with_message("Failed to open GLFW window. Need GPU compatible with 4.0 OpenGL library");
+		exit_error_with_message(
+			"Failed to open GLFW window."
+			"Need GPU compatible with 4.0 OpenGL library");
 	}
-
-	glfwSetKeyCallback(WINDOW, key_callback);
-
-	glfwSetWindowSizeCallback(WINDOW, window_size_callback);
-	glfwSetFramebufferSizeCallback(WINDOW, window_size_callback);
-
-	glfwMakeContextCurrent(WINDOW);
-	
-	printf("OpenGL %s, GLSL %s\n", 
-    		glGetString(GL_VERSION),
-    		glGetString(GL_SHADING_LANGUAGE_VERSION));
-
+	glfwSetKeyCallback(env->window, key_callback);
+	glfwSetWindowSizeCallback(env->window, window_size_callback);
+	glfwSetFramebufferSizeCallback(env->window, window_size_callback);
+	glfwMakeContextCurrent(env->window);
+	printf("OpenGL %s, GLSL %s\n",
+			glGetString(GL_VERSION),
+			glGetString(GL_SHADING_LANGUAGE_VERSION));
 	glew_init();
 }

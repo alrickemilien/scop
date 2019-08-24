@@ -1,234 +1,32 @@
 #include "scop.h"
 
-t_software_environ *env = NULL;
+t_software_environ	*g_env = NULL;
 
-/*
-** This macro handles the fact that windows works with \ and not / as Unix
-** when it comes to treat with files ...
-*/
-
-#ifdef _MSC_VER
-static const char *g_vertex_file_path = "\x5c"
-                                      "shaders"
-                                      "\x5c"
-                                      "mesh"
-                                      "\x5c"
-                                      "VertexShader.glsl";
-static const char *g_fragment_file_path = "\x5c"
-                                        "shaders"
-                                        "\x5c"
-                                        "mesh"
-                                        "\x5c"
-                                        "FragmentShader.glsl";
-
-static const char *g_plan_vertex_file_path = "\x5c"
-                                           "shaders"
-                                           "\x5c"
-                                           "plan"
-                                           "\x5c"
-                                           "VertexShader.glsl";
-static const char *g_plan_fragment_file_path = "\x5c"
-                                             "shaders"
-                                             "\x5c"
-                                             "plan"
-                                             "\x5c"
-                                             "FragmentShader.glsl";
-static const char *g_plan_geometry_file_path = "\x5c"
-                                             "shaders"
-                                             "\x5c"
-                                             "plan"
-                                             "\x5c"
-                                             "GeometryShader.glsl";
-
-static const char *g_axis_vertex_file_path = "\x5c"
-                                           "shaders"
-                                           "\x5c"
-                                           "axis"
-                                           "\x5c"
-                                           "VertexShader.glsl";
-static const char *g_axis_fragment_file_path = "\x5c"
-                                             "shaders"
-                                             "\x5c"
-                                             "axis"
-                                             "\x5c"
-                                             "FragmentShader.glsl";
-static const char *g_axis_geometry_file_path = "\x5c"
-                                             "shaders"
-                                             "\x5c"
-                                             "axis"
-                                             "\x5c"
-                                             "GeometryShader.glsl";
-
-static const char *g_normals_vertex_file_path = "\x5c"
-                                              "shaders"
-                                              "\x5c"
-                                              "normals\x5c"
-                                              "VertexShader.glsl";
-static const char *g_normals_fragment_file_path = "\x5c"
-                                                "shaders"
-                                                "\x5c"
-                                                "normals\x5c"
-                                                "FragmentShader.glsl";
-static const char *g_normals_geometry_file_path = "\x5c"
-                                                "shaders"
-                                                "\x5c"
-                                                "normals\x5c"
-                                                "GeometryShader.glsl";
-
-#else
-static const char *g_vertex_file_path = "/shaders/mesh/VertexShader.glsl";
-static const char *g_fragment_file_path = "/shaders/mesh/FragmentShader.glsl";
-
-static const char *g_plan_vertex_file_path = "/shaders/plan/VertexShader.glsl";
-static const char *g_plan_fragment_file_path = "/shaders/plan/"
-                                             "FragmentShader.glsl";
-static const char *g_plan_geometry_file_path = "/shaders/plan/"
-                                             "GeometryShader.glsl";
-
-static const char *g_axis_vertex_file_path = "/shaders/axis/VertexShader.glsl";
-static const char *g_axis_fragment_file_path = "/shaders/axis/"
-                                             "FragmentShader.glsl";
-static const char *g_axis_geometry_file_path = "/shaders/axis/"
-                                             "GeometryShader.glsl";
-
-static const char *g_normals_vertex_file_path = "/shaders/normals/"
-                                              "VertexShader.glsl";
-static const char *g_normals_fragment_file_path = "/shaders/normals/"
-                                                "FragmentShader.glsl";
-static const char *g_normals_geometry_file_path = "/shaders/normals/"
-                                                "GeometryShader.glsl";
-#endif
-
-void stop_on_sigint(int signo)
+void				stop_on_sigint(
+	int signo)
 {
-	if (signo == SIGINT && env != NULL)
+	if (signo == SIGINT && g_env != NULL)
 		glfwSetWindowShouldClose(WINDOW, GLFW_TRUE);
 }
 
 /*
-**
+** Could not continue if the system ressources
+** are fully and successfully loaded
 */
 
-void run()
+int					main(
+	int argc,
+	char **argv)
 {
-	glEnable(GL_DEPTH_TEST);
-
-	glDisable(GL_CULL_FACE);
-
-	// Dark blue background
-	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
-
-	// Load object shader
-
-	memset(&env->object_shader_program, 0, sizeof(shader_program_t));
-	memset(&env->internal_object_shader_program, 0, sizeof(shader_program_t));
-	memset(&env->axis_shader_program, 0, sizeof(shader_program_t));
-	memset(&env->normals_shader_program, 0, sizeof(shader_program_t));
-
-	env->object_shader_program.cwd = (char *) env->cwd;
-	env->internal_object_shader_program.cwd = (char *) env->cwd;
-	env->axis_shader_program.cwd = (char *) env->cwd;
-	env->normals_shader_program.cwd = (char *) env->cwd;
-
-	if (load_program_shader(
-		&env->object_shader_program,
-		g_vertex_file_path,
-		g_fragment_file_path,
-		NULL) < 0)
-		end_program(-1);
-
-	if (load_program_shader(
-		&env->internal_object_shader_program,
-		g_plan_vertex_file_path,
-		g_plan_fragment_file_path,
-		g_plan_geometry_file_path) < 0)
-		end_program(-1);
-
-	if (load_program_shader(
-		&env->axis_shader_program,
-		g_axis_vertex_file_path,
-		g_axis_fragment_file_path,
-		g_axis_geometry_file_path) < 0)
-		end_program(-1);
-
-	printf("About to fill load program shader ...\n");
-
-	if (load_program_shader(
-		&env->normals_shader_program,
-		g_normals_vertex_file_path,
-		g_normals_fragment_file_path,
-		g_normals_geometry_file_path) < 0)
-		end_program(-1);
-
-	printf("About to fill uvs ...\n");
-
-	fill_uvs(env->data.polygons);
-
-	printf("About to start buffering ...\n");
-
-	if (!env->indexation_mode && gl_buffering(env) < 0)
-		end_program(-1);
-
-	if (env->indexation_mode && gl_indexing(env) < 0)
-		end_program(-1);
-
-	printf("gl_buffering done\n");
-	check_gl_error();
-
-	gl_matrixing(env);
-
-	printf("matrixing done\n");
-	check_gl_error();
-
-	gl_texturing(env);
-
-	printf("textureuing done\n");
-	check_gl_error();
-
-	gl_lighting(env);
-
-	printf("lighting done\n");
-	check_gl_error();
-
-	printf("Preparation is done\n");
-
-	// Check if the ESC key was pressed or the window was closed
-	while (glfwWindowShouldClose(WINDOW) == 0)
-	{
-		// wipe the drawing surface clear
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		render(env);
-
-		// Handle other events (mouse, keyboard, ...)
-		glfwPollEvents();
-
-		// Swap buffers
-		glfwSwapBuffers(WINDOW);
-	}
-
-	end_program(0);
-}
-
-int main(int argc, char **argv)
-{
-	if (NULL == (env = malloc(sizeof(t_software_environ))))
+	if (NULL == (g_env = malloc(sizeof(t_software_environ))))
 		exit_error_with_message("Not enought memory to run the program");
-
 	if (signal(SIGINT, stop_on_sigint) == SIG_ERR)
 		fprintf(stderr, "Can't catch SIGINT\n");
-
-	// Could not continue if the system ressources are fully and successfully loaded
-	if (system_init(env, argc, argv) < 0)
+	if (system_init(g_env, argc, argv) < 0)
 		return (-1);
-
 	// print_object((const void*)&env->data);
-
-	glfw_init(env, argc, argv);
-
-	run();
-
+	glfw_init(g_env, argc, argv);
+	run(g_env);
 	end_program(0);
-
 	return (0);
 }

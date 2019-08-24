@@ -7,21 +7,19 @@ bool	check_tokens_number(const t_token *token, size_t size)
 	i = 0;
 	while (token[i].cursor)
 		i++;
-
 	if (i < size)
 		return (false);
-
 	return (true);
 }
 
 bool	is_printable(char c)
 {
-  if (c >= 1 && c <= 32 && c != 127)
-    return (false);
-  return (true);
+	if (c >= 1 && c <= 32 && c != 127)
+		return (false);
+	return (true);
 }
 
-int			token_to_int(const t_token *token, size_t index)
+int		token_to_int(const t_token *token, size_t index)
 {
 	size_t	j;
 	int		ret;
