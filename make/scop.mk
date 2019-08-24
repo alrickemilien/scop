@@ -42,6 +42,7 @@ SRC += ../src/core/render.c \
 SRC += ../src/texture_loader/tga/load_tga_file.c \
 ../src/texture_loader/tga/utils.c \
 ../src/texture_loader/tga/decode_tga.c \
+../src/texture_loader/tga/fill_tga_header.c \
 ../src/texture_loader/load_texture_file.c
 
 #

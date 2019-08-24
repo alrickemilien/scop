@@ -29,6 +29,10 @@ typedef struct			s_tga
 	size_t				pixel_depth;
 }						t_tga;
 
+int						fill_tga_header(
+							t_tga *tga,
+							t_tga_header *header,
+							FILE *stream);
 uint32_t				uint32_color(
     						uint8_t alpha,
     						uint8_t red,
