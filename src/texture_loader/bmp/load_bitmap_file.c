@@ -19,7 +19,6 @@ int			load_bitmap_file(
 
 	printf("Start loading bitmap file %s\n", pathname);
 	memset(bmp, 0, sizeof(t_bitmap));
-	bmp->path = strdup(pathname);
 	if ((stream = fopen(pathname, "rb")) == NULL)
 		return (load_bitmap_file_error(pathname, stream));
 	if (load_bitmap_file_header(bmp, stream) < 0)

@@ -69,7 +69,6 @@ int						load_tga_file(
 
 	printf("Start loading tga file %s\n", pathname);
 	memset(tga, 0, sizeof(t_tga));
-	tga->path = strdup(pathname);
 	if ((stream = fopen(pathname, "rb")) == NULL)
 		return (load_tga_file_error(pathname, stream));
 	if (fill_tga_header(tga, &tga->header, stream))
