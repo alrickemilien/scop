@@ -40,6 +40,6 @@ char	*extract_folder_from_path(const char *path)
 	                 NULL, 0,          // Don't need filename
 	                 NULL, 0) != 0)
 		return (NULL);
-	return strdup(dir);
+	return _strdup(dir);
 }
 #endif

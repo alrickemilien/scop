@@ -83,7 +83,11 @@ int			load_object_file(t_mesh *data, const char *file_path)
 
 	g_current_line = 0;
 	memset(data, 0, sizeof(t_mesh));
-	data->path = strdup(file_path);
+    #ifdef _MSC_VER
+	    data->path = _strdup(file_path);
+    #else
+	    data->path = strdup(file_path);
+    #endif
 	if (!(fp = fopen(file_path, "r")))
 		return (-1);
 	while (fgets(line, BUFF_SIZE, fp) != NULL && ++g_current_line)

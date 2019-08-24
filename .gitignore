@@ -3,7 +3,7 @@ CMakeFiles
 CMakeCache.txt
 *.vcxproj
 *.filters
-*.cmake
+cmake_install.cmake
 *.sln
 Win32
 Debug
