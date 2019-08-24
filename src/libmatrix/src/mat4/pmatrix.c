@@ -3,78 +3,77 @@
 #endif
 
 #include "libmatrix.h"
-
 static const t_pmatrix_fmt  g_pmatrix_format_function[] = {
-  { "d", &libmatrix_itoa },
-  { "ld", &libmatrix_ltoa },
-  { "f", &libmatrix_ftoa },
-  #ifdef __gl_h_
-  { "glf", &libmatrix_glftoa },
-  { "gld", &libmatrix_glitoa },
-  #endif
+	{ "d", &libmatrix_itoa },
+	{ "ld", &libmatrix_ltoa },
+	{ "f", &libmatrix_ftoa },
+#ifdef __gl_h_
+	{ "glf", &libmatrix_glftoa },
+	{ "gld", &libmatrix_glitoa },
+#endif
 };
 
-static inline bool          is_flag(char c)
+static inline bool			is_flag(char c)
 {
-  if (strchr(".0#+", c) == NULL)
-    return (false);
-  return (true);
+	if (strchr(".0#+", c) == NULL)
+		return (false);
+	return (true);
 }
 
-static int                  apply_identifier(
-  char *format,
-  t_pmatrix_format_value *options)
+static int					apply_identifier(
+		char *format,
+		t_pmatrix_format_value *options)
 {
-  int i;
+	int i;
 
-  i = 0;
-  while (i * sizeof(t_pmatrix_fmt) < sizeof(g_pmatrix_format_function))
+	i = 0;
+	while (i * sizeof(t_pmatrix_fmt) < sizeof(g_pmatrix_format_function))
 	{
-    if (!libmatrixutil_memcmp(
-			g_pmatrix_format_function[i].key,
-			format,
-			sizeof(char) * libmatrixutil_strlen(g_pmatrix_format_function[i].key)))
-    {
-      options->identifier = g_pmatrix_format_function[i];
-      return (libmatrixutil_strlen(g_pmatrix_format_function[i].key));
-    }
+		if (!libmatrixutil_memcmp(
+					g_pmatrix_format_function[i].key,
+					format,
+					sizeof(char) * libmatrixutil_strlen(g_pmatrix_format_function[i].key)))
+		{
+			options->identifier = g_pmatrix_format_function[i];
+			return (libmatrixutil_strlen(g_pmatrix_format_function[i].key));
+		}
 
-    i++;
-  }
+		i++;
+	}
 
-  return (0);
+	return (0);
 }
 
-static int                  apply_flag(
-  char *format,
-  t_pmatrix_format_value *options)
+static int					apply_flag(
+		char *format,
+		t_pmatrix_format_value *options)
 {
-  int i;
+	int i;
 
-  i = 0;
-  while (*format && is_flag(*format))
-  {
-    if (*format == '.')
-      options->point = 1;
-    else if (*format == '0')
-      options->zero = 1;
-    else if (*format == '#')
-      options->hashtag = 1;
-    else if (*format == '+')
-      options->plus = 1;
-    i++;
-    format++;
-  }
+	i = 0;
+	while (*format && is_flag(*format))
+	{
+		if (*format == '.')
+			options->point = 1;
+		else if (*format == '0')
+			options->zero = 1;
+		else if (*format == '#')
+			options->hashtag = 1;
+		else if (*format == '+')
+			options->plus = 1;
+		i++;
+		format++;
+	}
 
-  return (0);
+	return (0);
 }
 
-static int                  get_string_value_according_to_format(
-  t_pmatrix_format_value *options,
-  char *buffer,
-  void *value)
+static int						get_string_value_according_to_format(
+		t_pmatrix_format_value *options,
+		char *buffer,
+		void *value)
 {
-  return options->identifier.func(value, buffer);
+	return options->identifier.func(value, buffer);
 }
 
 /*
@@ -82,55 +81,54 @@ static int                  get_string_value_according_to_format(
 ** return the size of the buffer
 */
 
-static int                  pvalue(
-  const char *format,
-  char **whole_buffer,
-  void *value)
+static int					pvalue(
+		const char *format,
+		char**whole_buffer,
+		void *value)
 {
-  char                    *buffer;
-  char                    *cursor_of_format;
-  int                     ret;
-  t_pmatrix_format_value  options;
-  char                    value_str[42];
+	char                    *buffer;
+	char                    *cursor_of_format;
+	int                     ret;
+	t_pmatrix_format_value  options;
+	char                    value_str[42];
 
-  buffer = NULL;
-  ret = 0;
-  while (*format)
-  {
-    cursor_of_format = libmatrixutil_strchr(format, '%');
-    if (cursor_of_format == NULL)
-    {
-      // Minus 1 to not take the % character
-      libmatrixutil_append_and_release_memory(&buffer,
-        libmatrixutil_strdup(format));
-        ret += libmatrixutil_strlen(format);
-        return (ret);
-    }
+	buffer = NULL;
+	ret = 0;
+	while (*format)
+	{
+		cursor_of_format = libmatrixutil_strchr(format, '%');
+		if (cursor_of_format == NULL)
+		{
+			libmatrixutil_append_and_release_memory(&buffer,
+					libmatrixutil_strdup(format));
+			ret += libmatrixutil_strlen(format);
+			return (ret);
+		}
 
-    if (*cursor_of_format == '%'
-      && *(cursor_of_format + 1) != '%'
-      && *(cursor_of_format + 1) != 0)
-    {
-      cursor_of_format++;
+		if (*cursor_of_format == '%'
+				&& *(cursor_of_format + 1) != '%'
+				&& *(cursor_of_format + 1) != 0)
+		{
+			cursor_of_format++;
 
-      cursor_of_format += apply_flag(cursor_of_format, &options);
+			cursor_of_format += apply_flag(cursor_of_format, &options);
 
-      cursor_of_format += apply_identifier(cursor_of_format, &options);
+			cursor_of_format += apply_identifier(cursor_of_format, &options);
 
 			ret += get_string_value_according_to_format(&options, value_str, value);
 
 			value_str[ret] = ' ';
 			ret++;
 
-      libmatrixutil_append_and_release_memory_static(&buffer, value_str);
+			libmatrixutil_append_and_release_memory_static(&buffer, value_str);
 
-      format = cursor_of_format;
-    }
-  }
+			format = cursor_of_format;
+		}
+	}
 
-  libmatrixutil_append_and_release_memory(whole_buffer, buffer);
+	libmatrixutil_append_and_release_memory(whole_buffer, buffer);
 
-  return (ret);
+	return (ret);
 }
 
 /*
@@ -139,38 +137,38 @@ static int                  pvalue(
 ** matrix - The matrix to print
 */
 
-int                         pmatrix(
-  char *format,
-  t_matrix *matrix)
+int							pmatrix(
+		char *format,
+		t_matrix *matrix)
 {
-  size_t    i;
-  size_t    lines;
-  size_t    columns;
-  int       ret;
-  char      *buffer;
+	size_t    i;
+	size_t    lines;
+	size_t    columns;
+	int       ret;
+	char      *buffer;
 
-  lines = 4;
-  columns = 4;
-  i = 0;
-  ret = 0;
-  buffer = NULL;
-  while (i < lines * columns)
-  {
-      ret += pvalue(format, &buffer, &matrix->value[i % 4 + i]);
+	lines = 4;
+	columns = 4;
+	i = 0;
+	ret = 0;
+	buffer = NULL;
+	while (i < lines * columns)
+	{
+		ret += pvalue(format, &buffer, &matrix->value[i % 4 + i]);
 
-			if ((i + 1) % columns == 0)
-      {
-				libmatrixutil_append_and_release_memory_static(&buffer, "\n");
-				ret++;
-			}
-      i++;
-  }
-  #ifdef _MSC_VER
-  if (_write(1, buffer, ret) == -1)
-  #else
-  if (write(1, buffer, ret) == -1)
-  #endif
-    ret = -1;
-  free(buffer);
-  return (ret);
+		if ((i + 1) % columns == 0)
+		{
+			libmatrixutil_append_and_release_memory_static(&buffer, "\n");
+			ret++;
+		}
+		i++;
+	}
+#ifdef _MSC_VER
+	if (_write(1, buffer, ret) == -1)
+#else
+	if (write(1, buffer, ret) == -1)
+#endif
+		ret = -1;
+	free(buffer);
+	return (ret);
 }

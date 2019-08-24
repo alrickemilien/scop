@@ -11,7 +11,8 @@ void	transpose_mat4(t_matrix *a)
 	while (h < 4)
 	{
 		w = 0;
-		while (w < 4) {
+		while (w < 4)
+		{
 			t->value[w * 4 + h] = a->value[h * 4 + w];
 			w++;
 		}
