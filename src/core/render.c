@@ -21,8 +21,8 @@ static void		render_elements(GLuint vao, GLenum render_style, size_t vertex_numb
 
 static t_matrix	*rotate_object_around_point(t_software_environ *env, t_vec3 v)
 {
-	t_matrix *model_matrix;
-	t_vec3 minus_v;
+	t_matrix    *model_matrix;
+	t_vec3      minus_v;
 
 	minus_v = (t_vec3){-v.x, -v.y, -v.z};
 

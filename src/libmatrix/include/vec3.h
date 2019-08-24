@@ -13,11 +13,6 @@ typedef struct  s_vec3 {
 }               t_vec3;
 #pragma pack(pop)
 
-t_vec3 			*new_vec3(
-    GLfloat x,
-    GLfloat y,
-    GLfloat z);
-
 GLfloat         dot_product_vec3(
     const t_vec3 *vector1,
     const t_vec3 *vector2);
@@ -46,6 +41,7 @@ void            add_vec3(
 void            substract_vec3(
     t_vec3 *vector,
     const t_vec3 *modifier);
+
 t_vec3          return_sub_vec3(
     t_vec3 vector,
     t_vec3 modifier);

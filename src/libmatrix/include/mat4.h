@@ -2,7 +2,7 @@
 # define MAT_4
 
 typedef struct    s_matrix {
-    GLfloat       value[32];
+    GLfloat       value[16];
 }                 t_matrix;
 
 typedef t_matrix  t_mat4;
@@ -28,11 +28,11 @@ int               multiply_mat4(
   t_mat4 *b,
   t_mat4 *result);
 
-void              add_mat4(
+t_matrix          add_mat4(
   t_mat4 *a,
   t_mat4 *b,
   t_mat4 *result);
-void              copy_mat4(
+t_mat4            copy_mat4(
   t_mat4 *a,
   t_mat4 *destination);
 

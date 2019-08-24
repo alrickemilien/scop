@@ -1,6 +1,6 @@
 #include "libmatrix.h"
 
-void	normalize_vec3(t_vec3 *vector)
+void    normalize_vec3(t_vec3 *vector)
 {
 	float	magnitude;
 
@@ -8,4 +8,16 @@ void	normalize_vec3(t_vec3 *vector)
 	vector->x = vector->x / magnitude;
 	vector->y = vector->y / magnitude;
 	vector->z = vector->z / magnitude;
+}
+
+t_vec3  normalized_vec3(t_vec3 *vector)
+{
+	float	magnitude;
+
+	magnitude = magnitude_vec3(vector);
+    return ((t_vec3){
+	    vector->x / magnitude,
+	    vector->y / magnitude,
+	    vector->z / magnitude,
+    });
 }
