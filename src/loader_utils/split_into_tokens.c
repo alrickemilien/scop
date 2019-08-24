@@ -54,11 +54,35 @@ static size_t	count_words(const char *line, const char *delimiters)
 	return (n);
 }
 
-t_token	*split_into_tokens(const char *line, const char *delimiters)
+static size_t	on_delimiter(
+	const char *line,
+	const char *delimiters,
+	t_token *array,
+	size_t *n)
+{
+	t_token	token;
+	size_t	i;
+
+	i = 0;
+	token.cursor = (char*)(line);
+	token.size = 0;
+	while (line[i] && is_printable(line[i])
+		&& !is_on_delimiter(line + i, delimiters))
+	{
+		token.size++;
+		i++;
+	}
+	memcpy(&array[*n], &token, sizeof(t_token));
+	*n = *n + 1;
+	return (i);
+}
+
+t_token			*split_into_tokens(
+	const char *line,
+	const char *delimiters)
 {
 	size_t	i;
 	size_t	n;
-	t_token	token;
 	t_token	*array;
 
 	if (NULL == line)
@@ -76,17 +100,7 @@ t_token	*split_into_tokens(const char *line, const char *delimiters)
 		if (is_on_delimiter(line + i, delimiters))
 			i += skip_delimiters(line + i, delimiters);
 		if (line[i] && !is_on_delimiter(line + i, delimiters))
-		{
-			token.cursor = (char*)((size_t)line + i);
-			token.size = 0;
-			while (line[i] && is_printable(line[i])
-				&& !is_on_delimiter(line + i, delimiters))
-			{
-				token.size++;
-				i++;
-			}
-			memcpy(&array[n++], &token, sizeof(t_token));
-		}
+			i += on_delimiter(line, delimiters, array, &n);
 	}
 	return (array);
 }

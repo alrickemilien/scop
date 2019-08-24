@@ -45,7 +45,7 @@ void		gl_matrixing(t_software_environ *env)
 	);
 	env->projection_matrix = perspective_mat4(
 		90.0f,
-		(GLfloat)(WINDOW_WIDTH / WINDOW_HEIGHT),
+		(GLfloat)(env->window_width / env->window_height),
 		1.0f,
 		2000.0f);
 	check_gl_error();
