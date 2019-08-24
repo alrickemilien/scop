@@ -6,8 +6,6 @@ int			read_position(t_mesh *data, const t_token *tokens)
 
 	if (read_vec3(tokens, &new_position) < 0)
 		return (-1);
-
-  	ft_lstadd(&data->positions, ft_lstnew(&new_position, sizeof(t_vec3)));
-
- 	return (0);
+	ft_lstadd(&data->positions, ft_lstnew(&new_position, sizeof(t_vec3)));
+	return (0);
 }

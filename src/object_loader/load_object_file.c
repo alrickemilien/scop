@@ -6,12 +6,11 @@
 ** Done at the end after all vertices has been read
 */
 
-static int fill_vertices_data(t_mesh *data, t_list *vertices)
+static int	fill_vertices_data(t_mesh *data, t_list *vertices)
 {
 	int		error;
 
 	error = 0;
-	// For each vertex from the mesh
 	while (vertices)
 	{
 		if (fill_vertex_position(data, vertices->content) < 0)
@@ -22,7 +21,6 @@ static int fill_vertices_data(t_mesh *data, t_list *vertices)
 			error = -1;
 		vertices = vertices->next;
 	}
-
 	return (error);
 }
 
@@ -31,16 +29,14 @@ static int fill_vertices_data(t_mesh *data, t_list *vertices)
 ** The computed normal is wrong here
 */
 
-static void	fill_face_normal(t_polygon* polygon)
+static void	fill_face_normal(t_polygon *polygon)
 {
 	t_vec3 v1;
 	t_vec3 v2;
 
 	v1 = *(t_vec3*)polygon->vertices->content;
 	v2 = *(t_vec3*)polygon->vertices->next->content;
-
 	cross_vec3(&v1, &v2);
-
 	polygon->normal = v1;
 }
 
@@ -55,66 +51,53 @@ static int	fill_poylgons_vertices_data(t_mesh *data, t_list *polygons)
 	int			error;
 
 	error = 0;
-
-	// For each polygon
-	while(polygons)
+	while (polygons)
 	{
 		p = (t_polygon*)polygons->content;
-
-		// For each vertex from the current polygon
 		if (fill_vertices_data(data, p->vertices) == -1)
 			error = -1;
-
-		// Setup polygon's normal
 		fill_face_normal(p);
-
 		polygons = polygons->next;
 	}
-
 	return (error);
 }
 
-int		load_object_file(t_mesh *data, const char *file_path)
+static void	reorder_lists(t_mesh *data)
 {
-	FILE		*fp;
-	char		line[LOADER_LINE_BUFF_SIZE];
-	size_t		g_current_line;
-
-	g_current_line = 0;
-
-	memset(data, 0, sizeof(t_mesh));
-
-	data->path = strdup(file_path);
-
-	if (!(fp = fopen(file_path, "r")))
-		return (-1);
-
-	while (fgets(line, BUFF_SIZE, fp) != NULL && ++g_current_line)
-	{
-		if (line[0] == '\n')
-			continue ;
-
-		if (read_object_file_line(data, line) < 0)
-			return (-1);
-	}
-
-	fclose(fp);
-
 	ft_lstreverse(&data->uvs);
 	ft_lstreverse(&data->normals);
 	ft_lstreverse(&data->positions);
 	ft_lstreverse(&data->vertices);
 	ft_lstreverse(&data->polygons);
-
-	// Set up end of last usemtl instance
 	if (data->usemtl != NULL)
 		((t_usemtl*)data->usemtl->content)->end = data->faces_count - 1;
-
 	fill_poylgons_vertices_data(data, data->polygons);
-
 	fill_vertices_data(data, data->vertices);
+}
 
+int			load_object_file(t_mesh *data, const char *file_path)
+{
+	FILE	*fp;
+	char	line[LOADER_LINE_BUFF_SIZE];
+	size_t	g_current_line;
+
+	g_current_line = 0;
+	memset(data, 0, sizeof(t_mesh));
+	data->path = strdup(file_path);
+	if (!(fp = fopen(file_path, "r")))
+		return (-1);
+	while (fgets(line, BUFF_SIZE, fp) != NULL && ++g_current_line)
+	{
+		if (line[0] == '\n')
+			continue ;
+		if (read_object_file_line(data, line) < 0)
+		{
+			fclose(fp);
+			return (-1);
+		}
+	}
+	fclose(fp);
+	reorder_lists(data);
 	printf("%ld polygons have been loaded.\n", ft_lstlen(data->polygons));
-
 	return (0);
 }

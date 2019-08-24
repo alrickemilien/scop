@@ -17,11 +17,11 @@ static const	t_vec3	g_vec3_z_minus = { 0, 0, -1 };
 
 void garabage()
 {
-	(void)vec3_origin;
-	(void)vec3_x;
-	(void)vec3_x_minus;
-	(void)vec3_y;
-	(void)vec3_y_minus;
-	(void)vec3_z;
-	(void)vec3_z_minus;
+	(void)g_vec3_origin;
+	(void)g_vec3_x;
+	(void)g_vec3_x_minus;
+	(void)g_vec3_y;
+	(void)g_vec3_y_minus;
+	(void)g_vec3_z;
+	(void)g_vec3_z_minus;
 }

@@ -39,9 +39,10 @@ static const t_type_match	g_type_matches[9] = {
 	},
 };
 
-static t_parse_function get_parse_func(const t_token *token)
+static t_parse_function			get_parse_func(
+		const t_token *token)
 {
-	size_t		i;
+	size_t	i;
 
 	i = 0;
 	while (i * sizeof(t_type_match) < sizeof(g_type_matches))
@@ -49,35 +50,33 @@ static t_parse_function get_parse_func(const t_token *token)
 		if (!strncmp(g_type_matches[i].token, token->cursor, token->size))
 			return (g_type_matches[i].f);
 
-    i++;
+		i++;
 	}
-
-  return (NULL);
+	return (NULL);
 }
 
-int			read_object_file_line(t_mesh *data, const char *line)
-{
-	t_token	*tokens;
-	t_parse_function parse_function;
+/*
+** Split each token of the line
+** Get the function according to the first token
+*/
 
-  // Split each token of the line
+int								read_object_file_line(
+		t_mesh *data,
+		const char *line)
+{
+	t_token				*tokens;
+	t_parse_function	parse_function;
+
 	if (NULL == (tokens = split_into_tokens(line, NULL)))
 		return (0);
-
-  // Get the function according to the first token
-  parse_function = get_parse_func(tokens);
-
-  if (!parse_function)
+	parse_function = get_parse_func(tokens);
+	if (!parse_function)
 	{
 		puts(tokens[0].cursor);
 		free(tokens);
-
-    return (-1);
+		return (-1);
 	}
-
-  (*parse_function)(data, (const t_token *)(tokens + 1));
-
+	(*parse_function)(data, (const t_token *)(tokens + 1));
 	free(tokens);
-
 	return (0);
 }
