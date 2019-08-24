@@ -13,7 +13,6 @@ int	load_mtl_file(t_mtllib *data)
 	{
 		if (line[0] == '\n')
 			continue ;
-
 		if (read_mtl_file_line(data, line) < 0)
 			return (-1);
 	}

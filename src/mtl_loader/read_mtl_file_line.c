@@ -44,7 +44,7 @@ static const t_mtl_type_match	g_type_matches[10] = {
 };
 
 static t_mtl_parse_function		get_parse_func(
-	const t_token *token)
+		const t_token *token)
 {
 	size_t	i;
 
@@ -58,29 +58,27 @@ static t_mtl_parse_function		get_parse_func(
 	return (NULL);
 }
 
-int						read_mtl_file_line(
-	t_mtllib *data,
-	const char *line)
+int								read_mtl_file_line(
+		t_mtllib *data,
+		const char *line)
 {
 	t_token					*tokens;
 	t_mtl_parse_function	parse_function;
 
-	// Split each token of the line
 	if (NULL == (tokens = split_into_tokens(line, NULL)))
 		return (0);
-	// Get the function according to the first token
 	parse_function = get_parse_func(tokens);
 	if (!parse_function)
 	{
 		read_mtl_error("Unrecognized file line\n");
 		read_mtl_error(tokens[0].cursor);
 		free(tokens);
-    	return (0);
+		return (0);
 	}
 	(*parse_function)(
-		data,
-		data->materials_list ? data->materials_list->content : NULL,
-		(const t_token *)(tokens + 1));
+			data,
+			data->materials_list ? data->materials_list->content : NULL,
+			(const t_token *)(tokens + 1));
 	free(tokens);
 	return (0);
 }
