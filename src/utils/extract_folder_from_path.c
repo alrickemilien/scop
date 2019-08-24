@@ -19,8 +19,8 @@
 */
 
 #ifdef __APPLE__
-
-char	*extract_folder_from_path(const char *path)
+char	*extract_folder_from_path(
+		const char *path)
 {
 	char	*tmp;
 	char	*ret;

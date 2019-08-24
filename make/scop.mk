@@ -34,6 +34,7 @@ SRC += ../src/core/render.c \
 	../src/shader/cleanup_shader_program.c \
 	../src/shader/compile_shader.c \
 	../src/texture_loader/bmp/load_bitmap_file.c \
+	../src/texture_loader/bmp/load_bitmap_file_header.c \
 	../src/core/compute_vertex_uvs.c
 
 #

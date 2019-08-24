@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/16 17:34:19 by aemilien          #+#    #+#             */
-/*   Updated: 2016/12/05 17:00:33 by aemilien         ###   ########.fr       */
+/*   Updated: 2019/08/24 14:41:45 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	l;
 
 	l = strlen(s1) + strlen(s2);
-	new_str = malloc(sizeof(char) * (l + 1));
-	if (!new_str)
+	if (!(new_str = malloc(sizeof(char) * (l + 1))))
 		return (NULL);
 	new_str[l] = 0;
 	j = 0;

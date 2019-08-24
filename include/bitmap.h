@@ -39,6 +39,10 @@ typedef struct			s_bitmap {
 	size_t				size;
 }						t_bitmap;
 
+int						load_bitmap_file_header(
+							t_bitmap *bmp,
+							FILE *stream);
+
 int						load_bitmap_file(
 							t_bitmap *bmp,
 							char const *pathname);

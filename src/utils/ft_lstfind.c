@@ -6,17 +6,17 @@
 ** or null if no one
 */
 
-t_list *ft_lstfind(t_list *root,
-    const void *provided_content,
-    bool (*f)(const void *node_content, const void *provided_content))
+t_list	*ft_lstfind(t_list *root,
+		const void *provided_content,
+		bool (*f)(
+			const void *node_content,
+			const void *provided_content))
 {
-    while (root)
-    {
-        if (f(root->content, provided_content))
-            return (root);
-
-        root = root->next;
-    }
-
-    return (NULL);
+	while (root)
+	{
+		if (f(root->content, provided_content))
+			return (root);
+		root = root->next;
+	}
+	return (NULL);
 }

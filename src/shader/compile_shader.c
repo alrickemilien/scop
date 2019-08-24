@@ -1,12 +1,12 @@
 #include "scop.h"
 
 int	compile_single_shader(
-	shader_t *shader,
-	int *info_log_length,
-	GLint *result)
+		shader_t *shader,
+		int *info_log_length,
+		GLint *result)
 {
-	printf("Compiling shader : %s\n", shader->path);
-	glShaderSource(shader->id, 1, (const GLchar *const*)(&shader->content), &shader->length);
+	glShaderSource(shader->id, 1,
+			(const GLchar *const*)(&shader->content), &shader->length);
 	glCompileShader(shader->id);
 	glGetShaderiv(shader->id, GL_COMPILE_STATUS, result);
 	glGetShaderiv(shader->id, GL_INFO_LOG_LENGTH, info_log_length);
