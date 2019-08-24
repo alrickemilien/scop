@@ -30,7 +30,7 @@ GLEW := $(HOME)/.brew/include
 GLFW := ../external/glfw/include
 C_INCLUDE_PATH := $(GLEW):$(GLFW)
 
-GLEW_LIB := ../external/glew/lib
+GLEW_LIB := $(HOME)/.brew/lib
 GLFW_LIB := ../external/glfw/src
 LIBRARY_PATH := $(GLEW_LIB):$(GLFW_LIB)
 

@@ -69,7 +69,7 @@ t_token			*split_whitespaces(
 		while (line[i] && !is_printable(line[i]))
 			i++;
 		if (line[i])
-			i += on_whitespace(line, array, &n);
+			i += on_whitespace(line + i, array, &n);
 	}
 	return (array);
 }

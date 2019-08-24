@@ -100,7 +100,7 @@ t_token			*split_into_tokens(
 		if (is_on_delimiter(line + i, delimiters))
 			i += skip_delimiters(line + i, delimiters);
 		if (line[i] && !is_on_delimiter(line + i, delimiters))
-			i += on_delimiter(line, delimiters, array, &n);
+			i += on_delimiter(line + i, delimiters, array, &n);
 	}
 	return (array);
 }
