@@ -139,24 +139,24 @@ void		end_program(int code)
 
 	printf("Closing app ...\n");
 
-	// cleanup_shader_program(&g_env->object_shader_program);
-	// cleanup_shader_program(&g_env->internal_object_shader_program);
+	cleanup_shader_program(&g_env->object_shader_program);
+	cleanup_shader_program(&g_env->internal_object_shader_program);
 
-	// glDeleteBuffers(1, &g_env->vbo);
-	// glDeleteBuffers(1, &g_env->plan_vbo);
-	// glDeleteBuffers(1, &g_env->axis_vbo);
+	glDeleteBuffers(1, &g_env->vbo);
+	glDeleteBuffers(1, &g_env->plan_vbo);
+	glDeleteBuffers(1, &g_env->axis_vbo);
 
-	// if (g_env->indexation_mode)
-	// 	glDeleteBuffers(1, &g_env->ebo);
+	if (g_env->indexation_mode)
+		glDeleteBuffers(1, &g_env->ebo);
 
-	// glDeleteVertexArrays(1, &g_env->vao);
-	// glDeleteVertexArrays(1, &g_env->plan_vao);
-	// glDeleteVertexArrays(1, &g_env->axis_vao);
+	glDeleteVertexArrays(1, &g_env->vao);
+	glDeleteVertexArrays(1, &g_env->plan_vao);
+	glDeleteVertexArrays(1, &g_env->axis_vao);
 
-	// if (g_env->texture.is_texture_loaded)
-	// 	glDeleteTextures(1, &g_env->texture_uni);
+	if (g_env->texture.is_texture_loaded)
+		glDeleteTextures(1, &g_env->texture_uni);
 
-	// glfwTerminate();
+	glfwTerminate();
 
 	clear_env_memory();
 
