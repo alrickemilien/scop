@@ -1,3 +1,4 @@
 - need to improve load object file (handle \n garbage, etc)
 - compute window size dynamically through arguments command line
 - compute the all the matrix out of the shader
+- Pass matrix to static zthout malloc
