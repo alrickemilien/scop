@@ -18,8 +18,8 @@ int	gl_texturing(t_software_environ *env)
 	check_gl_error();
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
 			env->texture.width, env->texture.height,
-			0, GL_BGR, GL_UNSIGNED_BYTE,
-			env->texture.data);
+			0, env->texture.format,
+            GL_UNSIGNED_BYTE, env->texture.data);
 	check_gl_error();
 	env->texture_uni = glGetUniformLocation(
 			env->object_shader_program.id, "texture_sample");
