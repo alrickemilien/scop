@@ -71,9 +71,8 @@ t_mat4	look_at_mat4_2(
 	t_vec3	up;
 	t_mat4	matrix;
 
-	new_mat4(&matrix);
 	copy_vec3(&forward, center);
-	substract_vec3(&forward, eye);
+	sub_vec3(&forward, eye);
 	normalize_vec3(&forward);
 	copy_vec3(&left, &forward);
 	cross_vec3(&left, up_dir);

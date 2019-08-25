@@ -13,7 +13,7 @@ int main(void) {
 	/****************************************************************************/
 	NEW_TEST("basic test pmatrix");
 
-  m = new_matrix(4, 4);
+  	m = new_matrix(4, 4);
 
 	fill_matrix(m, &val);
 

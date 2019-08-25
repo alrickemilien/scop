@@ -93,7 +93,7 @@ int ltoa_hex(uint64_t value, char *buffer, uint64_t base) {
   return (i);
 }
 
-int libmatrix_itoa(void *param, char *buffer)
+int libmatrix_itoa(const void *param, char *buffer)
 {
   int value;
 
@@ -101,7 +101,7 @@ int libmatrix_itoa(void *param, char *buffer)
   return ((int)itoa_hex(value, buffer, 10));
 }
 
-int libmatrix_ltoa(void *param, char *buffer)
+int libmatrix_ltoa(const void *param, char *buffer)
 {
   long  value;
 
@@ -116,7 +116,7 @@ int libmatrix_ltoa(void *param, char *buffer)
 ** 1(The 2) +  1(The dot) +  38(e-38) + 1(\0 character) => 40 characters wide
 */
 
-int libmatrix_ftoa(void *param, char *buffer)
+int libmatrix_ftoa(const void *param, char *buffer)
 {
   float   value;
   int     integer_part;

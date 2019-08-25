@@ -71,7 +71,7 @@ static int					apply_flag(
 static int						get_string_value_according_to_format(
 		t_pmatrix_format_value *options,
 		char *buffer,
-		void *value)
+		const void *value)
 {
 	return options->identifier.func(value, buffer);
 }
@@ -83,8 +83,8 @@ static int						get_string_value_according_to_format(
 
 static int					pvalue(
 		const char *format,
-		char**whole_buffer,
-		void *value)
+		char **whole_buffer,
+		const void *value)
 {
 	char                    *buffer;
 	char                    *cursor_of_format;

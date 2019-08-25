@@ -50,7 +50,7 @@ t_mat4            copy_mat4(
 
  typedef struct   s_pmatrix_fmt {
    char           *key;
-   int            (*func)(void *i, char *buffer);
+   int            (*func)(const void *i, char *buffer);
  }                t_pmatrix_fmt;
 
  typedef struct   s_pmatrix_format_value {
@@ -139,13 +139,13 @@ void              libmatrixutil_append_and_release_memory_static(char **buffer, 
 */
 
 int               libmatrix_itoa_hex(uint64_t value, char *buffer, uint64_t base);
-int               libmatrix_itoa(void *param, char *buffer);
-int               libmatrix_ltoa(void *param, char *buffer);
-int               libmatrix_ftoa(void *param, char *buffer);
-int               libmatrix_dtoa(void *v, char *buffer);
+int               libmatrix_itoa(const void *param, char *buffer);
+int               libmatrix_ltoa(const void *param, char *buffer);
+int               libmatrix_ftoa(const void *param, char *buffer);
+int               libmatrix_dtoa(const void *v, char *buffer);
 # ifdef __gl_h_
-int               libmatrix_glftoa(void *param, char *buffer);
-int               libmatrix_glitoa(void *param, char *buffer);
+int               libmatrix_glftoa(const void *param, char *buffer);
+int               libmatrix_glitoa(const void *param, char *buffer);
 # endif
 
 #endif

@@ -12,7 +12,7 @@ static void	compute_forward(
 		t_vec3 *f)
 {
 	copy_vec3(f, eye);
-	substract_vec3(f, center);
+	sub_vec3(f, center);
 	normalize_vec3(f);
 }
 
