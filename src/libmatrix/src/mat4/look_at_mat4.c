@@ -12,8 +12,8 @@ static void	compute_forward(
 		t_vec3 *f)
 {
 	copy_vec3(f, eye);
-	sub_vec3(f, center);
-	normalize_vec3(f);
+	*f = sub_vec3(*f, *center);
+	*f = normalize_vec3(*f);
 }
 
 static void	compute_right(
@@ -22,8 +22,8 @@ static void	compute_right(
 		t_vec3 *right)
 {
 	copy_vec3(right, up);
-	cross_vec3(right, forward);
-	normalize_vec3(right);
+	*right = cross_vec3(*right, *forward);
+	*right = normalize_vec3(*right);
 }
 
 static void	compute_cam_up(
@@ -32,7 +32,7 @@ static void	compute_cam_up(
 		t_vec3 *cam_up)
 {
 	copy_vec3(cam_up, forward);
-	cross_vec3(cam_up, right);
+	*cam_up = cross_vec3(*cam_up, *right);
 }
 
 /*

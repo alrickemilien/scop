@@ -72,13 +72,13 @@ t_mat4	look_at_mat4_2(
 	t_mat4	matrix;
 
 	copy_vec3(&forward, center);
-	sub_vec3(&forward, eye);
-	normalize_vec3(&forward);
+	forward = sub_vec3(forward, *eye);
+	forward = normalize_vec3(forward);
 	copy_vec3(&left, &forward);
-	cross_vec3(&left, up_dir);
-	normalize_vec3(&left);
+	left = cross_vec3(left, *up_dir);
+	left = normalize_vec3(left);
 	copy_vec3(&up, &left);
-	cross_vec3(&up, &forward);
+	up = cross_vec3(up, forward);
 	memset(matrix.value, 0, sizeof(float) * 4 * 4);
 	matrix.value[0] = left.x;
 	matrix.value[1] = up.x;

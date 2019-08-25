@@ -40,5 +40,6 @@ SRC +=	../src/mat4/pmatrix.c \
 				../src/mat4/multiply_mat4.c \
 				../src/mat4/printmat4.c
 
+SRC += ../src/vec2/vec2.c
 
 INCLUDE += -I ../include

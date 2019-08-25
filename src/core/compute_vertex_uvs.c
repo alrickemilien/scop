@@ -115,9 +115,9 @@ void		set_default_uvs(t_polygon *polygon)
 
 		if (prev_vertex == NULL
 			|| (prev_vertex->uv->x == 0.0f && prev_vertex->uv->y == 1.0f))
-			{
+		{
 			vertex->uv = new_vec2(0.0f, 0.0f);
-			}
+		}
 		else if (prev_vertex->uv->x == 0.0f && prev_vertex->uv->y == 0.0f)
 		{
 			vertex->uv = new_vec2(1.0f, 0.0f);

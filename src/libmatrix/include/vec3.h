@@ -25,23 +25,15 @@ t_vec3            copy_vec3(
     t_vec3 *dest,
     const t_vec3 *src);
 
-t_vec3  normalize_vec3(t_vec3 *vector);
-t_vec3  normalize_to_vec3(const t_vec3 *vector, t_vec3 *dest);
+t_vec3  normalize_vec3(t_vec3 vector);
 
 GLfloat         magnitude_vec3(
     const t_vec3 *vector);
 
-t_vec3	add_vec3(t_vec3 *vector, const t_vec3 *modifier);
-t_vec3	add_to_vec3(const t_vec3 *a, const t_vec3 *b, t_vec3 *dest);
-
-t_vec3	sub_vec3(t_vec3 *vector, const t_vec3 *modifier);
-t_vec3	sub_to_vec3(const t_vec3 *a, const t_vec3 *b, t_vec3 *dest);
-
-t_vec3	scale_vec3(t_vec3 *vector, float factor);
-t_vec3	scale_to_vec3(t_vec3 *src, t_vec3 *dest, float factor);
-
-t_vec3	cross_vec3(t_vec3 *vector1, const t_vec3 *vector2);
-t_vec3	cross_to_vec3(const t_vec3 *a, const t_vec3 *b, t_vec3 *dest);
+t_vec3	add_vec3(t_vec3 vector, t_vec3 modifier);
+t_vec3	sub_vec3(t_vec3 vector, t_vec3 modifier);
+t_vec3	scale_vec3(t_vec3 vector, float factor);
+t_vec3	cross_vec3(t_vec3 vector1, t_vec3 vector2);
 
 t_vec3            set_vec3(
     t_vec3 *vector,

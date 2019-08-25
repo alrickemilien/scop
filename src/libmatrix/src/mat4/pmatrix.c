@@ -1,16 +1,14 @@
+#include "libmatrix.h"
 #ifdef _MSC_VER
 # include <io.h>
 #endif
 
-#include "libmatrix.h"
 static const t_pmatrix_fmt  g_pmatrix_format_function[] = {
 	{ "d", &libmatrix_itoa },
 	{ "ld", &libmatrix_ltoa },
 	{ "f", &libmatrix_ftoa },
-#ifdef __gl_h_
-	{ "glf", &libmatrix_glftoa },
-	{ "gld", &libmatrix_glitoa },
-#endif
+	{ "glf", &libmatrix_ftoa },
+	{ "gld", &libmatrix_itoa },
 };
 
 static inline bool			is_flag(char c)
@@ -139,7 +137,7 @@ static int					pvalue(
 
 int							pmatrix(
 		const char *format,
-		const t_matrix *matrix)
+		const t_mat4 *matrix)
 {
 	size_t    i;
 	int       ret;
@@ -150,7 +148,7 @@ int							pmatrix(
 	buffer = NULL;
 	while (i < 16)
 	{
-		ret += pvalue(format, &buffer, &matrix->value[i % 4 + i]);
+		ret += pvalue(format, &buffer, &matrix->value[i]);
 
 		if ((i + 1) % 4 == 0)
 		{

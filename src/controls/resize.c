@@ -10,7 +10,6 @@ void						window_size_callback(
 	(void)window;
 	WINDOW_WIDTH = width;
 	WINDOW_HEIGHT = height;
-	delete_matrix(g_env->projection_matrix);
 	g_env->projection_matrix = perspective_mat4(
 			90.0f,
 			(GLfloat)(WINDOW_WIDTH / WINDOW_HEIGHT),

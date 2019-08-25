@@ -58,6 +58,7 @@ SET (SRC
 	src/vec3/operations/cross_vec3.c
 
 	# vec2
+	src/vec2/vec2.c
 )
 
 LIST(TRANSFORM SRC PREPEND ${CMAKE_SOURCE_DIR})

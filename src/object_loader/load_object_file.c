@@ -36,7 +36,7 @@ static void	fill_face_normal(t_polygon *polygon)
 
 	v1 = *(t_vec3*)polygon->vertices->content;
 	v2 = *(t_vec3*)polygon->vertices->next->content;
-	cross_vec3(&v1, &v2);
+	v1 = cross_vec3(v1, v2);
 	polygon->normal = v1;
 }
 

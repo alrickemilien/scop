@@ -22,17 +22,17 @@ t_mat4            scale_to_mat4(
   const t_mat4 *src,
   t_mat4 *dest,
   GLfloat scalar);
-t_matrix	multiply_mat4(
+t_mat4	multiply_mat4(
   t_mat4 *a,
   const t_mat4 *b);
-t_matrix	multiply_to_mat4(
+t_mat4	multiply_to_mat4(
   const t_mat4 *a,
   const t_mat4 *b,
   t_mat4 *result);
-t_matrix          add_mat4(
+t_mat4          add_mat4(
   t_mat4 *a,
   const t_mat4 *b);
-t_matrix          add_to_mat4(
+t_mat4          add_to_mat4(
   const t_mat4 *a,
   const t_mat4 *b,
   t_mat4 *result);
@@ -109,11 +109,11 @@ t_mat4	translate_to_mat4(
 		const t_mat4 *src,
 		t_mat4 *dest,
 		const t_vec3 *amount);
-t_matrix          transpose_mat4(
-  t_matrix *a);
-t_matrix          transpose_to_mat4(
-  const t_matrix *src,
-  t_matrix *dest);
+t_mat4          transpose_mat4(
+  t_mat4 *a);
+t_mat4          transpose_to_mat4(
+  const t_mat4 *src,
+  t_mat4 *dest);
 
 t_vec3	mat4_on_vec3(t_vec3 *v, const t_mat4 *m);
 t_vec3	mat4_to_vec3(const t_vec3 *src, t_vec3 *dest, const t_mat4 *m);
@@ -143,9 +143,5 @@ int               libmatrix_itoa(const void *param, char *buffer);
 int               libmatrix_ltoa(const void *param, char *buffer);
 int               libmatrix_ftoa(const void *param, char *buffer);
 int               libmatrix_dtoa(const void *v, char *buffer);
-# ifdef __gl_h_
-int               libmatrix_glftoa(const void *param, char *buffer);
-int               libmatrix_glitoa(const void *param, char *buffer);
-# endif
 
 #endif

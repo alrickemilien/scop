@@ -47,7 +47,7 @@ static void look_at_polygon(
     *n += 1;
     if (is_vertex_same(vec[0], vertex))
         *normal = add_vec3(
-            normal,
+            *normal,
             cross_vec3(
                 sub_vec3(*vec[1]->position, *vec[0]->position),
                 sub_vec3(*vec[2]->position, *vec[0]->position)));

@@ -171,7 +171,7 @@ void			render_axis(t_software_environ *env, t_mat4 *mvp)
 {
 	identity_mat4(&env->model_matrix);
 
-	mvp = compute_mvp(env, mvp);
+	compute_mvp(env, mvp);
 
 	glUseProgram(env->axis_shader_program.id);
 

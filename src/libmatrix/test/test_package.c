@@ -26,10 +26,3 @@ void test_log_step(const char *msg) {
 void test_finished(void) {
 		printf("All tests pass\n");
 }
-
-bool are_floating_point_equal(GLfloat a, GLfloat b, GLfloat precision) {
-	if (fabs(a - b) <= precision)
-		return (true);
-
-	return false;
-}

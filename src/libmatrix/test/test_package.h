@@ -10,7 +10,6 @@ void test_warning(const char *msg);
 void test_failure(const char *msg);
 void test_log_step(const char *msg);
 void test_finished(void);
-bool are_floating_point_equal(double a, double b, double precision);
 
 #define NEW_TEST(x) test_log_step(x)
 
