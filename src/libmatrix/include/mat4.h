@@ -7,8 +7,6 @@ typedef struct    s_matrix {
 
 typedef t_matrix  t_mat4;
 
-t_mat4            *new_mat4();
-
 /*
 ** Simple matrix operations
 */
@@ -17,20 +15,26 @@ void              fill_mat4(
   t_mat4 *m,
   void *value);
 
-void              delete_matrix(
-  t_matrix *matrix);
-
-void              scale_mat4(
+t_mat4            scale_mat4(
   t_mat4 *a,
   GLfloat scalar);
-int               multiply_mat4(
+t_mat4            scale_to_mat4(
+  const t_mat4 *src,
+  t_mat4 *dest,
+  GLfloat scalar);
+t_matrix	multiply_mat4(
   t_mat4 *a,
-  t_mat4 *b,
+  const t_mat4 *b);
+t_matrix	multiply_to_mat4(
+  const t_mat4 *a,
+  const t_mat4 *b,
   t_mat4 *result);
-
 t_matrix          add_mat4(
   t_mat4 *a,
-  t_mat4 *b,
+  const t_mat4 *b);
+t_matrix          add_to_mat4(
+  const t_mat4 *a,
+  const t_mat4 *b,
   t_mat4 *result);
 t_mat4            copy_mat4(
   t_mat4 *a,
@@ -58,49 +62,61 @@ t_mat4            copy_mat4(
  }                t_pmatrix_format_value;
 
 int               pmatrix(
-  char *format,
-  t_mat4 *matrix);
+  const char *format,
+  const t_mat4 *matrix);
 void              printmat4(const t_mat4 *m);
 
 /*
 ** Specific matrix
 */
 
-t_mat4            *identity_mat4();
+t_mat4            identity_mat4(t_mat4 *m);
 
-t_mat4            *look_at_mat4(
+t_mat4            look_at_mat4(
   const t_vec3 *eye,
   const t_vec3 *center,
 	const t_vec3 *up);
 
-t_mat4            *look_at_mat4_2(
+t_mat4            look_at_mat4_2(
   const t_vec3 *eye,
   const t_vec3 *center,
 	const t_vec3 *up);
 
-t_mat4            *perspective_mat4(
+t_mat4						perspective_mat4(
 	GLfloat fov,
-	GLfloat aspect,
-	GLfloat near_plane,
-	GLfloat far_plane);
+	GLfloat aspect_ratio,
+	GLfloat znear,
+	GLfloat zfar);
 
-void              rotate_x_mat4(
+t_mat4              rotate_x_mat4(
   t_mat4 *m,
   GLfloat amount);
-void              rotate_y_mat4(
+t_mat4              rotate_y_mat4(
   t_mat4 *m,
   GLfloat amount);
-void              rotate_z_mat4(
+t_mat4              rotate_z_mat4(
   t_mat4 *m,
   GLfloat amount);
-void              translate_mat4(
-  t_mat4 *dest,
-  const t_vec3 *amount);
-void              transpose_mat4(
+
+t_mat4	rotate_x_to_mat4(t_mat4 *src, t_mat4 *dest, GLfloat angle);
+t_mat4	rotate_y_to_mat4(t_mat4 *src, t_mat4 *dest, GLfloat angle);
+t_mat4	rotate_z_to_mat4(t_mat4 *src, t_mat4 *dest, GLfloat angle);
+
+t_mat4	translate_mat4(
+		t_mat4 *dest,
+		const t_vec3 *amount);
+t_mat4	translate_to_mat4(
+		const t_mat4 *src,
+		t_mat4 *dest,
+		const t_vec3 *amount);
+t_matrix          transpose_mat4(
   t_matrix *a);
-void              mat4_on_vec3(
-  t_vec3 *v,
-  const t_mat4 *m);
+t_matrix          transpose_to_mat4(
+  const t_matrix *src,
+  t_matrix *dest);
+
+t_vec3	mat4_on_vec3(t_vec3 *v, const t_mat4 *m);
+t_vec3	mat4_to_vec3(const t_vec3 *src, t_vec3 *dest, const t_mat4 *m);
 
 /*
 ** Libmatrix utils

@@ -10,8 +10,5 @@ void	fill_mat4(t_mat4 *m, void *value)
 
 	i = 0;
 	while (i < 16)
-	{
-		memcpy(&m->value[i], value, sizeof(GLfloat));
-		i++;
-	}
+		memcpy(&m->value[i++], value, sizeof(GLfloat));
 }

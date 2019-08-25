@@ -13,7 +13,7 @@
 ** 2.5 2.2 2.5 2.5
 */
 
-void	scale_mat4(t_mat4 *a, GLfloat scalar)
+t_mat4	scale_mat4(t_mat4 *a, GLfloat scalar)
 {
 	size_t	i;
 
@@ -23,4 +23,18 @@ void	scale_mat4(t_mat4 *a, GLfloat scalar)
 		a->value[i] = (GLfloat)a->value[i] * scalar;
 		i++;
 	}
+	return (*a);
+}
+
+t_mat4	scale_to_mat4(const t_mat4 *src, t_mat4 *dest, GLfloat scalar)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < 16)
+	{
+		dest->value[i] = (GLfloat)src->value[i] * scalar;
+		i++;
+	}
+	return (*dest);
 }

@@ -1,23 +1,44 @@
 #include "libmatrix.h"
 
-void	transpose_mat4(t_matrix *a)
+t_matrix	transpose_mat4(t_matrix *a)
 {
 	size_t	h;
 	size_t	w;
-	t_mat4	*t;
+	t_mat4	t;
 
-	t = identity_mat4();
+	identity_mat4(&t);
 	h = 0;
 	while (h < 4)
 	{
 		w = 0;
 		while (w < 4)
 		{
-			t->value[w * 4 + h] = a->value[h * 4 + w];
+			t.value[w * 4 + h] = a->value[h * 4 + w];
 			w++;
 		}
 		h++;
 	}
-	memcpy(a->value, t->value, 16 * sizeof(GLfloat));
-	delete_matrix(t);
+	memcpy(a->value, t.value, 16 * sizeof(GLfloat));
+	return (*a);
+}
+
+t_matrix	transpose_to_mat4(const t_matrix *src, t_matrix *dest)
+{
+	size_t	h;
+	size_t	w;
+
+	identity_mat4(dest);
+	h = 0;
+	while (h < 4)
+	{
+		w = 0;
+		while (w < 4)
+		{
+			dest->value[w * 4 + h] = src->value[h * 4 + w];
+			w++;
+		}
+		h++;
+	}
+	memcpy(dest->value, src->value, 16 * sizeof(GLfloat));
+	return (*dest);
 }

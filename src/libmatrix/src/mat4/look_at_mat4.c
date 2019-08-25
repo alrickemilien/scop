@@ -50,7 +50,7 @@ static void	compute_cam_up(
 **    of the y axis of the view coordinate system
 */
 
-t_mat4		*look_at_mat4(
+t_mat4		look_at_mat4(
 		const t_vec3 *eye,
 		const t_vec3 *center,
 		const t_vec3 *up)
@@ -58,25 +58,25 @@ t_mat4		*look_at_mat4(
 	t_vec3	forward;
 	t_vec3	right;
 	t_vec3	cam_up;
-	t_mat4	*m;
+	t_mat4	m;
 
-	m = identity_mat4();
+	identity_mat4(&m);
 	if (are_vec3_equal(eye, center))
 		return (m);
 	compute_forward(eye, center, &forward);
 	compute_right(up, &forward, &right);
 	compute_cam_up(&forward, &right, &cam_up);
-	m->value[0] = right.x;
-	m->value[1] = cam_up.x;
-	m->value[2] = forward.x;
-	m->value[4] = right.y;
-	m->value[5] = cam_up.y;
-	m->value[6] = forward.y;
-	m->value[8] = right.z;
-	m->value[9] = cam_up.z;
-	m->value[10] = forward.z;
-	m->value[12] = -dot_product_vec3(&right, eye);
-	m->value[13] = -dot_product_vec3(&cam_up, eye);
-	m->value[14] = -dot_product_vec3(&forward, eye);
+	m.value[0] = right.x;
+	m.value[1] = cam_up.x;
+	m.value[2] = forward.x;
+	m.value[4] = right.y;
+	m.value[5] = cam_up.y;
+	m.value[6] = forward.y;
+	m.value[8] = right.z;
+	m.value[9] = cam_up.z;
+	m.value[10] = forward.z;
+	m.value[12] = -dot_product_vec3(&right, eye);
+	m.value[13] = -dot_product_vec3(&cam_up, eye);
+	m.value[14] = -dot_product_vec3(&forward, eye);
 	return (m);
 }

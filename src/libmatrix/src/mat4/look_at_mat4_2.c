@@ -61,7 +61,7 @@ void	mat4_translate_in_place(t_mat4 *matrix, GLfloat x, GLfloat y, GLfloat z)
 **       operands in the following cross products in the right way.
 */
 
-t_mat4	*look_at_mat4_2(
+t_mat4	look_at_mat4_2(
 		const t_vec3 *eye,
 		const t_vec3 *center,
 		const t_vec3 *up_dir)
@@ -69,9 +69,9 @@ t_mat4	*look_at_mat4_2(
 	t_vec3	forward;
 	t_vec3	left;
 	t_vec3	up;
-	t_mat4	*matrix;
+	t_mat4	matrix;
 
-	matrix = new_mat4();
+	new_mat4(&matrix);
 	copy_vec3(&forward, center);
 	substract_vec3(&forward, eye);
 	normalize_vec3(&forward);
@@ -80,19 +80,19 @@ t_mat4	*look_at_mat4_2(
 	normalize_vec3(&left);
 	copy_vec3(&up, &left);
 	cross_vec3(&up, &forward);
-	memset(matrix->value, 0, sizeof(float) * 4 * 4);
-	matrix->value[0] = left.x;
-	matrix->value[1] = up.x;
-	matrix->value[2] = forward.x;
-	matrix->value[4] = left.y;
-	matrix->value[5] = up.y;
-	matrix->value[6] = forward.y;
-	matrix->value[8] = left.z;
-	matrix->value[9] = up.z;
-	matrix->value[10] = forward.z;
-	matrix->value[15] = 1.f;
-	matrix->value[12] = -dot_product_vec3(&left, eye);
-	matrix->value[13] = -dot_product_vec3(&up, eye);
-	matrix->value[14] = dot_product_vec3(&forward, eye);
+	memset(matrix.value, 0, sizeof(float) * 4 * 4);
+	matrix.value[0] = left.x;
+	matrix.value[1] = up.x;
+	matrix.value[2] = forward.x;
+	matrix.value[4] = left.y;
+	matrix.value[5] = up.y;
+	matrix.value[6] = forward.y;
+	matrix.value[8] = left.z;
+	matrix.value[9] = up.z;
+	matrix.value[10] = forward.z;
+	matrix.value[15] = 1.f;
+	matrix.value[12] = -dot_product_vec3(&left, eye);
+	matrix.value[13] = -dot_product_vec3(&up, eye);
+	matrix.value[14] = dot_product_vec3(&forward, eye);
 	return (matrix);
 }
