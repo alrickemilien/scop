@@ -34,7 +34,6 @@ GLfloat         magnitude_vec3(
 t_vec3	add_vec3(t_vec3 *vector, const t_vec3 *modifier);
 t_vec3	add_to_vec3(const t_vec3 *a, const t_vec3 *b, t_vec3 *dest);
 
-
 t_vec3	sub_vec3(t_vec3 *vector, const t_vec3 *modifier);
 t_vec3	sub_to_vec3(const t_vec3 *a, const t_vec3 *b, t_vec3 *dest);
 

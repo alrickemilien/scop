@@ -19,29 +19,28 @@ static void		render_elements(GLuint vao, GLenum render_style, size_t vertex_numb
  		);
 }
 
-static t_matrix	*rotate_object_around_point(t_software_environ *env, t_vec3 v)
+static t_matrix	rotate_object_around_point(t_software_environ *env, t_vec3 v)
 {
-	t_matrix    *model_matrix;
+	t_matrix    model_matrix;
 	t_vec3      minus_v;
 
 	minus_v = (t_vec3){-v.x, -v.y, -v.z};
 
-	model_matrix = identity_mat4();
+	identity_mat4(&model_matrix);
 
-	env->translation_matrix = identity_mat4();
-	translate_mat4(env->translation_matrix, &v);
-	multiply_mat4(model_matrix, env->translation_matrix, model_matrix);
+	identity_mat4(&env->translation_matrix);
+	translate_mat4(&env->translation_matrix, &v);
+	multiply_mat4(&model_matrix, &env->translation_matrix);
 
-	env->rotation_matrix = identity_mat4();
-	rotate_y_mat4(env->rotation_matrix, env->y_auto_rotate_angle);
-	multiply_mat4(model_matrix, env->rotation_matrix, model_matrix);
+	identity_mat4(&env->rotation_matrix);
+	rotate_y_mat4(&env->rotation_matrix, env->y_auto_rotate_angle);
+	multiply_mat4(&model_matrix, &env->rotation_matrix);
 
-	delete_matrix(env->translation_matrix);
-	env->translation_matrix = identity_mat4();
-	translate_mat4(env->translation_matrix, &minus_v);
-	multiply_mat4(model_matrix, env->translation_matrix, model_matrix);
+	identity_mat4(&env->translation_matrix);
+	translate_mat4(&env->translation_matrix, &minus_v);
+	multiply_mat4(&model_matrix, &env->translation_matrix);
 
-	return model_matrix;
+	return (model_matrix);
 }
 
 static void		apply_rotation(t_software_environ *env) {
@@ -81,16 +80,16 @@ void			render_mesh(t_software_environ *env, t_matrix *mvp)
 	// check_gl_error();
 
 
-	glUniformMatrix4fv(env->m_uni, 1, GL_FALSE, env->model_matrix->value);
+	glUniformMatrix4fv(env->m_uni, 1, GL_FALSE, env->model_matrix.value);
 	// printf("2\n");
 	// check_gl_error();
 
-	glUniformMatrix4fv(env->v_uni, 1, GL_FALSE, env->view_matrix->value);
+	glUniformMatrix4fv(env->v_uni, 1, GL_FALSE, env->view_matrix.value);
 	// printf("3\n");
 	// check_gl_error();
 
 
-	glUniformMatrix4fv(env->p_uni, 1, GL_FALSE, env->projection_matrix->value);
+	glUniformMatrix4fv(env->p_uni, 1, GL_FALSE, env->projection_matrix.value);
 	// printf("3bis\n");
 	// check_gl_error();
 
@@ -134,7 +133,6 @@ void			render_mesh(t_software_environ *env, t_matrix *mvp)
 		render_elements(env->vao, env->render_style, env->data.vertex_count);
 	else
 		render_vao(env->vao, env->render_style, env->data.vertex_count);
-
 }
 
 void			render_meshs_normals(t_software_environ *env, t_matrix *mvp)
@@ -144,9 +142,9 @@ void			render_meshs_normals(t_software_environ *env, t_matrix *mvp)
 		glUseProgram(env->normals_shader_program.id);
 
 		glUniformMatrix4fv(env->normal_mvp_uni, 1, GL_FALSE, mvp->value);
-		glUniformMatrix4fv(env->normal_m_uni, 1, GL_FALSE, env->model_matrix->value);
-		glUniformMatrix4fv(env->normal_v_uni, 1, GL_FALSE, env->view_matrix->value);
-		glUniformMatrix4fv(env->normal_p_uni, 1, GL_FALSE, env->projection_matrix->value);
+		glUniformMatrix4fv(env->normal_m_uni, 1, GL_FALSE, env->model_matrix.value);
+		glUniformMatrix4fv(env->normal_v_uni, 1, GL_FALSE, env->view_matrix.value);
+		glUniformMatrix4fv(env->normal_p_uni, 1, GL_FALSE, env->projection_matrix.value);
 
 		if (env->indexation_mode)
 			render_elements(env->vao, env->render_style, env->data.vertex_count);
@@ -155,13 +153,11 @@ void			render_meshs_normals(t_software_environ *env, t_matrix *mvp)
 	}
 }
 
-void			render_plan(t_software_environ *env)
+void			render_plan(t_software_environ *env, t_mat4 *mvp)
 {
-	t_matrix *mvp;
-	
-	env->model_matrix = identity_mat4();
+	identity_mat4(&env->model_matrix);
 
-	mvp = compute_mvp(env);
+	compute_mvp(env, mvp);
 
 	glUseProgram(env->internal_object_shader_program.id);
 
@@ -169,63 +165,50 @@ void			render_plan(t_software_environ *env)
 	glUniformMatrix4fv(env->internal_object_mvp_uni, 1, GL_FALSE, mvp->value);
 
 	render_vao(env->plan_vao, GL_POINTS, 1);
-
-	delete_matrix(mvp);
-	delete_matrix(env->model_matrix);
 }
 
-void			render_axis(t_software_environ *env)
+void			render_axis(t_software_environ *env, t_mat4 *mvp)
 {
-	t_matrix *mvp;
+	identity_mat4(&env->model_matrix);
 
-	env->model_matrix = identity_mat4();
-
-	mvp = compute_mvp(env);
+	mvp = compute_mvp(env, mvp);
 
 	glUseProgram(env->axis_shader_program.id);
 
 	glUniformMatrix4fv(env->internal_object_mvp_uni, 1, GL_FALSE, mvp->value);
 
 	render_vao(env->axis_vao, GL_POINTS, 1);
-
-	delete_matrix(mvp);
-	delete_matrix(env->model_matrix);
 }
 
 void			render(t_software_environ *env)
 {
-	t_mat4 *mvp;
+	t_mat4 mvp;
 
 	apply_rotation(env);
 
-	mvp = compute_mvp(env);
+	compute_mvp(env, &mvp);
 
 	//
 	// MESH
 	//
 
-	render_mesh(env, mvp);
+	render_mesh(env, &mvp);
 
 	//
 	// MESH NORMALS
 	//
 
-	render_meshs_normals(env, mvp);
-
-	delete_matrix(mvp);
-	delete_matrix(env->model_matrix);
-	delete_matrix(env->translation_matrix);
-	delete_matrix(env->rotation_matrix);
+	render_meshs_normals(env, &mvp);
 
 	//
 	// PLAN
 	//
 
-	render_plan(env);
+	render_plan(env, &mvp);
 
 	//
 	// AXIS
 	//
 
-	render_axis(env);
+	render_axis(env, &mvp);
 }

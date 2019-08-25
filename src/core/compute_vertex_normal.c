@@ -46,23 +46,23 @@ static void look_at_polygon(
         return ;
     *n += 1;
     if (is_vertex_same(vec[0], vertex))
-        *normal = return_add_vec3(
-            *normal,
-            return_cross_vec3(
-                return_sub_vec3(*vec[1]->position, *vec[0]->position),
-                return_sub_vec3(*vec[2]->position, *vec[0]->position)));
+        *normal = add_vec3(
+            normal,
+            cross_vec3(
+                sub_vec3(*vec[1]->position, *vec[0]->position),
+                sub_vec3(*vec[2]->position, *vec[0]->position)));
     if (is_vertex_same(vec[1], vertex))
-        *normal = return_add_vec3(
+        *normal = add_vec3(
             *normal,
-            return_cross_vec3(
-                return_sub_vec3(*vec[0]->position, *vec[1]->position),
-                return_sub_vec3(*vec[2]->position, *vec[1]->position)));
+            cross_vec3(
+                sub_vec3(*vec[0]->position, *vec[1]->position),
+                sub_vec3(*vec[2]->position, *vec[1]->position)));
     if (is_vertex_same(vec[2], vertex))
-        *normal = return_add_vec3(
+        *normal = add_vec3(
             *normal,
-            return_cross_vec3(
-                return_sub_vec3(*vec[0]->position, *vec[2]->position),
-                return_sub_vec3(*vec[1]->position, *vec[2]->position)));
+            cross_vec3(
+                sub_vec3(*vec[0]->position, *vec[2]->position),
+                sub_vec3(*vec[1]->position, *vec[2]->position)));
 }
 
 /*

@@ -270,12 +270,11 @@ typedef struct			s_software_environ
 	GLuint				texture_id;
 	GLuint				texture_uni;
 
-	t_mat4				*translation_matrix;
-	t_mat4				*rotation_matrix;
-
-	t_mat4				*model_matrix;
-	t_mat4				*view_matrix;
-	t_mat4				*projection_matrix;
+	t_mat4				translation_matrix;
+	t_mat4				rotation_matrix;
+	t_mat4				model_matrix;
+	t_mat4				view_matrix;
+	t_mat4				projection_matrix;
 
 	// Axis lock for moves
 	int x_axis;
@@ -417,7 +416,8 @@ int						gl_lighting(
 int						gl_texturing(
 							t_software_environ *env);
 t_mat4					*compute_mvp(
-							t_software_environ *env);
+							t_software_environ *env,
+							t_mat4 *mvp);
 void					render(
 							t_software_environ *env);
 int						load_mtllib(
