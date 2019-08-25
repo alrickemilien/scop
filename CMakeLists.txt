@@ -75,8 +75,12 @@ set (SOURCES
     #
     # scop core functions library
     #
-	src/core/render.c
-	src/core/smart_camera_position.c
+    src/core/render.c
+    src/core/render_meshs_normals.c
+    src/core/render_mesh.c
+    src/core/render_mesh.c
+    src/core/is_vertex_same.c
+    src/core/apply_rotation.c
 	src/core/gl_lighting.c
 	src/core/gl_attribute.c
 	src/core/gl_buffering.c
@@ -90,15 +94,24 @@ set (SOURCES
 	src/core/math_utils.c
 	src/core/gl_indexing.c
 	src/core/gl_texturing.c
+    src/core/compute_vertex_uvs.c
+    src/core/smart_camera_position.c
+    
+    #
+    # Shader
+    #
 	src/shader/print_shader_error.c
 	src/shader/load_single_shader.c
 	src/shader/load_program_shader.c
 	src/shader/cleanup_shader_program.c
-	src/shader/compile_shader.c
+    src/shader/compile_shader.c
+    
+    #
+    # BMP files
+    #
 	src/texture_loader/bmp/load_bitmap_file.c
-	src/texture_loader/bmp/load_bitmap_file_header.c
-	src/core/compute_vertex_uvs.c
-
+    src/texture_loader/bmp/load_bitmap_file_header.c
+    
     #
     # TGA files
     #

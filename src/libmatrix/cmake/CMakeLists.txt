@@ -30,7 +30,6 @@ SET (SRC
 	# mat4
 	src/mat4/mat4.c
 	src/mat4/look_at_mat4.c
-	src/mat4/look_at_mat4_2.c
 	src/mat4/scale_mat4.c
 	src/mat4/translate_mat4.c
 	src/mat4/perspective_mat4.c
@@ -53,7 +52,7 @@ SET (SRC
 	src/vec3/magnitude_vec3.c
 	src/vec3/operations/scale_vec3.c
 	src/vec3/operations/dot_product_vec3.c
-	src/vec3/operations/substract_vec3.c
+	src/vec3/operations/sub_vec3.c
 	src/vec3/operations/add_vec3.c
 	src/vec3/operations/cross_vec3.c
 

@@ -1,7 +1,7 @@
 #include "scop.h"
 
 static const size_t	g_vertex_size = sizeof(t_vec3) * 3 + sizeof(t_vec2);
-static const t_vec3	g_color = (t_vec3){1.0f, 1.0f, 1.0f};
+static const t_vec3	g_color = {1.0f, 1.0f, 1.0f};
 static const t_vec2	g_uvs[3] = {
 	{0.0f, 0.0f},
 	{1.0f, 0.0f},

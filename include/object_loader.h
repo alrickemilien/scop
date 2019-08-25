@@ -142,5 +142,7 @@ void					print_object(const t_mesh *data);
 int						fill_vertex_position(t_mesh *data, t_vertex *vertex);
 int						fill_vertex_uv(t_mesh *data, t_vertex *vertex);
 int						fill_vertex_normal(t_mesh *data, t_vertex *vertex);
-
+bool					is_vertex_same(
+		const void *a,
+		const void *b);
 #endif
