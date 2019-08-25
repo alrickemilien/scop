@@ -11,7 +11,7 @@ int				fill_vertex_position(t_mesh *data, t_vertex *vertex)
 
 	pos = lst_data_at(data->positions, vertex->position_index - 1);
 	if (!pos)
-		return (read_object_error("Invalid index for a position."));
+		return (-1);
 	vertex->position = pos;
 	return (0);
 }
@@ -27,7 +27,7 @@ int				fill_vertex_uv(t_mesh *data, t_vertex *vertex)
 
 	uv = lst_data_at(data->uvs, vertex->uv_index - 1);
 	if (!uv)
-		return (read_object_error("Invalid index for uv."));
+		return (-1);
 	vertex->uv = uv;
 	return (0);
 }
@@ -38,7 +38,7 @@ int				fill_vertex_normal(t_mesh *data, t_vertex *vertex)
 
 	normal = lst_data_at(data->normals, vertex->normal_index - 1);
 	if (!normal)
-		return (read_object_error("Invalid index for normal."));
+		return (-1);
 	vertex->normal = normal;
 	return (0);
 }
