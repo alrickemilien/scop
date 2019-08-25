@@ -49,7 +49,6 @@ static t_parse_function			get_parse_func(
 	{
 		if (!strncmp(g_type_matches[i].token, token->cursor, token->size))
 			return (g_type_matches[i].f);
-
 		i++;
 	}
 	return (NULL);

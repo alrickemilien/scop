@@ -19,7 +19,7 @@ static void del(void *p, size_t s)
 ** Clear the environnement in memory
 */
 
-static void	del_usemtl(void *p, size_t s)
+static void					del_usemtl(void *p, size_t s)
 {
 	t_usemtl	*u;
 
@@ -113,6 +113,7 @@ static void	clear_env_memory()
 		ft_lstdel(&g_env->data.vertices, &del_vertex);
 
 	printf("G\n");
+
 	// Delete usemtl
 	ft_lstdel(&g_env->data.usemtl, &del_usemtl);
 
@@ -129,7 +130,6 @@ static void	clear_env_memory()
 	free(g_env);
 }
 
-// Close OpenGL window and terminate GLFW
 void		end_program(int code)
 {
 	if (closing)

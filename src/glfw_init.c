@@ -19,7 +19,7 @@ static void	glfw_error_callback(int error, const char *description)
 	gl_log_err("GLFW ERROR: code %i msg: %s\n", error, description);
 }
 
-static void	glfw_init_hint()
+static void	glfw_init_hint(void)
 {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, SOFT_GLFW_CONTEXT_VERSION_MAJOR);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, SOFT_GLFW_CONTEXT_VERSION_MINOR);
@@ -45,14 +45,12 @@ void		glfw_init(t_software_environ *env, int argc, char **argv)
 		exit_error_with_message("Failed to initialize GLFW");
 	glfw_init_hint();
 	env->window = glfwCreateWindow(
-			env->window_width,
-			env->window_height,
-			WINDOW_NAME, NULL, NULL);
+		env->window_width, env->window_height,
+		WINDOW_NAME, NULL, NULL);
 	if (!env->window)
 	{
 		glfwTerminate();
 		exit_error_with_message(
-			"Failed to open GLFW window."
 			"Need GPU compatible with 4.0 OpenGL library");
 	}
 	glfwSetKeyCallback(env->window, key_callback);

@@ -1,36 +1,39 @@
+#include "scop.h"
+
 #include <time.h>
 #include <stdarg.h>
 
-#include "scop.h"
-#define GL_LOG_FILE "gl.log"
-
-bool restart_gl_log()
+bool	restart_gl_log(void)
 {
-	FILE* file = fopen(GL_LOG_FILE, "w");
+	FILE	*file;
+	time_t	now;
+	char	*date;
 
-	if(!file)
+	if (!(file = fopen(GL_LOG_FILE, "w")))
 	{
 		fprintf(stderr,
-			"ERROR: could not open GL_LOG_FILE log file %s for writing\n",
+			"ERROR: could not open GL_LOG_FILE"
+			" log file %s for writing\n",
 			GL_LOG_FILE);
-		return false;
+		return (false);
 	}
-	time_t now = time(NULL);
-	char *date = ctime(&now);
+	now = time(NULL);
+	date = ctime(&now);
 	fprintf(file, "GL_LOG_FILE log. local time %s\n", date);
 	fclose(file);
-	return true;
+	return (true);
 }
 
-bool gl_log(const char* message, ...)
+bool	gl_log(const char *message, ...)
 {
-	va_list argptr;
-	FILE* file = fopen(GL_LOG_FILE, "a");
+	va_list	argptr;
+	FILE	*file;
 
-	if(!file)
+	if (!(file = fopen(GL_LOG_FILE, "a")))
 	{
 		fprintf(stderr,
-			"ERROR: could not open GL_LOG_FILE %s file for appending\n",
+			"ERROR: could not open GL_LOG_FILE"
+			" %s file for appending\n",
 			GL_LOG_FILE);
 		return (false);
 	}
@@ -41,17 +44,18 @@ bool gl_log(const char* message, ...)
 	return (true);
 }
 
-bool gl_log_err(const char* message, ...)
+bool	gl_log_err(const char *message, ...)
 {
-	va_list argptr;
-	FILE* file = fopen(GL_LOG_FILE, "a");
+	va_list	argptr;
+	FILE	*file;
 
-	if (!file)
+	if (!(file = fopen(GL_LOG_FILE, "a")))
 	{
 		fprintf(stderr,
-				"ERROR: could not open GL_LOG_FILE %s file for appending\n",
+				"ERROR: could not open GL_LOG_FILE"
+				" %s file for appending\n",
 				GL_LOG_FILE);
-		return false;
+		return (false);
 	}
 	va_start(argptr, message);
 	vfprintf(file, message, argptr);

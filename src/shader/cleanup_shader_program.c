@@ -18,7 +18,7 @@ static void	cleanup_shader(
 	free(s);
 }
 
-void			cleanup_shader_program(
+void		cleanup_shader_program(
 		shader_program_t *p)
 {
 	cleanup_shader(p, p->vertex_shader);

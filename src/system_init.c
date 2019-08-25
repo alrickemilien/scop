@@ -14,8 +14,7 @@ int	system_init(t_software_environ *env, int argc, char **argv)
 		exit_error_with_message("Input file missing.");
 #ifdef __APPLE__
 	if (getcwd(env->cwd, sizeof(env->cwd)) == NULL)
-		exit_error_with_message("An error occured when oading the pwd path of "
-								"the program.");
+		exit_error_with_message("An error occured when loading prog's pwd path");
 #else
 	if (_getcwd(env->cwd, sizeof(env->cwd)) == NULL)
 		exit_error_with_message("An error occured when oading the pwd path of "

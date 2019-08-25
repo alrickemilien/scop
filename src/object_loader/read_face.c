@@ -31,22 +31,18 @@ static int	read_polygon_vertex(
 
 static int	read_quadrilateral_face_component(
 		t_mesh *data,
-		const t_token *tokens,
-		t_polygon *new_polygon)
+		const t_token *tokens)
 {
 	size_t		i;
 	t_polygon	new_polygon_a;
 	t_polygon	new_polygon_b;
 
-	(void)new_polygon;
 	memset(&new_polygon_a, 0, sizeof(t_polygon));
 	memset(&new_polygon_b, 0, sizeof(t_polygon));
 	i = 0;
 	while (tokens[i].cursor)
-	{
 		if (strstr(tokens[i++].cursor, "//"))
 			data->is_texture_set = true;
-	}
 	if (read_polygon_vertex(data, &new_polygon_a, tokens[0]) == -1
 		|| read_polygon_vertex(data, &new_polygon_a, tokens[1]) == -1
 		|| read_polygon_vertex(data, &new_polygon_a, tokens[2]) == -1)
@@ -95,7 +91,7 @@ static int	read_quadrilateral_face_component(
 ** f v1//vn1 v2//vn2 v3//vn3 ...
 */
 
-static int		read_face_components(
+static int	read_face_components(
 		t_mesh *data,
 		const t_token *tokens)
 {
@@ -109,7 +105,7 @@ static int		read_face_components(
 	while (tokens[i].cursor)
 		i++;
 	if (i == 4)
-		return (read_quadrilateral_face_component(data, tokens, &new_polygon));
+		return (read_quadrilateral_face_component(data, tokens));
 	i = 0;
 	while (tokens[i].cursor)
 	{
@@ -134,7 +130,7 @@ static int		read_face_components(
 ** ...
 */
 
-int				read_face(t_mesh *data, const t_token *tokens)
+int			read_face(t_mesh *data, const t_token *tokens)
 {
 	data->faces_count++;
 	if (read_face_components(data, tokens) < 0)

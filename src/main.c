@@ -24,7 +24,6 @@ int					main(
 		fprintf(stderr, "Can't catch SIGINT\n");
 	if (system_init(g_env, argc, argv) < 0)
 		return (-1);
-	// print_object((const void*)&env->data);
 	glfw_init(g_env, argc, argv);
 	run(g_env);
 	end_program(0);

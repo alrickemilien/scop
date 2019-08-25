@@ -1,6 +1,6 @@
 #include "scop.h"
 
-static int						load_bitmap_file_error(
+static int	load_bitmap_file_error(
 	const char *pathname,
 	FILE *stream)
 {

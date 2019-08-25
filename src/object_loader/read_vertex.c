@@ -64,28 +64,13 @@ static size_t	read_index(
 	return ((size_t)index);
 }
 
-static bool			is_vertex_same(
-		const void *a,
-		const void *b)
-{
-	t_vertex *va;
-	t_vertex *vb;
-
-	va = (t_vertex*)a;
-	vb = (t_vertex*)b;
-	if (va->position_index == vb->position_index
-			&& va->normal_index == vb->normal_index)
-		return (true);
-	return (false);
-}
-
 /*
 ** Called from read_face
 ** It is not a handler function
 ** for a type vertex that do not exists in obj file
 */
 
-int					read_vertex(
+int				read_vertex(
 		t_mesh *data,
 		const t_token *tokens,
 		t_polygon *polygon)

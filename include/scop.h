@@ -119,6 +119,8 @@ int		munmap(void *addr, size_t len);
 # define BMP_TEXTURE 1
 # define TGA_TEXTURE 2
 
+# define GL_LOG_FILE "gl.log"
+
 typedef struct		shader_s {
 	GLuint			id;
 	GLchar			*content;

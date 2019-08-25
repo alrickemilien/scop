@@ -44,7 +44,7 @@ static void	debug_bitmap_header(t_bitmap *bmp)
 ** a dummy 0 can be given for BI_RGB bitmaps.
 */
 
-void				fill_missing_image_size(t_bitmap *bmp)
+void		fill_missing_image_size(t_bitmap *bmp)
 {
 	if ((int)bmp->dib_header.image_width < 0)
 		bmp->dib_header.image_width = -bmp->dib_header.image_width;
@@ -58,7 +58,7 @@ void				fill_missing_image_size(t_bitmap *bmp)
 	(void)debug_bitmap_header;
 }
 
-int				load_bitmap_file_header(
+int			load_bitmap_file_header(
 	t_bitmap *bmp,
 	FILE *stream)
 {
