@@ -29,7 +29,6 @@ t_vec3	compute_object_barycentre(t_list *positions)
 	barycentre.x /= (GLfloat)i;
 	barycentre.y /= (GLfloat)i;
 	barycentre.z /= (GLfloat)i;
-
 	return (barycentre);
 }
 
