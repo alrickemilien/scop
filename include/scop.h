@@ -407,9 +407,9 @@ int						gl_buffering(
 							t_software_environ *env);
 int						gl_indexing(
 							t_software_environ *env);
-void					plan_to_vbo(
+int 					plan_to_vbo(
 							t_software_environ *env);
-void					axis_to_vbo(
+int 					axis_to_vbo(
 							t_software_environ *env);
 void					gl_matrixing(
 							t_software_environ *env);

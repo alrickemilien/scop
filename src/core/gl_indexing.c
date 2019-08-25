@@ -72,7 +72,7 @@ static void			load_polygon_into_index_buffer(
 ** Convert a list into a ebo ( GL vertex buffer object )
 */
 
-static void			vertex_list_to_ebo(
+static int			vertex_list_to_ebo(
 		t_software_environ *env)
 {
 	size_t		i;
@@ -81,7 +81,8 @@ static void			vertex_list_to_ebo(
 	GLuint		*index_buffer;
 	size_t		poly_length;
 
-	index_buffer = (GLuint*)malloc(env->data.vertex_count * sizeof(GLuint));
+	if (!(index_buffer = (GLuint*)malloc(env->data.vertex_count * sizeof(GLuint))))
+        return (-1);
 	memset(index_buffer, 0, env->data.vertex_count * sizeof(GLuint));
 	i = 0;
 	j = 0;
@@ -99,9 +100,10 @@ static void			vertex_list_to_ebo(
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, env->ebo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, i, index_buffer, GL_STATIC_DRAW);
 	free(index_buffer);
+    return (0);
 }
 
-static void			vertex_list_to_vao(
+static int			vertex_list_to_vao(
 		t_software_environ *env)
 {
 	GLfloat		*buffer;
@@ -109,13 +111,14 @@ static void			vertex_list_to_vao(
 	glGenVertexArrays(1, &env->vao);
 	check_gl_error();
 	glBindVertexArray(env->vao);
-	if (NULL != (buffer = (GLfloat*)malloc(
+	if (!(buffer = (GLfloat*)malloc(
 		g_vertex_size * ft_lstlen(env->data.vertices))))
-	{
-		vertex_list_to_vbo(env, buffer);
-		free(buffer);
-	}
-	vertex_list_to_ebo(env);
+        return (-1);
+	vertex_list_to_vbo(env, buffer);
+	free(buffer);
+	if (vertex_list_to_ebo(env) < 0)
+        return (-1);
+    return (0);
 }
 
 int					gl_indexing(
@@ -125,8 +128,7 @@ int					gl_indexing(
 		end_program(-1);
 	if (glBindVertexArray == NULL)
 		end_program(-1);
-	vertex_list_to_vao(env);
-	if (set_attribute(
+	if (vertex_list_to_vao(env) < 0 || set_attribute(
 				env->object_shader_program.id, "position", g_vertex_size) < 0)
 		return (-1);
 	if (set_attribute(
@@ -135,13 +137,11 @@ int					gl_indexing(
 	if (set_attribute(
 				env->object_shader_program.id, "normal", g_vertex_size) < 0)
 		return (-1);
-	plan_to_vbo(env);
-	if (set_attribute(
+	if (plan_to_vbo(env) < 0 || set_attribute(
 				env->internal_object_shader_program.id,
 				"position", sizeof(t_vec3)) < 0)
 		return (-1);
-	axis_to_vbo(env);
-	if (set_attribute(
+	if (axis_to_vbo(env) < 0 || set_attribute(
 				env->axis_shader_program.id, "position", sizeof(t_vec3)) < 0)
 		return (-1);
 	return (0);

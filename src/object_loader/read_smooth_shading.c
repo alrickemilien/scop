@@ -8,7 +8,8 @@ int	read_smooth_shading(t_mesh *data, const t_token *tokens)
 	s = n_atoi(tokens[0].cursor, tokens[0].size);
 	if (s == 0 && tokens[0].size > 1)
 	{
-		off = strndup(tokens[0].cursor, tokens[0].size);
+		if(!(off = strndup(tokens[0].cursor, tokens[0].size)))
+            return (-1);
 		data->smooth_shading = -1;
 		if (memcmp(off, "off", sizeof(char) * 3) && tokens[0].size == 3)
 			data->smooth_shading = -1;

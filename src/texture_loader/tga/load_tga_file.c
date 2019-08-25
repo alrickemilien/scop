@@ -77,7 +77,8 @@ int						load_tga_file(
 		&& tga->header.color_map_type != 0
 		&& tga->header.image_type != NON_COMPRESSED_TGA)
 		return (load_tga_file_error(pathname, stream));
-	tga->image = (uint32_t*)malloc(sizeof(uint32_t) * tga->width * tga->height);
+	if (!(tga->image = (uint32_t*)malloc(sizeof(uint32_t) * tga->width * tga->height)))
+        return (load_tga_file_error(pathname, stream));
 	load_tga_image(tga, stream);
 	tga->buffer = decode_tga(tga);
 	fill_tga_image(tga);

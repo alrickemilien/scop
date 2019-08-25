@@ -4,7 +4,8 @@ void	print_gl_shader_error(GLuint id, int info_log_length)
 {
 	char	*error_message;
 
-	error_message = malloc(sizeof(char) * info_log_length + 1);
+	if (!(error_message = malloc(sizeof(char) * info_log_length + 1)))
+        return ;
 	error_message[sizeof(char) * info_log_length] = 0;
 	glGetShaderInfoLog(id, sizeof(char) * info_log_length,
 			NULL, error_message);
@@ -16,7 +17,8 @@ void	print_gl_program_error(GLuint id, int info_log_length)
 {
 	char	*error_message;
 
-	error_message = malloc(sizeof(char) * info_log_length + 1);
+	if (!(error_message = malloc(sizeof(char) * info_log_length + 1)))
+        return ;
 	error_message[sizeof(char) * info_log_length] = 0;
 	glGetProgramInfoLog(id, sizeof(char) * info_log_length,
 			NULL, error_message);

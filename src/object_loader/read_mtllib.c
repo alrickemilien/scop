@@ -53,8 +53,7 @@ int			read_mtllib(
 	i = 0;
 	while (tokens[i].cursor != NULL)
 	{
-		tmp = strndup(tokens[i].cursor, tokens[i].size);
-		if (tmp == NULL)
+		if (!(tmp = strndup(tokens[i].cursor, tokens[i].size)))
 			return (-1);
 		printf("data->path : %s\n", data->path);
 		lib.path = build_mtllib_full_path(data->path, tmp);

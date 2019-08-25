@@ -48,14 +48,15 @@ static void	load_polygon_into_data(
 ** Convert a list into a vbo ( GL vertex buffer object )
 */
 
-static void	vertex_list_to_vbo(t_software_environ *env)
+static int	vertex_list_to_vbo(t_software_environ *env)
 {
 	size_t	i;
 	t_list	*x;
 	GLfloat	*buffer;
 	size_t	poly_length;
 
-	buffer = (GLfloat*)malloc(g_vertex_size * env->data.vertex_count);
+	if (!(buffer = (GLfloat*)malloc(g_vertex_size * env->data.vertex_count)))
+        return (-1);
 	memset(buffer, 0, g_vertex_size * env->data.vertex_count);
 	i = 0;
 	x = env->data.polygons;
@@ -75,9 +76,10 @@ static void	vertex_list_to_vbo(t_software_environ *env)
 	glBindBuffer(GL_ARRAY_BUFFER, env->vbo);
 	glBufferData(GL_ARRAY_BUFFER, i, buffer, GL_STATIC_DRAW);
 	free(buffer);
+    return (0);
 }
 
-void		plan_to_vbo(t_software_environ *env)
+int 		plan_to_vbo(t_software_environ *env)
 {
 	t_vec3	v;
 	GLfloat	*plan_buffer;
@@ -86,16 +88,18 @@ void		plan_to_vbo(t_software_environ *env)
 	glGenVertexArrays(1, &env->plan_vao);
 	check_gl_error();
 	glBindVertexArray(env->plan_vao);
-	plan_buffer = (GLfloat*)malloc(sizeof(t_vec3));
+	if (!(plan_buffer = (GLfloat*)malloc(sizeof(t_vec3))))
+        return (-1);
 	memcpy((uint8_t*)plan_buffer, &v, sizeof(t_vec3));
 	glGenBuffers(1, &env->plan_vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, env->plan_vbo);
 	glBufferData(GL_ARRAY_BUFFER,
 			sizeof(t_vec3), plan_buffer, GL_STATIC_DRAW);
 	free(plan_buffer);
+    return (0);
 }
 
-void		axis_to_vbo(t_software_environ *env)
+int 		axis_to_vbo(t_software_environ *env)
 {
 	t_vec3	v;
 	GLfloat	*axis_buffer;
@@ -104,17 +108,20 @@ void		axis_to_vbo(t_software_environ *env)
 	glGenVertexArrays(1, &env->axis_vao);
 	check_gl_error();
 	glBindVertexArray(env->axis_vao);
-	axis_buffer = (GLfloat*)malloc(sizeof(t_vec3));
+	if (!(axis_buffer = (GLfloat*)malloc(sizeof(t_vec3))))
+        return (-1);
 	memcpy((uint8_t*)axis_buffer, &v, sizeof(t_vec3));
 	glGenBuffers(1, &env->axis_vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, env->axis_vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(t_vec3), axis_buffer, GL_STATIC_DRAW);
 	free(axis_buffer);
+    return (0);
 }
 
 int			gl_buffering(t_software_environ *env)
 {
-	vertex_list_to_vbo(env);
+	if (vertex_list_to_vbo(env) < 0)
+        return (-1);
 	if (set_attribute(
 				env->object_shader_program.id, "position", g_vertex_size) < 0)
 		return (-1);
@@ -127,13 +134,11 @@ int			gl_buffering(t_software_environ *env)
 	if (set_attribute(
 				env->object_shader_program.id, "uv", g_vertex_size) < 0)
 		return (-1);
-	plan_to_vbo(env);
-	if (set_attribute(
+	if (plan_to_vbo(env) < 0 || set_attribute(
 				env->internal_object_shader_program.id,
 				"position", sizeof(t_vec3)) < 0)
 		return (-1);
-	axis_to_vbo(env);
-	if (set_attribute(
+	if (axis_to_vbo(env) < 0 || set_attribute(
 				env->axis_shader_program.id, "position", sizeof(t_vec3)) < 0)
 		return (-1);
 	return (0);
