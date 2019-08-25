@@ -6,7 +6,6 @@ t_matrix	transpose_mat4(t_matrix *a)
 	size_t	w;
 	t_mat4	t;
 
-	identity_mat4(&t);
 	h = 0;
 	while (h < 4)
 	{
@@ -27,7 +26,6 @@ t_matrix	transpose_to_mat4(const t_matrix *src, t_matrix *dest)
 	size_t	h;
 	size_t	w;
 
-	identity_mat4(dest);
 	h = 0;
 	while (h < 4)
 	{
@@ -39,6 +37,5 @@ t_matrix	transpose_to_mat4(const t_matrix *src, t_matrix *dest)
 		}
 		h++;
 	}
-	memcpy(dest->value, src->value, 16 * sizeof(GLfloat));
 	return (*dest);
 }
