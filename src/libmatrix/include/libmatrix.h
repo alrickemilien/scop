@@ -1,5 +1,5 @@
 #ifndef LIBMATRIX_H
-#define LIBMATRIX_H
+# define LIBMATRIX_H
 
 /*
 ** Scop embed it's own matrix library
@@ -20,14 +20,14 @@
 ** 5        A[5]   a23
 */
 
-#ifdef _MSC_VER
-  #define _USE_MATH_DEFINES // for C
-  # include <windows.h>
-  # include <GL/gl.h>
+# ifdef _MSC_VER
+#  define _USE_MATH_DEFINES
+#  include <windows.h>
+#  include <GL/gl.h>
 # else
-  # include <OpenGL/gl.h>
-  # include <unistd.h>
-#endif
+#  include <OpenGL/gl.h>
+#  include <unistd.h>
+# endif
 
 # include <math.h>
 # include <stdio.h>
@@ -36,11 +36,8 @@
 # include <stdbool.h>
 # include <string.h>
 
-# include "libmatrixerror.h"
-
 # include "vec2.h"
 # include "vec3.h"
-# include "vec4.h"
 # include "mat4.h"
 
 #endif

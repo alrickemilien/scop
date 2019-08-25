@@ -39,7 +39,7 @@ t_mat4					orthograhic_mat4(
 ** Upload to your shader as usual.
 */
 
-t_mat4						perspective_mat4(
+t_mat4					perspective_mat4(
 	GLfloat fov,
 	GLfloat aspect_ratio,
 	GLfloat znear,

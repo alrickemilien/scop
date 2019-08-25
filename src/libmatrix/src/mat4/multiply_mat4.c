@@ -33,7 +33,10 @@ t_matrix	multiply_mat4(t_matrix *a, const t_matrix *b)
 	return (*a);
 }
 
-t_matrix	multiply_to_mat4(const t_matrix *a, const t_matrix *b, t_matrix *result)
+t_matrix	multiply_to_mat4(
+		const t_matrix *a,
+		const t_matrix *b,
+		t_matrix *result)
 {
 	size_t	h;
 	size_t	w;

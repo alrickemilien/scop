@@ -15,7 +15,7 @@ static const	t_vec3	g__libvec__vec3_y_minus = { 0, -1, 0 };
 static const	t_vec3	g__libvec__vec3_z = { 0, 0, 1 };
 static const	t_vec3	g__libvec__vec3_z_minus = { 0, 0, -1 };
 
-void garabage()
+void					garabage(void)
 {
 	(void)g__libvec__vec3_origin;
 	(void)g__libvec__vec3_x;
