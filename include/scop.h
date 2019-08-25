@@ -420,6 +420,22 @@ t_mat4					*compute_mvp(
 							t_mat4 *mvp);
 void					render(
 							t_software_environ *env);
+void			render_vao(
+		GLuint vao,
+		GLenum render_style,
+		size_t vertex_number);
+void			render_elements(
+		GLuint vao,
+		GLenum render_style,
+		size_t vertex_number);
+void			render_mesh(t_software_environ *env, t_matrix *mvp);
+void			render_meshs_normals(t_software_environ *env, t_matrix *mvp);
+
+bool					is_vertex_same(
+		const void *a,
+		const void *b);
+void					apply_rotation(
+							t_software_environ *env);
 int						load_mtllib(
 							t_list *mtllib,
 							t_list *usemtl);

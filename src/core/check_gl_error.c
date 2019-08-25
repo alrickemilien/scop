@@ -16,13 +16,14 @@ int							check_gl_error(void)
 {
 	GLenum	err;
 	char	*error;
+	size_t	i;
 
 	error = 0;
 	while ((err = glGetError()) != GL_NO_ERROR)
 	{
 		error = "Unhandled GL error";
 		i = 0;
-		while (i * sizeof(glmaperror_t) < sizeof(glmaperror))
+		while (i * sizeof(glmaperror_t) < sizeof(g_glmaperror))
 		{
 			if (g_glmaperror[i].err == err)
 				error = g_glmaperror[i].string_error;

@@ -77,31 +77,25 @@ void	fill_vertex_uvs(t_polygon *vertexs_polygon)
 
 void	set_default_uvs(t_polygon *polygon)
 {
-	t_vertex	*prev_vertex;
+	t_vertex	*pvtx;
 	t_vertex	*vertex;
 	t_list		*x;
 
-	prev_vertex = NULL;
+	pvtx = NULL;
 	x = polygon->vertices;
 	while (x)
 	{
 		vertex = (t_vertex*)x->content;
-		if (vertex->uv)
-		{
-			prev_vertex = vertex;
-			x = x->next;
-			continue ;
-		}
-		if (prev_vertex == NULL
-				|| (prev_vertex->uv->x == 0.0f && prev_vertex->uv->y == 1.0f))
+		if (!vertex->uv && (pvtx == NULL
+				|| (pvtx->uv->x == 0.f && pvtx->uv->y == 1.f)))
 			vertex->uv = new_vec2(0.0f, 0.0f);
-		else if (prev_vertex->uv->x == 0.0f && prev_vertex->uv->y == 0.0f)
+		else if (!vertex->uv && pvtx->uv->x == 0.0f && pvtx->uv->y == 0.0f)
 			vertex->uv = new_vec2(1.0f, 0.0f);
-		else if (prev_vertex->uv->x == 1.0f && prev_vertex->uv->y == 0.0f)
+		else if (!vertex->uv && pvtx->uv->x == 1.0f && pvtx->uv->y == 0.0f)
 			vertex->uv = new_vec2(1.0f, 1.0f);
-		else if (prev_vertex->uv->x == 1.0f && prev_vertex->uv->y == 1.0f)
+		else if (!vertex->uv && pvtx->uv->x == 1.0f && pvtx->uv->y == 1.0f)
 			vertex->uv = new_vec2(0.0f, 1.0f);
-		prev_vertex = vertex;
+		pvtx = vertex;
 		x = x->next;
 	}
 }

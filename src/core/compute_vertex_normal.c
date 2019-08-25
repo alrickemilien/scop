@@ -1,6 +1,6 @@
 #include "scop.h"
 
-static bool		is_vertex_same(
+static bool		is_vertex_same_(
 		const void *a,
 		const void *b)
 {
@@ -12,6 +12,25 @@ static bool		is_vertex_same(
 	if (va->position == vb->position)
 		return (true);
 	return (false);
+}
+
+static void		setup_normal(
+		t_vec3 *normal,
+		t_vertex **vec,
+		t_vertex *vertex)
+{
+	if (is_vertex_same_(vec[0], vertex))
+		*normal = add_vec3(*normal, cross_vec3(
+					sub_vec3(*vec[1]->position, *vec[0]->position),
+					sub_vec3(*vec[2]->position, *vec[0]->position)));
+	if (is_vertex_same_(vec[1], vertex))
+		*normal = add_vec3(*normal, cross_vec3(
+					sub_vec3(*vec[0]->position, *vec[1]->position),
+					sub_vec3(*vec[2]->position, *vec[1]->position)));
+	if (is_vertex_same_(vec[2], vertex))
+		*normal = add_vec3(*normal, cross_vec3(
+					sub_vec3(*vec[0]->position, *vec[2]->position),
+					sub_vec3(*vec[1]->position, *vec[2]->position)));
 }
 
 static void		look_at_polygon(
@@ -37,18 +56,7 @@ static void		look_at_polygon(
 	if (!found)
 		return ;
 	*n += 1;
-	if (is_vertex_same(vec[0], vertex))
-		*normal = add_vec3(*normal, cross_vec3(
-					sub_vec3(*vec[1]->position, *vec[0]->position),
-					sub_vec3(*vec[2]->position, *vec[0]->position)));
-	if (is_vertex_same(vec[1], vertex))
-		*normal = add_vec3(*normal, cross_vec3(
-					sub_vec3(*vec[0]->position, *vec[1]->position),
-					sub_vec3(*vec[2]->position, *vec[1]->position)));
-	if (is_vertex_same(vec[2], vertex))
-		*normal = add_vec3(*normal, cross_vec3(
-					sub_vec3(*vec[0]->position, *vec[2]->position),
-					sub_vec3(*vec[1]->position, *vec[2]->position)));
+	setup_normal(normal, vec, vertex);
 }
 
 /*

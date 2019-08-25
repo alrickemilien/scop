@@ -1,4 +1,5 @@
 *.o
+*.o-*
 CMakeFiles
 CMakeCache.txt
 *.vcxproj

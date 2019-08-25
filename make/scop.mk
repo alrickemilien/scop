@@ -14,6 +14,10 @@ endif
 # scop core functions library
 #
 SRC += ../src/core/render.c \
+../src/core/render_mesh.c \
+../src/core/render_meshs_normals.c \
+../src/core/apply_rotation.c \
+../src/core/is_vertex_same.c \
 ../src/core/smart_camera_position.c \
 ../src/core/gl_lighting.c \
 ../src/core/gl_attribute.c \

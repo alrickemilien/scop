@@ -16,14 +16,9 @@ int	gl_texturing(t_software_environ *env)
 	check_gl_error();
 	glBindTexture(GL_TEXTURE_2D, env->texture_id);
 	check_gl_error();
-	glTexImage2D(GL_TEXTURE_2D,
-			0,
-			GL_RGB,
-			env->texture.width,
-			env->texture.height,
-			0,
-			GL_BGR,
-			GL_UNSIGNED_BYTE,
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
+			env->texture.width, env->texture.height,
+			0, GL_BGR, GL_UNSIGNED_BYTE,
 			env->texture.data);
 	check_gl_error();
 	env->texture_uni = glGetUniformLocation(
