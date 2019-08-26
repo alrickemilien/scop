@@ -26,6 +26,8 @@ SET (SRC
 	src/utils/libmatrix_utils.c
 	src/utils/libmatrix_stringutils.c
 	src/utils/libmatrix_utils_xtoa.c
+	src/utils/libmatrix_utils_hexxtoa.c
+	src/utils/libmatrixutil_append_and_release_memory.c
 
 	# mat4
 	src/mat4/mat4.c

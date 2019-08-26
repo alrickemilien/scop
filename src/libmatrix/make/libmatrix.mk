@@ -8,7 +8,9 @@ endif
 
 SRC +=	../src/utils/libmatrix_utils.c \
 				../src/utils/libmatrix_stringutils.c \
-				../src/utils/libmatrix_utils_xtoa.c
+				../src/utils/libmatrix_utils_xtoa.c \
+				../src/utils/libmatrix_utils_hexxtoa.c \
+				../src/utils/libmatrixutil_append_and_release_memory.c
 
 SRC +=	../src/mat4/mat4.c \
 				../src/mat4/look_at_mat4.c \
