@@ -30,15 +30,14 @@ static int					apply_identifier(
 		if (!libmatrixutil_memcmp(
 					g_pmatrix_format_function[i].key,
 					format,
-					sizeof(char) * libmatrixutil_strlen(g_pmatrix_format_function[i].key)))
+					sizeof(char) * libmatrixutil_strlen(
+						g_pmatrix_format_function[i].key)))
 		{
 			options->identifier = g_pmatrix_format_function[i];
 			return (libmatrixutil_strlen(g_pmatrix_format_function[i].key));
 		}
-
 		i++;
 	}
-
 	return (0);
 }
 
@@ -62,16 +61,7 @@ static int					apply_flag(
 		i++;
 		format++;
 	}
-
 	return (0);
-}
-
-static int						get_string_value_according_to_format(
-		t_pmatrix_format_value *options,
-		char *buffer,
-		const void *value)
-{
-	return options->identifier.func(value, buffer);
 }
 
 /*
@@ -102,46 +92,37 @@ static int					pvalue(
 			ret += libmatrixutil_strlen(format);
 			return (ret);
 		}
-
 		if (*cursor_of_format == '%'
 				&& *(cursor_of_format + 1) != '%'
 				&& *(cursor_of_format + 1) != 0)
 		{
 			cursor_of_format++;
-
 			cursor_of_format += apply_flag(cursor_of_format, &options);
-
 			cursor_of_format += apply_identifier(cursor_of_format, &options);
-
-			ret += get_string_value_according_to_format(&options, value_str, value);
-
+			ret += options->identifier.func(value, value_str);
 			value_str[ret] = ' ';
 			ret++;
-
 			libmatrixutil_append_and_release_memory_static(&buffer, value_str);
-
 			format = cursor_of_format;
 		}
 	}
-
 	libmatrixutil_append_and_release_memory(whole_buffer, buffer);
-
 	return (ret);
 }
 
 /*
-** @param
-** format - The format to follow for each value
-** matrix - The matrix to print
-*/
+ ** @param
+ ** format - The format to follow for each value
+ ** matrix - The matrix to print
+ */
 
 int							pmatrix(
 		const char *format,
 		const t_mat4 *matrix)
 {
-	size_t    i;
-	int       ret;
-	char      *buffer;
+	size_t	i;
+	int		ret;
+	char	*buffer;
 
 	i = 0;
 	ret = 0;
@@ -157,11 +138,7 @@ int							pmatrix(
 		}
 		i++;
 	}
-#ifdef _MSC_VER
-	if (_write(1, buffer, ret) == -1)
-#else
 	if (write(1, buffer, ret) == -1)
-#endif
 		ret = -1;
 	free(buffer);
 	return (ret);
