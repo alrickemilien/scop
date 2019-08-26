@@ -30,8 +30,9 @@ int					main(
 	int argc,
 	char **argv)
 {
-	if (NULL == (g_env = calloc(sizeof(t_software_environ))))
+	if (NULL == (g_env = malloc(sizeof(t_software_environ))))
 		exit_error_with_message("Not enought memory to run the program");
+	memset(g_env, 0, sizeof(t_software_environ));
 	if (signal(SIGINT, stop_on_sigint) == SIG_ERR)
 		fprintf(stderr, "Can't catch SIGINT\n");
 	if (system_init(g_env, argc, argv) < 0)

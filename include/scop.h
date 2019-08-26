@@ -550,9 +550,19 @@ bool					gl_log_err(
 							...);
 
 /*
-**
+** END PROGRAM
 */
 
+void					del_polygon(
+							void *p, size_t s);
+void					del_usemtl(
+							void *p, size_t s);
+void					del_mtl_data(
+							void *p, size_t s);
+void					del_mtllib(
+							void *p, size_t s);
+void					del_vertex(
+							void *p, size_t s);
 void					end_program(
 							int code);
 int						system_init(

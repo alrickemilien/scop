@@ -136,11 +136,24 @@ SRC +=	../src/utils/ft_strjoin.c \
 		../src/utils/ft_lstfind.c \
 		../src/utils/extract_folder_from_path.c
 
+#
+# Start program
+#
 SRC += ../src/main.c \
 ../src/run.c \
 		../src/glfw_init.c \
-		../src/system_init.c \
-		../src/end_program.c
+		../src/system_init.c
+
+#
+# End program
+#
+SRC += ../src/end_program/del_usemtl.c \
+../src/end_program/del_mtllib.c \
+../src/end_program/del_mtl_data.c \
+../src/end_program/del_polygon.c \
+../src/end_program/del_vertex.c \
+../src/end_program/end_program.c \
+		../src/end_program/end_program.c
 
 INCLUDE += -I ../include -I ../src/libmatrix/include
 
