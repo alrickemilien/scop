@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_gl_error.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/26 20:34:54 by aemilien          #+#    #+#             */
+/*   Updated: 2019/08/26 20:35:07 by aemilien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "scop.h"
 
 /*
@@ -28,11 +40,8 @@ int							check_gl_error(void)
 			if (g_glmaperror[i].err == err)
 				error = g_glmaperror[i].string_error;
 		}
-#ifdef _MSC_VER
-		fprintf(stderr, "[GL Error]: %s\n", error);
-#else
-		fprintf(stderr, isatty(fileno(stderr)) ? "\033[31m[GL Error]\033[0m : %s\n" : "[GL Error] : %s\n", error);
-#endif
+		fprintf(stderr, isatty(fileno(stderr))
+			? "\033[31m[GL Error]\033[0m : %s\n" : "[GL Error] : %s\n", error);
 		return (-1);
 	}
 	return (0);

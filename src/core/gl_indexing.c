@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   gl_indexing.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/26 20:34:19 by aemilien          #+#    #+#             */
+/*   Updated: 2019/08/26 20:37:05 by aemilien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "scop.h"
 
 static const size_t	g_vertex_size = sizeof(t_vec3) * 3;
@@ -24,13 +36,13 @@ static void			vertex_list_to_vbo(
 	while (x)
 	{
 		vertex = (t_vertex*)x->content;
-		memcpy((uint8_t*)buffer + i * g_vertex_size,
+		memcpy(buffer + i * g_vertex_size,
 			vertex->position, sizeof(t_vec3));
-		memcpy((uint8_t*)buffer + i * g_vertex_size + sizeof(t_vec3),
+		memcpy(buffer + i * g_vertex_size + sizeof(t_vec3),
 			vertex->color == NULL ? &g_color : vertex->color, sizeof(t_vec3));
 		if (vertex->normal == NULL)
 			compute_vertex_normal(&env->data, vertex, &normal);
-		memcpy((uint8_t*)buffer + i * g_vertex_size + 2 * sizeof(t_vec3),
+		memcpy(buffer + i * g_vertex_size + 2 * sizeof(t_vec3),
 			vertex->normal == NULL ? &normal : vertex->normal, sizeof(t_vec3));
 		i++;
 		x = x->next;
@@ -81,8 +93,9 @@ static int			vertex_list_to_ebo(
 	GLuint		*index_buffer;
 	size_t		poly_length;
 
-	if (!(index_buffer = (GLuint*)malloc(env->data.vertex_count * sizeof(GLuint))))
-        return (-1);
+	if (!(index_buffer = (GLuint*)malloc(
+			env->data.vertex_count * sizeof(GLuint))))
+		return (-1);
 	memset(index_buffer, 0, env->data.vertex_count * sizeof(GLuint));
 	i = 0;
 	j = 0;
@@ -100,7 +113,7 @@ static int			vertex_list_to_ebo(
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, env->ebo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, i, index_buffer, GL_STATIC_DRAW);
 	free(index_buffer);
-    return (0);
+	return (0);
 }
 
 static int			vertex_list_to_vao(
@@ -113,12 +126,12 @@ static int			vertex_list_to_vao(
 	glBindVertexArray(env->vao);
 	if (!(buffer = (GLfloat*)malloc(
 		g_vertex_size * ft_lstlen(env->data.vertices))))
-        return (-1);
+		return (-1);
 	vertex_list_to_vbo(env, buffer);
 	free(buffer);
 	if (vertex_list_to_ebo(env) < 0)
-        return (-1);
-    return (0);
+		return (-1);
+	return (0);
 }
 
 int					gl_indexing(
