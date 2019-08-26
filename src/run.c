@@ -1,79 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   run.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/26 19:05:55 by aemilien          #+#    #+#             */
+/*   Updated: 2019/08/26 19:08:14 by aemilien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "scop.h"
 
 /*
- ** This macro handles the fact that windows
- ** works with \ and not / as Unix
- ** when it comes to treat with files ...
- */
+** This macro handles the fact that windows
+** works with \ and not / as Unix
+** when it comes to treat with files ...
+*/
 
-#ifdef _MSC_VER
-static const char *g_vertex_file_path = "\x5c"
-"shaders"
-"\x5c"
-"mesh"
-"\x5c"
-"VertexShader.glsl";
-static const char *g_fragment_file_path = "\x5c"
-"shaders"
-"\x5c"
-"mesh"
-"\x5c"
-"FragmentShader.glsl";
-
-static const char *g_plan_vertex_file_path = "\x5c"
-"shaders"
-"\x5c"
-"plan"
-"\x5c"
-"VertexShader.glsl";
-static const char *g_plan_fragment_file_path = "\x5c"
-"shaders"
-"\x5c"
-"plan"
-"\x5c"
-"FragmentShader.glsl";
-static const char *g_plan_geometry_file_path = "\x5c"
-"shaders"
-"\x5c"
-"plan"
-"\x5c"
-"GeometryShader.glsl";
-
-static const char *g_axis_vertex_file_path = "\x5c"
-"shaders"
-"\x5c"
-"axis"
-"\x5c"
-"VertexShader.glsl";
-static const char *g_axis_fragment_file_path = "\x5c"
-"shaders"
-"\x5c"
-"axis"
-"\x5c"
-"FragmentShader.glsl";
-static const char *g_axis_geometry_file_path = "\x5c"
-"shaders"
-"\x5c"
-"axis"
-"\x5c"
-"GeometryShader.glsl";
-
-static const char *g_normals_vertex_file_path = "\x5c"
-"shaders"
-"\x5c"
-"normals\x5c"
-"VertexShader.glsl";
-static const char *g_normals_fragment_file_path = "\x5c"
-"shaders"
-"\x5c"
-"normals\x5c"
-"FragmentShader.glsl";
-static const char *g_normals_geometry_file_path = "\x5c"
-"shaders"
-"\x5c"
-"normals\x5c"
-"GeometryShader.glsl";
-#else
 static const char	*g_vertex_file_path = "/shaders/mesh/"
 "VertexShader.glsl";
 static const char	*g_fragment_file_path = "/shaders/mesh/"
@@ -96,7 +40,6 @@ static const char	*g_normals_fragment_file_path = "/shaders/normals/"
 "FragmentShader.glsl";
 static const char	*g_normals_geometry_file_path = "/shaders/normals/"
 "GeometryShader.glsl";
-#endif
 
 static void			prepare_load_all_shaders(
 		t_software_environ *env)

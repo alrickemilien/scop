@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   load_tga_file.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/26 19:27:49 by aemilien          #+#    #+#             */
+/*   Updated: 2019/08/26 19:29:02 by aemilien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "scop.h"
 
 static int				load_tga_image(
@@ -77,8 +89,9 @@ int						load_tga_file(
 		&& tga->header.color_map_type != 0
 		&& tga->header.image_type != NON_COMPRESSED_TGA)
 		return (load_tga_file_error(pathname, stream));
-	if (!(tga->image = (uint32_t*)malloc(sizeof(uint32_t) * tga->width * tga->height)))
-        return (load_tga_file_error(pathname, stream));
+	if (!(tga->image = (uint32_t*)malloc(
+			sizeof(uint32_t) * tga->width * tga->height)))
+		return (load_tga_file_error(pathname, stream));
 	load_tga_image(tga, stream);
 	tga->buffer = decode_tga(tga);
 	fill_tga_image(tga);

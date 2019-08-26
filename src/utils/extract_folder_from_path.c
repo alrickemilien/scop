@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   extract_folder_from_path.c                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/26 19:00:25 by aemilien          #+#    #+#             */
+/*   Updated: 2019/08/26 19:00:26 by aemilien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "utils.h"
 #include <stdio.h>
 
@@ -18,7 +30,6 @@
 ** .. => /
 */
 
-#ifdef __APPLE__
 char	*extract_folder_from_path(
 		const char *path)
 {
@@ -30,16 +41,3 @@ char	*extract_folder_from_path(
 	free(tmp);
 	return (ret);
 }
-#else
-char	*extract_folder_from_path(const char *path)
-{
-	char	dir[_MAX_DIR];
-
-	if (_splitpath_s(path, NULL, 0,    // Don't need drive
-	                 dir, sizeof(dir), // Just the directory
-	                 NULL, 0,          // Don't need filename
-	                 NULL, 0) != 0)
-		return (NULL);
-	return (_strdup(dir));
-}
-#endif

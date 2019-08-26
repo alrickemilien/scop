@@ -6,17 +6,17 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 17:53:31 by aemilien          #+#    #+#             */
-/*   Updated: 2019/08/25 17:53:33 by aemilien         ###   ########.fr       */
+/*   Updated: 2019/08/26 19:00:42 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
 /*
- ** Return index of node if list node's content fits
- ** into provided function
- ** or -1 if no found
- */
+** Return index of node if list node's content fits
+** into provided function
+** or -1 if no found
+*/
 
 size_t	ft_lstindex(t_list *root,
 		const void *provided_content,

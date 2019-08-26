@@ -1,28 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   print_vec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/26 19:29:22 by aemilien          #+#    #+#             */
-/*   Updated: 2019/08/26 19:29:23 by aemilien         ###   ########.fr       */
+/*   Created: 2019/08/26 19:18:43 by aemilien          #+#    #+#             */
+/*   Updated: 2019/08/26 19:18:44 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "scop.h"
+#include "object_loader.h"
 
-uint32_t	uint32_color(
-	uint8_t alpha,
-	uint8_t red,
-	uint8_t green,
-	uint8_t blue)
+void		print_vec3(void *data)
 {
-	uint32_t	color;
+	t_vec3		*pos;
 
-	color = alpha;
-	color = (color * 256) + red;
-	color = (color * 256) + green;
-	color = (color * 256) + blue;
-	return (color);
+	pos = (t_vec3 *)data;
+	printf(
+		"\tx = %lf\n"
+		"\ty = %lf\n"
+		"\tz = %lf\n\n",
+		pos->x,
+		pos->y,
+		pos->z);
+}
+
+void		print_vec2(void *data)
+{
+	t_vec2		*pos;
+
+	pos = (t_vec2 *)data;
+	printf("\tx = %lf\n"
+			"\ty = %lf\n\n",
+			pos->x, pos->y);
 }

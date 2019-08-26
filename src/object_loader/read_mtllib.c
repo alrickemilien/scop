@@ -1,6 +1,15 @@
-#ifdef _MSC_VER
-# include <direct.h>
-#endif
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_mtllib.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/26 19:12:17 by aemilien          #+#    #+#             */
+/*   Updated: 2019/08/26 19:12:25 by aemilien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "object_loader.h"
 #include "utils.h"
 
@@ -26,13 +35,8 @@ static char	*build_mtllib_full_path(
 	char	*tmp2;
 	char	cwd[PATH_MAX];
 
-#ifdef _MSC_VER
-	if (_getcwd(cwd, sizeof(cwd)) == NULL)
-		return (NULL);
-#else
 	if (getcwd(cwd, sizeof(cwd)) == NULL)
 		return (NULL);
-#endif
 	tmp2 = extract_folder_from_path(object_file_path);
 	tmp = merge_paths(cwd, tmp2);
 	ret = merge_paths(tmp, mtllib_filename);

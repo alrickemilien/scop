@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   load_bitmap_file_header.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/26 19:29:31 by aemilien          #+#    #+#             */
+/*   Updated: 2019/08/26 19:31:39 by aemilien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "scop.h"
 
-/**
- * The first byte is 'B' (0x42), the second byte is 'M' (0x4D)
- * A little endian uint16_t would see this as 0x4D42.
- * Try the following instead for a endian independent solution.
- */
+/*
+** The first byte is 'B' (0x42), the second byte is 'M' (0x4D)
+** A little endian uint16_t would see this as 0x4D42.
+** Try the following instead for a endian independent solution.
+*/
 
 static int	find_bmp_endian(uint8_t type[2])
 {

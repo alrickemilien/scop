@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_smooth_shading.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/26 19:13:39 by aemilien          #+#    #+#             */
+/*   Updated: 2019/08/26 19:13:40 by aemilien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "object_loader.h"
 
 int	read_smooth_shading(t_mesh *data, const t_token *tokens)
@@ -8,8 +20,8 @@ int	read_smooth_shading(t_mesh *data, const t_token *tokens)
 	s = n_atoi(tokens[0].cursor, tokens[0].size);
 	if (s == 0 && tokens[0].size > 1)
 	{
-		if(!(off = strndup(tokens[0].cursor, tokens[0].size)))
-            return (-1);
+		if (!(off = strndup(tokens[0].cursor, tokens[0].size)))
+			return (-1);
 		data->smooth_shading = -1;
 		if (memcmp(off, "off", sizeof(char) * 3) && tokens[0].size == 3)
 			data->smooth_shading = -1;

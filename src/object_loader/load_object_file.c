@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   load_object_file.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/26 19:11:45 by aemilien          #+#    #+#             */
+/*   Updated: 2019/08/26 19:11:48 by aemilien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include "object_loader.h"
 
@@ -83,11 +95,7 @@ int			load_object_file(t_mesh *data, const char *file_path)
 
 	g_current_line = 0;
 	memset(data, 0, sizeof(t_mesh));
-    #ifdef _MSC_VER
-	    data->path = _strdup(file_path);
-    #else
-	    data->path = strdup(file_path);
-    #endif
+	data->path = strdup(file_path);
 	if (!(fp = fopen(file_path, "r")))
 		return (-1);
 	while (fgets(line, BUFF_SIZE, fp) != NULL && ++g_current_line)

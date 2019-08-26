@@ -1,8 +1,16 @@
-#include "object_loader.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_vec3.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/26 19:14:40 by aemilien          #+#    #+#             */
+/*   Updated: 2019/08/26 19:14:51 by aemilien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-/*
-** @TODO need check of values
-*/
+#include "object_loader.h"
 
 int	read_vec3(const t_token *tokens, t_vec3 *vector)
 {

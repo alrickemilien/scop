@@ -138,6 +138,8 @@ int						add_vertex(
 							t_list *vertices);
 
 void					print_object(const t_mesh *data);
+void					print_vec3(void *data);
+void					print_vec2(void *data);
 
 int						fill_vertex_position(t_mesh *data, t_vertex *vertex);
 int						fill_vertex_uv(t_mesh *data, t_vertex *vertex);

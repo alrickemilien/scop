@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cleanup_shader_program.c                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/26 19:26:03 by aemilien          #+#    #+#             */
+/*   Updated: 2019/08/26 19:26:08 by aemilien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "scop.h"
 
 static void	cleanup_shader(
@@ -9,12 +21,7 @@ static void	cleanup_shader(
 	glDetachShader(p->id, s->id);
 	glDeleteShader(p->id);
 	free(s->path);
-#ifdef __APPLE__
 	munmap(s->content, s->length);
-#endif
-#ifdef _MSC_VER
-	free(s->content);
-#endif
 	free(s);
 }
 

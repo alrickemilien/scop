@@ -80,6 +80,7 @@ SRC +=	../src/object_loader/read_position.c \
 ../src/object_loader/read_name.c \
 ../src/object_loader/load_object_file.c \
 ../src/object_loader/print_object.c \
+../src/object_loader/print_vec.c \
 ../src/object_loader/read_usemtl.c \
 ../src/object_loader/read_object_error.c \
 ../src/object_loader/read_face.c

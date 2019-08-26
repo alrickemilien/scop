@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   load_bitmap_file.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/26 19:31:18 by aemilien          #+#    #+#             */
+/*   Updated: 2019/08/26 19:31:19 by aemilien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "scop.h"
 
 static int	load_bitmap_file_error(
@@ -34,6 +46,5 @@ int			load_bitmap_file(
 		fclose(stream);
 		return (-1);
 	}
-	fclose(stream);
-	return (0);
+	return (fclose(stream));
 }

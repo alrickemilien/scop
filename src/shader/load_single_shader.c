@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   load_single_shader.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/26 19:26:28 by aemilien          #+#    #+#             */
+/*   Updated: 2019/08/26 19:26:33 by aemilien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "scop.h"
 
-#ifdef __APPLE__
 int		load_single_shader(
 	shader_t *shader,
 	const char *path)
@@ -29,4 +40,3 @@ int		load_single_shader(
 	}
 	return (0);
 }
-#endif

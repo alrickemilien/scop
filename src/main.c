@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/26 19:04:45 by aemilien          #+#    #+#             */
+/*   Updated: 2019/08/26 19:07:27 by aemilien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "scop.h"
 
 t_software_environ	*g_env = NULL;
@@ -18,7 +30,7 @@ int					main(
 	int argc,
 	char **argv)
 {
-	if (NULL == (g_env = malloc(sizeof(t_software_environ))))
+	if (NULL == (g_env = calloc(sizeof(t_software_environ))))
 		exit_error_with_message("Not enought memory to run the program");
 	if (signal(SIGINT, stop_on_sigint) == SIG_ERR)
 		fprintf(stderr, "Can't catch SIGINT\n");
