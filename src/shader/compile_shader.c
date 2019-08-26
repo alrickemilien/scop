@@ -13,7 +13,7 @@
 #include "scop.h"
 
 int	compile_single_shader(
-		shader_t *shader,
+		t_shader *shader,
 		int *info_log_length,
 		GLint *result)
 {

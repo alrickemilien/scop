@@ -82,15 +82,15 @@ typedef struct			s_shader {
 	GLchar				*content;
 	GLint				length;
 	char				*path;
-}						shader_t;
+}						t_shader;
 
-typedef struct			shader_program_s {
+typedef struct			s_shader_program {
 	GLuint				id;
 	char				*cwd;
-	shader_t			*vertex_shader;
-	shader_t			*fragment_shader;
-	shader_t			*geometry_shader;
-}						shader_program_t;
+	t_shader			*vertex_shader;
+	t_shader			*fragment_shader;
+	t_shader			*geometry_shader;
+}						t_shader_program;
 
 typedef struct			s_light
 {
@@ -172,10 +172,10 @@ typedef struct			s_software_environ
 	GLenum				render_style;
 	GLfloat				y_auto_rotate_angle;
 	t_texture			texture;
-	shader_program_t	object_shader_program;
-	shader_program_t	internal_object_shader_program;
-	shader_program_t	axis_shader_program;
-	shader_program_t	normals_shader_program;
+	t_shader_program	object_shader_program;
+	t_shader_program	internal_object_shader_program;
+	t_shader_program	axis_shader_program;
+	t_shader_program	normals_shader_program;
 	GLuint				vao;
 	GLuint				plan_vao;
 	GLuint				axis_vao;
@@ -249,12 +249,12 @@ int						load_texture_file(
 							t_texture *texture,
 							const char *pathname);
 int						load_program_shader(
-							shader_program_t *env,
+							t_shader_program *env,
 							const char *vertex_file_path,
 							const char *fragment_file_path,
 							const char *geometry_file_path);
 int						load_single_shader(
-							shader_t *shader,
+							t_shader *shader,
 							const char *path);
 void					print_gl_shader_error(
 							GLuint id,
@@ -263,9 +263,9 @@ void					print_gl_program_error(
 							GLuint id,
 							int info_log_length);
 void					cleanup_shader_program(
-							shader_program_t *p);
+							t_shader_program *p);
 int						compile_single_shader(
-							shader_t *shader,
+							t_shader *shader,
 							int *info_log_length,
 							GLint *result);
 
@@ -295,10 +295,10 @@ int						set_attribute(
 							const char *attribute_name,
 							size_t vertex_size);
 
-typedef struct			glmaperror_s {
+typedef struct			s_glmaperror {
 	GLenum				err;
 	char				*string_error;
-}						glmaperror_t;
+}						t_glmaperror;
 
 int						check_gl_error(void);
 

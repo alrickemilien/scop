@@ -16,7 +16,7 @@
 ** Provides gl error string message if any
 */
 
-static const glmaperror_t	g_glmaperror[] = {
+static const t_glmaperror	g_glmaperror[] = {
 	{ GL_INVALID_OPERATION, "GL_INVALID_OPERATION", },
 	{ GL_INVALID_ENUM, "GL_INVALID_ENUM", },
 	{ GL_INVALID_VALUE, "GL_INVALID_VALUE", },
@@ -35,7 +35,7 @@ int							check_gl_error(void)
 	{
 		error = "Unhandled GL error";
 		i = 0;
-		while (i * sizeof(glmaperror_t) < sizeof(g_glmaperror))
+		while (i * sizeof(t_glmaperror) < sizeof(g_glmaperror))
 		{
 			if (g_glmaperror[i].err == err)
 				error = g_glmaperror[i].string_error;

@@ -44,10 +44,10 @@ static const char	*g_normals_geometry_file_path = "/shaders/normals/"
 static void			prepare_load_all_shaders(
 		t_software_environ *env)
 {
-	memset(&env->object_shader_program, 0, sizeof(shader_program_t));
-	memset(&env->internal_object_shader_program, 0, sizeof(shader_program_t));
-	memset(&env->axis_shader_program, 0, sizeof(shader_program_t));
-	memset(&env->normals_shader_program, 0, sizeof(shader_program_t));
+	memset(&env->object_shader_program, 0, sizeof(t_shader_program));
+	memset(&env->internal_object_shader_program, 0, sizeof(t_shader_program));
+	memset(&env->axis_shader_program, 0, sizeof(t_shader_program));
+	memset(&env->normals_shader_program, 0, sizeof(t_shader_program));
 	env->object_shader_program.cwd = (char *)env->cwd;
 	env->internal_object_shader_program.cwd = (char *)env->cwd;
 	env->axis_shader_program.cwd = (char *)env->cwd;

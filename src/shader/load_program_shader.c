@@ -17,14 +17,14 @@
 ** 	GLuint		id;
 ** 	GLchar		*content;
 ** 	GLint		length;
-** }				shader_t;
+** }				t_shader;
 */
 
-static shader_t	*load_shader(GLenum shader_type, char *src_path)
+static t_shader	*load_shader(GLenum t_shaderype, char *src_path)
 {
 	GLint		result;
 	int			info_log_length;
-	shader_t	*shader;
+	t_shader	*shader;
 
 	if (src_path == NULL)
 	{
@@ -32,10 +32,10 @@ static shader_t	*load_shader(GLenum shader_type, char *src_path)
 			"An error occured when wanting to build shaders full path");
 		return (NULL);
 	}
-	if (NULL == (shader = (shader_t*)malloc(sizeof(shader_t))))
+	if (NULL == (shader = (t_shader*)malloc(sizeof(t_shader))))
 		return (NULL);
 	shader->path = src_path;
-	shader->id = glCreateShader(shader_type);
+	shader->id = glCreateShader(t_shaderype);
 	if (load_single_shader(shader, shader->path) < 0)
 		return (NULL);
 	result = GL_FALSE;
@@ -46,7 +46,7 @@ static shader_t	*load_shader(GLenum shader_type, char *src_path)
 }
 
 static int		link_program(
-		shader_program_t *program)
+		t_shader_program *program)
 {
 	GLint	result;
 	int		info_log_length;
@@ -67,7 +67,7 @@ static int		link_program(
 */
 
 int				load_program_shader(
-		shader_program_t *program,
+		t_shader_program *program,
 		const char *vertex,
 		const char *fragment,
 		const char *geometry)

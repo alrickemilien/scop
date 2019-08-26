@@ -13,8 +13,8 @@
 #include "scop.h"
 
 static void	cleanup_shader(
-		shader_program_t *p,
-		shader_t *s)
+		t_shader_program *p,
+		t_shader *s)
 {
 	if (!s)
 		return ;
@@ -26,7 +26,7 @@ static void	cleanup_shader(
 }
 
 void		cleanup_shader_program(
-		shader_program_t *p)
+		t_shader_program *p)
 {
 	cleanup_shader(p, p->vertex_shader);
 	cleanup_shader(p, p->fragment_shader);

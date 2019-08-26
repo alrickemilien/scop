@@ -13,7 +13,7 @@
 #include "scop.h"
 
 int		load_single_shader(
-	shader_t *shader,
+	t_shader *shader,
 	const char *path)
 {
 	int			fd;
