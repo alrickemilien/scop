@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tga.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/26 21:07:26 by aemilien          #+#    #+#             */
+/*   Updated: 2019/08/26 21:07:27 by aemilien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef TGA_H
 # define TGA_H
 
@@ -7,7 +19,8 @@
 
 # define NON_COMPRESSED_TGA 2
 
-#pragma pack(push, 1)
+# pragma pack(push, 1)
+
 typedef struct			s_tga_header
 {
 	uint8_t				id_length;
@@ -16,7 +29,8 @@ typedef struct			s_tga_header
 	uint8_t				color_map_spec[5];
 	uint8_t				image_spec[10];
 }						t_tga_header;
-#pragma pack(pop)
+
+# pragma pack(pop)
 
 typedef struct			s_tga
 {
@@ -34,14 +48,13 @@ int						fill_tga_header(
 							t_tga_header *header,
 							FILE *stream);
 uint32_t				uint32_color(
-    						uint8_t alpha,
-    						uint8_t red,
-    						uint8_t green,
-    						uint8_t blue);
+							uint8_t alpha,
+							uint8_t red,
+							uint8_t green,
+							uint8_t blue);
 uint8_t					*decode_tga(
 							t_tga *tga);
 int						load_tga_file(
 							t_tga *tga,
 							const char *pathname);
-
 #endif

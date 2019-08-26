@@ -1,7 +1,20 @@
-#ifndef BMP_H
-# define BMP_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   bitmap.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/26 21:01:26 by aemilien          #+#    #+#             */
+/*   Updated: 2019/08/26 21:01:27 by aemilien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef BITMAP_H
+# define BITMAP_H
 
 # pragma pack(push, 1)
+
 typedef struct			s_bmp_header
 {
 	uint8_t				type[2];
@@ -10,9 +23,11 @@ typedef struct			s_bmp_header
 	uint16_t			reserved2;
 	uint32_t			data_offset;
 }						t_bmp_header;
+
 # pragma pack(pop)
 
 # pragma pack(push, 1)
+
 typedef struct			s_bmp_dib_header
 {
 	uint32_t			header_size;
@@ -27,6 +42,7 @@ typedef struct			s_bmp_dib_header
 	uint32_t			colors;
 	uint32_t			important_colors;
 }						t_bmp_dib_header;
+
 # pragma pack(pop)
 
 typedef struct			s_bitmap {
@@ -40,11 +56,10 @@ typedef struct			s_bitmap {
 }						t_bitmap;
 
 int						load_bitmap_file_header(
-							t_bitmap *bmp,
-							FILE *stream);
+		t_bitmap *bmp,
+		FILE *stream);
 
 int						load_bitmap_file(
-							t_bitmap *bmp,
-							char const *pathname);
-
+		t_bitmap *bmp,
+		char const *pathname);
 #endif

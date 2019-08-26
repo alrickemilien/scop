@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/26 21:08:23 by aemilien          #+#    #+#             */
+/*   Updated: 2019/08/26 21:08:24 by aemilien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef UTILS_H
 # define UTILS_H
 
-#ifdef __APPLE__
-# include <unistd.h>
-# include <libgen.h>
-#endif 
+# ifdef __APPLE__
+#  include <unistd.h>
+#  include <libgen.h>
+# endif
 
 # include <stdlib.h>
 # include <string.h>
@@ -40,14 +52,14 @@ t_list				*ft_lstmap(t_list *lst,
 						t_list *(*f)(
 						t_list *elem));
 t_list				*ft_lstfind(t_list *root,
-    					const void *provided_content,
-    					bool (*f)(
+						const void *provided_content,
+						bool (*f)(
 							const void *node_content,
 							const void *provided_content));
 
 size_t				ft_lstindex(t_list *root,
-    					const void *provided_content,
-    					bool (*f)(
+						const void *provided_content,
+						bool (*f)(
 							const void *node_content,
 							const void *provided_content));
 char				*extract_folder_from_path(

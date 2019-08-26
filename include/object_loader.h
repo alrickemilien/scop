@@ -1,5 +1,17 @@
-#ifndef OBJ_LOADER_H
-# define OBJ_LOADER_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   object_loader.h                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/26 21:04:14 by aemilien          #+#    #+#             */
+/*   Updated: 2019/08/26 21:04:15 by aemilien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef OBJECT_LOADER_H
+# define OBJECT_LOADER_H
 
 # define DEFAULT_CODE -9
 
@@ -19,7 +31,6 @@
 # define MTLLIB_TOKEN "mtllib"
 # define USEMTL_TOKEN "usemtl"
 
-// @TODO need to implement this shit
 # define SMOOTH_SHADING_AROUND_POLYGON_TOKEN "s"
 
 /*
@@ -30,8 +41,6 @@ typedef struct			s_usemtl {
 	size_t				start;
 	size_t				end;
 	char				*mtl;
-
-	// Keep NULL until it has not been filled
 	t_mtl_data			*material;
 }						t_usemtl;
 
@@ -54,19 +63,10 @@ typedef struct			s_mesh
 	t_list				*positions;
 	t_list				*uvs;
 	t_list				*normals;
-	
-	// A vertex is composed of one position, one uv and one normal
 	t_list				*vertices;
-
-	// A polygon is composed of at least 3 vertices
 	t_list				*polygons;
-
-	// All texture libs
 	t_list				*mtllib;
-
-	// MTL reference of faces
 	t_list				*usemtl;
-
 	size_t				vertex_count;
 	size_t				faces_count;
 	bool				is_texture_set;
@@ -75,8 +75,6 @@ typedef struct			s_mesh
 
 typedef struct			s_polygon {
 	t_list				*vertices;
-
-	// Provide storing space for polygon's normal
 	t_vec3				normal;
 }						t_polygon;
 
@@ -85,7 +83,6 @@ typedef struct			s_vertex
 	size_t				position_index;
 	size_t				normal_index;
 	size_t				uv_index;
-
 	t_vec3				*position;
 	t_vec3				*color;
 	t_vec2				*uv;
@@ -124,12 +121,15 @@ int						read_name(t_mesh *data, const t_token *tokens);
 int						read_usemtl(t_mesh *data, const t_token *tokens);
 int						read_mtllib(t_mesh *data, const t_token *tokens);
 
-int						read_vertex(t_mesh *data, const t_token *tokens, t_polygon *polygon);
+int						read_vertex(
+		t_mesh *data, const t_token *tokens, t_polygon *polygon);
 
-int						read_object_file_line(t_mesh *data, const char *line);
-int						read_smooth_shading(t_mesh *data, const t_token *tokens);
+int						read_object_file_line(
+		t_mesh *data, const char *line);
+int						read_smooth_shading(
+		t_mesh *data, const t_token *tokens);
 
-int 					read_object_error(const char *msg);
+int						read_object_error(const char *msg);
 
 int						add_vertex(
 							t_mesh *data,

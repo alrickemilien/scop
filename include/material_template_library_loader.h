@@ -1,5 +1,17 @@
-#ifndef MATERIAL_TEMPLATE_LIBRARY_LOADER_LOADER_H
-# define MATERIAL_TEMPLATE_LIBRARY_LOADER_LOADER_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   material_template_library_loader.h                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/26 21:06:16 by aemilien          #+#    #+#             */
+/*   Updated: 2019/08/26 21:06:17 by aemilien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef MATERIAL_TEMPLATE_LIBRARY_LOADER_H
+# define MATERIAL_TEMPLATE_LIBRARY_LOADER_H
 
 # include <stdlib.h>
 # include <stdio.h>
@@ -27,7 +39,7 @@
 # define SPECULAR_COLOR_EXPONENT_TOKEN "Ns"
 
 /*
-** Ni specifies the optical density for the surface.  This is also known as 
+** Ni specifies the optical density for the surface.  This is also known as
 ** index of refraction.
 */
 
@@ -42,12 +54,12 @@
 ** !!
 */
 
-# define FRESNEL_REFLECTANCE_TOKEN "Ft"	// Fresnel reflectance
-# define FRESNEL_TRANSMITTANCE_TOKEN "Ft"	// Fresnel transmittance
-# define AMBIENT_LIGHT_COLOR_TOKEN "Ia"	// ambient light
-# define AMBIENT_LIGHT_INTENSITY_TOKEN "I"	// light intensity
-# define REFLECTED_DIRECTION_INTENSITY_TOKEN "Ir"	// intensity from reflected direction
-# define TRANSMITTED_DIRECTION_INTENSITY_TOKEN "It"	// intensity from transmitted direction
+# define FRESNEL_REFLECTANCE_TOKEN "Ft"
+# define FRESNEL_TRANSMITTANCE_TOKEN "Ft"
+# define AMBIENT_LIGHT_COLOR_TOKEN "Ia"
+# define AMBIENT_LIGHT_INTENSITY_TOKEN "I"
+# define REFLECTED_DIRECTION_INTENSITY_TOKEN "Ir"
+# define TRANSMITTED_DIRECTION_INTENSITY_TOKEN "It"
 
 typedef struct				s_mtllib {
 	char					*path;
@@ -61,15 +73,11 @@ typedef struct				s_mtllib {
 typedef struct				s_mtl_data
 {
 	char					*label;
-	
 	t_vec3					specular;
-	float					specular_exponent; // ranges between 0 and 1000
-
+	float					specular_exponent;
 	t_vec3					ambient;
 	t_vec3					diffuse;
-
 	float					optical_density;
-
 	float					dissolved;
 	float					transparency;
 	float					illumination;
@@ -110,25 +118,25 @@ int							read_ambient_color(
 								t_mtl_data *material,
 								const t_token *tokens);
 int							read_diffuse_color(
-							    t_mtllib *lib,
-							    t_mtl_data *material,
-							    const t_token *tokens);
+								t_mtllib *lib,
+								t_mtl_data *material,
+								const t_token *tokens);
 int							read_optical_density(
-							    t_mtllib *lib,
-							    t_mtl_data *material,
-							    const t_token *tokens);
+								t_mtllib *lib,
+								t_mtl_data *material,
+								const t_token *tokens);
 int							read_dissolved(
-							    t_mtllib *lib,
-							    t_mtl_data *material,
-							    const t_token *tokens);
+								t_mtllib *lib,
+								t_mtl_data *material,
+								const t_token *tokens);
 int							read_transparency(
-							    t_mtllib *lib,
-							    t_mtl_data *material,
-							    const t_token *tokens);
+								t_mtllib *lib,
+								t_mtl_data *material,
+								const t_token *tokens);
 int							read_illumination(
-							    t_mtllib *lib,
-							    t_mtl_data *material,
-							    const t_token *tokens);
+								t_mtllib *lib,
+								t_mtl_data *material,
+								const t_token *tokens);
 int							load_mtl_file(t_mtllib *data);
 int							read_mtl_error(const char *msg);
 #endif
