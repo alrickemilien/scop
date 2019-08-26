@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 19:51:35 by aemilien          #+#    #+#             */
-/*   Updated: 2019/08/26 19:51:50 by aemilien         ###   ########.fr       */
+/*   Updated: 2019/08/26 20:26:50 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ int					libmatrix_ltoa(
 	return ((int)ltoa_hex(value, buffer, 10));
 }
 
-static const char	g_integer_part_str[514];
-
 /*
 ** 2^-126 is the most little float you can have
 ** It is in decimal 2.3509887e-38
@@ -41,17 +39,17 @@ static const char	g_integer_part_str[514];
 ** 1(The 2) +  1(The dot) +  38(e-38) + 1(\0 character) => 40 characters wide
 */
 
-int					libmatrix_ftoa(
+static int			libmatrix_ftoa_(
 		const void *param,
-		char *buffer)
+		char *buffer,
+		int precision_afterpoint)
 {
 	float	value;
 	int		integer_part;
 	float	float_part;
 	size_t	i;
-	int		precision_afterpoint;
+	char	g_integer_part_str[514];
 
-	precision_afterpoint = 38;
 	libmatrixutil_memcpy(&value, param, sizeof(float));
 	libmatrixutil_bzero(buffer, sizeof(char) * 41);
 	integer_part = (int)value;
@@ -69,4 +67,18 @@ int					libmatrix_ftoa(
 	while (buffer[i - 1] == '0' && buffer[i - 2] != '.')
 		buffer[i-- - 1] = 0;
 	return ((int)i);
+}
+
+/*
+** 2^-126 is the most little float you can have
+** It is in decimal 2.3509887e-38
+** It means that the most bigger number will be
+** 1(The 2) +  1(The dot) +  38(e-38) + 1(\0 character) => 40 characters wide
+*/
+
+int					libmatrix_ftoa(
+		const void *param,
+		char *buffer)
+{
+	return (libmatrix_ftoa_(param, buffer, 38));
 }

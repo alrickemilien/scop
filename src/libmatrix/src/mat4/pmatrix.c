@@ -1,22 +1,24 @@
-#include "libmatrix.h"
-#ifdef _MSC_VER
-# include <io.h>
-#endif
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pmatrix.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/26 20:26:24 by aemilien          #+#    #+#             */
+/*   Updated: 2019/08/26 20:26:25 by aemilien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-static const t_pmatrix_fmt  g_pmatrix_format_function[] = {
+#include "libmatrix.h"
+
+static const t_pmatrix_fmt	g_pmatrix_format_function[] = {
 	{ "d", &libmatrix_itoa },
 	{ "ld", &libmatrix_ltoa },
 	{ "f", &libmatrix_ftoa },
 	{ "glf", &libmatrix_ftoa },
 	{ "gld", &libmatrix_itoa },
 };
-
-static inline bool			is_flag(char c)
-{
-	if (strchr(".0#+", c) == NULL)
-		return (false);
-	return (true);
-}
 
 static int					apply_identifier(
 		char *format,
@@ -48,7 +50,7 @@ static int					apply_flag(
 	int i;
 
 	i = 0;
-	while (*format && is_flag(*format))
+	while (*format && strchr(".0#+", *format) != NULL)
 	{
 		if (*format == '.')
 			options->point = 1;
@@ -64,6 +66,21 @@ static int					apply_flag(
 	return (0);
 }
 
+static int					apply_value(
+	char **cursor_of_format,
+	t_pmatrix_format_value *options,
+	const void *value,
+	char *value_str)
+{
+	int	ret;
+
+	*cursor_of_format += apply_flag(++(*cursor_of_format), options);
+	*cursor_of_format += apply_identifier(*cursor_of_format, options);
+	ret = options->identifier.func(value, value_str);
+	value_str[ret++] = ' ';
+	return (ret);
+}
+
 /*
 ** Print a single value of the matrix with the format given in parameter
 ** return the size of the buffer
@@ -74,36 +91,27 @@ static int					pvalue(
 		char **whole_buffer,
 		const void *value)
 {
-	char                    *buffer;
-	char                    *cursor_of_format;
-	int                     ret;
-	t_pmatrix_format_value  options;
-	char                    value_str[42];
+	char					*buffer;
+	char					*cof;
+	int						ret;
+	t_pmatrix_format_value	options;
+	char					value_str[42];
 
 	buffer = NULL;
 	ret = 0;
 	while (*format)
 	{
-		cursor_of_format = libmatrixutil_strchr(format, '%');
-		if (cursor_of_format == NULL)
+		if ((cof = libmatrixutil_strchr(format, '%')) == NULL)
 		{
 			libmatrixutil_append_and_release_memory(&buffer,
 					libmatrixutil_strdup(format));
-			ret += libmatrixutil_strlen(format);
-			return (ret);
+			return ((ret += libmatrixutil_strlen(format)));
 		}
-		if (*cursor_of_format == '%'
-				&& *(cursor_of_format + 1) != '%'
-				&& *(cursor_of_format + 1) != 0)
+		if (*cof == '%' && *(cof + 1) != '%' && *(cof + 1) != 0)
 		{
-			cursor_of_format++;
-			cursor_of_format += apply_flag(cursor_of_format, &options);
-			cursor_of_format += apply_identifier(cursor_of_format, &options);
-			ret += options->identifier.func(value, value_str);
-			value_str[ret] = ' ';
-			ret++;
+			ret += apply_value(&cof, &options, value, value_str);
 			libmatrixutil_append_and_release_memory_static(&buffer, value_str);
-			format = cursor_of_format;
+			format = cof;
 		}
 	}
 	libmatrixutil_append_and_release_memory(whole_buffer, buffer);
@@ -111,10 +119,10 @@ static int					pvalue(
 }
 
 /*
- ** @param
- ** format - The format to follow for each value
- ** matrix - The matrix to print
- */
+** @param
+** format - The format to follow for each value
+** matrix - The matrix to print
+*/
 
 int							pmatrix(
 		const char *format,
@@ -130,7 +138,6 @@ int							pmatrix(
 	while (i < 16)
 	{
 		ret += pvalue(format, &buffer, &matrix->value[i]);
-
 		if ((i + 1) % 4 == 0)
 		{
 			libmatrixutil_append_and_release_memory_static(&buffer, "\n");

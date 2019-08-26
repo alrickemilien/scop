@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mat4.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/26 20:29:51 by aemilien          #+#    #+#             */
+/*   Updated: 2019/08/26 20:29:52 by aemilien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MAT4_H
 # define MAT4_H
 
@@ -158,7 +170,9 @@ void				libmatrixutil_append_and_release_memory_static(
 ** Limatrix utils xtoa
 */
 
-int					libmatrix_itoa_hex(
+int					itoa_hex(
+		uint64_t value, char *buffer, uint64_t base);
+int					ltoa_hex(
 		uint64_t value, char *buffer, uint64_t base);
 int					libmatrix_itoa(
 		const void *param, char *buffer);
