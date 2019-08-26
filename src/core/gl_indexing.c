@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 20:34:19 by aemilien          #+#    #+#             */
-/*   Updated: 2019/08/26 20:37:05 by aemilien         ###   ########.fr       */
+/*   Updated: 2019/08/26 20:42:16 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,29 +90,27 @@ static int			vertex_list_to_ebo(
 	size_t		i;
 	size_t		j;
 	t_list		*x;
-	GLuint		*index_buffer;
+	GLuint		*ib;
 	size_t		poly_length;
 
-	if (!(index_buffer = (GLuint*)malloc(
-			env->data.vertex_count * sizeof(GLuint))))
+	if (!(ib = (GLuint*)malloc(env->data.vertex_count * sizeof(GLuint))))
 		return (-1);
-	memset(index_buffer, 0, env->data.vertex_count * sizeof(GLuint));
+	memset(ib, 0, env->data.vertex_count * sizeof(GLuint));
 	i = 0;
 	j = 0;
 	x = env->data.polygons;
 	while (x)
 	{
 		poly_length = ft_lstlen(((t_polygon*)x->content)->vertices);
-		load_polygon_into_index_buffer(env, x->content,
-				(GLuint*)((uint8_t*)index_buffer + i));
+		load_polygon_into_index_buffer(env, x->content, ((uint8_t*)ib + i));
 		i += sizeof(GLuint) * poly_length;
 		j++;
 		x = x->next;
 	}
 	glGenBuffers(1, &env->ebo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, env->ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, i, index_buffer, GL_STATIC_DRAW);
-	free(index_buffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, i, ib, GL_STATIC_DRAW);
+	free(ib);
 	return (0);
 }
 

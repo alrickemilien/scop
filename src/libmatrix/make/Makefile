@@ -16,8 +16,6 @@ $(NAME): $(OBJ)
 %.o: %.c
 	@gcc -o $@ -c $< $(INCLUDE) $(CCFLAGS)
 
-include libmatrix_test.mk
-
 clean:
 	@rm -rf $(OBJ)
 
