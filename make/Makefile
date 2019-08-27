@@ -27,11 +27,11 @@ CCFLAGS= -Wall -Wextra -Werror
 LIBS := -framework OpenGL -framework Cocoa -framework IOkit -framework CoreVideo -lglfw3 -lGLEW
 
 GLEW := $(HOME)/.brew/include
-GLFW := ../external/glfw/include
+GLFW := $(HOME)/.brew/include
 C_INCLUDE_PATH := $(GLEW):$(GLFW)
 
 GLEW_LIB := $(HOME)/.brew/lib
-GLFW_LIB := ../external/glfw/src
+GLFW_LIB := $(HOME)/.brew/include
 LIBRARY_PATH := $(GLEW_LIB):$(GLFW_LIB)
 
 include scop.mk
