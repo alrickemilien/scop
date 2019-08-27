@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 20:34:54 by aemilien          #+#    #+#             */
-/*   Updated: 2019/08/26 20:35:07 by aemilien         ###   ########.fr       */
+/*   Updated: 2019/08/27 19:29:31 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int							check_gl_error(void)
 		{
 			if (g_glmaperror[i].err == err)
 				error = g_glmaperror[i].string_error;
+			i++;
 		}
 		fprintf(stderr, isatty(fileno(stderr))
 			? "\033[31m[GL Error]\033[0m : %s\n" : "[GL Error] : %s\n", error);
