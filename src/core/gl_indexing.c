@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 20:34:19 by aemilien          #+#    #+#             */
-/*   Updated: 2019/08/26 20:42:16 by aemilien         ###   ########.fr       */
+/*   Updated: 2019/08/27 19:48:55 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ static void			vertex_list_to_vbo(
 	while (x)
 	{
 		vertex = (t_vertex*)x->content;
-		memcpy(buffer + i * g_vertex_size,
+		memcpy((uint8_t*)buffer + i * g_vertex_size,
 			vertex->position, sizeof(t_vec3));
-		memcpy(buffer + i * g_vertex_size + sizeof(t_vec3),
+		memcpy((uint8_t*)buffer + i * g_vertex_size + sizeof(t_vec3),
 			vertex->color == NULL ? &g_color : vertex->color, sizeof(t_vec3));
 		if (vertex->normal == NULL)
 			compute_vertex_normal(&env->data, vertex, &normal);
-		memcpy(buffer + i * g_vertex_size + 2 * sizeof(t_vec3),
+		memcpy((uint8_t*)buffer + i * g_vertex_size + 2 * sizeof(t_vec3),
 			vertex->normal == NULL ? &normal : vertex->normal, sizeof(t_vec3));
 		i++;
 		x = x->next;
