@@ -56,6 +56,10 @@ void			render(t_software_environ *env)
 {
 	t_mat4 mvp;
 
+	if (env->is_texture_rendered && env->smooth_texture_coefficient < 1.f)
+		env->smooth_texture_coefficient += 0.01f;
+	if (!env->is_texture_rendered && env->smooth_texture_coefficient > 0.f)
+		env->smooth_texture_coefficient -= 0.01f;
 	apply_rotation(env);
 	compute_mvp(env, &mvp);
 	render_mesh(env, &mvp);

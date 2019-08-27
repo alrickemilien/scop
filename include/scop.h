@@ -166,6 +166,7 @@ typedef struct			s_software_environ
 	GLuint				grey_scale_uni;
 	GLuint				is_texture_uni;
 	GLuint				mesh_offset_uni;
+	GLuint				smooth_texture_coefficient_uni;
 	t_vec3				camera_position;
 	t_vec3				light_position;
 	t_vec3				mesh_offset;
@@ -207,6 +208,7 @@ typedef struct			s_software_environ
 	int					x_axis;
 	int					y_axis;
 	int					z_axis;
+	GLfloat				smooth_texture_coefficient;
 }						t_software_environ;
 
 void					run(t_software_environ *env);

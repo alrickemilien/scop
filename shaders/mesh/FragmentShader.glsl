@@ -13,7 +13,7 @@ uniform float ambient_light;
 uniform float specular_light;
 uniform sampler2D texture_sample;
 uniform int grey_scale;
-uniform int is_texture_rendered;
+uniform float smooth_texture_coefficient;
 
 const int RED = 0;
 const int GREEN = 1;
@@ -136,13 +136,8 @@ void main() {
   lightDir = normalize(_light - _position);
   diffuse = max(dot(_normal, lightDir), 0.0);
 
-  if (is_texture_rendered == 1) {
-    fragColour = (ambient_light + diffuse) * vec4(texture(texture_sample, _uv).rgb, 255.0);
-    fragColour.w = 255.0;
-  } else {
-    fragColour = (ambient_light + diffuse) * vec4(_color.xyz, 255.0);
-    fragColour.w = 255.0;
-  }
+  fragColour = (ambient_light + diffuse) * vec4((1 - smooth_texture_coefficient) * _color.xyz + smooth_texture_coefficient * texture(texture_sample, _uv).rgb, 255.0);
+  fragColour.w = 255.0;
 
   if (grey_scale == 1) {
     vec3  hsvColor = RGBtoHSV(fragColour.rgb);

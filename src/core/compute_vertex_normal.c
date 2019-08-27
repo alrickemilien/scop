@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 20:33:58 by aemilien          #+#    #+#             */
-/*   Updated: 2019/08/26 20:33:59 by aemilien         ###   ########.fr       */
+/*   Updated: 2019/08/27 20:59:11 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ static void		look_at_polygon(
 		size_t *n)
 {
 	bool		found;
-	t_vertex	*vec[3];
+	t_vertex	*vec[4];
 	size_t		i;
 
 	i = 0;
 	found = false;
-	while (vertex_list)
+	while (i < 4 && vertex_list)
 	{
 		vec[i] = (t_vertex*)vertex_list->content;
 		if (is_vertex_same(vec[i], vertex))

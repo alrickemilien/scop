@@ -22,7 +22,7 @@ int	gl_lighting(t_software_environ *env)
 			env->object_shader_program.id, "specular_light");
 	env->light_uni = glGetUniformLocation(
 			env->object_shader_program.id, "light");
-	env->is_texture_uni = glGetUniformLocation(
-			env->object_shader_program.id, "is_texture_rendered");
+	env->smooth_texture_coefficient_uni = glGetUniformLocation(
+		env->object_shader_program.id, "smooth_texture_coefficient");
 	return (0);
 }

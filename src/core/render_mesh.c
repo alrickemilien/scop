@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 20:32:06 by aemilien          #+#    #+#             */
-/*   Updated: 2019/08/26 20:32:07 by aemilien         ###   ########.fr       */
+/*   Updated: 2019/08/27 21:40:51 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void			render_mesh(t_software_environ *env, t_matrix *mvp)
 	glUniformMatrix4fv(env->v_uni, 1, GL_FALSE, env->view_matrix.value);
 	glUniformMatrix4fv(env->p_uni, 1, GL_FALSE, env->projection_matrix.value);
 	glUniform1f(env->ambient_lighting_uni, env->ambient_lighting);
+	glUniform1f(env->smooth_texture_coefficient_uni,
+			env->smooth_texture_coefficient);
 	glUniform1f(env->specular_lighting_uni, env->specular_lighting);
 	glUniform3fv(env->light_uni, 1, (GLfloat*)(&env->light_position));
 	glUniform3fv(env->eye_uni, 1, (GLfloat*)(&env->camera_position));
@@ -27,7 +29,6 @@ void			render_mesh(t_software_environ *env, t_matrix *mvp)
 	glUniform1i(env->texture_uni, 0);
 	check_gl_error();
 	glUniform1i(env->grey_scale_uni, env->grey_scale);
-	glUniform1i(env->is_texture_uni, env->is_texture_rendered);
 	if (env->indexation_mode)
 		render_elements(env->vao, env->render_style, env->data.vertex_count);
 	else

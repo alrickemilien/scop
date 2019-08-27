@@ -42,8 +42,8 @@ void			apply_rotation(t_software_environ *env)
 	b.y += env->mesh_offset.y;
 	b.z += env->mesh_offset.z;
 	minus_b = (t_vec3){-b.x, -b.y, -b.z};
-	env->y_auto_rotate_angle += 0.5f;
+	env->y_auto_rotate_angle += 0.1f;
 	if (env->y_auto_rotate_angle >= 360.f)
-		env->y_auto_rotate_angle = 30.f;
+		env->y_auto_rotate_angle = 0.f;
 	env->model_matrix = rotate_object_around_point(env, minus_b);
 }

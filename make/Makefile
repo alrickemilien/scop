@@ -40,7 +40,7 @@ OBJ=$(SRC:.c=.o)
 
 .PHONY: all clean fclean
 
-all: gitsubmodule $(SCOP)
+all: $(SCOP)
 
 $(SCOP): $(OBJ)
 	make -C ../src/libmatrix/make
@@ -49,13 +49,6 @@ $(SCOP): $(OBJ)
 
 %.o: %.c
 	C_INCLUDE_PATH=$(C_INCLUDE_PATH) $(CC) -o $@ -c $< $(INCLUDE) $(CCFLAGS)
-
-gitsubmodule:
-	# git submodule init
-	# git submodule update --remote
-	# make -C ../external/glew
-	# (cd ../external/glfw && $(CMAKE) .)
-	# make -C ../external/glfw
 
 clean:
 	@rm -rf $(OBJ)
