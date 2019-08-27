@@ -136,7 +136,7 @@ void main() {
   lightDir = normalize(_light - _position);
   diffuse = max(dot(_normal, lightDir), 0.0);
 
-  fragColour = (ambient_light + diffuse) * vec4((1 - smooth_texture_coefficient) * _color.xyz + smooth_texture_coefficient * texture(texture_sample, _uv).rgb, 255.0);
+  fragColour = (ambient_light + diffuse) * vec4((1 - smooth_texture_coefficient) * _color.xyz * norm.xyz + smooth_texture_coefficient * texture(texture_sample, _uv).rgb, 255.0);
   fragColour.w = 255.0;
 
   if (grey_scale == 1) {
