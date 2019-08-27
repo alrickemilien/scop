@@ -24,7 +24,7 @@ endif
 
 CCFLAGS= -Wall -Wextra -Werror
 
-LIBS := -framework OpenGL -framework Cocoa -framework IOkit -framework CoreVideo -lglfw3 -lGLEW
+LIBS := -framework OpenGL -framework Cocoa -framework IOkit -framework CoreVideo -lglfw -lGLEW
 
 GLEW := $(HOME)/.brew/include
 GLFW := $(HOME)/.brew/include
